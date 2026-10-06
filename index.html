@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>League of Legends - Rumo ao Estrelato (Modo Carreira)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --bg-surface: #0e1524;
+      --bg-card: #131d31;
+      --bg-card-hover: #1b2844;
+      --hextech-blue: #00d2ff;
+      --hextech-blue-glow: rgba(0, 210, 255, 0.35);
+      --hextech-gold: #c8aa6e;
+      --hextech-gold-bright: #f0e6d2;
+      --hextech-gold-glow: rgba(200, 170, 110, 0.4);
+      --danger-red: #e84057;
+      --success-green: #0ac8b9;
+      --text-main: #f0f6fc;
+      --text-muted: #8c9cb3;
+      --border-hex: rgba(200, 170, 110, 0.25);
+      --border-blue: rgba(0, 210, 255, 0.25);
+      --font-display: 'Cinzel', serif;
+      --font-tech: 'Rajdhani', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(200, 170, 110, 0.05) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 24px);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #090e18; }
+    ::-webkit-scrollbar-thumb { background: #243452; border-radius: 4px; border: 1px solid var(--border-hex); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--hextech-gold); }
+
+    /* Buttons & Badges */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 20px; font-family: var(--font-tech); font-weight: 700; font-size: 1rem;
+      letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--hextech-gold);
+      background: linear-gradient(180deg, #1e283d 0%, #111828 100%);
+      color: var(--hextech-gold-bright); cursor: pointer; position: relative;
+      transition: all 0.25s ease; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .btn:hover:not(:disabled) {
+      border-color: var(--hextech-blue); color: #fff;
+      background: linear-gradient(180deg, #243555 0%, #15223a 100%);
+      box-shadow: 0 0 15px var(--hextech-blue-glow); transform: translateY(-2px);
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(0.8); }
+
+    .btn-gold {
+      background: linear-gradient(180deg, #c8aa6e 0%, #785a28 100%);
+      border-color: #f0e6d2; color: #0c0a06; font-weight: 800;
+    }
+    .btn-gold:hover:not(:disabled) {
+      background: linear-gradient(180deg, #e3c78a 0%, #8c6930 100%);
+      box-shadow: 0 0 20px var(--hextech-gold-glow);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #0ac8b9 0%, #03776e 100%);
+      border-color: #00ffe5; color: #041a1c; font-weight: 800;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(180deg, #1fe5d4 0%, #069c90 100%);
+      color: #000; box-shadow: 0 0 20px rgba(10, 200, 185, 0.6);
+    }
+
+    .btn-danger {
+      border-color: var(--danger-red);
+      background: linear-gradient(180deg, #6e1823 0%, #3a0a10 100%);
+      color: #ffc9cf;
+    }
+
+    .btn-sm { padding: 6px 14px; font-size: 0.85rem; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+      border-radius: 4px; font-size: 0.75rem; font-family: var(--font-tech);
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-gold { background: rgba(200, 170, 110, 0.15); color: var(--hextech-gold); border: 1px solid var(--border-hex); }
+    .badge-blue { background: rgba(0, 210, 255, 0.15); color: var(--hextech-blue); border: 1px solid var(--border-blue); }
+    .badge-green { background: rgba(10, 200, 185, 0.15); color: var(--success-green); border: 1px solid rgba(10, 200, 185, 0.3); }
+    .badge-red { background: rgba(232, 64, 87, 0.15); color: var(--danger-red); border: 1px solid rgba(232, 64, 87, 0.3); }
+
+    .app-wrapper { max-width: 1440px; margin: 0 auto; padding: 16px 24px; }
+    .screen { display: none; animation: fadeIn 0.3s ease forwards; }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Top Global Bar */
+    .top-controls {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 20px; background: rgba(10, 14, 23, 0.85);
+      border-bottom: 1px solid var(--border-hex); border-radius: 6px;
+      margin-bottom: 16px; backdrop-filter: blur(10px);
+    }
+    .brand-logo {
+      display: flex; align-items: center; gap: 12px; font-family: var(--font-display);
+      font-size: 1.15rem; letter-spacing: 1.5px; color: var(--hextech-gold); cursor: pointer;
+    }
+    .brand-logo span { color: var(--hextech-blue); font-family: var(--font-tech); font-weight: 700; font-size: 0.85rem; }
+
+    /* ==========================================================
+       SCREEN 0: TITLE HUB INICIAL
+       ========================================================== */
+    .title-hub {
+      max-width: 1100px; margin: 20px auto; text-align: center;
+      position: relative; padding: 40px 20px;
+    }
+    .title-hero-banner {
+      background: linear-gradient(180deg, rgba(0, 210, 255, 0.12) 0%, rgba(14, 21, 36, 0.95) 100%),
+                  radial-gradient(circle, rgba(200, 170, 110, 0.15) 0%, transparent 70%);
+      border: 1px solid var(--hextech-gold); border-radius: 12px;
+      padding: 50px 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 35px var(--hextech-gold-glow);
+      margin-bottom: 30px; position: relative; overflow: hidden;
+    }
+    .title-hero-banner h1 {
+      font-family: var(--font-display); font-size: 3.2rem; letter-spacing: 4px;
+      color: var(--hextech-gold-bright); text-shadow: 0 0 30px rgba(200, 170, 110, 0.6);
+      margin-bottom: 8px; line-height: 1.1;
+    }
+    .title-hero-banner p {
+      color: var(--hextech-blue); font-family: var(--font-tech); font-size: 1.35rem;
+      letter-spacing: 2px; font-weight: 600;
+    }
+
+    .title-menu-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;
+      margin-bottom: 30px;
+    }
+    .title-menu-card {
+      background: linear-gradient(145deg, #101828 0%, #0a0e18 100%);
+      border: 1px solid #1f2f48; border-radius: 10px; padding: 24px 20px;
+      text-align: left; cursor: pointer; transition: all 0.25s ease;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .title-menu-card:hover {
+      border-color: var(--hextech-gold); transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(200, 170, 110, 0.25);
+    }
+    .title-menu-card.highlight {
+      border-color: var(--hextech-blue); background: linear-gradient(145deg, #132238 0%, #0a1320 100%);
+      box-shadow: 0 0 20px var(--hextech-blue-glow);
+    }
+    .title-card-icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .title-card-title { font-family: var(--font-tech); font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .title-card-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ==========================================================
+       SCREEN 1: CRIAÇÃO DE PERSONAGEM
+       ========================================================== */
+    .creation-container {
+      max-width: 1050px; margin: 10px auto; background: var(--bg-surface);
+      border: 1px solid var(--border-hex); border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.7); overflow: hidden;
+    }
+    .creation-hero {
+      background: linear-gradient(180deg, rgba(0, 210, 255, 0.15) 0%, rgba(14, 21, 36, 0.95) 100%);
+      padding: 30px; text-align: center; border-bottom: 2px solid var(--hextech-gold);
+    }
+    .creation-hero h2 { font-family: var(--font-display); font-size: 2rem; color: var(--hextech-gold-bright); letter-spacing: 2px; }
+    .creation-body { padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-family: var(--font-tech); font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 1px; color: var(--hextech-gold); margin-bottom: 6px; text-transform: uppercase;
+    }
+    .form-control {
+      width: 100%; padding: 10px 14px; background: #090e18; border: 1px solid #233148;
+      border-radius: 4px; color: #fff; font-family: var(--font-body); font-size: 0.95rem; outline: none;
+    }
+    .form-control:focus { border-color: var(--hextech-blue); box-shadow: 0 0 10px var(--hextech-blue-glow); }
+
+    /* Grid de Campeões no Seletor */
+    .champ-select-box {
+      grid-column: span 2; background: rgba(9, 14, 24, 0.7); border: 1px solid var(--border-hex);
+      border-radius: 8px; padding: 18px;
+    }
+    .champ-grid-compact {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px;
+      max-height: 250px; overflow-y: auto; padding: 10px; background: #080c14;
+      border: 1px solid #1a2538; border-radius: 6px;
+    }
+    .champ-card-selectable {
+      background: #111827; border: 1px solid #24344d; border-radius: 6px;
+      padding: 8px 6px; text-align: center; cursor: pointer; transition: all 0.2s ease;
+      display: flex; flex-direction: column; align-items: center; position: relative;
+    }
+    .champ-card-selectable:hover { border-color: var(--hextech-blue); transform: translateY(-2px); }
+    .champ-card-selectable.selected {
+      border-color: var(--hextech-gold); background: rgba(200, 170, 110, 0.18);
+      box-shadow: 0 0 12px var(--hextech-gold-glow);
+    }
+    .champ-card-selectable.selected::after {
+      content: '✓'; position: absolute; top: 4px; right: 4px; width: 18px; height: 18px;
+      background: var(--hextech-gold); color: #000; border-radius: 50%; font-size: 11px;
+      font-weight: bold; display: flex; align-items: center; justify-content: center;
+    }
+    .champ-card-selectable.banned {
+      opacity: 0.35; filter: grayscale(1); pointer-events: none; border-color: var(--danger-red);
+    }
+    .champ-card-selectable.banned::before {
+      content: 'BAN'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: var(--danger-red); color: #fff; font-family: var(--font-tech); font-weight: 800;
+      padding: 2px 6px; border-radius: 3px; font-size: 0.75rem; z-index: 2;
+    }
+
+    .champ-img-wrap {
+      width: 50px; height: 50px; border-radius: 50%; overflow: hidden;
+      border: 2px solid #2e4161; margin-bottom: 4px; background: #1a2538;
+      display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .champ-card-selectable.selected .champ-img-wrap { border-color: var(--hextech-gold); }
+    .champ-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .champ-name-lbl {
+      font-size: 0.75rem; font-family: var(--font-tech); font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; color: #d1d9e6;
+    }
+
+    /* ==========================================================
+       SCREEN 2: DASHBOARD PRINCIPAL (HUB DE CARREIRA COM ABAS)
+       ========================================================== */
+    .dashboard-header {
+      background: linear-gradient(135deg, #10192b 0%, #0a0e17 100%);
+      border: 1px solid var(--border-hex); border-radius: 10px; padding: 18px 24px;
+      margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px; position: relative;
+    }
+    .dashboard-header::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      background: linear-gradient(180deg, var(--hextech-blue) 0%, var(--hextech-gold) 100%);
+    }
+    .player-profile-summary { display: flex; align-items: center; gap: 16px; }
+    .player-avatar-large {
+      width: 68px; height: 68px; border-radius: 50%; border: 2px solid var(--hextech-gold);
+      box-shadow: 0 0 15px var(--hextech-gold-glow); overflow: hidden; background: #141c2c;
+      position: relative;
+    }
+    .player-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+    .player-details h2 { font-family: var(--font-display); font-size: 1.5rem; color: var(--hextech-gold-bright); }
+    .player-team-pill {
+      display: inline-flex; align-items: center; gap: 6px; background: rgba(200, 170, 110, 0.1);
+      border: 1px solid var(--border-hex); padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;
+      font-family: var(--font-tech); font-weight: 600; color: var(--hextech-gold); margin-top: 4px;
+    }
+
+    .header-career-stats { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+    .stat-badge-group { text-align: right; }
+    .stat-badge-title { font-size: 0.72rem; font-family: var(--font-tech); text-transform: uppercase; color: var(--text-muted); }
+    .stat-badge-val { font-family: var(--font-tech); font-size: 1.3rem; font-weight: 700; color: #fff; }
+
+    /* Navigation Bar */
+    .dashboard-nav-tabs {
+      display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #1a273c;
+      padding-bottom: 4px; overflow-x: auto;
+    }
+    .nav-tab-btn {
+      padding: 10px 18px; font-family: var(--font-tech); font-size: 0.95rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; background: transparent; border: none;
+      color: #8c9cb3; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s;
+    }
+    .nav-tab-btn:hover { color: #fff; }
+    .nav-tab-btn.active { color: var(--hextech-gold); border-bottom-color: var(--hextech-gold); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+
+    /* Layout Grids */
+    .dashboard-grid { display: grid; grid-template-columns: 320px 1fr 340px; gap: 20px; }
+    .card {
+      background: var(--bg-surface); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .card-title {
+      font-family: var(--font-tech); font-weight: 700; font-size: 1.05rem; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--hextech-gold); margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(200, 170, 110, 0.15); padding-bottom: 8px;
+    }
+
+    /* Attributes Bars */
+    .attr-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+    .attr-info { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; }
+    .attr-bar-bg { height: 8px; background: #090e18; border-radius: 4px; overflow: hidden; border: 1px solid #1a2538; }
+    .attr-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s ease; }
+
+    /* Actions Grid */
+    .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .action-tile {
+      background: linear-gradient(145deg, #131c2e 0%, #0d1524 100%);
+      border: 1px solid #233450; border-radius: 8px; padding: 14px;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+      cursor: pointer; transition: all 0.25s ease;
+    }
+    .action-tile:hover {
+      border-color: var(--hextech-gold); transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(200, 170, 110, 0.2);
+    }
+    .action-tile h4 { font-family: var(--font-tech); font-size: 1.1rem; color: #fff; }
+    .action-tile p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.3; }
+    .action-tile-cost { margin-top: auto; font-size: 0.72rem; color: var(--hextech-blue); font-weight: 600; }
+
+    /* Tables (Standings / SoloQueue) */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left; }
+    .data-table th {
+      background: #0d1526; color: var(--hextech-gold); padding: 10px 12px;
+      font-family: var(--font-tech); text-transform: uppercase; font-size: 0.8rem;
+    }
+    .data-table td { padding: 10px 12px; border-bottom: 1px solid #16243a; }
+    .data-table tr.highlight-row {
+      background: rgba(0, 210, 255, 0.12); border-left: 3px solid var(--hextech-blue);
+    }
+
+    /* ==========================================================
+       SCREEN 3: SISTEMA DE PICK & BAN COMPLETO
+       ========================================================= */
+    .pickban-container {
+      max-width: 1150px; margin: 10px auto; background: var(--bg-surface);
+      border: 1px solid var(--border-hex); border-radius: 12px; overflow: hidden;
+    }
+    .pickban-hud {
+      background: #060910; border-bottom: 2px solid var(--border-hex); padding: 14px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .ban-row { display: flex; align-items: center; gap: 8px; }
+    .ban-slot {
+      width: 42px; height: 42px; border-radius: 4px; border: 1px dashed var(--danger-red);
+      background: #0f1624; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .ban-slot.banned { border-style: solid; }
+    .ban-slot img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+    .ban-slot.banned::after {
+      content: '✕'; position: absolute; color: var(--danger-red); font-size: 1.4rem; font-weight: 900;
+    }
+
+    .pickban-body { padding: 24px; }
+    .pick-selection-mode-tabs {
+      display: flex; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid #233450; padding-bottom: 10px;
+    }
+    .pick-mode-btn {
+      padding: 8px 18px; font-family: var(--font-tech); font-weight: 700; font-size: 0.95rem;
+      border: 1px solid #283e60; background: #0c1424; color: #8c9cb3; border-radius: 4px; cursor: pointer;
+    }
+    .pick-mode-btn.active {
+      border-color: var(--hextech-gold); background: rgba(200, 170, 110, 0.15); color: #fff;
+    }
+
+    .pocket-picks-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px;
+    }
+    .pocket-pick-card {
+      background: linear-gradient(135deg, #131f33 0%, #0a111e 100%);
+      border: 2px solid var(--hextech-gold); border-radius: 8px; padding: 14px;
+      display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.25s ease;
+      position: relative;
+    }
+    .pocket-pick-card:hover { transform: translateY(-3px); box-shadow: 0 0 20px var(--hextech-gold-glow); }
+    .pocket-pick-card.active {
+      border-color: var(--hextech-blue); background: rgba(0, 210, 255, 0.15);
+      box-shadow: 0 0 20px var(--hextech-blue-glow);
+    }
+    .pocket-thumb { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--hextech-gold); }
+
+    /* ==========================================================
+       SCREEN 4: SIMULAÇÃO DE PARTIDA & SCOREBOARD
+       ========================================================== */
+    .scenario-box {
+      background: linear-gradient(180deg, #101726 0%, #0a0f1b 100%);
+      border: 1px solid var(--border-hex); border-radius: 10px; padding: 24px; margin-bottom: 24px;
+    }
+    .scenario-choices { display: flex; flex-direction: column; gap: 12px; }
+    .choice-btn {
+      background: #0f1728; border: 1px solid #21324c; border-radius: 8px; padding: 16px 20px;
+      cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: space-between; align-items: center;
+    }
+    .choice-btn:hover { border-color: var(--hextech-blue); background: #142036; transform: translateX(4px); }
+
+    .outcome-header { text-align: center; padding: 24px; margin-bottom: 20px; border-radius: 8px; }
+    .outcome-header.victory { background: rgba(10, 200, 185, 0.15); border: 2px solid var(--success-green); }
+    .outcome-header.defeat { background: rgba(232, 64, 87, 0.15); border: 2px solid var(--danger-red); }
+    .outcome-text { font-family: var(--font-display); font-size: 2.8rem; font-weight: 900; letter-spacing: 3px; }
+    .outcome-header.victory .outcome-text { color: var(--success-green); }
+    .outcome-header.defeat .outcome-text { color: var(--danger-red); }
+
+    .mvp-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(90deg, #c8aa6e, #f0e6d2); color: #000;
+      font-family: var(--font-display); font-weight: 900; font-size: 1rem;
+      padding: 6px 16px; border-radius: 20px; margin-top: 10px;
+    }
+
+    /* Toast */
+    .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+    .toast {
+      background: #111a2d; border: 1px solid var(--hextech-gold); padding: 12px 18px;
+      border-radius: 6px; color: #fff; font-family: var(--font-tech); font-size: 0.92rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .creation-body { grid-template-columns: 1fr; }
+      .champ-select-box { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="top-controls">
+    <div class="brand-logo" onclick="gameRouter.goTitle()">
+      ⚔️ LEAGUE OF LEGENDS <span>RUMO AO ESTRELATO</span>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <button class="btn btn-sm" id="btnSoundToggle" onclick="gameAudio.toggleSound()">🔊 Som: ON</button>
+      <button class="btn btn-sm" onclick="gameRouter.goTitle()">🏠 Menu Principal</button>
+    </div>
+  </div>
+
+  <div class="app-wrapper">
+
+    <!-- ==========================================================
+         SCREEN 0: TITLE SCREEN / HUB INICIAL
+         ========================================================== -->
+    <section id="screenTitle" class="screen active">
+      <div class="title-hub">
+        <div class="title-hero-banner">
+          <h1>RUMO AO ESTRELATO</h1>
+          <p>O MODO CARREIRA DEFINITIVO DO LEAGUE OF LEGENDS</p>
+          <div style="margin-top: 14px;">
+            <span class="badge badge-gold">EDIÇÃO CBLOL & WORLDS • 168+ CAMPEÕES • DRAFT PROFISSIONAL</span>
+          </div>
+        </div>
+
+        <div class="title-menu-grid">
+          <div class="title-menu-card highlight" id="btnContinueCareerCard" onclick="gameRouter.continueCareer()" style="display: none;">
+            <div>
+              <div class="title-card-icon">📂</div>
+              <div class="title-card-title">Continuar Carreira</div>
+              <div class="title-card-desc" id="titleContinueDesc">Carregando seu atleta...</div>
+            </div>
+            <div style="margin-top: 14px;">
+              <button class="btn btn-gold btn-sm" style="width: 100%;">Voltar ao Jogo ➔</button>
+            </div>
+          </div>
+
+          <div class="title-menu-card" onclick="gameRouter.newCareer()">
+            <div>
+              <div class="title-card-icon">⚔️</div>
+              <div class="title-card-title">Nova Carreira</div>
+              <div class="title-card-desc">Crie seu jogador, escolha sua rota e seus 3 campeões mains da várzea até o CBLOL.</div>
+            </div>
+            <div style="margin-top: 14px;">
+              <button class="btn btn-primary btn-sm" style="width: 100%;">Criar Atleta ➔</button>
+            </div>
+          </div>
+
+          <div class="title-menu-card" onclick="gameRouter.showLeagueLadderInfo()">
+            <div>
+              <div class="title-card-icon">🏆</div>
+              <div class="title-card-title">Estrutura de Ligas</div>
+              <div class="title-card-desc">Tier 4 (Várzea) ➔ Tier 3 (Acesso) ➔ Tier 2 (Circuito Desafiante) ➔ Tier 1 (CBLOL).</div>
+            </div>
+            <div style="margin-top: 14px;">
+              <span class="badge badge-blue">Ver Divisões</span>
+            </div>
+          </div>
+
+          <div class="title-menu-card" onclick="gameRouter.openSoloQueueRankView()">
+            <div>
+              <div class="title-card-icon">👑</div>
+              <div class="title-card-title">Ranking da SoloQueue</div>
+              <div class="title-card-desc">Veja a tabela de Desafiantes do servidor com Faker, Tinowns, Robo e streamer stars.</div>
+            </div>
+            <div style="margin-top: 14px;">
+              <span class="badge badge-gold">Top 100 Servidor</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="card" style="text-align: left; background: #0a0f1b;">
+          <div class="card-title">
+            <span>Como funciona a Carreira?</span>
+            <span class="badge badge-gold">Guia do Cenário</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 0.85rem; color: #a5b4c8;">
+            <div>
+              <strong style="color: #fff;">1. Comece na Base:</strong> Você inicia jogando por equipes amadoras no Tier 4. Treine seus atributos e vença partidas para subir de divisão.
+            </div>
+            <div>
+              <strong style="color: #fff;">2. Suba o SoloQ:</strong> Jogue a ranqueada individual para subir de Ferro até Desafiante e chamar atenção dos scouts do CBLOL.
+            </div>
+            <div>
+              <strong style="color: #fff;">3. Pick & Ban com Liberdade:</strong> Tenha seus 3 Pocket Picks favoritos com bônus de maestria, mas com a liberdade de escolher qualquer um dos 168 campeões!
+            </div>
+            <div>
+              <strong style="color: #fff;">4. Assine com a Elite:</strong> Receba propostas reais de LOUD, paiN Gaming, RED Canids e brigue pelo título e vaga no Mundial!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         SCREEN 1: CRIAÇÃO DE PERSONAGEM
+         ========================================================== -->
+    <section id="screenCreation" class="screen">
+      <div class="creation-container">
+        <div class="creation-hero">
+          <h2>CRIE SEU ATLETA DE ESPORTS</h2>
+          <p style="color: var(--hextech-blue); font-family: var(--font-tech); font-size: 1rem;">O início da sua jornada rumo ao topo do competitivo</p>
+        </div>
+
+        <div class="creation-body">
+          <div>
+            <div class="form-group">
+              <label>Nome Completo</label>
+              <input type="text" id="inputPlayerName" class="form-control" value="Gabriel Santos">
+            </div>
+
+            <div class="form-group">
+              <label>Nickname In-Game</label>
+              <input type="text" id="inputNickName" class="form-control" value="Revenge">
+            </div>
+
+            <div class="form-group">
+              <label>Rota Principal</label>
+              <select id="selectRole" class="form-control" onchange="creationUI.onRoleChange()">
+                <option value="Mid" selected>Mid Laner (Rota do Meio)</option>
+                <option value="Top">Top Laner (Rota Superior)</option>
+                <option value="Jungle">Jungler (Caçador da Selva)</option>
+                <option value="ADC">ADC / Bot (Atirador)</option>
+                <option value="Suporte">Suporte</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <div class="form-group">
+              <label>Estilo de Jogo</label>
+              <select id="selectStyle" class="form-control" onchange="creationUI.updateStatPreview()">
+                <option value="Agressivo" selected>Agressivo / Mecânico (Foco em Solo Kills e Mecânica)</option>
+                <option value="Tático">Tático / Macro (Foco em Visão, Rotações e Objetivos)</option>
+                <option value="Seguro">Seguro / Farm (Foco em Consistência e Escalar)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Região Inicial</label>
+              <select id="selectRegion" class="form-control">
+                <option value="CBLOL (Brasil)">CBLOL (Brasil) 🇧🇷</option>
+                <option value="LCK (Coreia)">LCK (Coreia) 🇰🇷</option>
+                <option value="LEC (Europa)">LEC (Europa) 🇪🇺</option>
+              </select>
+            </div>
+
+            <div style="background: rgba(14, 21, 36, 0.8); border: 1px solid var(--border-blue); border-radius: 8px; padding: 14px; display: flex; justify-content: space-around;" id="creationStatPreview">
+              <!-- Dynamically populated stats -->
+            </div>
+          </div>
+
+          <!-- Pool Inicial de 3 Campeões -->
+          <div class="champ-select-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong style="color: var(--hextech-gold); font-family: var(--font-tech); font-size: 1.1rem;">
+                  SELECIONE SEUS 3 CAMPEÕES MAINS (<span id="creationChampCount">0</span>/3)
+                </strong>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">
+                  Estes serão seus Pocket Picks com bônus de maestria durante toda a carreira.
+                </div>
+              </div>
+              <input type="text" id="creationChampSearch" class="form-control" style="max-width: 250px;" placeholder="Buscar entre todos os 168 campeões..." oninput="creationUI.filterChamps(this.value)">
+            </div>
+
+            <div class="champ-grid-compact" id="creationChampGrid">
+              <!-- Dynamically populated with all 168 champions -->
+            </div>
+
+            <div style="margin-top: 12px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;" id="creationSelectedPoolPreview">
+              <!-- Selected pool badges -->
+            </div>
+          </div>
+
+          <div style="grid-column: span 2; text-align: center; margin-top: 10px;">
+            <button class="btn btn-gold" style="padding: 14px 40px; font-size: 1.15rem;" onclick="creationUI.startGame()">
+              ⚔️ Forjar Carreira Profissional
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         SCREEN 2: DASHBOARD PRINCIPAL (HUB DE CARREIRA)
+         ========================================================== -->
+    <section id="screenDashboard" class="screen">
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="player-profile-summary">
+          <div class="player-avatar-large">
+            <img id="hubPlayerAvatar" src="" alt="Avatar">
+          </div>
+          <div class="player-details">
+            <h2>
+              <span id="hubNickName">Revenge</span>
+              <span class="badge badge-gold" id="hubBadgeRegion">CBLOL</span>
+            </h2>
+            <div style="color: var(--text-muted); font-size: 0.85rem;" id="hubRealName">Gabriel Santos</div>
+            <div class="player-team-pill">
+              🛡️ Time: <strong id="hubTeamName">Tier 4 - Academia dos Cria</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-career-stats">
+          <div class="stat-badge-group">
+            <div class="stat-badge-title">Divisão Competitiva</div>
+            <div class="stat-badge-val" id="hubTierBadge" style="color: var(--hextech-gold);">Tier 4 (Amador)</div>
+          </div>
+
+          <div class="stat-badge-group">
+            <div class="stat-badge-title">SoloQueue Elo</div>
+            <div class="stat-badge-val" id="hubEloBadge" style="color: var(--hextech-blue);">Ouro IV • 50 PDL</div>
+          </div>
+
+          <div class="stat-badge-group">
+            <div class="stat-badge-title">Energia</div>
+            <div class="stat-badge-val" id="hubEnergyText" style="color: #ffb703;">100%</div>
+          </div>
+
+          <div class="stat-badge-group">
+            <div class="stat-badge-title">Fama & Fãs</div>
+            <div class="stat-badge-val" id="hubFameText" style="color: #ff76ac;">120 Fãs</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Navigation Tabs -->
+      <nav class="dashboard-nav-tabs">
+        <button class="nav-tab-btn active" onclick="hubTabs.switchTab('tabOverview', this)">🏠 Meu Atleta & Rotina</button>
+        <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabLeagueStandings', this)">🏆 Tabela da Liga (Tier)</button>
+        <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabSoloQueueRank', this)">👑 Ranking da SoloQueue</button>
+        <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabTransfers', this)">💼 Mercado de Transferências</button>
+        <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabCommunity', this)">📱 Redes Sociais & Notícias</button>
+      </nav>
+
+      <!-- TAB 1: VISÃO GERAL (MEU ATLETA & AÇÕES) -->
+      <div id="tabOverview" class="tab-content active">
+        <div class="dashboard-grid">
+
+          <!-- Left Column: Status do Atleta & Pool -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="card">
+              <div class="card-title">
+                <span>Status do Atleta</span>
+                <span class="badge badge-blue" id="hubOverallRating">OVR: 55</span>
+              </div>
+              <div class="attr-row">
+                <div class="attr-info"><span>Mecânica</span><span id="valStatMech">55</span></div>
+                <div class="attr-bar-bg"><div class="attr-bar-fill" id="barStatMech" style="width: 55%; background: linear-gradient(90deg, #00d2ff, #0ac8b9);"></div></div>
+              </div>
+              <div class="attr-row">
+                <div class="attr-info"><span>Macro / Visão</span><span id="valStatMacro">48</span></div>
+                <div class="attr-bar-bg"><div class="attr-bar-fill" id="barStatMacro" style="width: 48%; background: linear-gradient(90deg, #9b59b6, #3498db);"></div></div>
+              </div>
+              <div class="attr-row">
+                <div class="attr-info"><span>Comunicação</span><span id="valStatComm">45</span></div>
+                <div class="attr-bar-bg"><div class="attr-bar-fill" id="barStatComm" style="width: 45%; background: linear-gradient(90deg, #f39c12, #e67e22);"></div></div>
+              </div>
+              <div class="attr-row">
+                <div class="attr-info"><span>Consistência</span><span id="valStatCons">50</span></div>
+                <div class="attr-bar-bg"><div class="attr-bar-fill" id="barStatCons" style="width: 50%; background: linear-gradient(90deg, #2ecc71, #27ae60);"></div></div>
+              </div>
+              <div class="attr-row">
+                <div class="attr-info"><span>Confiança Mental</span><span id="valStatConf">70%</span></div>
+                <div class="attr-bar-bg"><div class="attr-bar-fill" id="barStatConf" style="width: 70%; background: linear-gradient(90deg, #e84057, #ff6b81);"></div></div>
+              </div>
+            </div>
+
+            <!-- Pool de Mains -->
+            <div class="card">
+              <div class="card-title">
+                <span>Seus Pocket Picks (Mains)</span>
+                <button class="btn btn-sm btn-primary" onclick="championModal.open()">+ Treinar Outro</button>
+              </div>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;">
+                Estes campeões garantem bônus de maestria nas partidas oficiais!
+              </p>
+              <div id="hubPoolList" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Column: Próxima Partida & Rotina -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="card" style="border-color: var(--hextech-gold); background: linear-gradient(135deg, rgba(200, 170, 110, 0.1) 0%, #0d1526 100%);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span class="badge badge-gold" id="hubMatchLeagueHeader">Tier 4 (Amador) • Rodada 1</span>
+                <span class="badge badge-blue" id="hubSeasonRecord">0V - 0D</span>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-around; padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 16px;">
+                <div style="text-align: center;">
+                  <div style="font-family: var(--font-tech); font-weight: 800; font-size: 1.15rem; color: #fff;" id="hubMyTeamNameMatch">Academia dos Cria</div>
+                  <div style="font-size: 0.75rem; color: var(--hextech-blue);">Seu Time</div>
+                </div>
+                <div style="font-family: var(--font-display); font-size: 1.4rem; color: var(--danger-red); font-weight: 900;">VS</div>
+                <div style="text-align: center;">
+                  <div style="font-family: var(--font-tech); font-weight: 800; font-size: 1.15rem; color: #fff;" id="hubEnemyTeamNameMatch">Ilha da Macacada</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);" id="hubEnemyTeamTagMatch">Rival da Rodada</div>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="font-size: 0.85rem; color: #cbd5e1;">
+                  Próxima Partida com <strong style="color: var(--hextech-gold);">Fase de Pick & Ban</strong>
+                </div>
+                <button class="btn btn-gold" style="padding: 12px 30px;" onclick="pickBanEngine.startDraft()">
+                  ⚔️ Iniciar Pick & Ban Oficial
+                </button>
+              </div>
+            </div>
+
+            <!-- Ações Diárias -->
+            <div class="card">
+              <div class="card-title">
+                <span>Ações Diárias & Rotina</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Semana <span id="hubWeekNumber">1</span></span>
+              </div>
+              <div class="actions-grid">
+                <div class="action-tile" onclick="career.trainStat('mechanics')">
+                  <h4>🎯 Treino 1v1 Mecânico</h4>
+                  <p>Aprimore combos, reflexos e micro-decisões de rota.</p>
+                  <div class="action-tile-cost">+2 Mecânica | -20 Energia</div>
+                </div>
+                <div class="action-tile" onclick="career.trainStat('macro')">
+                  <h4>🗺️ VOD Review & Macro</h4>
+                  <p>Estude mapas, timing de objetivos e rotações profissionais.</p>
+                  <div class="action-tile-cost">+2 Macro/Visão | -20 Energia</div>
+                </div>
+                <div class="action-tile" onclick="career.trainStat('comm')">
+                  <h4>🎙️ Comunicação de Time</h4>
+                  <p>Treine shotcalling e liderança em chamadas no discord.</p>
+                  <div class="action-tile-cost">+2 Comunicação | -20 Energia</div>
+                </div>
+                <div class="action-tile" onclick="career.trainStat('consistency')">
+                  <h4>🛡️ Rotina de Farm</h4>
+                  <p>Pratique controle de wave e disciplina mental.</p>
+                  <div class="action-tile-cost">+2 Consistência | -20 Energia</div>
+                </div>
+                <div class="action-tile" style="border-color: var(--hextech-blue);" onclick="career.playSoloQueue()">
+                  <h4>🔥 Jogar SoloQueue Ranqueada</h4>
+                  <p>Dispute PDL na ranqueada, suba no Ranking do Servidor e treine campeões.</p>
+                  <div class="action-tile-cost">±PDL | -25 Energia | +Confiança</div>
+                </div>
+                <div class="action-tile" style="border-color: var(--success-green);" onclick="career.restDay()">
+                  <h4>🛌 Descanso & Academia</h4>
+                  <p>Recupere energia física e renove a confiança mental.</p>
+                  <div class="action-tile-cost">+50 Energia | +10 Confiança</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Resumo da Liga & Feed Rápido -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="card">
+              <div class="card-title">
+                <span>Classificação Rápida</span>
+                <span class="badge badge-gold" id="hubMiniTierBadge">Tier 4</span>
+              </div>
+              <div id="hubMiniStandingsList" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Mini table filled dynamically -->
+              </div>
+              <div style="margin-top: 12px; text-align: center;">
+                <button class="btn btn-sm" style="width: 100%;" onclick="hubTabs.switchTab('tabLeagueStandings')">Ver Tabela Completa ➔</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                <span>Sua Posição na SoloQueue</span>
+                <span class="badge badge-blue">Servidor BR</span>
+              </div>
+              <div style="text-align: center; padding: 12px 0;">
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Posição Geral:</div>
+                <div style="font-family: var(--font-tech); font-size: 2rem; font-weight: 800; color: var(--hextech-gold);" id="hubSoloQPosition">#24.810</div>
+                <div style="font-size: 0.88rem; color: var(--hextech-blue); font-weight: 600;" id="hubSoloQRankDetailed">Ouro IV (50 PDL)</div>
+              </div>
+              <button class="btn btn-sm" style="width: 100%;" onclick="hubTabs.switchTab('tabSoloQueueRank')">Ver Top Desafiantes ➔</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: TABELA DA LIGA (TIER 4 AO CBLOL) -->
+      <div id="tabLeagueStandings" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            <span id="tabStandingsLeagueTitle">TABELA DE CLASSIFICAÇÃO • TIER 4 (LIGA AMADORA)</span>
+            <span class="badge badge-gold" id="tabStandingsPromotionBadge">Top 2 avançam para o Tier 3!</span>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Equipe</th>
+                <th>Jogos</th>
+                <th>Vitórias</th>
+                <th>Derrotas</th>
+                <th>Aproveitamento</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody id="tabLeagueStandingsTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+
+          <div style="margin-top: 24px; padding: 16px; background: #0a0f1c; border: 1px solid var(--border-hex); border-radius: 6px;">
+            <h4 style="font-family: var(--font-tech); color: var(--hextech-gold); margin-bottom: 6px;">
+              🏅 CAMINHO ATÉ O CBLOL:
+            </h4>
+            <div style="display: flex; gap: 12px; font-size: 0.85rem; flex-wrap: wrap;">
+              <span class="badge badge-gold">Tier 4 (Amador)</span> ➔ 
+              <span class="badge badge-blue">Tier 3 (Acesso Semiprofissional)</span> ➔ 
+              <span class="badge badge-gold">Tier 2 (Circuito Desafiante / Academy)</span> ➔ 
+              <span class="badge badge-green">Tier 1 (CBLOL - LOUD, paiN, RED, FURIA...)</span> ➔ 
+              <span class="badge badge-red">Mundial (Worlds - T1, Gen.G)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: RANKING DA SOLOQUEUE -->
+      <div id="tabSoloQueueRank" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            <span>RANKING OFICIAL DA SOLOQUEUE (LEADERBOARD DO SERVIDOR)</span>
+            <span class="badge badge-blue">Atualizado em Tempo Real</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+            Vença partidas de SoloQueue no Hub para subir de divisão, ganhar PDL e subir posições até entrar no Top 100 dos Desafiantes!
+          </p>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Posição</th>
+                <th>Invocador</th>
+                <th>Tier / Elo</th>
+                <th>PDL</th>
+                <th>Taxa de Vitória</th>
+                <th>Campeão Mais Jogado</th>
+              </tr>
+            </thead>
+            <tbody id="tabSoloQueueTableBody">
+              <!-- Rendered dynamically with pro players + current player -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 4: MERCADO DE TRANSFERÊNCIAS -->
+      <div id="tabTransfers" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            <span>MERCADO DE CONTRATOS & TRANSFERÊNCIAS</span>
+            <span class="badge badge-gold" id="tabTransferCountBadge">0 Propostas</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+            Conforme você sobe no SoloQueue e se destaca nas partidas oficiais, grandes organizações do Circuito Desafiante e do CBLOL enviarão propostas oficiais de contrato.
+          </p>
+          <div id="tabTransfersList" style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Offers rendered dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: REDES SOCIAIS & NOTÍCIAS -->
+      <div id="tabCommunity" class="tab-content">
+        <div class="card">
+          <div class="card-title">
+            <span>FEED DA COMUNIDADE & IMPRENSA (#CBLOL)</span>
+            <span class="badge badge-red">🔴 AO VIVO</span>
+          </div>
+          <div id="tabSocialFeedContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: 600px; overflow-y: auto;">
+            <!-- Tweets rendered dynamically -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==========================================================
+         SCREEN 3: PICK & BAN COMPLETO (DRAFT COMPETITIVO)
+         ========================================================== -->
+    <section id="screenPickBan" class="screen">
+      <div class="pickban-container">
+        <!-- HUD Superior do Draft -->
+        <div class="pickban-hud">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">FASE COMPETITIVA</div>
+            <h3 style="font-family: var(--font-display); color: var(--hextech-gold-bright);" id="pickBanStageTitle">FASE DE BANIMENTOS</h3>
+          </div>
+
+          <!-- BANS HUD -->
+          <div style="display: flex; gap: 24px; align-items: center;">
+            <div style="text-align: right;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Bans do Seu Time</div>
+              <div class="ban-row" id="allyBansRow">
+                <div class="ban-slot" id="allyBanSlot1"></div>
+              </div>
+            </div>
+
+            <div style="font-family: var(--font-tech); font-weight: 800; font-size: 1.4rem; color: var(--danger-red);">VS</div>
+
+            <div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Bans Adversários</div>
+              <div class="ban-row" id="enemyBansRow">
+                <div class="ban-slot" id="enemyBanSlot1"></div>
+                <div class="ban-slot" id="enemyBanSlot2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pickban-body">
+
+          <!-- ETAPA 1: BAN PHASE -->
+          <div id="draftBanPhaseBox">
+            <div style="margin-bottom: 16px;">
+              <h4 style="font-family: var(--font-tech); font-size: 1.25rem; color: #fff;">
+                🚫 Escolha 1 Campeão para Banir:
+              </h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                O campeão banido não poderá ser escolhido por ninguém na partida.
+              </p>
+            </div>
+
+            <div style="margin-bottom: 14px; display: flex; gap: 10px; align-items: center;">
+              <input type="text" id="draftBanSearch" class="form-control" style="max-width: 300px;" placeholder="Filtrar campeão para banir..." oninput="pickBanEngine.filterBanGrid(this.value)">
+            </div>
+
+            <div class="champ-grid-compact" id="draftBanGrid">
+              <!-- All champions available to ban -->
+            </div>
+          </div>
+
+          <!-- ETAPA 2: PICK PHASE -->
+          <div id="draftPickPhaseBox" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h4 style="font-family: var(--font-tech); font-size: 1.3rem; color: #fff;">
+                  👑 Escolha seu Campeão para a Rota (<span id="draftLaneLabel">Mid</span>):
+                </h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">
+                  Você pode escolher um dos seus <strong style="color: var(--hextech-gold);">Pocket Picks com Bônus</strong> ou <strong style="color: var(--hextech-blue);">qualquer outro campeão do jogo livremente</strong>!
+                </p>
+              </div>
+
+              <!-- Opponent Pick Preview -->
+              <div style="background: #090e18; border: 1px solid var(--danger-red); border-radius: 8px; padding: 10px 18px; display: flex; align-items: center; gap: 12px;">
+                <div class="champ-img-wrap" style="border-color: var(--danger-red);">
+                  <img id="draftOpponentPickImg" src="" alt="Adversário">
+                </div>
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--danger-red); font-weight: bold;">OPONENTE DE ROTA</div>
+                  <div style="font-family: var(--font-tech); font-weight: 700; color: #fff; font-size: 1.1rem;" id="draftOpponentPickName">Aatrox</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabs: Pocket Picks vs Todos os Campeões -->
+            <div class="pick-selection-mode-tabs">
+              <button class="pick-mode-btn active" id="btnTabPocketPicks" onclick="pickBanEngine.switchPickTab('mains')">
+                🌟 Seus Pocket Picks (Mains)
+              </button>
+              <button class="pick-mode-btn" id="btnTabAllChamps" onclick="pickBanEngine.switchPickTab('all')">
+                🌐 Todos os 168+ Campeões (Livre Escolha)
+              </button>
+            </div>
+
+            <!-- View A: Pocket Picks -->
+            <div id="pickViewMains">
+              <div class="pocket-picks-grid" id="draftPocketPicksGrid">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- View B: Todos os Campeões -->
+            <div id="pickViewAll" style="display: none;">
+              <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
+                <input type="text" id="draftPickAllSearch" class="form-control" style="max-width: 250px;" placeholder="Buscar campeão..." oninput="pickBanEngine.filterPickAllGrid(this.value)">
+                <div style="display: flex; gap: 6px;" id="draftRoleFiltersContainer">
+                  <!-- Role filter buttons -->
+                </div>
+              </div>
+              <div class="champ-grid-compact" id="draftPickAllGrid">
+                <!-- All 168 champions -->
+              </div>
+            </div>
+
+            <!-- Lock-In Confirmation Bar -->
+            <div style="margin-top: 24px; padding: 16px; background: #0c1424; border: 1px solid var(--border-hex); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="champ-img-wrap" style="width: 58px; height: 58px; border-color: var(--hextech-gold);">
+                  <img id="draftMyLockedImg" src="" alt="Seu Pick">
+                </div>
+                <div>
+                  <div style="font-size: 0.75rem; color: var(--hextech-gold); font-weight: 700;">SEU CAMPEÃO SELECIONADO:</div>
+                  <div style="font-family: var(--font-tech); font-size: 1.35rem; font-weight: 800; color: #fff;" id="draftMyLockedName">Nenhum</div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);" id="draftMyLockedMeta">Clique em um campeão para selecionar</div>
+                </div>
+              </div>
+
+              <button class="btn btn-gold" id="btnConfirmLockIn" style="padding: 14px 40px;" onclick="pickBanEngine.confirmLockIn()">
+                🔒 Confirmar Escolha (Lock-In)
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         SCREEN 4: MOMENTOS DECISIVOS & SCOREBOARD
+         ========================================================== -->
+    <section id="screenMatch" class="screen">
+      <div class="creation-container" style="max-width: 1100px;">
+        <!-- HUD Superior da Partida -->
+        <div class="top-controls" style="margin-bottom: 0; border-radius: 0; background: #070a12;">
+          <div style="font-family: var(--font-tech); font-weight: 700; color: var(--hextech-blue);" id="matchAllyTeamHud">Academia dos Cria: <span id="matchAllyKills">0</span> Kills</div>
+          <div style="font-family: var(--font-tech); font-size: 1.3rem; color: var(--hextech-gold);" id="matchGameTime">08:15</div>
+          <div style="font-family: var(--font-tech); font-weight: 700; color: var(--danger-red);" id="matchEnemyTeamHud"><span id="matchEnemyKills">0</span> Kills :Rival</div>
+        </div>
+
+        <!-- Momentos Decisivos Body -->
+        <div style="padding: 30px;" id="matchInteractivePhase">
+          <div class="scenario-box">
+            <span class="badge badge-blue" id="scenarioPhaseBadge">MOMENTO 1 DE 3 • EARLY GAME</span>
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: #fff; margin: 8px 0 12px;" id="scenarioTitle">Disputa no Rio</h3>
+            <p style="color: #cbd5e1; line-height: 1.6;" id="scenarioDesc">Carregando momento...</p>
+          </div>
+
+          <div class="scenario-choices" id="scenarioChoicesContainer">
+            <!-- 3 tactical choice buttons -->
+          </div>
+
+          <!-- Resolution Feedback Card -->
+          <div id="resolutionBanner" style="display: none; margin-top: 20px; padding: 20px; border-radius: 8px; border: 1px solid var(--border-hex); background: #090e18;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4 id="resolutionResultTitle" style="font-family: var(--font-tech); font-size: 1.25rem; font-weight: 800;">JOGADA SUCEDIDA!</h4>
+              <span class="badge" id="resolutionBadgeRoll">Rolagem: 80%</span>
+            </div>
+            <p id="resolutionNarrative" style="color: #e2eaf5; line-height: 1.5;"></p>
+            <div style="margin-top: 14px; text-align: right;">
+              <button class="btn btn-sm btn-gold" id="btnNextScenario" onclick="matchEngine.proceedNextTurn()">Continuar ➔</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scoreboard Pós-Jogo -->
+        <div style="padding: 30px; display: none;" id="matchScoreboardPhase">
+          <div class="outcome-header victory" id="postGameOutcomeHeader">
+            <div class="outcome-text" id="postGameOutcomeText">VITÓRIA!</div>
+            <div style="font-family: var(--font-tech); font-size: 1.4rem; color: #fff; margin-top: 6px;">
+              Nota da Partida: <strong id="postGameRating">9.2</strong> / 10.0
+            </div>
+            <div id="postGameMvpWrapper">
+              <div class="mvp-badge">⭐ MVP DA PARTIDA ⭐</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 12px; margin-bottom: 20px;">
+            <div class="card-title">Scoreboard Oficial da Partida</div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Jogador</th>
+                  <th>Campeão</th>
+                  <th>K / D / A</th>
+                  <th>Dano Causado</th>
+                  <th>Ouro</th>
+                  <th>Nota</th>
+                </tr>
+              </thead>
+              <tbody id="scoreboardTableBody">
+                <!-- Dynamically generated scoreboard -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Recompensas -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 24px;">
+            <div class="card" style="text-align: center;">
+              <div style="font-family: var(--font-tech); font-size: 1.4rem; font-weight: 700; color: var(--hextech-gold);" id="rewardExp">+300 EXP</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Experiência</div>
+            </div>
+            <div class="card" style="text-align: center;">
+              <div style="font-family: var(--font-tech); font-size: 1.4rem; font-weight: 700; color: #ff76ac;" id="rewardFame">+40 Fãs</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Fama & Reputação</div>
+            </div>
+            <div class="card" style="text-align: center;">
+              <div style="font-family: var(--font-tech); font-size: 1.4rem; font-weight: 700; color: #ffd700;" id="rewardGold">+R$ 500</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Premiação da Rodada</div>
+            </div>
+            <div class="card" style="text-align: center;">
+              <div style="font-family: var(--font-tech); font-size: 1.4rem; font-weight: 700; color: var(--hextech-blue);" id="rewardMastery">+1.400 MP</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Maestria de Campeão</div>
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <button class="btn btn-gold" style="padding: 14px 40px;" onclick="matchEngine.finishAndReturnHub()">
+              Voltar ao Hub de Carreira ➔
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /app-wrapper -->
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Modal: Academia de Campeões -->
+  <div id="champModalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(6px); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:var(--bg-surface); border:1px solid var(--hextech-gold); border-radius:10px; max-width:850px; width:100%; max-height:85vh; display:flex; flex-direction:column; overflow:hidden;">
+      <div style="padding:16px 20px; background:#090e18; border-bottom:1px solid var(--border-hex); display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-family:var(--font-display); color:var(--hextech-gold);">ACADEMIA DE CAMPEÕES (TREINAR NOVO MAIN)</h3>
+        <button style="background:none; border:none; color:#8c9cb3; font-size:1.5rem; cursor:pointer;" onclick="championModal.close()">&times;</button>
+      </div>
+      <div style="padding:20px; overflow-y:auto; flex:1;">
+        <input type="text" id="modalSearchInput" class="form-control" placeholder="Buscar campeão para treinar..." oninput="championModal.filter(this.value)" style="margin-bottom:14px;">
+        <div class="champ-grid-compact" id="modalChampsGrid" style="max-height:400px;"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================
+       EXTERNAL CHAMPION DATABASE SCRIPT (168 CHAMPIONS)
+       ========================================================== -->
+  <script>window.LOL_CHAMPIONS_DB = [{"id":"Aatrox","name":"Aatrox","img":"Aatrox.png","roles":["Top"],"tags":["Fighter"]},{"id":"Ahri","name":"Ahri","img":"Ahri.png","roles":["Mid"],"tags":["Mage","Assassin"]},{"id":"Akali","name":"Akali","img":"Akali.png","roles":["Mid","Top"],"tags":["Assassin"]},{"id":"Akshan","name":"Akshan","img":"Akshan.png","roles":["Mid","Top"],"tags":["Marksman","Assassin"]},{"id":"Alistar","name":"Alistar","img":"Alistar.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Amumu","name":"Amumu","img":"Amumu.png","roles":["Jungle"],"tags":["Tank","Support"]},{"id":"Anivia","name":"Anivia","img":"Anivia.png","roles":["Mid"],"tags":["Mage"]},{"id":"Annie","name":"Annie","img":"Annie.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Aphelios","name":"Aphelios","img":"Aphelios.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Ashe","name":"Ashe","img":"Ashe.png","roles":["ADC","Suporte"],"tags":["Marksman","Support"]},{"id":"AurelionSol","name":"Aurelion Sol","img":"AurelionSol.png","roles":["Mid"],"tags":["Mage"]},{"id":"Aurora","name":"Aurora","img":"Aurora.png","roles":["Mid","Top"],"tags":["Mage","Assassin"]},{"id":"Azir","name":"Azir","img":"Azir.png","roles":["Mid"],"tags":["Mage","Marksman"]},{"id":"Bard","name":"Bard","img":"Bard.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Belveth","name":"Bel'Veth","img":"Belveth.png","roles":["Jungle"],"tags":["Fighter"]},{"id":"Blitzcrank","name":"Blitzcrank","img":"Blitzcrank.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Brand","name":"Brand","img":"Brand.png","roles":["Suporte","Mid","Jungle"],"tags":["Mage","Support"]},{"id":"Braum","name":"Braum","img":"Braum.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Briar","name":"Briar","img":"Briar.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Caitlyn","name":"Caitlyn","img":"Caitlyn.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Camille","name":"Camille","img":"Camille.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Cassiopeia","name":"Cassiopeia","img":"Cassiopeia.png","roles":["Mid","Top"],"tags":["Mage"]},{"id":"Chogath","name":"Cho'Gath","img":"Chogath.png","roles":["Top","Mid"],"tags":["Tank","Mage"]},{"id":"Corki","name":"Corki","img":"Corki.png","roles":["Mid","ADC"],"tags":["Marksman","Mage"]},{"id":"Darius","name":"Darius","img":"Darius.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Diana","name":"Diana","img":"Diana.png","roles":["Jungle","Mid"],"tags":["Fighter","Assassin"]},{"id":"Draven","name":"Draven","img":"Draven.png","roles":["ADC"],"tags":["Marksman"]},{"id":"DrMundo","name":"Dr. Mundo","img":"DrMundo.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Ekko","name":"Ekko","img":"Ekko.png","roles":["Jungle","Mid"],"tags":["Assassin","Mage"]},{"id":"Elise","name":"Elise","img":"Elise.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Evelynn","name":"Evelynn","img":"Evelynn.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Ezreal","name":"Ezreal","img":"Ezreal.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Fiddlesticks","name":"Fiddlesticks","img":"Fiddlesticks.png","roles":["Jungle"],"tags":["Mage","Support"]},{"id":"Fiora","name":"Fiora","img":"Fiora.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Fizz","name":"Fizz","img":"Fizz.png","roles":["Mid"],"tags":["Assassin","Fighter"]},{"id":"Galio","name":"Galio","img":"Galio.png","roles":["Mid","Suporte"],"tags":["Tank","Mage"]},{"id":"Gangplank","name":"Gangplank","img":"Gangplank.png","roles":["Top"],"tags":["Fighter"]},{"id":"Garen","name":"Garen","img":"Garen.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Gnar","name":"Gnar","img":"Gnar.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Gragas","name":"Gragas","img":"Gragas.png","roles":["Jungle","Top","Mid"],"tags":["Fighter","Mage"]},{"id":"Graves","name":"Graves","img":"Graves.png","roles":["Jungle"],"tags":["Marksman"]},{"id":"Gwen","name":"Gwen","img":"Gwen.png","roles":["Top"],"tags":["Fighter"]},{"id":"Hecarim","name":"Hecarim","img":"Hecarim.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Heimerdinger","name":"Heimerdinger","img":"Heimerdinger.png","roles":["Mid","Top","Suporte"],"tags":["Mage","Support"]},{"id":"Hwei","name":"Hwei","img":"Hwei.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Illaoi","name":"Illaoi","img":"Illaoi.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Irelia","name":"Irelia","img":"Irelia.png","roles":["Top","Mid"],"tags":["Fighter","Assassin"]},{"id":"Ivern","name":"Ivern","img":"Ivern.png","roles":["Jungle"],"tags":["Support","Mage"]},{"id":"Janna","name":"Janna","img":"Janna.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"JarvanIV","name":"Jarvan IV","img":"JarvanIV.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Jax","name":"Jax","img":"Jax.png","roles":["Top","Jungle"],"tags":["Fighter"]},{"id":"Jayce","name":"Jayce","img":"Jayce.png","roles":["Top","Mid"],"tags":["Marksman","Fighter"]},{"id":"Jhin","name":"Jhin","img":"Jhin.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Jinx","name":"Jinx","img":"Jinx.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Kaisa","name":"Kai'Sa","img":"Kaisa.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Kalista","name":"Kalista","img":"Kalista.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Karma","name":"Karma","img":"Karma.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Karthus","name":"Karthus","img":"Karthus.png","roles":["Jungle","Mid"],"tags":["Mage"]},{"id":"Kassadin","name":"Kassadin","img":"Kassadin.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"Katarina","name":"Katarina","img":"Katarina.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"Kayle","name":"Kayle","img":"Kayle.png","roles":["Top","Mid"],"tags":["Mage","Marksman"]},{"id":"Kayn","name":"Kayn","img":"Kayn.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Kennen","name":"Kennen","img":"Kennen.png","roles":["Top"],"tags":["Mage"]},{"id":"Khazix","name":"Kha'Zix","img":"Khazix.png","roles":["Jungle"],"tags":["Assassin"]},{"id":"Kindred","name":"Kindred","img":"Kindred.png","roles":["Jungle"],"tags":["Marksman"]},{"id":"Kled","name":"Kled","img":"Kled.png","roles":["Top"],"tags":["Fighter"]},{"id":"KogMaw","name":"Kog'Maw","img":"KogMaw.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"KSante","name":"K'Sante","img":"KSante.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Leblanc","name":"LeBlanc","img":"Leblanc.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"LeeSin","name":"Lee Sin","img":"LeeSin.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Leona","name":"Leona","img":"Leona.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Lillia","name":"Lillia","img":"Lillia.png","roles":["Jungle"],"tags":["Fighter","Mage"]},{"id":"Lissandra","name":"Lissandra","img":"Lissandra.png","roles":["Mid"],"tags":["Mage"]},{"id":"Lucian","name":"Lucian","img":"Lucian.png","roles":["ADC","Mid"],"tags":["Marksman","Assassin"]},{"id":"Lulu","name":"Lulu","img":"Lulu.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Lux","name":"Lux","img":"Lux.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Malphite","name":"Malphite","img":"Malphite.png","roles":["Top"],"tags":["Tank","Mage"]},{"id":"Malzahar","name":"Malzahar","img":"Malzahar.png","roles":["Mid"],"tags":["Mage"]},{"id":"Maokai","name":"Maokai","img":"Maokai.png","roles":["Suporte","Jungle","Top"],"tags":["Tank","Support"]},{"id":"MasterYi","name":"Master Yi","img":"MasterYi.png","roles":["Jungle"],"tags":["Assassin","Fighter"]},{"id":"Milio","name":"Milio","img":"Milio.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"MissFortune","name":"Miss Fortune","img":"MissFortune.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"MonkeyKing","name":"Wukong","img":"MonkeyKing.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Mordekaiser","name":"Mordekaiser","img":"Mordekaiser.png","roles":["Top"],"tags":["Fighter","Mage"]},{"id":"Morgana","name":"Morgana","img":"Morgana.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Naafiri","name":"Naafiri","img":"Naafiri.png","roles":["Mid"],"tags":["Assassin","Fighter"]},{"id":"Nami","name":"Nami","img":"Nami.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Nasus","name":"Nasus","img":"Nasus.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Nautilus","name":"Nautilus","img":"Nautilus.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Neeko","name":"Neeko","img":"Neeko.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Nidalee","name":"Nidalee","img":"Nidalee.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Nilah","name":"Nilah","img":"Nilah.png","roles":["ADC"],"tags":["Fighter","Assassin"]},{"id":"Nocturne","name":"Nocturne","img":"Nocturne.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Nunu","name":"Nunu & Willump","img":"Nunu.png","roles":["Jungle"],"tags":["Tank","Mage"]},{"id":"Olaf","name":"Olaf","img":"Olaf.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Orianna","name":"Orianna","img":"Orianna.png","roles":["Mid"],"tags":["Mage","Support"]},{"id":"Ornn","name":"Ornn","img":"Ornn.png","roles":["Top"],"tags":["Tank"]},{"id":"Pantheon","name":"Pantheon","img":"Pantheon.png","roles":["Mid","Top","Suporte"],"tags":["Fighter","Assassin"]},{"id":"Poppy","name":"Poppy","img":"Poppy.png","roles":["Top","Jungle","Suporte"],"tags":["Tank","Fighter"]},{"id":"Pyke","name":"Pyke","img":"Pyke.png","roles":["Suporte"],"tags":["Support","Assassin"]},{"id":"Qiyana","name":"Qiyana","img":"Qiyana.png","roles":["Mid"],"tags":["Assassin"]},{"id":"Quinn","name":"Quinn","img":"Quinn.png","roles":["Top"],"tags":["Marksman","Assassin"]},{"id":"Rakan","name":"Rakan","img":"Rakan.png","roles":["Suporte"],"tags":["Support"]},{"id":"Rammus","name":"Rammus","img":"Rammus.png","roles":["Jungle"],"tags":["Tank"]},{"id":"RekSai","name":"Rek'Sai","img":"RekSai.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Rell","name":"Rell","img":"Rell.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Renata","name":"Renata Glasc","img":"Renata.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Renekton","name":"Renekton","img":"Renekton.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Rengar","name":"Rengar","img":"Rengar.png","roles":["Jungle","Top"],"tags":["Assassin","Fighter"]},{"id":"Riven","name":"Riven","img":"Riven.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Rumble","name":"Rumble","img":"Rumble.png","roles":["Top","Mid"],"tags":["Fighter","Mage"]},{"id":"Ryze","name":"Ryze","img":"Ryze.png","roles":["Mid","Top"],"tags":["Mage"]},{"id":"Samira","name":"Samira","img":"Samira.png","roles":["ADC"],"tags":["Marksman","Assassin"]},{"id":"Sejuani","name":"Sejuani","img":"Sejuani.png","roles":["Jungle","Top"],"tags":["Tank"]},{"id":"Senna","name":"Senna","img":"Senna.png","roles":["Suporte","ADC"],"tags":["Support","Marksman"]},{"id":"Seraphine","name":"Seraphine","img":"Seraphine.png","roles":["Suporte","ADC","Mid"],"tags":["Support","Mage"]},{"id":"Sett","name":"Sett","img":"Sett.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Shaco","name":"Shaco","img":"Shaco.png","roles":["Jungle"],"tags":["Assassin"]},{"id":"Shen","name":"Shen","img":"Shen.png","roles":["Top","Suporte"],"tags":["Tank"]},{"id":"Shyvana","name":"Shyvana","img":"Shyvana.png","roles":["Jungle"],"tags":["Fighter","Mage"]},{"id":"Singed","name":"Singed","img":"Singed.png","roles":["Top"],"tags":["Tank","Mage"]},{"id":"Sion","name":"Sion","img":"Sion.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Sivir","name":"Sivir","img":"Sivir.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Skarner","name":"Skarner","img":"Skarner.png","roles":["Jungle","Top"],"tags":["Tank","Fighter"]},{"id":"Smolder","name":"Smolder","img":"Smolder.png","roles":["ADC","Mid"],"tags":["Marksman","Mage"]},{"id":"Sona","name":"Sona","img":"Sona.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Soraka","name":"Soraka","img":"Soraka.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Swain","name":"Swain","img":"Swain.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Sylas","name":"Sylas","img":"Sylas.png","roles":["Mid","Top"],"tags":["Mage","Assassin"]},{"id":"Syndra","name":"Syndra","img":"Syndra.png","roles":["Mid"],"tags":["Mage"]},{"id":"TahmKench","name":"Tahm Kench","img":"TahmKench.png","roles":["Top","Suporte"],"tags":["Tank","Support"]},{"id":"Taliyah","name":"Taliyah","img":"Taliyah.png","roles":["Jungle","Mid"],"tags":["Mage","Support"]},{"id":"Talon","name":"Talon","img":"Talon.png","roles":["Mid","Jungle"],"tags":["Assassin"]},{"id":"Taric","name":"Taric","img":"Taric.png","roles":["Suporte"],"tags":["Support","Tank"]},{"id":"Teemo","name":"Teemo","img":"Teemo.png","roles":["Top"],"tags":["Marksman","Mage"]},{"id":"Thresh","name":"Thresh","img":"Thresh.png","roles":["Suporte"],"tags":["Support","Tank"]},{"id":"Tristana","name":"Tristana","img":"Tristana.png","roles":["ADC","Mid"],"tags":["Marksman","Assassin"]},{"id":"Trundle","name":"Trundle","img":"Trundle.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Tryndamere","name":"Tryndamere","img":"Tryndamere.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"TwistedFate","name":"Twisted Fate","img":"TwistedFate.png","roles":["Mid"],"tags":["Mage","Marksman"]},{"id":"Twitch","name":"Twitch","img":"Twitch.png","roles":["ADC"],"tags":["Marksman","Assassin"]},{"id":"Udyr","name":"Udyr","img":"Udyr.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Urgot","name":"Urgot","img":"Urgot.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Varus","name":"Varus","img":"Varus.png","roles":["ADC","Mid"],"tags":["Marksman","Mage"]},{"id":"Vayne","name":"Vayne","img":"Vayne.png","roles":["ADC","Top"],"tags":["Marksman","Assassin"]},{"id":"Veigar","name":"Veigar","img":"Veigar.png","roles":["Mid"],"tags":["Mage"]},{"id":"Velkoz","name":"Vel'Koz","img":"Velkoz.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Vex","name":"Vex","img":"Vex.png","roles":["Mid"],"tags":["Mage"]},{"id":"Vi","name":"Vi","img":"Vi.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Viego","name":"Viego","img":"Viego.png","roles":["Jungle","Mid"],"tags":["Fighter","Assassin"]},{"id":"Viktor","name":"Viktor","img":"Viktor.png","roles":["Mid"],"tags":["Mage"]},{"id":"Vladimir","name":"Vladimir","img":"Vladimir.png","roles":["Mid","Top"],"tags":["Mage","Fighter"]},{"id":"Volibear","name":"Volibear","img":"Volibear.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Warwick","name":"Warwick","img":"Warwick.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Xayah","name":"Xayah","img":"Xayah.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Xerath","name":"Xerath","img":"Xerath.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"XinZhao","name":"Xin Zhao","img":"XinZhao.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Yasuo","name":"Yasuo","img":"Yasuo.png","roles":["Mid","Top"],"tags":["Fighter","Assassin"]},{"id":"Yone","name":"Yone","img":"Yone.png","roles":["Mid","Top"],"tags":["Fighter","Assassin"]},{"id":"Yorick","name":"Yorick","img":"Yorick.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Yuumi","name":"Yuumi","img":"Yuumi.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Zac","name":"Zac","img":"Zac.png","roles":["Jungle","Top"],"tags":["Tank","Fighter"]},{"id":"Zed","name":"Zed","img":"Zed.png","roles":["Mid"],"tags":["Assassin"]},{"id":"Zeri","name":"Zeri","img":"Zeri.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Ziggs","name":"Ziggs","img":"Ziggs.png","roles":["ADC","Mid"],"tags":["Mage"]},{"id":"Zilean","name":"Zilean","img":"Zilean.png","roles":["Suporte","Mid"],"tags":["Support","Mage"]},{"id":"Zoe","name":"Zoe","img":"Zoe.png","roles":["Mid"],"tags":["Mage"]},{"id":"Zyra","name":"Zyra","img":"Zyra.png","roles":["Suporte","Jungle"],"tags":["Mage","Support"]}];</script>
+
+  <!-- ==========================================================
+       GAME SCRIPTS & LOGIC
+       ========================================================== -->
+  <script>
+    function getChampImgUrl(champ) {
+      if (!champ) return "";
+      const imgFile = champ.img || (champ.id + ".png");
+      return "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/" + imgFile;
+    }
+
+    /* Fallback avatar SVG gerado em tempo real com iniciais */
+    function getFallbackAvatar(name) {
+      const initials = (name || "LoL").substring(0, 2).toUpperCase();
+      return "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2264%22%20height%3D%2264%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%2310192b%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2228%22%20stroke%3D%22%23c8aa6e%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2258%25%22%20fill%3D%22%2300d2ff%22%20font-size%3D%2218%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%3E" + initials + "%3C%2Ftext%3E%3C%2Fsvg%3E";
+    }
+
+    /* ========================================================
+       2. ESTRUTURA DE LIGAS (TIER 4 AO CBLOL)
+       ======================================================== */
+    const LEAGUES_DATA = {
+      4: {
+        id: 4,
+        name: "Tier 4 - Liga Amadora (Várzea)",
+        tierLabel: "Tier 4 (Amador)",
+        teams: [
+          { name: "Academia dos Cria", tag: "CRIA", wins: 0, losses: 0, power: 50 },
+          { name: "Ilha da Macacada", tag: "ILHA", wins: 0, losses: 0, power: 48 },
+          { name: "Fila dos Sonhos", tag: "FDS", wins: 0, losses: 0, power: 52 },
+          { name: "Bonde do Urgot", tag: "BONDE", wins: 0, losses: 0, power: 47 },
+          { name: "Só os Mono", tag: "MONO", wins: 0, losses: 0, power: 51 },
+          { name: "Rejeitados da SoloQ", tag: "REJ", wins: 0, losses: 0, power: 49 }
+        ],
+        promotionTarget: 3,
+        winTarget: 6 // vitórias para subir
+      },
+      3: {
+        id: 3,
+        name: "Tier 3 - Torneio de Acesso Semiprofissional",
+        tierLabel: "Tier 3 (Acesso)",
+        teams: [
+          { name: "Santos eSports", tag: "SAN", wins: 0, losses: 0, power: 60 },
+          { name: "Rensga Academy", tag: "RNS", wins: 0, losses: 0, power: 58 },
+          { name: "Miners Tier 3", tag: "MNR", wins: 0, losses: 0, power: 62 },
+          { name: "Falkol E-Sports", tag: "FLK", wins: 0, losses: 0, power: 59 },
+          { name: "INTZ Academy", tag: "ITZ", wins: 0, losses: 0, power: 63 },
+          { name: "Flamengo Medley", tag: "FLA", wins: 0, losses: 0, power: 61 }
+        ],
+        promotionTarget: 2,
+        winTarget: 8
+      },
+      2: {
+        id: 2,
+        name: "Tier 2 - Circuito Desafiante (CBLOL Academy)",
+        tierLabel: "Tier 2 (Desafiante)",
+        teams: [
+          { name: "LOUD Academy", tag: "LOUD.A", wins: 0, losses: 0, power: 72 },
+          { name: "paiN Gaming Academy", tag: "PNG.A", wins: 0, losses: 0, power: 74 },
+          { name: "RED Canids Academy", tag: "RED.A", wins: 0, losses: 0, power: 71 },
+          { name: "Vivo Keyd Stars Academy", tag: "VKS.A", wins: 0, losses: 0, power: 70 },
+          { name: "FURIA Academy", tag: "FUR.A", wins: 0, losses: 0, power: 69 },
+          { name: "KaBuM! Academy", tag: "KBM.A", wins: 0, losses: 0, power: 73 },
+          { name: "Fluxo Academy", tag: "FX.A", wins: 0, losses: 0, power: 68 },
+          { name: "Los Grandes Academy", tag: "LOS.A", wins: 0, losses: 0, power: 69 }
+        ],
+        promotionTarget: 1,
+        winTarget: 10
+      },
+      1: {
+        id: 1,
+        name: "Tier 1 - CBLOL (Primeira Divisão Oficial)",
+        tierLabel: "Tier 1 (CBLOL)",
+        teams: [
+          { name: "LOUD", tag: "LOUD", wins: 0, losses: 0, power: 88 },
+          { name: "paiN Gaming", tag: "PNG", wins: 0, losses: 0, power: 89 },
+          { name: "RED Canids Kalunga", tag: "RED", wins: 0, losses: 0, power: 84 },
+          { name: "Vivo Keyd Stars", tag: "VKS", wins: 0, losses: 0, power: 85 },
+          { name: "FURIA", tag: "FUR", wins: 0, losses: 0, power: 83 },
+          { name: "KaBuM! Esports", tag: "KBM", wins: 0, losses: 0, power: 82 },
+          { name: "Fluxo", tag: "FX", wins: 0, losses: 0, power: 80 },
+          { name: "INTZ", tag: "ITZ", wins: 0, losses: 0, power: 79 },
+          { name: "Los Grandes", tag: "LOS", wins: 0, losses: 0, power: 81 }
+        ],
+        promotionTarget: 0, // Worlds
+        winTarget: 14
+      }
+    };
+
+    /* ========================================================
+       3. TOP PLAYERS DA SOLOQUEUE (LEADERBOARD)
+       ======================================================== */
+    const SERVER_TOP_PLAYERS = [
+      { rank: 1, name: "Hide on bush (Faker)", tier: "Desafiante", lp: 1690, winrate: "67%", main: "Ahri" },
+      { rank: 2, name: "Chovy", tier: "Desafiante", lp: 1625, winrate: "65%", main: "Yone" },
+      { rank: 3, name: "Tinowns", tier: "Desafiante", lp: 1450, winrate: "63%", main: "Azir" },
+      { rank: 4, name: "Robo", tier: "Desafiante", lp: 1390, winrate: "62%", main: "Renekton" },
+      { rank: 5, name: "Cariok", tier: "Desafiante", lp: 1340, winrate: "60%", main: "LeeSin" },
+      { rank: 6, name: "BrTT (O Pai)", tier: "Desafiante", lp: 1280, winrate: "59%", main: "Draven" },
+      { rank: 7, name: "Baiano", tier: "Desafiante", lp: 1210, winrate: "58%", main: "Xerath" },
+      { rank: 8, name: "Aegis", tier: "Desafiante", lp: 1150, winrate: "61%", main: "Viego" },
+      { rank: 9, name: "Titan", tier: "Desafiante", lp: 1120, winrate: "59%", main: "Lucian" },
+      { rank: 10, name: "Ayu", tier: "Desafiante", lp: 1090, winrate: "58%", main: "KaiSa" },
+      { rank: 11, name: "Croc", tier: "Desafiante", lp: 1050, winrate: "57%", main: "JarvanIV" },
+      { rank: 12, name: "Route", tier: "Desafiante", lp: 1020, winrate: "58%", main: "Ezreal" },
+      { rank: 13, name: "Ceos", tier: "Desafiante", lp: 990, winrate: "56%", main: "Nautilus" },
+      { rank: 14, name: "Grevthar", tier: "Desafiante", lp: 960, winrate: "56%", main: "Galio" },
+      { rank: 15, name: "Tutsz", tier: "Desafiante", lp: 930, winrate: "55%", main: "Syndra" }
+    ];
+
+    /* ========================================================
+       4. SOUND ENGINE (WEB AUDIO)
+       ======================================================== */
+    class SoundEngine {
+      constructor() { this.ctx = null; this.enabled = true; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      }
+      toggleSound() {
+        this.enabled = !this.enabled;
+        const btn = document.getElementById("btnSoundToggle");
+        if (btn) btn.innerText = this.enabled ? "🔊 Som: ON" : "🔇 Som: OFF";
+      }
+      playClick() {
+        if (!this.enabled) return; this.init(); if (!this.ctx) return;
+        const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+        osc.type = "sine"; osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.08);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.08);
+      }
+      playBan() {
+        if (!this.enabled) return; this.init(); if (!this.ctx) return;
+        const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+        osc.type = "sawtooth"; osc.frequency.setValueAtTime(260, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.2);
+        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.2);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.2);
+      }
+      playLockIn() {
+        if (!this.enabled) return; this.init(); if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [440, 660, 880].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+          osc.type = "triangle"; osc.frequency.setValueAtTime(freq, now + i * 0.08);
+          gain.gain.setValueAtTime(0.2, now + i * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.3);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(now + i * 0.08); osc.stop(now + i * 0.08 + 0.3);
+        });
+      }
+      playVictory() {
+        if (!this.enabled) return; this.init(); if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [523, 659, 783, 1046].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+          osc.type = "sine"; osc.frequency.setValueAtTime(freq, now + i * 0.1);
+          gain.gain.setValueAtTime(0.2, now + i * 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.4);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(now + i * 0.1); osc.stop(now + i * 0.1 + 0.4);
+        });
+      }
+      playFailure() {
+        if (!this.enabled) return; this.init(); if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [320, 220, 150].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+          osc.type = "sawtooth"; osc.frequency.setValueAtTime(freq, now + i * 0.09);
+          gain.gain.setValueAtTime(0.18, now + i * 0.09);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.2);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(now + i * 0.09); osc.stop(now + i * 0.09 + 0.2);
+        });
+      }
+    }
+    const gameAudio = new SoundEngine();
+
+    /* ========================================================
+       5. CAREER STATE & STORAGE
+       ======================================================== */
+    const STORAGE_KEY = "lol_career_save_v2";
+
+    const DEFAULT_CAREER = {
+      name: "Gabriel Santos",
+      nick: "Revenge",
+      role: "Mid",
+      style: "Agressivo",
+      region: "CBLOL (Brasil)",
+      currentTierId: 4, // começa no Tier 4 (Amador)
+      stats: { mechanics: 58, macro: 48, comm: 45, consistency: 50, confidence: 70 },
+      energy: 100,
+      gold: 500,
+      fame: 100,
+      elo: { tier: "Ouro", division: "IV", lp: 50, soloRank: 24810 },
+      team: { name: "Academia dos Cria", tierId: 4, week: 1, wins: 0, losses: 0 },
+      championPool: [], // Seus Mains
+      socialFeed: [
+        { user: "LoL Esports BR", handle: "@lolesportsbr", text: "Começa a temporada de acesso da Liga Amadora! Novos talentos da SoloQueue estão sob os olhares atentos dos olheiros do CBLOL." },
+        { user: "Baiano", handle: "@baianolol", text: "Quem é esse mono boneco que tá amassando no SoloQueue? Se vier pro competitivo vai tomar caldo!" },
+        { user: "CBLOL Comms", handle: "@cblol", text: "Scouts de LOUD e paiN Gaming estão monitorando os destaques da rodada amadora." }
+      ],
+      offers: [
+        { id: 1, team: "Santos eSports", tierId: 3, tierName: "Tier 3", salary: 400, reqFame: 150 }
+      ]
+    };
+
+    let careerState = null;
+
+    const gameRouter = {
+      showScreen(screenId) {
+        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+        const target = document.getElementById(screenId);
+        if (target) {
+          target.classList.add("active");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      },
+      goTitle() {
+        gameAudio.playClick();
+        this.updateTitleScreen();
+        this.showScreen("screenTitle");
+      },
+      newCareer() {
+        gameAudio.playClick();
+        creationUI.init();
+        this.showScreen("screenCreation");
+      },
+      continueCareer() {
+        gameAudio.playClick();
+        career.updateDashboardUI();
+        this.showScreen("screenDashboard");
+      },
+      updateTitleScreen() {
+        const hasSave = career.load();
+        const continueCard = document.getElementById("btnContinueCareerCard");
+        if (hasSave && careerState) {
+          continueCard.style.display = "flex";
+          document.getElementById("titleContinueDesc").innerText = 
+            careerState.nick + " • " + careerState.team.name + " (" + LEAGUES_DATA[careerState.currentTierId].tierLabel + ") • " + careerState.team.wins + "V - " + careerState.team.losses + "D";
+        } else {
+          continueCard.style.display = "none";
+        }
+      },
+      showLeagueLadderInfo() {
+        if (!career.load()) {
+          careerState = JSON.parse(JSON.stringify(DEFAULT_CAREER));
+        }
+        career.updateDashboardUI();
+        this.showScreen("screenDashboard");
+        hubTabs.switchTab('tabLeagueStandings');
+      },
+      openSoloQueueRankView() {
+        if (!career.load()) {
+          careerState = JSON.parse(JSON.stringify(DEFAULT_CAREER));
+        }
+        career.updateDashboardUI();
+        this.showScreen("screenDashboard");
+        hubTabs.switchTab('tabSoloQueueRank');
+      }
+    };
+
+    /* ========================================================
+       6. CREATION SCREEN UI
+       ======================================================== */
+    const creationUI = {
+      selectedMains: [],
+
+      init() {
+        this.selectedMains = [];
+        this.onRoleChange();
+        this.updateStatPreview();
+        this.updateSelectedPreview();
+      },
+
+      onRoleChange() {
+        const role = document.getElementById("selectRole").value;
+        this.renderChampGrid(role);
+      },
+
+      filterChamps(search) {
+        const role = document.getElementById("selectRole").value;
+        this.renderChampGrid(role, search);
+      },
+
+      renderChampGrid(roleFilter, search = "") {
+        const grid = document.getElementById("creationChampGrid");
+        grid.innerHTML = "";
+
+        const db = window.LOL_CHAMPIONS_DB || [];
+        const filtered = db.filter(c => {
+          const matchRole = roleFilter === "All" || (c.roles && c.roles.includes(roleFilter));
+          const matchSearch = c.name.toLowerCase().includes(search.toLowerCase());
+          return matchRole && matchSearch;
+        });
+
+        filtered.forEach(champ => {
+          const isSelected = this.selectedMains.some(m => m.id === champ.id);
+          const card = document.createElement("div");
+          card.className = "champ-card-selectable " + (isSelected ? "selected" : "");
+          card.onclick = () => this.toggleSelect(champ);
+
+          const imgUrl = getChampImgUrl(champ);
+          const fallback = getFallbackAvatar(champ.name);
+
+          card.innerHTML = `
+            <div class="champ-img-wrap">
+              <img src="${imgUrl}" alt="${champ.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='${fallback}';">
+            </div>
+            <div class="champ-name-lbl" title="${champ.name}">${champ.name}</div>
+          `;
+          grid.appendChild(card);
+        });
+      },
+
+      toggleSelect(champ) {
+        gameAudio.playClick();
+        const idx = this.selectedMains.findIndex(m => m.id === champ.id);
+        if (idx > -1) {
+          this.selectedMains.splice(idx, 1);
+        } else {
+          if (this.selectedMains.length >= 3) {
+            showToast("Você já escolheu seus 3 mains! Desmarque um para trocar.");
+            return;
+          }
+          this.selectedMains.push(champ);
+        }
+        document.getElementById("creationChampCount").innerText = this.selectedMains.length;
+        this.updateSelectedPreview();
+        const role = document.getElementById("selectRole").value;
+        const search = document.getElementById("creationChampSearch").value;
+        this.renderChampGrid(role, search);
+      },
+
+      updateSelectedPreview() {
+        const container = document.getElementById("creationSelectedPoolPreview");
+        container.innerHTML = "<span style='font-size:0.85rem; color:var(--text-muted);'>Mains Selecionados:</span>";
+        if (this.selectedMains.length === 0) {
+          container.innerHTML += "<span style='font-size:0.82rem; color:#667;'>(Nenhum selecionado ainda)</span>";
+          return;
+        }
+        this.selectedMains.forEach((c, idx) => {
+          const slot = document.createElement("div");
+          slot.style.display = "inline-flex";
+          slot.style.alignItems = "center";
+          slot.style.gap = "6px";
+          slot.style.background = "#141f33";
+          slot.style.padding = "4px 10px";
+          slot.style.border = "1px solid var(--border-hex)";
+          slot.style.borderRadius = "20px";
+          slot.style.fontSize = "0.85rem";
+          slot.innerHTML = `
+            <img src="${getChampImgUrl(c)}" style="width:22px; height:22px; border-radius:50%;" onerror="this.onerror=null; this.src='${getFallbackAvatar(c.name)}';">
+            <span>${c.name} (Main #${idx + 1})</span>
+          `;
+          container.appendChild(slot);
+        });
+      },
+
+      updateStatPreview() {
+        const style = document.getElementById("selectStyle").value;
+        let stats = { mechanics: 50, macro: 50, comm: 50, consistency: 50 };
+        if (style === "Agressivo") stats = { mechanics: 60, macro: 46, comm: 44, consistency: 50 };
+        if (style === "Tático") stats = { mechanics: 46, macro: 60, comm: 55, consistency: 48 };
+        if (style === "Seguro") stats = { mechanics: 48, macro: 52, comm: 44, consistency: 60 };
+
+        document.getElementById("creationStatPreview").innerHTML = `
+          <div style="text-align:center;"><div style="font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;">${stats.mechanics}</div><div style="font-size:0.75rem; color:var(--text-muted);">Mecânica</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;">${stats.macro}</div><div style="font-size:0.75rem; color:var(--text-muted);">Macro/Visão</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;">${stats.comm}</div><div style="font-size:0.75rem; color:var(--text-muted);">Comunicação</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;">${stats.consistency}</div><div style="font-size:0.75rem; color:var(--text-muted);">Consistência</div></div>
+        `;
+      },
+
+      startGame() {
+        if (this.selectedMains.length < 3) {
+          showToast("⚠️ Escolha 3 campeões mains para definir sua pool inicial!");
+          return;
+        }
+
+        const name = document.getElementById("inputPlayerName").value.trim() || "Gabriel Santos";
+        const nick = document.getElementById("inputNickName").value.trim() || "Revenge";
+        const role = document.getElementById("selectRole").value;
+        const style = document.getElementById("selectStyle").value;
+        const region = document.getElementById("selectRegion").value;
+
+        careerState = JSON.parse(JSON.stringify(DEFAULT_CAREER));
+        careerState.name = name;
+        careerState.nick = nick;
+        careerState.role = role;
+        careerState.style = style;
+        careerState.region = region;
+        careerState.currentTierId = 4; // Começa no Tier 4 (Amador)
+        careerState.team.name = "Academia dos Cria";
+        careerState.team.tierId = 4;
+
+        if (style === "Agressivo") careerState.stats = { mechanics: 60, macro: 46, comm: 44, consistency: 50, confidence: 75 };
+        if (style === "Tático") careerState.stats = { mechanics: 46, macro: 60, comm: 55, consistency: 48, confidence: 70 };
+        if (style === "Seguro") careerState.stats = { mechanics: 48, macro: 52, comm: 44, consistency: 60, confidence: 70 };
+
+        careerState.championPool = this.selectedMains.map((c, i) => ({
+          id: c.id,
+          name: c.name,
+          img: c.img,
+          masteryLevel: i === 0 ? 4 : 3,
+          masteryPoints: i === 0 ? 14500 : 8000,
+          games: 0,
+          wins: 0
+        }));
+
+        career.save();
+        gameAudio.playVictory();
+        career.updateDashboardUI();
+        gameRouter.showScreen("screenDashboard");
+        showToast("🎮 Carreira iniciada no Tier 4! Bem-vindo, " + nick + "!");
+      }
+    };
+
+    /* ========================================================
+       7. CAREER HUB & TABS
+       ======================================================== */
+    const hubTabs = {
+      switchTab(tabId, btnEl) {
+        gameAudio.playClick();
+        document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.remove("active"));
+        const target = document.getElementById(tabId);
+        if (target) target.classList.add("active");
+        if (btnEl) btnEl.classList.add("active");
+
+        if (tabId === "tabLeagueStandings") career.renderStandingsTable();
+        if (tabId === "tabSoloQueueRank") career.renderSoloQueueTable();
+        if (tabId === "tabTransfers") career.renderTransfersTab();
+        if (tabId === "tabCommunity") career.renderSocialFeedTab();
+      }
+    };
+
+    const career = {
+      load() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            careerState = JSON.parse(raw);
+            return true;
+          }
+        } catch (e) { console.error("Erro ao carregar save", e); }
+        return false;
+      },
+
+      save() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(careerState));
+        } catch (e) { console.error("Erro ao salvar", e); }
+      },
+
+      getOverall() {
+        const s = careerState.stats;
+        return Math.round((s.mechanics + s.macro + s.comm + s.consistency) / 4);
+      },
+
+      getCurrentOpponent() {
+        const tier = LEAGUES_DATA[careerState.currentTierId];
+        const otherTeams = tier.teams.filter(t => t.name !== careerState.team.name);
+        return otherTeams[(careerState.team.week - 1) % otherTeams.length] || otherTeams[0];
+      },
+
+      updateDashboardUI() {
+        if (!careerState) return;
+
+        // Header info
+        document.getElementById("hubNickName").innerText = careerState.nick;
+        document.getElementById("hubRealName").innerText = careerState.name + " • " + careerState.role + " (" + careerState.style + ")";
+        document.getElementById("hubTeamName").innerText = careerState.team.name;
+        document.getElementById("hubTierBadge").innerText = LEAGUES_DATA[careerState.currentTierId].tierLabel;
+        document.getElementById("hubEloBadge").innerText = careerState.elo.tier + " " + careerState.elo.division + " • " + careerState.elo.lp + " PDL";
+        document.getElementById("hubEnergyText").innerText = careerState.energy + "%";
+        document.getElementById("hubFameText").innerText = careerState.fame + " Fãs";
+
+        // Avatar
+        const mainChamp = careerState.championPool[0] || { id: "Ahri", img: "Ahri.png", name: "Ahri" };
+        const avatarImg = document.getElementById("hubPlayerAvatar");
+        avatarImg.src = getChampImgUrl(mainChamp);
+        avatarImg.onerror = function() { this.src = getFallbackAvatar(mainChamp.name); };
+
+        // Attributes
+        const s = careerState.stats;
+        document.getElementById("valStatMech").innerText = s.mechanics;
+        document.getElementById("barStatMech").style.width = Math.min(100, s.mechanics) + "%";
+        document.getElementById("valStatMacro").innerText = s.macro;
+        document.getElementById("barStatMacro").style.width = Math.min(100, s.macro) + "%";
+        document.getElementById("valStatComm").innerText = s.comm;
+        document.getElementById("barStatComm").style.width = Math.min(100, s.comm) + "%";
+        document.getElementById("valStatCons").innerText = s.consistency;
+        document.getElementById("barStatCons").style.width = Math.min(100, s.consistency) + "%";
+        document.getElementById("valStatConf").innerText = s.confidence + "%";
+        document.getElementById("barStatConf").style.width = Math.min(100, s.confidence) + "%";
+        document.getElementById("hubOverallRating").innerText = "OVR: " + this.getOverall();
+
+        // Mains pool list in hub
+        const poolList = document.getElementById("hubPoolList");
+        poolList.innerHTML = "";
+        careerState.championPool.forEach(c => {
+          const item = document.createElement("div");
+          item.style.display = "flex";
+          item.style.alignItems = "center";
+          item.style.justifyContent = "space-between";
+          item.style.background = "#0c1322";
+          item.style.border = "1px solid #1c2b42";
+          item.style.borderRadius = "6px";
+          item.style.padding = "6px 10px";
+          item.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px;">
+              <img src="${getChampImgUrl(c)}" style="width:32px; height:32px; border-radius:50%;" onerror="this.onerror=null; this.src='${getFallbackAvatar(c.name)}';">
+              <div>
+                <div style="font-weight:700; font-size:0.85rem; color:#fff;">${c.name}</div>
+                <div style="font-size:0.7rem; color:var(--hextech-gold);">Maestria ${c.masteryLevel} • ${c.masteryPoints.toLocaleString()} MP</div>
+              </div>
+            </div>
+            <div style="font-size:0.75rem; color:var(--hextech-blue); font-weight:700;">${c.games}J (${c.wins}V)</div>
+          `;
+          poolList.appendChild(item);
+        });
+
+        // Match card
+        const opp = this.getCurrentOpponent();
+        document.getElementById("hubMatchLeagueHeader").innerText = LEAGUES_DATA[careerState.currentTierId].tierLabel + " • Rodada " + careerState.team.week;
+        document.getElementById("hubSeasonRecord").innerText = careerState.team.wins + "V - " + careerState.team.losses + "D";
+        document.getElementById("hubMyTeamNameMatch").innerText = careerState.team.name;
+        document.getElementById("hubEnemyTeamNameMatch").innerText = opp.name;
+        document.getElementById("hubEnemyTeamTagMatch").innerText = "Tag: " + opp.tag + " • Força: " + opp.power;
+        document.getElementById("hubWeekNumber").innerText = careerState.team.week;
+
+        // Mini standings & SoloQ
+        this.renderMiniStandings();
+        document.getElementById("hubSoloQPosition").innerText = "#" + careerState.elo.soloRank.toLocaleString('pt-BR');
+        document.getElementById("hubSoloQRankDetailed").innerText = careerState.elo.tier + " " + careerState.elo.division + " (" + careerState.elo.lp + " PDL)";
+      },
+
+      trainStat(stat) {
+        if (careerState.energy < 20) {
+          showToast("⚡ Energia esgotada! Descanse para repor suas energias.");
+          gameAudio.playFailure();
+          return;
+        }
+        careerState.energy -= 20;
+        const gain = Math.floor(Math.random() * 2) + 2;
+        careerState.stats[stat] = Math.min(99, careerState.stats[stat] + gain);
+        careerState.stats.confidence = Math.min(100, careerState.stats.confidence + 2);
+        gameAudio.playVictory();
+        this.save();
+        this.updateDashboardUI();
+        showToast("💪 Treino finalizado! +" + gain + " no atributo selecionado.");
+      },
+
+      playSoloQueue() {
+        if (careerState.energy < 25) {
+          showToast("⚡ Energia insuficiente para jogar ranqueada. Descanse primeiro.");
+          return;
+        }
+        careerState.energy -= 25;
+        const ovr = this.getOverall();
+        const winChance = 0.45 + (ovr / 200) + (careerState.stats.confidence / 500);
+        const won = Math.random() < winChance;
+
+        const mainChamp = careerState.championPool[Math.floor(Math.random() * careerState.championPool.length)];
+        mainChamp.games++;
+
+        if (won) {
+          mainChamp.wins++;
+          mainChamp.masteryPoints += 850;
+          careerState.elo.lp += 22;
+          careerState.fame += 8;
+          careerState.stats.confidence = Math.min(100, careerState.stats.confidence + 4);
+          careerState.elo.soloRank = Math.max(1, Math.round(careerState.elo.soloRank * 0.94)); // Sobe posições
+          gameAudio.playVictory();
+
+          if (careerState.elo.lp >= 100) {
+            this.promoteElo();
+            showToast("🔥 Vitória no SoloQueue! Você atingiu 100 PDL e subiu para " + careerState.elo.tier + " " + careerState.elo.division + "!");
+          } else {
+            showToast("✅ Vitória na SoloQueue jogando de " + mainChamp.name + "! +22 PDL e subiu no ranking do servidor.");
+          }
+        } else {
+          mainChamp.masteryPoints += 150;
+          careerState.elo.lp = Math.max(0, careerState.elo.lp - 16);
+          careerState.stats.confidence = Math.max(20, careerState.stats.confidence - 5);
+          careerState.elo.soloRank = Math.min(50000, Math.round(careerState.elo.soloRank * 1.03));
+          gameAudio.playFailure();
+          showToast("❌ Derrota no SoloQueue jogando de " + mainChamp.name + ". -16 PDL.");
+        }
+
+        this.checkOffers();
+        this.save();
+        this.updateDashboardUI();
+      },
+
+      promoteElo() {
+        const tiers = ["Ferro", "Bronze", "Prata", "Ouro", "Platina", "Esmeralda", "Diamante", "Mestre", "Grão-Mestre", "Desafiante"];
+        const divs = ["IV", "III", "II", "I"];
+        let tIdx = tiers.indexOf(careerState.elo.tier);
+        let dIdx = divs.indexOf(careerState.elo.division);
+
+        if (dIdx < 3) {
+          careerState.elo.division = divs[dIdx + 1];
+          careerState.elo.lp = 15;
+        } else if (tIdx < tiers.length - 1) {
+          careerState.elo.tier = tiers[tIdx + 1];
+          careerState.elo.division = "IV";
+          careerState.elo.lp = 15;
+          careerState.fame += 50;
+        }
+      },
+
+      restDay() {
+        gameAudio.playClick();
+        careerState.energy = Math.min(100, careerState.energy + 50);
+        careerState.stats.confidence = Math.min(100, careerState.stats.confidence + 10);
+        this.save();
+        this.updateDashboardUI();
+        showToast("🛌 Dia de descanso e academia! Energia recarregada para a próxima rodada.");
+      },
+
+      renderMiniStandings() {
+        const container = document.getElementById("hubMiniStandingsList");
+        container.innerHTML = "";
+        const tier = LEAGUES_DATA[careerState.currentTierId];
+        document.getElementById("hubMiniTierBadge").innerText = tier.tierLabel;
+
+        tier.teams.slice(0, 4).forEach((t, i) => {
+          const row = document.createElement("div");
+          const isMyTeam = t.name === careerState.team.name;
+          row.style.display = "flex";
+          row.style.justifyContent = "space-between";
+          row.style.fontSize = "0.82rem";
+          row.style.padding = "4px 6px";
+          row.style.borderRadius = "4px";
+          if (isMyTeam) {
+            row.style.background = "rgba(0, 210, 255, 0.15)";
+            row.style.fontWeight = "bold";
+            row.style.color = "var(--hextech-blue)";
+          }
+          row.innerHTML = `
+            <span>${i + 1}º ${t.name}</span>
+            <span>${isMyTeam ? careerState.team.wins : t.wins}V - ${isMyTeam ? careerState.team.losses : t.losses}D</span>
+          `;
+          container.appendChild(row);
+        });
+      },
+
+      renderStandingsTable() {
+        const tier = LEAGUES_DATA[careerState.currentTierId];
+        document.getElementById("tabStandingsLeagueTitle").innerText = "TABELA DE CLASSIFICAÇÃO • " + tier.name.toUpperCase();
+        document.getElementById("tabStandingsPromotionBadge").innerText = "Top 2 sobem para o Tier " + (tier.promotionTarget || 1) + "!";
+
+        const tbody = document.getElementById("tabLeagueStandingsTableBody");
+        tbody.innerHTML = "";
+
+        const sorted = [...tier.teams].map(t => {
+          if (t.name === careerState.team.name) {
+            return { ...t, wins: careerState.team.wins, losses: careerState.team.losses };
+          }
+          return t;
+        }).sort((a, b) => b.wins - a.wins);
+
+        sorted.forEach((team, idx) => {
+          const tr = document.createElement("tr");
+          const isMyTeam = team.name === careerState.team.name;
+          if (isMyTeam) tr.className = "highlight-row";
+          const games = team.wins + team.losses;
+          const wr = games > 0 ? Math.round((team.wins / games) * 100) + "%" : "0%";
+          const situation = idx < 2 ? "<span class='badge badge-green'>Zona de Acesso ⬆️</span>" : "<span style='color:var(--text-muted);'>Fase de Grupos</span>";
+
+          tr.innerHTML = `
+            <td><strong>${idx + 1}º</strong></td>
+            <td><strong>${team.name}</strong> ${isMyTeam ? "<span class='badge badge-gold'>Seu Time</span>" : ""}</td>
+            <td>${games}</td>
+            <td style="color:var(--success-green); font-weight:bold;">${team.wins}</td>
+            <td style="color:var(--danger-red);">${team.losses}</td>
+            <td>${wr}</td>
+            <td>${situation}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      },
+
+      renderSoloQueueTable() {
+        const tbody = document.getElementById("tabSoloQueueTableBody");
+        tbody.innerHTML = "";
+
+        // Mostra Top 10 + jogador
+        SERVER_TOP_PLAYERS.forEach(p => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong style="color:var(--hextech-gold);">#${p.rank}</strong></td>
+            <td><strong>${p.name}</strong></td>
+            <td><span class="badge badge-gold">${p.tier}</span></td>
+            <td>${p.lp} PDL</td>
+            <td>${p.winrate}</td>
+            <td>${p.main}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        // Adiciona linha do jogador
+        const myTr = document.createElement("tr");
+        myTr.className = "highlight-row";
+        const mainChamp = careerState.championPool[0] || { name: "Ahri" };
+        myTr.innerHTML = `
+          <td><strong style="color:var(--hextech-blue);">#${careerState.elo.soloRank}</strong></td>
+          <td><strong>${careerState.nick} (Você)</strong></td>
+          <td><span class="badge badge-blue">${careerState.elo.tier} ${careerState.elo.division}</span></td>
+          <td>${careerState.elo.lp} PDL</td>
+          <td>62%</td>
+          <td>${mainChamp.name}</td>
+        `;
+        tbody.appendChild(myTr);
+      },
+
+      renderTransfersTab() {
+        const container = document.getElementById("tabTransfersList");
+        container.innerHTML = "";
+        document.getElementById("tabTransferCountBadge").innerText = careerState.offers.length + " Propostas";
+
+        if (careerState.offers.length === 0) {
+          container.innerHTML = "<div style='text-align:center; padding:20px; color:var(--text-muted);'>Nenhuma proposta ativa no momento. Suba de elo e vença partidas para atrair times maiores!</div>";
+          return;
+        }
+
+        careerState.offers.forEach(o => {
+          const card = document.createElement("div");
+          card.style.background = "#101828";
+          card.style.border = "1px solid var(--border-hex)";
+          card.style.borderRadius = "8px";
+          card.style.padding = "16px";
+          card.style.display = "flex";
+          card.style.justifyContent = "space-between";
+          card.style.alignItems = "center";
+          card.style.flexWrap = "wrap";
+          card.style.gap = "10px";
+
+          card.innerHTML = `
+            <div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <h4 style="font-family:var(--font-tech); font-size:1.2rem; color:#fff;">${o.team}</h4>
+                <span class="badge badge-gold">${o.tierName}</span>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">
+                💰 Salário: R$ ${o.salary}/semana • Exigência de Fama: ${o.reqFame} Fãs
+              </div>
+            </div>
+            <button class="btn btn-gold btn-sm" onclick="career.acceptOffer(${o.id})">Assinar Contrato ➔</button>
+          `;
+          container.appendChild(card);
+        });
+      },
+
+      checkOffers() {
+        const fame = careerState.fame;
+        if (fame >= 250 && !careerState.offers.some(o => o.team === "LOUD Academy")) {
+          careerState.offers.push({ id: 2, team: "LOUD Academy", tierId: 2, tierName: "Tier 2 (Circuito Desafiante)", salary: 900, reqFame: 250 });
+        }
+        if (fame >= 600 && !careerState.offers.some(o => o.team === "paiN Gaming")) {
+          careerState.offers.push({ id: 3, team: "paiN Gaming", tierId: 1, tierName: "Tier 1 (CBLOL)", salary: 3500, reqFame: 550 });
+        }
+      },
+
+      acceptOffer(id) {
+        const off = careerState.offers.find(o => o.id === id);
+        if (!off) return;
+        if (careerState.fame < off.reqFame) {
+          showToast("⚠️ Você precisa de pelo menos " + off.reqFame + " de Fama para assinar com a " + off.team + "!");
+          return;
+        }
+
+        careerState.team.name = off.team;
+        careerState.team.tierId = off.tierId;
+        careerState.currentTierId = off.tierId;
+        careerState.team.wins = 0;
+        careerState.team.losses = 0;
+        careerState.team.week = 1;
+        careerState.offers = careerState.offers.filter(o => o.id !== id);
+
+        gameAudio.playVictory();
+        this.save();
+        this.updateDashboardUI();
+        showToast("🎉 OFICIAL! Você assinou com a " + off.team + " no " + off.tierName + "!");
+      },
+
+      renderSocialFeedTab() {
+        const container = document.getElementById("tabSocialFeedContainer");
+        container.innerHTML = "";
+        careerState.socialFeed.forEach(t => {
+          const div = document.createElement("div");
+          div.style.background = "#0c1322";
+          div.style.border = "1px solid #1c2b42";
+          div.style.borderRadius = "6px";
+          div.style.padding = "12px";
+          div.innerHTML = `
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <strong style="color:var(--hextech-gold);">${t.user}</strong>
+              <span style="font-size:0.75rem; color:var(--text-muted);">${t.handle}</span>
+            </div>
+            <div style="font-size:0.85rem; color:#e2eaf5;">${t.text}</div>
+          `;
+          container.appendChild(div);
+        });
+      }
+    };
+
+    /* ========================================================
+       8. SISTEMA DE PICK & BAN COMPLETO
+       ======================================================== */
+    const pickBanEngine = {
+      allyBan: null,
+      enemyBans: [],
+      mySelectedChamp: null,
+      opponentChamp: null,
+      bannedChampsIds: [],
+      activePickTab: "mains",
+
+      startDraft() {
+        if (careerState.energy < 25) {
+          showToast("⚡ Energia esgotada para disputar uma partida oficial. Descanse primeiro!");
+          return;
+        }
+
+        careerState.energy -= 25;
+        career.save();
+        career.updateDashboardUI();
+
+        this.allyBan = null;
+        this.enemyBans = [];
+        this.mySelectedChamp = null;
+        this.bannedChampsIds = [];
+
+        // Adversário bane 2 campeões aleatórios da mesma rota
+        const db = window.LOL_CHAMPIONS_DB || [];
+        const laneChamps = db.filter(c => c.roles && c.roles.includes(careerState.role));
+        const shuffle = [...laneChamps].sort(() => 0.5 - Math.random());
+        this.enemyBans = [shuffle[0] || db[0], shuffle[1] || db[1]];
+        this.bannedChampsIds = this.enemyBans.map(b => b.id);
+
+        // Pick do adversário
+        const validOpponents = shuffle.filter(c => !this.bannedChampsIds.includes(c.id));
+        this.opponentChamp = validOpponents[0] || laneChamps[0] || db[0];
+
+        // Atualizar UI dos Bans
+        document.getElementById("enemyBanSlot1").innerHTML = `<img src="${getChampImgUrl(this.enemyBans[0])}" onerror="this.src='${getFallbackAvatar(this.enemyBans[0].name)}';">`;
+        document.getElementById("enemyBanSlot1").className = "ban-slot banned";
+        document.getElementById("enemyBanSlot2").innerHTML = `<img src="${getChampImgUrl(this.enemyBans[1])}" onerror="this.src='${getFallbackAvatar(this.enemyBans[1].name)}';">`;
+        document.getElementById("enemyBanSlot2").className = "ban-slot banned";
+
+        document.getElementById("allyBanSlot1").innerHTML = "";
+        document.getElementById("allyBanSlot1").className = "ban-slot";
+
+        // Abrir Fase de Ban
+        document.getElementById("draftBanPhaseBox").style.display = "block";
+        document.getElementById("draftPickPhaseBox").style.display = "none";
+        document.getElementById("pickBanStageTitle").innerText = "FASE DE BANIMENTOS • ESCOLHA O BAN DO SEU TIME";
+
+        this.renderBanGrid();
+        gameRouter.showScreen("screenPickBan");
+        showToast("⚔️ Início do Draft! Escolha 1 campeão para banir.");
+      },
+
+      renderBanGrid(search = "") {
+        const grid = document.getElementById("draftBanGrid");
+        grid.innerHTML = "";
+        const role = careerState.role;
+        const db = window.LOL_CHAMPIONS_DB || [];
+
+        const filtered = db.filter(c => {
+          const matchRole = c.roles && c.roles.includes(role);
+          const matchSearch = c.name.toLowerCase().includes(search.toLowerCase());
+          return matchRole && matchSearch;
+        });
+
+        filtered.forEach(champ => {
+          const isBanned = this.bannedChampsIds.includes(champ.id);
+          const card = document.createElement("div");
+          card.className = "champ-card-selectable " + (isBanned ? "banned" : "");
+          card.onclick = () => {
+            if (!isBanned) this.chooseAllyBan(champ);
+          };
+
+          card.innerHTML = `
+            <div class="champ-img-wrap">
+              <img src="${getChampImgUrl(champ)}" alt="${champ.name}" loading="lazy" onerror="this.src='${getFallbackAvatar(champ.name)}';">
+            </div>
+            <div class="champ-name-lbl">${champ.name}</div>
+          `;
+          grid.appendChild(card);
+        });
+      },
+
+      filterBanGrid(val) { this.renderBanGrid(val); },
+
+      chooseAllyBan(champ) {
+        gameAudio.playBan();
+        this.allyBan = champ;
+        this.bannedChampsIds.push(champ.id);
+
+        document.getElementById("allyBanSlot1").innerHTML = `<img src="${getChampImgUrl(champ)}" onerror="this.src='${getFallbackAvatar(champ.name)}';">`;
+        document.getElementById("allyBanSlot1").className = "ban-slot banned";
+
+        showToast("🚫 " + champ.name + " foi BANIDO pelo seu time!");
+
+        // Avançar para a Fase de Pick após 600ms
+        setTimeout(() => {
+          this.openPickPhase();
+        }, 600);
+      },
+
+      openPickPhase() {
+        document.getElementById("draftBanPhaseBox").style.display = "none";
+        document.getElementById("draftPickPhaseBox").style.display = "block";
+        document.getElementById("pickBanStageTitle").innerText = "FASE DE ESCOLHA (PICK) • SELECIONE SEU CAMPEÃO";
+
+        document.getElementById("draftLaneLabel").innerText = careerState.role;
+        document.getElementById("draftOpponentPickName").innerText = this.opponentChamp.name;
+        document.getElementById("draftOpponentPickImg").src = getChampImgUrl(this.opponentChamp);
+        document.getElementById("draftOpponentPickImg").onerror = function() { this.src = getFallbackAvatar(pickBanEngine.opponentChamp.name); };
+
+        // Auto-selecionar primeiro main disponível que não foi banido
+        const availableMain = careerState.championPool.find(c => !this.bannedChampsIds.includes(c.id));
+        if (availableMain) {
+          this.selectChampion(availableMain, true);
+        }
+
+        this.renderPocketPicksGrid();
+        this.renderPickAllGrid();
+        this.switchPickTab("mains");
+      },
+
+      switchPickTab(mode) {
+        gameAudio.playClick();
+        this.activePickTab = mode;
+        const btnMains = document.getElementById("btnTabPocketPicks");
+        const btnAll = document.getElementById("btnTabAllChamps");
+        const viewMains = document.getElementById("pickViewMains");
+        const viewAll = document.getElementById("pickViewAll");
+
+        if (mode === "mains") {
+          btnMains.classList.add("active");
+          btnAll.classList.remove("active");
+          viewMains.style.display = "block";
+          viewAll.style.display = "none";
+        } else {
+          btnAll.classList.add("active");
+          btnMains.classList.remove("active");
+          viewAll.style.display = "block";
+          viewMains.style.display = "none";
+        }
+      },
+
+      renderPocketPicksGrid() {
+        const grid = document.getElementById("draftPocketPicksGrid");
+        grid.innerHTML = "";
+
+        careerState.championPool.forEach(champ => {
+          const isBanned = this.bannedChampsIds.includes(champ.id);
+          const isSelected = this.mySelectedChamp && this.mySelectedChamp.id === champ.id;
+
+          const card = document.createElement("div");
+          card.className = "pocket-pick-card " + (isSelected ? "active" : "") + (isBanned ? " banned" : "");
+          card.onclick = () => {
+            if (!isBanned) this.selectChampion(champ, true);
+          };
+
+          card.innerHTML = `
+            <img class="pocket-thumb" src="${getChampImgUrl(champ)}" onerror="this.src='${getFallbackAvatar(champ.name)}';">
+            <div>
+              <div style="font-family:var(--font-tech); font-size:1.15rem; font-weight:800; color:#fff;">${champ.name}</div>
+              <div style="font-size:0.75rem; color:var(--hextech-gold);">Maestria ${champ.masteryLevel} • ${champ.masteryPoints.toLocaleString()} MP</div>
+              <span class="badge badge-gold" style="margin-top:4px;">+15% BÔNUS DE MAIN</span>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      },
+
+      renderPickAllGrid(search = "", roleFilter = "All") {
+        const grid = document.getElementById("draftPickAllGrid");
+        grid.innerHTML = "";
+        const db = window.LOL_CHAMPIONS_DB || [];
+
+        const filtered = db.filter(c => {
+          const matchRole = roleFilter === "All" || (c.roles && c.roles.includes(roleFilter));
+          const matchSearch = c.name.toLowerCase().includes(search.toLowerCase());
+          return matchRole && matchSearch;
+        });
+
+        filtered.forEach(champ => {
+          const isBanned = this.bannedChampsIds.includes(champ.id);
+          const isSelected = this.mySelectedChamp && this.mySelectedChamp.id === champ.id;
+
+          const card = document.createElement("div");
+          card.className = "champ-card-selectable " + (isSelected ? "selected" : "") + (isBanned ? " banned" : "");
+          card.onclick = () => {
+            if (!isBanned) {
+              const inPool = careerState.championPool.find(p => p.id === champ.id);
+              this.selectChampion(inPool || champ, !!inPool);
+            }
+          };
+
+          card.innerHTML = `
+            <div class="champ-img-wrap">
+              <img src="${getChampImgUrl(champ)}" alt="${champ.name}" loading="lazy" onerror="this.src='${getFallbackAvatar(champ.name)}';">
+            </div>
+            <div class="champ-name-lbl">${champ.name}</div>
+          `;
+          grid.appendChild(card);
+        });
+      },
+
+      filterPickAllGrid(val) { this.renderPickAllGrid(val); },
+
+      selectChampion(champ, isMain) {
+        gameAudio.playClick();
+        this.mySelectedChamp = champ;
+        this.isMainChoice = isMain;
+
+        document.getElementById("draftMyLockedName").innerText = champ.name;
+        document.getElementById("draftMyLockedImg").src = getChampImgUrl(champ);
+        document.getElementById("draftMyLockedImg").onerror = function() { this.src = getFallbackAvatar(champ.name); };
+
+        if (isMain) {
+          document.getElementById("draftMyLockedMeta").innerText = "Pocket Pick! Maestria Nível " + (champ.masteryLevel || 4) + " (+15% Bônus em jogo)";
+          document.getElementById("draftMyLockedMeta").style.color = "var(--hextech-gold)";
+        } else {
+          document.getElementById("draftMyLockedMeta").innerText = "Livre Escolha: Estratégia sem bônus de main (Maestria 1)";
+          document.getElementById("draftMyLockedMeta").style.color = "var(--hextech-blue)";
+        }
+
+        this.renderPocketPicksGrid();
+        this.renderPickAllGrid(document.getElementById("draftPickAllSearch")?.value || "");
+      },
+
+      confirmLockIn() {
+        if (!this.mySelectedChamp) {
+          showToast("Selecione um campeão antes de confirmar!");
+          return;
+        }
+        gameAudio.playLockIn();
+        showToast("🔒 " + this.mySelectedChamp.name + " CONFIRMADO! Entrando em Summoner's Rift...");
+
+        setTimeout(() => {
+          matchEngine.startMatchSimulation(this.mySelectedChamp, this.opponentChamp, this.isMainChoice);
+        }, 700);
+      }
+    };
+
+    /* ========================================================
+       9. SIMULAÇÃO DE PARTIDA (MOMENTOS DECISIVOS)
+       ======================================================== */
+    const matchEngine = {
+      myChamp: null,
+      oppChamp: null,
+      isMain: false,
+      currentTurn: 1,
+      allyKills: 0,
+      enemyKills: 0,
+      scores: [],
+
+      startMatchSimulation(myChamp, oppChamp, isMain) {
+        this.myChamp = myChamp;
+        this.oppChamp = oppChamp;
+        this.isMain = isMain;
+        this.currentTurn = 1;
+        this.allyKills = 0;
+        this.enemyKills = 0;
+        this.scores = [];
+
+        document.getElementById("matchAllyTeamHud").innerText = careerState.team.name + ": 0 Kills";
+        document.getElementById("matchEnemyTeamHud").innerText = "0 Kills :" + career.getCurrentOpponent().name;
+
+        document.getElementById("matchInteractivePhase").style.display = "block";
+        document.getElementById("matchScoreboardPhase").style.display = "none";
+
+        gameRouter.showScreen("screenMatch");
+        this.loadTurn(1);
+      },
+
+      getScenarios() {
+        return [
+          {
+            turn: 1, time: "08:15", badge: "MOMENTO 1 DE 3 • EARLY GAME",
+            title: "Disputa de Rota contra " + this.oppChamp.name,
+            desc: "O " + this.oppChamp.name + " adversário tentou avançar a wave e forçar uma troca no rio pelo Aronguejo. Você está pilotando seu " + this.myChamp.name + ". Qual a sua decisão?",
+            choices: [
+              { title: "1. Forçar Solo Kill Mecânico com Flash Ofensivo", stat: "mechanics", desc: "Usa Mecânica & Frieza", win: "Você acertou o combo letal de " + this.myChamp.name + "! First Blood limpo!", fail: "Você forçou demais, o " + this.oppChamp.name + " reagiu e você acabou morrendo." },
+              { title: "2. Congelar a Wave e Chamar Emboscada do Jungler", stat: "macro", desc: "Usa Macro & Visão", win: "Leitura tática perfeita! O jungler adversário foi neutralizado no rio.", fail: "A call atrasou e o oponente escapou pegando o objetivo." },
+              { title: "3. Rotacionar e Ajudar a Bot Lane no 3v2", stat: "comm", desc: "Usa Comunicação & Rotação", win: "Double kill na bot lane! Toda a vantagem foi pro seu time.", fail: "A rotação foi vista por sentinelas e você perdeu duas barricadas." }
+            ]
+          },
+          {
+            turn: 2, time: "20:30", badge: "MOMENTO 2 DE 3 • MID GAME",
+            title: "Luta pelo 3º Dragão da Alma",
+            desc: "As equipes colapsam no rio do Dragão. O adversário montou posição defensiva. Como você comanda a equipe?",
+            choices: [
+              { title: "1. Flanco Agressivo na Backline Inimiga", stat: "mechanics", desc: "Usa Mecânica", win: "Flanco absurdo! O ADC inimigo evaporou no seu dano de " + this.myChamp.name + "!", fail: "Você tomou controle de grupo no flanco e foi eliminado." },
+              { title: "2. Puxar Split-Push na Rota Lateral e Forçar TP", stat: "macro", desc: "Usa Macro & Pressão", win: "Você levou duas torres na side e deu o Dragão de graça pro seu time!", fail: "Eles ignoraram seu push, deram engage 5v4 e limparam sua equipe." },
+              { title: "3. Kiting Paciente em Formação de Equipe", stat: "consistency", desc: "Usa Consistência", win: "Paciência de aço! Seu time derreteu a linha de frente deles sem sofrer baixas.", fail: "A formação quebrou e seu time teve que recuar do objetivo." }
+            ]
+          },
+          {
+            turn: 3, time: "32:45", badge: "MOMENTO 3 DE 3 • LATE GAME",
+            title: "O Destino da Partida no Covil do Barão Nashor",
+            desc: "O Barão está com 3.000 de vida! Os 10 jogadores se enfrentam no covil. Um único erro define a vitória ou derrota!",
+            choices: [
+              { title: "1. Roubo de Objetivo no Timing Perfeito", stat: "mechanics", desc: "Usa Mecânica", win: "SURREAL! Roubo milimétrico com " + this.myChamp.name + "! O GINÁSIO ENLOUQUECE!", fail: "O Smite inimigo foi mais rápido e seu time ficou encurralado." },
+              { title: "2. Emboscada Tática no Arbusto da Visão Cega", stat: "macro", desc: "Usa Visão & Macro", win: "Caiu todo mundo na armadilha! Ace limpo e rota livre pro Nexus!", fail: "Uma sentinela azul revelou a emboscada e o time adversário virou." },
+              { title: "3. Call de Backdoor no Nexus Inimigo", stat: "comm", desc: "Usa Shotcalling", win: "CALL DE GÊNIO! Nexus adversário detonado antes que voltassem!", fail: "Recall milagroso da defesa impediu o backdoor e gerou contragolpe." }
+            ]
+          }
+        ];
+      },
+
+      loadTurn(turn) {
+        this.currentTurn = turn;
+        const scenarios = this.getScenarios();
+        const sc = scenarios[turn - 1];
+
+        document.getElementById("scenarioPhaseBadge").innerText = sc.badge;
+        document.getElementById("matchGameTime").innerText = sc.time;
+        document.getElementById("scenarioTitle").innerText = sc.title;
+        document.getElementById("scenarioDesc").innerText = sc.desc;
+        document.getElementById("resolutionBanner").style.display = "none";
+
+        const container = document.getElementById("scenarioChoicesContainer");
+        container.innerHTML = "";
+
+        sc.choices.forEach(ch => {
+          const odds = this.calculateOdds(ch.stat);
+          const btn = document.createElement("div");
+          btn.className = "choice-btn";
+          btn.onclick = () => this.resolveChoice(ch, odds);
+          btn.innerHTML = `
+            <div>
+              <div style="font-family:var(--font-tech); font-weight:700; font-size:1.1rem; color:#fff;">${ch.title}</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">Requisito: ${ch.desc} • Atributo: ${careerState.stats[ch.stat]}</div>
+            </div>
+            <div style="font-family:var(--font-tech); font-size:1.25rem; font-weight:800; color:var(--success-green);">${odds}% Sucesso</div>
+          `;
+          container.appendChild(btn);
+        });
+      },
+
+      calculateOdds(stat) {
+        const base = careerState.stats[stat] || 50;
+        const mainBonus = this.isMain ? 15 : 0;
+        const confBonus = (careerState.stats.confidence - 50) * 0.15;
+        const oppPower = career.getCurrentOpponent().power || 50;
+        const penalty = (oppPower - 50) * 0.35;
+        return Math.max(25, Math.min(95, Math.round(base * 0.75 + mainBonus + confBonus - penalty)));
+      },
+
+      resolveChoice(choice, odds) {
+        document.querySelectorAll(".choice-btn").forEach(b => b.style.pointerEvents = "none");
+        const roll = Math.floor(Math.random() * 100) + 1;
+        const success = roll <= odds;
+
+        if (success) {
+          this.allyKills += Math.floor(Math.random() * 2) + 2;
+          this.scores.push(Math.floor(Math.random() * 20) + 80);
+          gameAudio.playVictory();
+        } else {
+          this.enemyKills += Math.floor(Math.random() * 2) + 2;
+          this.scores.push(Math.floor(Math.random() * 25) + 50);
+          gameAudio.playFailure();
+        }
+
+        document.getElementById("matchAllyTeamHud").innerText = careerState.team.name + ": " + this.allyKills + " Kills";
+        document.getElementById("matchEnemyTeamHud").innerText = this.enemyKills + " Kills :" + career.getCurrentOpponent().name;
+
+        const banner = document.getElementById("resolutionBanner");
+        banner.style.display = "block";
+        document.getElementById("resolutionResultTitle").innerText = success ? "⭐ JOGADA SUCEDIDA!" : "⚠️ JOGADA FALHOU!";
+        document.getElementById("resolutionBadgeRoll").innerText = "Rolagem: " + roll + " (Meta: ≤ " + odds + "%)";
+        document.getElementById("resolutionBadgeRoll").className = "badge " + (success ? "badge-green" : "badge-red");
+        document.getElementById("resolutionNarrative").innerText = success ? choice.win : choice.fail;
+
+        document.getElementById("btnNextScenario").innerText = this.currentTurn >= 3 ? "Ver Scoreboard Final ➔" : "Avançar para Turno " + (this.currentTurn + 1) + " ➔";
+      },
+
+      proceedNextTurn() {
+        gameAudio.playClick();
+        if (this.currentTurn < 3) {
+          this.loadTurn(this.currentTurn + 1);
+        } else {
+          this.showScoreboard();
+        }
+      },
+
+      showScoreboard() {
+        document.getElementById("matchInteractivePhase").style.display = "none";
+        document.getElementById("matchScoreboardPhase").style.display = "block";
+
+        const won = this.allyKills >= this.enemyKills;
+        const tier = LEAGUES_DATA[careerState.currentTierId];
+
+        if (won) {
+          gameAudio.playVictory();
+          careerState.team.wins++;
+        } else {
+          gameAudio.playFailure();
+          careerState.team.losses++;
+        }
+        careerState.team.week++;
+
+        // Checa se subiu de divisão do Tier
+        if (careerState.team.wins >= tier.winTarget && tier.promotionTarget > 0) {
+          const nextTierId = tier.promotionTarget;
+          careerState.currentTierId = nextTierId;
+          careerState.team.tierId = nextTierId;
+          careerState.team.name = careerState.nick + " Esports (" + LEAGUES_DATA[nextTierId].tierLabel + ")";
+          careerState.team.wins = 0;
+          careerState.team.losses = 0;
+          careerState.team.week = 1;
+          showToast("🏆 PARABÉNS! Seu time foi PROMOVIDO para o " + LEAGUES_DATA[nextTierId].name + "!");
+        }
+
+        const avg = this.scores.reduce((a, b) => a + b, 0) / this.scores.length;
+        let rating = (avg / 10).toFixed(1);
+        if (won && rating < 7.0) rating = "7.5";
+
+        document.getElementById("postGameOutcomeHeader").className = "outcome-header " + (won ? "victory" : "defeat");
+        document.getElementById("postGameOutcomeText").innerText = won ? "VITÓRIA ÉPICA!" : "DERROTA!";
+        document.getElementById("postGameRating").innerText = rating;
+
+        const isMvp = parseFloat(rating) >= 8.5 && won;
+        document.getElementById("postGameMvpWrapper").style.display = isMvp ? "block" : "none";
+
+        // Recompensas
+        const exp = won ? 350 : 150;
+        const fame = won ? (isMvp ? 65 : 40) : 10;
+        const gold = won ? 600 : 250;
+        const mp = won ? 1500 : 600;
+
+        careerState.fame += fame;
+        careerState.gold += gold;
+
+        // Se jogou com main, sobe maestria
+        const main = careerState.championPool.find(c => c.id === this.myChamp.id);
+        if (main) {
+          main.games++;
+          if (won) main.wins++;
+          main.masteryPoints += mp;
+          if (main.masteryPoints >= 21600) main.masteryLevel = 7;
+          else if (main.masteryPoints >= 12600) main.masteryLevel = 6;
+          else if (main.masteryPoints >= 6000) main.masteryLevel = 5;
+        }
+
+        document.getElementById("rewardExp").innerText = "+" + exp + " EXP";
+        document.getElementById("rewardFame").innerText = "+" + fame + " Fãs";
+        document.getElementById("rewardGold").innerText = "+R$ " + gold;
+        document.getElementById("rewardMastery").innerText = "+" + mp.toLocaleString() + " MP";
+
+        this.renderScoreboardTable(rating, isMvp, won);
+        career.checkOffers();
+        career.save();
+      },
+
+      renderScoreboardTable(rating, isMvp, won) {
+        const tbody = document.getElementById("scoreboardTableBody");
+        tbody.innerHTML = "";
+
+        const myK = won ? Math.floor(Math.random() * 5) + 6 : Math.floor(Math.random() * 3) + 2;
+        const myD = won ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 4) + 3;
+        const myA = Math.floor(Math.random() * 6) + 5;
+        const myDmg = (Math.floor(Math.random() * 12000) + (won ? 26000 : 16000)).toLocaleString();
+        const myGold = (Math.floor(Math.random() * 3000) + (won ? 14000 : 9500)).toLocaleString();
+
+        const tr = document.createElement("tr");
+        tr.className = "highlight-row";
+        tr.innerHTML = `
+          <td><strong>${careerState.nick}</strong> ${isMvp ? "⭐ (MVP)" : ""}</td>
+          <td>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <img src="${getChampImgUrl(this.myChamp)}" style="width:28px; height:28px; border-radius:50%;" onerror="this.src='${getFallbackAvatar(this.myChamp.name)}';">
+              <span>${this.myChamp.name}</span>
+            </div>
+          </td>
+          <td>${myK}/${myD}/${myA}</td>
+          <td>${myDmg}</td>
+          <td>R$ ${myGold}</td>
+          <td><strong style="color:var(--hextech-gold);">${rating}</strong></td>
+        `;
+        tbody.appendChild(tr);
+
+        // Adversário
+        const oppK = !won ? Math.floor(Math.random() * 5) + 5 : Math.floor(Math.random() * 3) + 1;
+        const oppD = !won ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 4) + 4;
+        const oppA = Math.floor(Math.random() * 6) + 3;
+        const oppDmg = (Math.floor(Math.random() * 10000) + (!won ? 24000 : 14000)).toLocaleString();
+        const oppGold = (Math.floor(Math.random() * 3000) + (!won ? 13500 : 9000)).toLocaleString();
+        const oppRating = (!won ? (Math.random() * 1.5 + 7.5) : (Math.random() * 1.5 + 5.0)).toFixed(1);
+
+        const oppTr = document.createElement("tr");
+        oppTr.innerHTML = `
+          <td><span style="color:var(--danger-red);">Rival (${career.getCurrentOpponent().name})</span></td>
+          <td>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <img src="${getChampImgUrl(this.oppChamp)}" style="width:28px; height:28px; border-radius:50%;" onerror="this.src='${getFallbackAvatar(this.oppChamp.name)}';">
+              <span>${this.oppChamp.name}</span>
+            </div>
+          </td>
+          <td>${oppK}/${oppD}/${oppA}</td>
+          <td>${oppDmg}</td>
+          <td>R$ ${oppGold}</td>
+          <td>${oppRating}</td>
+        `;
+        tbody.appendChild(oppTr);
+      },
+
+      finishAndReturnHub() {
+        gameAudio.playClick();
+        career.updateDashboardUI();
+        gameRouter.showScreen("screenDashboard");
+        hubTabs.switchTab("tabOverview");
+      }
+    };
+
+    /* ========================================================
+       10. MODAL: ACADEMIA DE CAMPEÕES (TREINAR NOVO MAIN)
+       ======================================================== */
+    const championModal = {
+      open() {
+        document.getElementById("champModalOverlay").style.display = "flex";
+        this.render();
+      },
+      close() {
+        document.getElementById("champModalOverlay").style.display = "none";
+      },
+      filter(term) { this.render(term); },
+      render(search = "") {
+        const grid = document.getElementById("modalChampsGrid");
+        grid.innerHTML = "";
+        const db = window.LOL_CHAMPIONS_DB || [];
+        const filtered = db.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
+
+        filtered.forEach(champ => {
+          const inPool = careerState.championPool.some(p => p.id === champ.id);
+          const card = document.createElement("div");
+          card.className = "champ-card-selectable " + (inPool ? "selected" : "");
+          card.onclick = () => this.learnChamp(champ);
+
+          card.innerHTML = `
+            <div class="champ-img-wrap">
+              <img src="${getChampImgUrl(champ)}" alt="${champ.name}" loading="lazy" onerror="this.src='${getFallbackAvatar(champ.name)}';">
+            </div>
+            <div class="champ-name-lbl">${champ.name}</div>
+            <div style="font-size:0.65rem; color:${inPool ? 'var(--hextech-gold)' : 'var(--hextech-blue)'}; margin-top:2px;">
+              ${inPool ? "Main" : "+ Treinar"}
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      },
+      learnChamp(champ) {
+        if (careerState.championPool.some(p => p.id === champ.id)) {
+          showToast(champ.name + " já é um dos seus Pocket Picks!");
+          return;
+        }
+        if (careerState.energy < 30) {
+          showToast("⚡ Você precisa de pelo menos 30 de energia para treinar um novo campeão!");
+          return;
+        }
+        careerState.energy -= 30;
+        careerState.championPool.push({
+          id: champ.id,
+          name: champ.name,
+          img: champ.img,
+          masteryLevel: 1,
+          masteryPoints: 500,
+          games: 0,
+          wins: 0
+        });
+        gameAudio.playVictory();
+        career.save();
+        career.updateDashboardUI();
+        this.render();
+        showToast("✨ " + champ.name + " adicionado aos seus Pocket Picks!");
+      }
+    };
+
+    /* ========================================================
+       11. TOAST HELPER & BOOTSTRAP
+       ======================================================== */
+    function showToast(msg) {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.innerHTML = "<span>⚡ " + msg + "</span>";
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transition = "all 0.3s ease";
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      gameRouter.updateTitleScreen();
+      gameRouter.showScreen("screenTitle");
+    });
+  </script>
+</body>
+</html>
