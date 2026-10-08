@@ -56,6 +56,40 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--hextech-gold); }
 
     
+    /* Brasões e Bandeiras dos Times */
+    .team-flag-crest {
+      border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; transition: all 0.2s ease;
+    }
+    .team-flag-crest:hover { transform: scale(1.1); }
+
+    /* Barra de Bans no Draft Oficial */
+    .draft-bans-bar {
+      background: rgba(5, 8, 15, 0.95); border-bottom: 1px solid #1a273e;
+      padding: 6px 18px; display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-tech);
+    }
+    .bans-group { display: flex; align-items: center; gap: 8px; }
+    .bans-group .bans-title { font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+    .bans-slots { display: flex; gap: 6px; }
+    .ban-slot-avatar {
+      width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--danger-red);
+      background: #100608; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .ban-slot-avatar img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.9) brightness(0.6); }
+    .ban-slot-avatar .ban-slash {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: var(--danger-red); font-size: 1.1rem; font-weight: 900; text-shadow: 0 0 6px #000;
+    }
+
+    /* Nível do Treinador / Coach Level Badge */
+    .coach-level-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px;
+      border-radius: 20px; font-family: var(--font-tech); font-size: 0.78rem; font-weight: 800;
+      background: linear-gradient(90deg, #b8860b 0%, #d4af37 100%); color: #080702;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); text-transform: uppercase;
+    }
+
     /* Feitiços de Invocador Clicáveis */
     .spell-slot-btn {
       width: 44px; height: 44px; border-radius: 4px; border: 2px solid var(--hextech-gold);
@@ -134,6 +168,25 @@
     .stat-evolution-col .stat-gain-val {
       font-family: var(--font-tech); font-size: 1.4rem; font-weight: 800; color: var(--success-green);
     }
+
+    /* Indicador de Série MD5 / Playoffs */
+    .playoffs-series-hud {
+      background: linear-gradient(90deg, #1c0f2b 0%, #0d162a 100%);
+      border: 1px solid #9b51e0; border-radius: 6px; padding: 8px 16px;
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+    }
+    .bo5-circles { display: flex; gap: 6px; align-items: center; }
+    .bo5-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #555; background: #111; }
+    .bo5-dot.win { background: var(--success-green); border-color: #fff; box-shadow: 0 0 8px var(--success-green); }
+    .bo5-dot.loss { background: var(--danger-red); border-color: #fff; }
+
+    /* Ações de Rede Social do Jogador */
+    .btn-tweet-action {
+      background: rgba(0, 210, 255, 0.1); border: 1px solid var(--hextech-blue); color: var(--hextech-blue);
+      border-radius: 4px; padding: 5px 12px; font-size: 0.8rem; font-family: var(--font-tech); font-weight: 700;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .btn-tweet-action:hover { background: var(--hextech-blue); color: #000; box-shadow: 0 0 10px var(--hextech-blue-glow); }
 
     /* Buttons & Badges */
     .btn {
@@ -219,7 +272,9 @@
       50% { box-shadow: 0 0 50px var(--hextech-blue-glow); }
       100% { box-shadow: 0 0 30px var(--hextech-gold-glow); }
     }
-    .title-hextech-crest::before { content: '⚔️'; font-size: 3rem; }
+    .title-hextech-crest::before {
+      content: '⚔️'; font-size: 3rem;
+    }
     .title-logo-box { text-align: center; margin-bottom: 34px; }
     .title-main-heading {
       font-family: var(--font-display); font-size: 3.2rem; font-weight: 900;
@@ -253,6 +308,17 @@
     .title-btn-label h3 { font-family: var(--font-display); font-size: 1.25rem; color: #fff; margin-bottom: 2px; }
     .title-btn-label p { font-size: 0.85rem; color: var(--text-muted); }
     .title-card-btn.primary .title-btn-label h3 { color: var(--hextech-gold-bright); }
+
+    /* Active Save Preview Card */
+    .active-save-preview {
+      background: rgba(16, 25, 43, 0.9); border: 1px solid #283e60; border-radius: 8px;
+      padding: 14px 18px; margin-top: 6px; display: flex; align-items: center; gap: 14px;
+    }
+    .save-avatar-circle {
+      width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--hextech-gold);
+      overflow: hidden; background: #080c14; flex-shrink: 0;
+    }
+    .save-avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
     /* ==========================================================
        SCREEN 1: CRIAÇÃO DE PERSONAGEM
@@ -316,16 +382,24 @@
     }
 
     /* ==========================================================
-       SCREEN: PROPOSTAS DA LIGA GO4LOL (TIER 4)
+       SCREEN: PROPOSTAS DE ENTRADA (GO4LOL TIER 4)
        ========================================================== */
-    .offers-screen-wrapper { max-width: 1040px; margin: 30px auto; padding: 20px; }
-    .offers-header { text-align: center; margin-bottom: 30px; }
+    .offers-screen-wrapper {
+      max-width: 1040px; margin: 30px auto; padding: 20px;
+    }
+    .offers-header {
+      text-align: center; margin-bottom: 30px;
+    }
     .offers-header h2 {
       font-family: var(--font-display); font-size: 2.3rem; color: var(--hextech-gold-bright);
       text-shadow: 0 0 20px var(--hextech-gold-glow); margin-bottom: 8px;
     }
-    .offers-header p { font-size: 1rem; color: #a4b6cd; max-width: 700px; margin: 0 auto; }
-    .offers-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .offers-header p {
+      font-size: 1rem; color: #a4b6cd; max-width: 700px; margin: 0 auto;
+    }
+    .offers-cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+    }
     .offer-entry-card {
       background: linear-gradient(145deg, #0e1628 0%, #080d17 100%);
       border: 1px solid var(--border-hex); border-radius: 10px; padding: 24px;
@@ -347,11 +421,13 @@
       display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
       background: rgba(6, 10, 18, 0.6); padding: 14px; border-radius: 6px; border: 1px solid #1c2a40;
     }
-    .offer-detail-row { display: flex; justify-content: space-between; font-size: 0.88rem; }
+    .offer-detail-row {
+      display: flex; justify-content: space-between; font-size: 0.88rem;
+    }
     .offer-detail-row strong { color: #fff; }
 
     /* ==========================================================
-       SCREEN 2: DASHBOARD (HUB DE CARREIRA)
+       SCREEN 2: DASHBOARD (HUB DE CARREIRA COM ABAS)
        ========================================================== */
     .dashboard-header {
       background: linear-gradient(135deg, #0f182a 0%, #090e18 100%);
@@ -400,8 +476,13 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
 
-    .dashboard-grid { display: grid; grid-template-columns: 320px 1fr 340px; gap: 16px; }
-    @media (max-width: 1100px) { .dashboard-grid { grid-template-columns: 1fr; } }
+    /* Layout do Hub */
+    .dashboard-grid {
+      display: grid; grid-template-columns: 320px 1fr 340px; gap: 16px;
+    }
+    @media (max-width: 1100px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
 
     .card {
       background: var(--bg-card); border: 1px solid var(--border-hex); border-radius: 8px;
@@ -437,7 +518,7 @@
 
     /* ==========================================================
        SCREEN 3: DRAFT OFICIAL (SELEÇÃO DE CAMPEÕES ESTILO CLIENT)
-       Referência: media_1791392260095.png
+       Referência idêntica à screenshot do usuário
        ========================================================== */
     .draft-screen-wrapper {
       max-width: 1480px; margin: 0 auto; min-height: 94vh;
@@ -445,6 +526,8 @@
       display: flex; flex-direction: column; justify-content: space-between;
       overflow: hidden; box-shadow: 0 10px 50px rgba(0,0,0,0.8);
     }
+
+    /* Top Bar: Timer, Phase, Minimal controls */
     .draft-top-bar {
       background: linear-gradient(180deg, #0e1728 0%, #070b13 100%);
       border-bottom: 1px solid #1f2f48; padding: 8px 24px;
@@ -467,34 +550,38 @@
     }
     .draft-timer-sub { font-size: 0.7rem; font-family: var(--font-tech); color: var(--hextech-gold); text-transform: uppercase; letter-spacing: 1px; }
 
+    /* Draft Main 3 Columns: Ally (Left) | Grid & Coach (Center) | Enemy (Right) */
     .draft-arena-grid {
-      display: grid; grid-template-columns: 280px 1fr; min-height: 590px;
-      background: radial-gradient(circle at 60% 40%, rgba(13, 22, 40, 0.95) 0%, #04070e 100%);
-      position: relative;
+      display: grid; grid-template-columns: 280px 1fr; min-height: 600px;
+      background: radial-gradient(circle at 50% 50%, #0d1628 0%, #050810 100%);
     }
 
+    /* Ally Column (Left) */
     .draft-team-side {
-      padding: 14px 12px; display: flex; flex-direction: column; gap: 10px;
-      background: rgba(6, 10, 18, 0.85); border-right: 2px solid #1a283f;
+      padding: 12px; display: flex; flex-direction: column; gap: 8px;
+      background: rgba(7, 11, 19, 0.75);
     }
+    .draft-team-side.ally { border-right: 1px solid #19273d; }
+    .draft-team-side.enemy { border-left: 1px solid #19273d; }
 
     .slot-player-card {
-      background: linear-gradient(135deg, #0e1628 0%, #070c16 100%);
-      border: 1px solid #1c2b42; border-radius: 6px; padding: 10px 12px;
-      display: flex; align-items: center; gap: 12px; position: relative;
-      transition: all 0.22s ease;
+      background: linear-gradient(135deg, #0e1628 0%, #080d16 100%);
+      border: 1px solid #1c2b42; border-radius: 6px; padding: 8px 10px;
+      display: flex; align-items: center; gap: 10px; position: relative;
+      transition: all 0.2s ease;
     }
     .slot-player-card.is-current-player {
-      border-color: var(--hextech-gold); background: linear-gradient(135deg, #1d273d 0%, #0e1728 100%);
-      box-shadow: 0 0 18px var(--hextech-gold-glow);
+      border-color: var(--hextech-gold); background: linear-gradient(135deg, #1b263d 0%, #0f182a 100%);
+      box-shadow: 0 0 15px var(--hextech-gold-glow);
     }
     .slot-player-card.is-picking {
-      border-color: var(--hextech-blue); box-shadow: 0 0 20px var(--hextech-blue-glow);
+      border-color: var(--hextech-blue); box-shadow: 0 0 15px var(--hextech-blue-glow);
       animation: slotPulse 1.5s infinite;
     }
+    @keyframes slotPulse { 0%, 100% { border-color: var(--hextech-blue); } 50% { border-color: #fff; } }
 
     .slot-circle-wrap {
-      width: 48px; height: 48px; border-radius: 50%; overflow: hidden;
+      width: 44px; height: 44px; border-radius: 50%; overflow: hidden;
       border: 2px solid #283a54; background: #080d17; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
     }
@@ -502,60 +589,69 @@
     .slot-circle-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .slot-meta { overflow: hidden; flex: 1; }
     .slot-role-tag {
-      font-family: var(--font-tech); font-weight: 800; font-size: 0.76rem;
+      font-family: var(--font-tech); font-weight: 800; font-size: 0.74rem;
       letter-spacing: 1px; color: var(--hextech-gold); text-transform: uppercase;
     }
     .slot-nick-tag {
-      font-family: var(--font-tech); font-weight: 700; font-size: 1rem; color: #fff;
+      font-family: var(--font-tech); font-weight: 700; font-size: 0.95rem; color: #fff;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .slot-champ-selected-name { font-size: 0.8rem; color: var(--hextech-blue); font-weight: 600; }
-    .slot-swap-btn { color: #61738d; cursor: pointer; font-size: 1.1rem; padding: 2px 4px; }
+    .slot-champ-selected-name {
+      font-size: 0.74rem; color: var(--hextech-blue); font-weight: 600;
+    }
+    .slot-swap-btn {
+      color: #61738d; cursor: pointer; font-size: 1rem; padding: 2px 4px;
+    }
     .slot-swap-btn:hover { color: var(--hextech-gold); }
 
-    /* Palco Central do Draft com Arco Hextech */
+    /* Center: Coach Advisory + Filters + 168 Champ Grid */
     .draft-center-stage {
-      padding: 12px 20px; display: flex; flex-direction: column; justify-content: space-between;
-      position: relative;
+      padding: 12px 18px; display: flex; flex-direction: column; justify-content: space-between;
     }
 
-    /* Barra Elegante do Técnico Maestro */
-    .coach-matchup-bar {
-      background: linear-gradient(90deg, rgba(200, 170, 110, 0.15) 0%, rgba(10, 18, 32, 0.95) 100%);
-      border: 1px solid var(--hextech-gold); border-radius: 8px; padding: 8px 16px;
-      margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); flex-wrap: wrap;
+    /* COACH ADVISORY BOX (COM SUGESTÕES DE MATCHUP PARA QUALQUER ROTA) */
+    .coach-matchup-panel {
+      background: linear-gradient(135deg, rgba(200, 170, 110, 0.12) 0%, rgba(12, 20, 34, 0.95) 100%);
+      border: 1px solid var(--hextech-gold); border-radius: 8px; padding: 12px 16px;
+      margin-bottom: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
-    .coach-bar-left { display: flex; align-items: center; gap: 10px; }
-    .coach-bar-left .coach-icon { font-size: 1.4rem; }
-    .coach-bar-left h4 {
-      font-family: var(--font-tech); font-size: 0.88rem; font-weight: 800; color: var(--hextech-gold);
-      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;
+    .coach-panel-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .coach-avatar-circle {
+      width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--hextech-gold);
+      background: #111a2d; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.1rem; color: var(--hextech-gold); font-weight: 900;
+      flex-shrink: 0;
     }
-    .coach-bar-left p { font-size: 0.82rem; color: #e2e8f0; line-height: 1.2; }
-    .coach-counter-recommendations { display: flex; gap: 8px; flex-wrap: wrap; }
+    .coach-briefing-text h4 {
+      font-family: var(--font-tech); font-size: 0.9rem; font-weight: 800; color: var(--hextech-gold);
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .coach-briefing-text p { font-size: 0.82rem; color: #d9e3f0; line-height: 1.35; }
+    .coach-counter-recommendations {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px;
+    }
     .coach-counter-card {
-      background: #090e18; border: 1px solid #24354f; border-radius: 6px; padding: 4px 10px;
-      display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s ease;
+      background: #090e18; border: 1px solid #24354f; border-radius: 6px; padding: 6px 10px;
+      display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.2s ease;
     }
     .coach-counter-card:hover, .coach-counter-card.active {
-      border-color: var(--hextech-blue); background: rgba(0, 210, 255, 0.2);
+      border-color: var(--hextech-blue); background: rgba(0, 210, 255, 0.15);
       transform: translateY(-2px); box-shadow: 0 0 12px var(--hextech-blue-glow);
     }
-    .coach-counter-card img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--hextech-gold); }
-    .coach-counter-info h5 { font-family: var(--font-tech); font-size: 0.88rem; color: #fff; font-weight: 700; margin: 0; }
-    .coach-counter-info span { font-size: 0.72rem; color: var(--success-green); font-weight: 700; display: block; }
+    .coach-counter-card img { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hextech-gold); }
+    .coach-counter-info h5 { font-family: var(--font-tech); font-size: 0.9rem; color: #fff; font-weight: 700; }
+    .coach-counter-info span { font-size: 0.72rem; color: var(--success-green); font-weight: 600; display: block; }
 
-    /* Barra de Filtros e Busca */
+    /* Filters Bar (Icons, Sort, Search) - Similar to Reference */
     .draft-filter-toolbar {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 8px; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 10px; flex-wrap: wrap; gap: 10px;
     }
-    .draft-role-icon-group { display: flex; gap: 6px; }
+    .draft-role-icon-group { display: flex; gap: 4px; }
     .role-filter-icon-btn {
-      width: 38px; height: 38px; border-radius: 4px; border: 1px solid #1e2c42;
+      width: 36px; height: 36px; border-radius: 4px; border: 1px solid #1e2c42;
       background: #0a101b; color: #7f93ac; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 1.15rem; transition: all 0.2s ease;
+      cursor: pointer; font-size: 1.1rem; transition: all 0.2s ease;
     }
     .role-filter-icon-btn:hover { border-color: var(--hextech-blue); color: #fff; }
     .role-filter-icon-btn.active {
@@ -564,33 +660,29 @@
 
     .draft-search-box {
       display: flex; align-items: center; gap: 8px; background: #070b13; border: 1px solid #1c2a3f;
-      border-radius: 4px; padding: 5px 12px;
+      border-radius: 4px; padding: 4px 10px;
     }
     .draft-search-box input {
       background: transparent; border: none; outline: none; color: #fff; font-family: var(--font-body);
-      font-size: 0.9rem; width: 190px;
+      font-size: 0.88rem; width: 160px;
     }
 
-    /* Grade Completa dos 168 Campeões (Estilo Oficial com Molduras e Baús) */
+    /* 168 Campeões Grid - Matching Official LoL Screen */
     .draft-168-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 10px;
-      max-height: 440px; overflow-y: auto; padding: 12px; background: rgba(5, 8, 16, 0.9);
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px;
+      max-height: 440px; overflow-y: auto; padding: 10px; background: #050810;
       border: 1px solid #18253a; border-radius: 8px;
     }
     .champ-select-tile {
-      background: #0e1524; border: 1px solid #1d2a3f; border-radius: 4px;
-      padding: 4px; text-align: center; cursor: pointer; transition: all 0.18s ease;
+      background: #0e1524; border: 1px solid #1d2a3f; border-radius: 6px;
+      padding: 5px 3px; text-align: center; cursor: pointer; transition: all 0.18s ease;
       display: flex; flex-direction: column; align-items: center; position: relative;
     }
     .champ-select-tile:hover {
       border-color: var(--hextech-blue); transform: translateY(-2px);
-      box-shadow: 0 0 12px var(--hextech-blue-glow);
+      box-shadow: 0 0 10px var(--hextech-blue-glow);
     }
-    /* Moldura Dourada Ornamental quando selecionado (igual ao Alistar no print) */
-    .champ-select-tile.selected {
-      border: 2px solid var(--hextech-gold); background: rgba(200, 170, 110, 0.25);
-      box-shadow: 0 0 18px var(--hextech-gold-glow);
-    }
+    
     .champ-select-tile.selected::before, .champ-select-tile.selected::after {
       content: ''; position: absolute; width: 8px; height: 8px;
       border-color: #f0e6d2; pointer-events: none;
@@ -598,21 +690,23 @@
     .champ-select-tile.selected::before { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
     .champ-select-tile.selected::after { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
 
-    /* Baú de Maestria Azul no topo direito da foto (igual ao LoL Client) */
+    .champ-select-tile.selected {
+      border: 2px solid var(--hextech-gold); background: rgba(200, 170, 110, 0.2);
+      box-shadow: 0 0 15px var(--hextech-gold-glow);
+    }
     .champ-tile-chest-badge {
-      position: absolute; top: 2px; right: 2px; width: 16px; height: 16px;
-      border-radius: 50%; background: #0ac8b9; color: #051419; font-size: 10px;
+      position: absolute; top: 4px; right: 4px; width: 14px; height: 14px;
+      border-radius: 50%; background: #0ac8b9; color: #000; font-size: 9px;
       font-weight: 900; display: flex; align-items: center; justify-content: center;
-      border: 1px solid #fff; box-shadow: 0 0 6px rgba(10, 200, 185, 0.8); z-index: 2;
     }
     .champ-tile-img {
-      width: 58px; height: 58px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;
-      background: #111a2c; border: 1px solid rgba(255,255,255,0.06);
+      width: 44px; height: 44px; border-radius: 4px; overflow: hidden; margin-bottom: 4px;
+      background: #111a2c;
     }
     .champ-tile-img img { width: 100%; height: 100%; object-fit: cover; }
     .champ-tile-name {
-      font-size: 0.72rem; font-family: var(--font-tech); font-weight: 700;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70px; color: #e2e8f0;
+      font-size: 0.7rem; font-family: var(--font-tech); font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 66px; color: #d1d9e6;
     }
 
     /* Bottom Bar estilo LoL Client (Chat + Runas/Feitiços + Lock In) */
@@ -638,7 +732,9 @@
     .draft-center-lockin-zone {
       display: flex; align-items: center; justify-content: center; gap: 16px;
     }
-    .spells-and-runes { display: flex; align-items: center; gap: 6px; }
+    .spells-and-runes {
+      display: flex; align-items: center; gap: 6px;
+    }
     .spell-icon-box {
       width: 36px; height: 36px; border: 1px solid var(--hextech-gold); border-radius: 4px;
       overflow: hidden; background: #111a2a; display: flex; align-items: center; justify-content: center;
@@ -648,8 +744,12 @@
       padding: 14px 44px; font-size: 1.25rem; font-weight: 900; letter-spacing: 2px;
     }
 
-    .draft-mode-info { text-align: right; }
-    .draft-mode-label { font-family: var(--font-tech); font-size: 0.95rem; font-weight: 800; color: #fff; }
+    .draft-mode-info {
+      text-align: right;
+    }
+    .draft-mode-label {
+      font-family: var(--font-tech); font-size: 0.95rem; font-weight: 800; color: #fff;
+    }
     .draft-queue-tag { font-size: 0.75rem; color: var(--hextech-gold); }
 
     /* ==========================================================
@@ -738,27 +838,35 @@
 
   <div id="toastContainer" class="toast-container"></div>
 
-  <!-- SCREEN 0: TITLE SCREEN -->
+  <!-- ==========================================================
+       SCREEN 0: TITLE SCREEN (MENU INICIAL / SAVE / NOVO JOGO)
+       ========================================================== -->
   <div id="screenTitle" class="screen active">
     <div class="title-screen-wrap">
+      
+      <!-- Crest Oficial Hextech -->
       <div class="title-hextech-crest"></div>
+
       <div class="title-logo-box">
-        <h1 class="title-main-heading">League of Legends</h1>
-        <div class="title-sub-heading">Rumo ao Estrelato • Modo Carreira Pro</div>
+        <h1 class="title-main-heading">LEAGUE OF LEGENDS</h1>
+        <div class="title-sub-heading">RUMO AO ESTRELATO • CARREIRA PROFISSIONAL</div>
+        <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px; letter-spacing: 2px; text-transform: uppercase;">
+          Do Circuito Go4LoL ao Campeonato Mundial (Worlds)
+        </div>
       </div>
 
       <div class="title-menu-cards">
         <div class="title-card-btn primary" onclick="gameRouter.newCareer()">
           <div class="title-btn-label">
-            <h3>▶ NOVO JOGO</h3>
-            <p>Crie seu atleta prodígio e inicie a jornada rumo ao CBLOL</p>
+            <h3>⚔️ NOVO JOGO</h3>
+            <p>Crie seu prodígio, assine com um clube e inicie sua lenda</p>
           </div>
           <span style="font-size: 1.5rem; color: var(--hextech-gold);">➔</span>
         </div>
 
         <div id="btnContinueCareerCard" class="title-card-btn" style="display: none;" onclick="gameRouter.continueCareer()">
           <div class="title-btn-label">
-            <h3 style="color: var(--hextech-blue);">💾 CONTINUAR CARREIRA</h3>
+            <h3 style="color: var(--hextech-blue);">🎮 CONTINUAR CARREIRA</h3>
             <p id="titleContinueDesc">Carregando save salvo...</p>
           </div>
           <span style="font-size: 1.5rem; color: var(--hextech-blue);">➔</span>
@@ -766,28 +874,32 @@
 
         <div class="title-card-btn" onclick="saveManager.openModal()">
           <div class="title-btn-label">
-            <h3>⚙️ GERENCIADOR DE SAVES</h3>
-            <p>Salvar, exportar código de save ou restaurar backup</p>
+            <h3>💾 GERENCIADOR DE SAVES</h3>
+            <p>Exportar código de save, baixar arquivo .JSON ou restaurar</p>
           </div>
-          <span style="font-size: 1.3rem; color: var(--text-muted);">💾</span>
+          <span style="font-size: 1.3rem; color: #a0aec0;">📁</span>
         </div>
 
         <div class="title-card-btn" onclick="gameRouter.openGuideModal()">
           <div class="title-btn-label">
-            <h3>📜 COMO JOGAR & GUIA DE CARREIRA</h3>
-            <p>Entenda o sistema de SoloQ, Go4LoL, Drafts e Treinamentos</p>
+            <h3>📖 GUIA DO CIRCUITO & REGRAS</h3>
+            <p>Formato de Ligas, Séries MD5, Playoffs, SoloQ e Worlds</p>
           </div>
-          <span style="font-size: 1.3rem; color: var(--text-muted);">❓</span>
+          <span style="font-size: 1.3rem; color: var(--danger-red);">?</span>
         </div>
       </div>
 
-      <div style="margin-top: 28px; display: flex; gap: 14px; align-items: center;">
-        <button class="btn btn-sm" id="btnSoundToggle" onclick="gameAudio.toggleSound()">🔊 Som: ON</button>
+      <div style="margin-top: 26px; display: flex; align-items: center; gap: 16px;">
+        <button class="btn btn-sm" id="btnToggleSoundTitle" onclick="gameAudio.toggleMute()">🔊 SOM: ON</button>
+        <span style="font-size: 0.76rem; color: #526178; letter-spacing: 1px;">PATCH 14.19 • ESPORTS MANAGER EDITION</span>
       </div>
+</div>
     </div>
   </div>
 
-  <!-- SCREEN 1: CRIAÇÃO DE PERSONAGEM -->
+  <!-- ==========================================================
+       SCREEN 1: CRIAÇÃO DE PERSONAGEM
+       ========================================================== -->
   <div id="screenCreation" class="screen">
     <div class="app-container">
       <div class="creation-wrapper">
@@ -848,7 +960,9 @@
           <!-- Atributos Preview -->
           <div style="grid-column: span 2; background: #080c14; border: 1px solid #1b263b; border-radius: 6px; padding: 12px;">
             <div style="font-family: var(--font-tech); font-weight: 700; color: var(--hextech-gold); font-size: 0.85rem; margin-bottom: 8px;">PRÉVIA DOS ATRIBUTOS INICIAIS:</div>
-            <div id="creationStatPreview" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;"></div>
+            <div id="creationStatPreview" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+              <!-- Preenchido via JS -->
+            </div>
           </div>
 
           <!-- Seleção de 3 Mains -->
@@ -860,8 +974,12 @@
             <div style="margin-bottom: 10px; display: flex; gap: 10px;">
               <input type="text" id="creationChampSearch" class="form-control" placeholder="🔍 Filtrar campeão por nome..." oninput="creationUI.filterChamps(this.value)">
             </div>
-            <div id="creationChampGrid" class="champ-grid-compact"></div>
-            <div id="creationSelectedPoolPreview" style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;"></div>
+            <div id="creationChampGrid" class="champ-grid-compact">
+              <!-- Cards de Campeões -->
+            </div>
+            <div id="creationSelectedPoolPreview" style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+              <!-- Preview dos 3 escolhidos -->
+            </div>
           </div>
 
           <div style="grid-column: span 2; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
@@ -873,7 +991,9 @@
     </div>
   </div>
 
-  <!-- SCREEN: PROPOSTAS DA LIGA GO4LOL (MERCADO DE ENTRADA) -->
+  <!-- ==========================================================
+       SCREEN: PROPOSTAS DA LIGA GO4LOL (MERCADO DE ENTRADA)
+       ========================================================== -->
   <div id="screenGo4LoLOffers" class="screen">
     <div class="app-container">
       <div class="offers-screen-wrapper">
@@ -881,14 +1001,20 @@
           <h2>Propostas Oficiais • Liga Amadora Go4LoL</h2>
           <p id="offersSubtitle">Olheiros e dirigentes das ligas de base analisaram seu histórico de alto nível no Mestre. Três organizações amadoras enviaram contratos formais para a sua estreia competitiva:</p>
         </div>
-        <div id="offersCardsGrid" class="offers-cards-grid"></div>
+
+        <div id="offersCardsGrid" class="offers-cards-grid">
+          <!-- Gerado via JS de acordo com a região -->
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 2: DASHBOARD (HUB DE CARREIRA) -->
+  <!-- ==========================================================
+       SCREEN 2: DASHBOARD (HUB DE CARREIRA)
+       ========================================================== -->
   <div id="screenDashboard" class="screen">
     <div class="app-container">
+      <!-- Header do Hub -->
       <div class="dashboard-header">
         <div class="player-profile-summary">
           <div class="player-avatar-large">
@@ -923,6 +1049,7 @@
         </div>
       </div>
 
+      <!-- Navigation Tabs -->
       <nav class="nav-tabs-wrap">
         <button class="nav-tab-btn active" onclick="hubTabs.switchTab('tabOverview', this)">🏠 Visão Geral</button>
         <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabLeagueStandings', this)">🏆 Tabela da Liga</button>
@@ -935,6 +1062,7 @@
       <!-- TAB 1: VISÃO GERAL -->
       <div id="tabOverview" class="tab-content active">
         <div class="dashboard-grid">
+          <!-- Coluna Esquerda: Status do Atleta & Mains -->
           <div style="display: flex; flex-direction: column; gap: 16px;">
             <div class="card">
               <div class="card-title">
@@ -972,6 +1100,7 @@
             </div>
           </div>
 
+          <!-- Coluna Central: Próximo Jogo & Rotina Diária -->
           <div style="display: flex; flex-direction: column; gap: 16px;">
             <div class="card" style="border-color: var(--hextech-gold); background: linear-gradient(135deg, rgba(200, 170, 110, 0.1) 0%, #0c1424 100%);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -995,15 +1124,13 @@
                 <div style="font-size: 0.85rem; color: #cbd5e1;">
                   ⚔️ Confronto Oficial com <strong style="color: var(--hextech-gold);">Draft & Treinador</strong>
                 </div>
-                <button class="btn btn-primary" style="padding: 12px 20px;" onclick="matchController.startSoloQMatch()">
-                  🔥 Jogar SoloQueue
-                </button>
-                <button class="btn btn-gold" style="padding: 12px 26px;" onclick="draftEngine.startChampionSelect()">
+                <button class="btn btn-gold" style="padding: 12px 30px;" onclick="draftEngine.startChampionSelect()">
                   ⚔️ Entrar na Seleção de Campeões
                 </button>
               </div>
             </div>
 
+            <!-- Rotina e Ações Diárias -->
             <div class="card">
               <div class="card-title">
                 <span>Ações Diárias & Rotina de Atleta</span>
@@ -1044,6 +1171,7 @@
             </div>
           </div>
 
+          <!-- Coluna Direita: Classificação Rápida & SoloQueue -->
           <div style="display: flex; flex-direction: column; gap: 16px;">
             <div class="card">
               <div class="card-title">
@@ -1072,6 +1200,7 @@
         </div>
       </div>
 
+      <!-- TAB 2: TABELA DA LIGA -->
       <!-- TAB 2: TABELA DA LIGA (NAVEGADOR COMPLETO DE DIVISÕES) -->
       <div id="tabLeagueStandings" class="tab-content">
         <div class="card">
@@ -1126,10 +1255,7 @@
         <div class="card">
           <div class="card-title">
             <span>🔥 RANKING DOS MELHORES DO SERVIDOR (TOP DESAFIANTES)</span>
-            <div style="display: flex; gap: 8px; align-items: center;">
-              <span class="badge badge-gold" id="tabSoloQRegionBadge">REGIÃO SELECIONADA</span>
-              <button class="btn btn-sm btn-gold" onclick="matchController.startSoloQMatch()">⚔️ Jogar Ranqueada SoloQ</button>
-            </div>
+            <span class="badge badge-gold" id="tabSoloQRegionBadge">REGIÃO SELECIONADA</span>
           </div>
           <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 12px;">
             Apenas os melhores jogadores, streamers e profissionais que disputam as ranqueadas da sua região:
@@ -1168,16 +1294,34 @@
       <div id="tabSocialFeed" class="tab-content">
         <div class="card">
           <div class="card-title">
-            <span>📱 REDE SOCIAL • REPERCUSSÃO NO CENÁRIO</span>
+            <span>📱 REDE SOCIAL • X / TWITTER DOS ESPORTS & COMUNIDADE</span>
             <span class="badge badge-blue">Ao Vivo</span>
           </div>
+
+          <!-- Pronunciamento do Jogador -->
+          <div style="background: #090e18; border: 1px solid #1a283f; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
+            <div style="font-family: var(--font-tech); font-weight: 700; color: var(--hextech-gold); font-size: 0.95rem; margin-bottom: 8px;">
+              💬 PRONUNCIAMENTO DO ATLETA (ESCOLHA COMO REAGIR À RODADA):
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn-tweet-action" onclick="socialEngine.playerTweet('provoke')">
+                🔥 Provocar Rivais ("Sem adversários à altura!") (+Fãs, +Confiança)
+              </button>
+              <button class="btn-tweet-action" onclick="socialEngine.playerTweet('humble')">
+                🙏 Discurso Humilde ("Pés no chão e foco no treino") (+Consistência)
+              </button>
+              <button class="btn-tweet-action" onclick="socialEngine.playerTweet('bo5')">
+                ⚔️ Foco na Série ("A MD5 ainda não acabou, confiem!") (+Comunicação)
+              </button>
+            </div>
+          </div>
+
           <div id="tabSocialFeedContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 3: DRAFT OFICIAL (SELEÇÃO DE CAMPEÕES ESTILO CLIENT) -->
   <div id="screenDraft" class="screen">
     <div class="draft-screen-wrapper">
       <div class="draft-top-bar">
@@ -1187,8 +1331,22 @@
           <div class="draft-timer-sub">SELEÇÃO DE CAMPEÕES</div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
-          <span class="badge badge-gold" id="draftOpponentRivalPreview">Oponente: Rival (Carregando...)</span>
+          <span class="coach-level-badge" id="draftCoachLevelBadge">👔 Treinador Nív. 1</span>
+          <span class="badge badge-gold" id="draftOpponentRivalPreview">Oponente: Rival</span>
           <span style="color: var(--text-muted); font-size: 0.85rem;" id="draftMatchMetaHeader">RODADA OFICIAL</span>
+        </div>
+      </div>
+
+      <!-- Barra de Bans Oficial (3 bans para cada equipe) -->
+      <div class="draft-bans-bar">
+        <div class="bans-group">
+          <span class="bans-title" style="color:var(--hextech-blue);">Bans do Seu Time:</span>
+          <div class="bans-slots" id="draftAllyBansContainer"></div>
+        </div>
+        <span style="color:#64748b; font-size:0.8rem; font-weight:700;">CAMPEÕES BLOQUEADOS NÃO PODEM SER ESCOLHIDOS</span>
+        <div class="bans-group">
+          <span class="bans-title" style="color:var(--danger-red);">Bans Inimigos:</span>
+          <div class="bans-slots" id="draftEnemyBansContainer"></div>
         </div>
       </div>
 
@@ -1199,10 +1357,10 @@
         <!-- Palco Central Grande (Arco Hextech com Técnico, Filtros e 168 Campeões) -->
         <div class="draft-center-stage">
           <!-- Barra Sutil do Técnico com os Counters Instantâneos -->
-          <div class="coach-matchup-bar" id="coachMatchupPanel">
-            <div class="coach-bar-left">
-              <span class="coach-icon">👔</span>
-              <div>
+          <div class="coach-matchup-panel" id="coachMatchupPanel">
+            <div class="coach-panel-top">
+              <div class="coach-avatar-circle">👔</div>
+              <div class="coach-briefing-text">
                 <h4 id="coachBriefingHeader">Coach Maestro (Técnico da Equipe)</h4>
                 <p id="coachBriefingDialogue">O rival travou o campeão dele. Qual campeão você quer para responder a esse matchup?</p>
               </div>
@@ -1292,10 +1450,10 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: SIMULAÇÃO DE PARTIDA -->
   <div id="screenMatch" class="screen">
     <div class="app-container">
       <div class="match-screen-wrap">
+        <!-- HUD Superior da Partida -->
         <div class="match-live-hud">
           <div class="hud-team-score" style="color: var(--hextech-blue);" id="matchAllyScoreHud">Seu Time: 0 Kills</div>
           <div class="hud-gold-diff">
@@ -1305,6 +1463,7 @@
           <div class="hud-team-score" style="color: var(--danger-red);" id="matchEnemyScoreHud">0 Kills :Rival</div>
         </div>
 
+        <!-- Fase Interativa dos Momentos Decisivos -->
         <div id="matchInteractivePhase" class="scenario-card-body">
           <div class="scenario-badge-row">
             <span class="badge badge-gold" id="scenarioPhaseBadge">MOMENTO 1 DE 3 • FASE DE ROTAS</span>
@@ -1314,8 +1473,11 @@
           <h2 class="scenario-title" id="scenarioTitle">Disputa de Rota</h2>
           <p class="scenario-desc" id="scenarioDesc">Descrição da situação...</p>
 
-          <div class="choices-list" id="scenarioChoicesContainer"></div>
+          <div class="choices-list" id="scenarioChoicesContainer">
+            <!-- 3 Opções de Ação -->
+          </div>
 
+          <!-- Banner de Resolução da Jogada -->
           <div id="resolutionBanner" style="display: none; margin-top: 20px; padding: 16px; border-radius: 8px; background: #080d16; border: 1px solid var(--border-hex);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
               <h3 id="resolutionResultTitle" style="font-family: var(--font-display); font-size: 1.25rem;">Resultado</h3>
@@ -1328,6 +1490,7 @@
           </div>
         </div>
 
+        <!-- Fase do Scoreboard Pós-Jogo com EVOLUÇÃO DE STATUS -->
         <div id="matchScoreboardPhase" class="scoreboard-wrap" style="display: none;">
           <div id="postGameOutcomeHeader" class="outcome-header victory">
             <h2 id="postGameOutcomeText">VITÓRIA!</h2>
@@ -1337,11 +1500,15 @@
             </div>
           </div>
 
+          <!-- SEÇÃO DE EVOLUÇÃO DE ATRIBUTOS (Solicitada pelo usuário) -->
           <div class="stat-growth-card" id="postGameStatGrowthBox">
             <h4>⚡ EVOLUÇÃO DO ATLETA NESTA PARTIDA:</h4>
-            <div class="stat-growth-chips" id="postGameStatGrowthChips"></div>
+            <div class="stat-growth-chips" id="postGameStatGrowthChips">
+              <!-- Preenchido via JS com os aumentos reais de Mecânica/Macro/etc. -->
+            </div>
           </div>
 
+          <!-- Scoreboard Table -->
           <table class="scoreboard-table">
             <thead>
               <tr>
@@ -1356,6 +1523,7 @@
             <tbody id="scoreboardTableBody"></tbody>
           </table>
 
+          <!-- Recompensas de Partida -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;">
             <div class="quick-stat-box"><div class="quick-stat-lbl">Experiência</div><div class="quick-stat-val" style="color: var(--hextech-blue);" id="rewardExp">+350 EXP</div></div>
             <div class="quick-stat-box"><div class="quick-stat-lbl">Fãs Ganhos</div><div class="quick-stat-val" style="color: var(--success-green);" id="rewardFame">+40 Fãs</div></div>
@@ -1371,7 +1539,10 @@
     </div>
   </div>
 
-  <!-- MODAIS -->
+  <!-- ==========================================================
+       MODAIS (SOLOQUEUE, SAVES, GUIA)
+       ========================================================== -->
+  <!-- Modal de SoloQueue Matchmaking -->
   <div id="soloqMatchmakingModal" class="modal-overlay">
     <div class="modal-box" style="text-align: center;">
       <div style="font-size: 2.2rem; margin-bottom: 8px;">🔥</div>
@@ -1379,7 +1550,9 @@
       <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
         Partida de High Elo ranqueada no servidor <strong id="soloqModalRegionName" style="color: #fff;">BR</strong>
       </p>
-      <div id="soloqLobbyRosterPreview" style="background: #070b13; border: 1px solid #1a273c; border-radius: 6px; padding: 12px; margin-bottom: 18px; font-size: 0.85rem; color: #cbd5e1; text-align: left;"></div>
+      <div id="soloqLobbyRosterPreview" style="background: #070b13; border: 1px solid #1a273c; border-radius: 6px; padding: 12px; margin-bottom: 18px; font-size: 0.85rem; color: #cbd5e1; text-align: left;">
+        <!-- Preenchido com jogadores reais da região -->
+      </div>
       <div style="display: flex; justify-content: center; gap: 12px;">
         <button class="btn btn-danger" onclick="career.cancelSoloQueue()">Recusar</button>
         <button class="btn btn-primary" style="padding: 12px 34px;" onclick="career.confirmSoloQueuePlay()">ACEITAR PARTIDA (10s)</button>
@@ -1387,6 +1560,7 @@
     </div>
   </div>
 
+  <!-- Modal do Gerenciador de Saves -->
   <div id="saveManagerModal" class="modal-overlay">
     <div class="modal-box">
       <h3>Gerenciador de Saves</h3>
@@ -1413,6 +1587,7 @@
     </div>
   </div>
 
+  <!-- Modal de Guia de Carreira -->
   <div id="guideModal" class="modal-overlay">
     <div class="modal-box">
       <h3>Guia de Carreira • Rumo ao Estrelato</h3>
@@ -1440,17 +1615,67 @@
 
     function getFallbackAvatar(name) {
       const initial = (name || "L").charAt(0).toUpperCase();
-      return "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23111827'/><circle cx='40' cy='40' r='34' fill='%231f2937' stroke='%23c8aa6e' stroke-width='3'/><text x='50%25' y='55%25' font-family='sans-serif' font-weight='bold' font-size='30' fill='%23c8aa6e' dominant-baseline='middle' text-anchor='middle'>" + initial + "</text></svg>";
+      return "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23111827'/><circle cx='40' cy='40' r='34' fill='%231f2937' stroke='%23c8aa6e' stroke-width='3'/><text x='50%' y='55%' font-family='sans-serif' font-weight='bold' font-size='26' fill='%23c8aa6e' dominant-baseline='middle' text-anchor='middle'>" + initial + "</text></svg>";
     }
 
-    
-    
     function handleImgError(img) {
       if (!img) return;
       img.onerror = null;
-      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23111827"/><circle cx="40" cy="40" r="34" fill="%231f2937" stroke="%23c8aa6e" stroke-width="3"/><text x="50%" y="55%" font-family="sans-serif" font-weight="bold" font-size="26" fill="%23c8aa6e" dominant-baseline="middle" text-anchor="middle">LoL</text></svg>';
+      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23111827"/><circle cx="40" cy="40" r="34" fill="%231f2937" stroke="%23c8aa6e" stroke-width="3"/><text x="50%" y="55%" font-family="sans-serif" font-weight="bold" font-size="24" fill="%23c8aa6e" dominant-baseline="middle" text-anchor="middle">LoL</text></svg>';
     }
     window.handleImgError = handleImgError;
+
+    /* GERADOR OFICIAL DE BRASÕES E BANDEIRAS DOS TIMES */
+    const TEAM_METADATA = {
+      "LOUD": { color: "#00ff66", bg: "#062410", tag: "LOUD", icon: "⚡" },
+      "paiN Gaming": { color: "#e81a38", bg: "#280509", tag: "PNG", icon: "⚔️" },
+      "RED Canids Kalunga": { color: "#ff2a2a", bg: "#260606", tag: "RED", icon: "🐺" },
+      "Vivo Keyd Stars": { color: "#9b51e0", bg: "#19082d", tag: "VKS", icon: "⭐" },
+      "FURIA": { color: "#ffffff", bg: "#111111", tag: "FUR", icon: "🐾" },
+      "KaBuM! Esports": { color: "#ff7700", bg: "#281200", tag: "KBM", icon: "💥" },
+      "Fluxo": { color: "#8a2be2", bg: "#16072b", tag: "FX", icon: "🌊" },
+      "INTZ": { color: "#00b4d8", bg: "#041924", tag: "ITZ", icon: "🚀" },
+      "Los Grandes": { color: "#ff8c00", bg: "#281400", tag: "LOS", icon: "👑" },
+      
+      // Academy
+      "LOUD Academy": { color: "#00ff66", bg: "#062410", tag: "LOUD.A", icon: "⚡" },
+      "paiN Gaming Academy": { color: "#e81a38", bg: "#280509", tag: "PNG.A", icon: "⚔️" },
+      "RED Canids Academy": { color: "#ff2a2a", bg: "#260606", tag: "RED.A", icon: "🐺" },
+      "Vivo Keyd Stars Academy": { color: "#9b51e0", bg: "#19082d", tag: "VKS.A", icon: "⭐" },
+      "FURIA Academy": { color: "#ffffff", bg: "#111111", tag: "FUR.A", icon: "🐾" },
+      "KaBuM! Academy": { color: "#ff7700", bg: "#281200", tag: "KBM.A", icon: "💥" },
+      
+      // Circuito Desafiante
+      "Santos eSports": { color: "#c8aa6e", bg: "#0a1322", tag: "SAN", icon: "🐟" },
+      "Team oNe eSports": { color: "#ffd700", bg: "#201a03", tag: "ONE", icon: "1️⃣" },
+      "ProGaming Esports": { color: "#00ffff", bg: "#051d24", tag: "PRG", icon: "🎮" },
+      "Havan Liberty": { color: "#2563eb", bg: "#081533", tag: "HL", icon: "🗽" },
+      "CNB e-Sports Club": { color: "#3b82f6", bg: "#071329", tag: "CNB", icon: "🛡️" },
+      "Submarino Stars": { color: "#06b6d4", bg: "#041a24", tag: "SUB", icon: "⚓" },
+      
+      // Go4LoL
+      "Academia Santos Dex": { color: "#00d2ff", bg: "#071728", tag: "SAN.D", icon: "🔱" },
+      "KaBuM! Black": { color: "#ff6600", bg: "#1c0d03", tag: "KBM.B", icon: "🥷" },
+      "Ilha das Lendas Cup Team": { color: "#ef4444", bg: "#290707", tag: "ILHA", icon: "🏝️" },
+      "Falkol Reborn": { color: "#38bdf8", bg: "#071c26", tag: "FLK", icon: "🦅" },
+      "Rensga Amador": { color: "#facc15", bg: "#261d02", tag: "RNG.A", icon: "🤠" },
+      "Team One Sub-20": { color: "#eab308", bg: "#1f1601", tag: "ONE.J", icon: "🌟" },
+
+      // Worlds
+      "T1 (Faker)": { color: "#e11d48", bg: "#2b030b", tag: "T1", icon: "🏆" },
+      "Gen.G (Chovy)": { color: "#ca8a04", bg: "#261801", tag: "GEN", icon: "🐯" },
+      "G2 Esports": { color: "#e2e8f0", bg: "#0f172a", tag: "G2", icon: "⚔️" },
+      "Bilibili Gaming": { color: "#38bdf8", bg: "#051e2b", tag: "BLG", icon: "⚡" }
+    };
+
+    function getTeamLogoSvg(teamName, size) {
+      size = size || 36;
+      const meta = TEAM_METADATA[teamName] || { color: "#c8aa6e", bg: "#111827", tag: (teamName || "LOL").slice(0,3).toUpperCase(), icon: "🛡️" };
+      return "<div class='team-flag-crest' style='width:" + size + "px; height:" + size + "px; background:" + meta.bg + "; border:2px solid " + meta.color + "; box-shadow:0 0 10px " + meta.color + "44;' title='" + teamName + "'>" +
+        "<span style='font-size:" + Math.round(size * 0.48) + "px; line-height:1;'>" + meta.icon + "</span>" +
+      "</div>";
+    }
+    window.getTeamLogoSvg = getTeamLogoSvg;
 
     /* BANCO DE DADOS DE FEITIÇOS DE INVOCADOR (SUMMONER SPELLS) */
     const SUMMONER_SPELLS_DB = {
@@ -1586,46 +1811,33 @@
         { rank: 14, name: "Yoda", tier: "Desafiante", lp: 920, winrate: "55%", main: "Katarina" },
         { rank: 15, name: "Grevthar", tier: "Grão-Mestre", lp: 560, winrate: "54%", main: "Galio" },
         { rank: 16, name: "Netuno", tier: "Grão-Mestre", lp: 520, winrate: "54%", main: "Jinx" },
-        { rank: 17, name: "RedBert", tier: "Grão-Mestre", lp: 480, winrate: "53%", main: "Rakan" },
-        { rank: 18, name: "Disamis", tier: "Grão-Mestre", lp: 450, winrate: "53%", main: "Vi" }
+        { rank: 17, name: "RedBert", tier: "Grão-Mestre", lp: 480, winrate: "53%", main: "Rakan" }
       ],
       KR: [
-        { rank: 1, name: "Hide on bush (Faker)", tier: "Desafiante", lp: 1720, winrate: "66%", main: "Ahri" },
-        { rank: 2, name: "Chovy", tier: "Desafiante", lp: 1680, winrate: "65%", main: "Yone" },
-        { rank: 3, name: "Canyon", tier: "Desafiante", lp: 1620, winrate: "64%", main: "Nidalee" },
-        { rank: 4, name: "Viper", tier: "Desafiante", lp: 1570, winrate: "63%", main: "Lucian" },
-        { rank: 5, name: "Zeus", tier: "Desafiante", lp: 1520, winrate: "62%", main: "Jayce" },
-        { rank: 6, name: "Keria", tier: "Desafiante", lp: 1480, winrate: "62%", main: "Thresh" },
-        { rank: 7, name: "ShowMaker", tier: "Desafiante", lp: 1440, winrate: "61%", main: "Syndra" },
-        { rank: 8, name: "Gumayusi", tier: "Desafiante", lp: 1400, winrate: "60%", main: "Varus" },
-        { rank: 9, name: "Ruler", tier: "Desafiante", lp: 1360, winrate: "60%", main: "Zeri" },
-        { rank: 10, name: "Peanut", tier: "Desafiante", lp: 1320, winrate: "59%", main: "Poppy" },
-        { rank: 11, name: "Oner", tier: "Desafiante", lp: 1240, winrate: "58%", main: "LeeSin" },
-        { rank: 12, name: "Lehends", tier: "Desafiante", lp: 1200, winrate: "57%", main: "Blitzcrank" },
-        { rank: 13, name: "Bdd", tier: "Desafiante", lp: 1160, winrate: "57%", main: "Azir" },
-        { rank: 14, name: "Deft", tier: "Grão-Mestre", lp: 580, winrate: "55%", main: "Ezreal" }
+        { rank: 1, name: "Faker", tier: "Desafiante", lp: 1680, winrate: "66%", main: "Ahri" },
+        { rank: 2, name: "Chovy", tier: "Desafiante", lp: 1620, winrate: "65%", main: "Yone" },
+        { rank: 3, name: "Canyon", tier: "Desafiante", lp: 1570, winrate: "64%", main: "Nidalee" },
+        { rank: 4, name: "Viper", tier: "Desafiante", lp: 1520, winrate: "63%", main: "Lucian" },
+        { rank: 5, name: "Keria", tier: "Desafiante", lp: 1480, winrate: "62%", main: "Thresh" },
+        { rank: 6, name: "ShowMaker", tier: "Desafiante", lp: 1440, winrate: "61%", main: "Syndra" },
+        { rank: 7, name: "Zeus", tier: "Desafiante", lp: 1400, winrate: "60%", main: "Jayce" },
+        { rank: 8, name: "Ruler", tier: "Desafiante", lp: 1350, winrate: "60%", main: "Ezreal" },
+        { rank: 9, name: "Oner", tier: "Desafiante", lp: 1300, winrate: "59%", main: "LeeSin" },
+        { rank: 10, name: "BeryL", tier: "Grão-Mestre", lp: 610, winrate: "55%", main: "Braum" }
       ],
       EUW: [
         { rank: 1, name: "Caps", tier: "Desafiante", lp: 1630, winrate: "65%", main: "Sylas" },
         { rank: 2, name: "Jankos", tier: "Desafiante", lp: 1560, winrate: "63%", main: "LeeSin" },
         { rank: 3, name: "BrokenBlade", tier: "Desafiante", lp: 1510, winrate: "62%", main: "Riven" },
         { rank: 4, name: "Mikyx", tier: "Desafiante", lp: 1460, winrate: "61%", main: "Gragas" },
-        { rank: 5, name: "Hans Sama", tier: "Desafiante", lp: 1420, winrate: "60%", main: "Draven" },
-        { rank: 6, name: "Elyoya", tier: "Desafiante", lp: 1380, winrate: "60%", main: "Viego" },
-        { rank: 7, name: "Perkz", tier: "Desafiante", lp: 1340, winrate: "59%", main: "LeBlanc" },
-        { rank: 8, name: "Rekkles", tier: "Desafiante", lp: 1300, winrate: "58%", main: "Janna" },
-        { rank: 9, name: "Humanoid", tier: "Desafiante", lp: 1220, winrate: "57%", main: "Orianna" },
-        { rank: 10, name: "Larssen", tier: "Grão-Mestre", lp: 580, winrate: "55%", main: "Azir" }
+        { rank: 5, name: "Hans Sama", tier: "Desafiante", lp: 1420, winrate: "60%", main: "Draven" }
       ],
       NA: [
         { rank: 1, name: "Jojopyun", tier: "Desafiante", lp: 1540, winrate: "64%", main: "Akali" },
         { rank: 2, name: "Blaber", tier: "Desafiante", lp: 1490, winrate: "63%", main: "Olaf" },
         { rank: 3, name: "Berserker", tier: "Desafiante", lp: 1450, winrate: "62%", main: "Jinx" },
         { rank: 4, name: "Inspired", tier: "Desafiante", lp: 1410, winrate: "61%", main: "Viego" },
-        { rank: 5, name: "Bjergsen", tier: "Desafiante", lp: 1370, winrate: "60%", main: "Zilean" },
-        { rank: 6, name: "Doublelift", tier: "Desafiante", lp: 1330, winrate: "59%", main: "Lucian" },
-        { rank: 7, name: "Vulcan", tier: "Desafiante", lp: 1290, winrate: "59%", main: "Alistar" },
-        { rank: 8, name: "Impact", tier: "Desafiante", lp: 1250, winrate: "58%", main: "Shen" }
+        { rank: 5, name: "Bjergsen", tier: "Desafiante", lp: 1370, winrate: "60%", main: "Zilean" }
       ]
     };
 
@@ -1682,7 +1894,7 @@
       },
       Mid: {
         assassins: {
-          champs: ["Zed", "Katarina", "Akali", "Talon", "LeBlanc", "Yasuo", "Yone"],
+          champs: ["Zed", "Katarina", "Akali", "Talon", "LeBlanc", "Yasuo", "Yone", "Jayce"],
           dialogue: "O mid inimigo lockou um assassino mecânico de alta mobilidade! Como pretendemos neutralizá-lo?",
           counters: [
             { champId: "Lissandra", champName: "Lissandra", bonus: 20, desc: "Túmulo Glacial Defensivo: Cancela o burst inimigo e contra-ataca em área (+20% Sobrevivência)" },
@@ -1691,7 +1903,7 @@
           ]
         },
         mages: {
-          champs: ["Syndra", "Orianna", "Viktor", "Azir", "Hwei", "Ahri"],
+          champs: ["Syndra", "Orianna", "Viktor", "Azir", "Hwei", "Ahri", "Vex"],
           dialogue: "Eles escolheram um mago de controle com alto dano em lutas de equipe! Qual é o contra-ataque?",
           counters: [
             { champId: "Ahri", champName: "Ahri", bonus: 18, desc: "Mobilidade e Pick-Off: Desvia dos disparos com o R e acerta o Charme (+18% Mobilidade)" },
@@ -1702,504 +1914,121 @@
       },
       ADC: {
         hypercarries: {
-          champs: ["Jinx", "Twitch", "KogMaw", "Zeri", "Aphelios"],
-          dialogue: "Eles pegaram um atirador de hiperescala! Temos que punir a fase de rotas antes do minuto 25. Qual seu pick?",
+          champs: ["Jinx", "KogMaw", "Vayne", "Twitch", "Zeri", "Aphelios"],
+          dialogue: "O atirador rival escala forte para o late game! Como vamos encerrar o jogo antes que eles fiquem gigantes?",
           counters: [
-            { champId: "Lucian", champName: "Lucian", bonus: 20, desc: "Pressão Agressiva de Rota: Amassa a lane phase com trocas curtas e burst (+20% Lane Phase)" },
-            { champId: "Draven", champName: "Draven", bonus: 18, desc: "Glória dos Machados: Dano monstruoso de early game para fechar o jogo cedo (+18% Snowball)" },
-            { champId: "Samira", champName: "Samira", bonus: 17, desc: "All-in Devastador: Explode a bot lane com combos e cancela disparos com W (+17% All-in)" }
+            { champId: "Lucian", champName: "Lucian", bonus: 20, desc: "Pressão Inicial Agressiva: Amassa a bot lane nos primeiros 15 minutos (+20% Early Game)" },
+            { champId: "Draven", champName: "Draven", bonus: 20, desc: "Machados Giratórios: Snowball brutal que não dá espaço para farm (+20% Snowball)" },
+            { champId: "MissFortune", champName: "Miss Fortune", bonus: 17, desc: "Chuva de Disparos: Pressiona a lane com Q e derrete em lutas de dragão (+17% Lutas)" }
           ]
         },
-        bullies: {
-          champs: ["Caitlyn", "Draven", "Kalista", "Varus"],
-          dialogue: "O adversário quer ditar o ritmo da bot lane com pressão de alcance. Como você quer responder?",
+        laneBullies: {
+          champs: ["Caitlyn", "Draven", "Lucian", "Kalista", "Varus"],
+          dialogue: "Eles escolheram atirador agressivo de pressão de rota! Qual é a nossa resposta?",
           counters: [
-            { champId: "Ezreal", champName: "Ezreal", bonus: 18, desc: "Disparo Seguro & Translocação: Farma de longe e escapa com facilidade (+18% Segurança)" },
-            { champId: "Ashe", champName: "Ashe", bonus: 17, desc: "Utilidade e Flecha Global: Iniciação à distância para o time (+17% Utilidade)" },
-            { champId: "KaiSa", champName: "KaiSa", bonus: 19, desc: "Isolamento & Instinto Assassino: Pula por trás da linha de frente no pico de poder (+19% Outplay)" }
+            { champId: "Ezreal", champName: "Ezreal", bonus: 18, desc: "Disparo Místico Seguro: Farma de longe com o Q e escapa com o E (+18% Segurança)" },
+            { champId: "Jhin", champName: "Jhin", bonus: 17, desc: "Controle & 4º Disparo: Responde às trocas com W e inicia do fog com o R (+17% Controle)" },
+            { champId: "Ashe", champName: "Ashe", bonus: 16, desc: "Lentidão Constante: Segura a agressividade rival com rajadas de gelo (+16% Kiting)" }
           ]
         }
       },
       Jungle: {
-        gankers: {
-          champs: ["LeeSin", "Elise", "JarvanIV", "XinZhao", "Vi"],
-          dialogue: "O caçador inimigo vai acelerar ganks agressivos nos primeiros 10 minutos! Qual é o nosso contra-plano?",
+        invaders: {
+          champs: ["LeeSin", "Nidalee", "Graves", "Shaco", "Kindred"],
+          dialogue: "O caçador rival adora invadir a selva e duelar cedo! Qual é o plano de contenção?",
           counters: [
-            { champId: "RekSai", champName: "RekSai", bonus: 20, desc: "Sentido Sísmico: Rastreia a selva inimiga pelo som e contra-ganka com eficácia (+20% Contra-Gank)" },
-            { champId: "Sejuani", champName: "Sejuani", bonus: 18, desc: "Resistência Gélida & CC: Linha de frente inquebrável para desarmar emboscadas (+18% Linha de Frente)" },
-            { champId: "Poppy", champName: "Poppy", bonus: 17, desc: "Presença Inabalável: Cancela os dashes e pulos dos gankers inimigos (+17% Anti-Dash)" }
+            { champId: "Warwick", champName: "Warwick", bonus: 20, desc: "Duelo Imbatível: Cura absurda em vida baixa e rastreio de sangue (+20% Duelos)" },
+            { champId: "Poppy", champName: "Poppy", bonus: 18, desc: "Firmeza Inabalável: Bloqueia saltos e investidas dos caçadores ágeis (+18% Anti-Dash)" },
+            { champId: "Trundle", champName: "Trundle", bonus: 17, desc: "Roubo de Atributos: Destrói qualquer invasor em combate corpo a corpo (+17% Invasão)" }
           ]
         },
         farmers: {
-          champs: ["Karthus", "Shyvana", "MasterYi", "Graves", "Hecarim"],
-          dialogue: "O jungler adversário quer farmar a selva inteira e ficar gigante no late game. Como reagimos?",
+          champs: ["Karthus", "Hecarim", "Fiddlesticks", "Shyvana", "Evelynn"],
+          dialogue: "O caçador inimigo quer farmar a selva inteira e aparecer forte no late game. Como aceleramos?",
           counters: [
-            { champId: "KhaZix", champName: "KhaZix", bonus: 20, desc: "Invasão & Dano Isolado: Caça o caçador inimigo na própria selva (+20% Invasão)" },
-            { champId: "LeeSin", champName: "LeeSin", bonus: 18, desc: "Pressão de Mapa Total: Cria vantagens nas três rotas antes que ele escale (+18% Ritmo)" },
-            { champId: "Warwick", champName: "Warwick", bonus: 17, desc: "Faro de Sangue: Controle de objetivos e sustentação imbatível em duelos (+17% Controle)" }
+            { champId: "XinZhao", champName: "Xin Zhao", bonus: 20, desc: "Ganks Devastadores: Pressiona as rotas antes que o caçador deles termine o farm (+20% Pressão)" },
+            { champId: "JarvanIV", champName: "Jarvan IV", bonus: 18, desc: "Cataclisma Fatal: Garante eliminações rápidas com E-Q e o R (+18% Ganks)" },
+            { champId: "Vi", champName: "Vi", bonus: 17, desc: "Arrombadora de Defesas: Lockdown direto e ganks certeiros (+17% Lockdown)" }
           ]
         }
       }
     };
 
-    /* SISTEMA DE ÁUDIO WEB */
-    class SoundEngine {
-      constructor() { this.ctx = null; this.enabled = true; }
+    /* ESTADO PADRÃO DE CARREIRA */
+    const DEFAULT_CAREER = {
+      name: "Gabriel Santos",
+      nick: "Revenge",
+      region: "BR",
+      role: "Mid",
+      style: "Agressivo",
+      currentTierId: 4,
+      team: { name: "Academia Santos Dex", tierId: 4, week: 1, wins: 0, losses: 0 },
+      elo: { tier: "Mestre", division: "I", lp: 140, soloRank: 2450 },
+      stats: { mechanics: 60, macro: 52, comm: 50, consistency: 54, confidence: 75 },
+      energy: 100, gold: 500, fame: 150,
+      championPool: [],
+      spells: { d: "Flash", f: "Ignite" },
+      coach: { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" },
+      playoffs: { inPlayoffs: false, stage: "Fase Regular", wins: 0, losses: 0, seriesTarget: 3, opponentName: "" },
+      socialFeed: [],
+      offers: [
+        { id: 1, team: "KaBuM! Black", tierId: 4, salary: 500, bonusGold: 300, bonusFame: 100, reqFame: 0 },
+        { id: 2, team: "Academia Santos Dex", tierId: 4, salary: 450, bonusGold: 400, bonusFame: 150, reqFame: 0 }
+      ]
+    };
+
+    let careerState = null;
+
+    /* GERENCIADOR DE AUDIO COM WEBAUDIO */
+    const gameAudio = {
+      muted: false,
+      ctx: null,
       init() {
         if (!this.ctx) {
           const AudioContext = window.AudioContext || window.webkitAudioContext;
           if (AudioContext) this.ctx = new AudioContext();
         }
-      }
-      toggleSound() {
-        this.enabled = !this.enabled;
-        const btn = document.getElementById("btnSoundToggle");
-        if (btn) btn.innerText = this.enabled ? "🔊 Som: ON" : "🔇 Som: OFF";
-      }
-      playClick() {
-        if (!this.enabled) return; this.init(); if (!this.ctx) return;
-        const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
-        osc.type = "sine"; osc.frequency.setValueAtTime(800, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.08);
-        osc.connect(gain); gain.connect(this.ctx.destination);
-        osc.start(); osc.stop(this.ctx.currentTime + 0.08);
-      }
+      },
+      playTone(freq, type, duration) {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type || "sine";
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch(e) {}
+      },
+      playClick() { this.playTone(580, "sine", 0.08); },
       playLockIn() {
-        if (!this.enabled) return; this.init(); if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        [440, 660, 880].forEach((freq, i) => {
-          const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
-          osc.type = "triangle"; osc.frequency.setValueAtTime(freq, now + i * 0.08);
-          gain.gain.setValueAtTime(0.18, now + i * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.3);
-          osc.connect(gain); gain.connect(this.ctx.destination);
-          osc.start(now + i * 0.08); osc.stop(now + i * 0.08 + 0.3);
-        });
-      }
+        if (this.muted) return;
+        this.playTone(320, "triangle", 0.15);
+        setTimeout(() => this.playTone(520, "triangle", 0.3), 120);
+      },
       playVictory() {
-        if (!this.enabled) return; this.init(); if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        [523, 659, 783, 1046].forEach((freq, i) => {
-          const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
-          osc.type = "sine"; osc.frequency.setValueAtTime(freq, now + i * 0.1);
-          gain.gain.setValueAtTime(0.18, now + i * 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.4);
-          osc.connect(gain); gain.connect(this.ctx.destination);
-          osc.start(now + i * 0.1); osc.stop(now + i * 0.1 + 0.4);
+        if (this.muted) return;
+        [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+          setTimeout(() => this.playTone(f, "triangle", 0.25), i * 90);
         });
-      }
+      },
       playFailure() {
-        if (!this.enabled) return; this.init(); if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        [320, 220, 150].forEach((freq, i) => {
-          const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
-          osc.type = "sawtooth"; osc.frequency.setValueAtTime(freq, now + i * 0.09);
-          gain.gain.setValueAtTime(0.15, now + i * 0.09);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.2);
-          osc.connect(gain); gain.connect(this.ctx.destination);
-          osc.start(now + i * 0.09); osc.stop(now + i * 0.09 + 0.2);
-        });
-      }
-    }
-    const gameAudio = new SoundEngine();
-
-    /* ESTADO DA CARREIRA E SAVE SYSTEM */
-    const STORAGE_KEY = "lol_career_save_v4";
-
-    const DEFAULT_CAREER = {
-      name: "Gabriel Santos",
-      nick: "Revenge",
-      role: "Mid",
-      style: "Agressivo",
-      region: "BR",
-      currentTierId: 4,
-      stats: { mechanics: 62, macro: 52, comm: 50, consistency: 54, confidence: 75 },
-      energy: 100,
-      gold: 500,
-      fame: 150,
-      elo: { tier: "Mestre", division: "I", lp: 140, soloRank: 2450 },
-      team: { name: "KaBuM! Black", tierId: 4, week: 1, wins: 0, losses: 0 },
-      championPool: [],
-      spells: { d: "Flash", f: "Ignite" },
-      tacticalStance: "macro",
-      socialFeed: [],
-      offers: [],
-      savedAt: null
-    };
-
-    let careerState = null;
-
-    const career = {
-      load() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return false;
-          careerState = JSON.parse(raw);
-          return true;
-        } catch (e) {
-          console.error("Erro ao carregar save:", e);
-          return false;
-        }
-      },
-
-      save() {
-        if (!careerState) return;
-        careerState.savedAt = new Date().toLocaleString("pt-BR");
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(careerState));
-        } catch (e) {
-          console.error("Erro ao salvar:", e);
-        }
-      },
-
-      saveWithToast() {
-        this.save();
-        gameAudio.playClick();
-        showToast("💾 Jogo salvo com sucesso!");
-      },
-
-      getOverall() {
-        if (!careerState) return 60;
-        const s = careerState.stats;
-        return Math.round((s.mechanics * 0.35) + (s.macro * 0.25) + (s.consistency * 0.25) + (s.comm * 0.15));
-      },
-
-      updateDashboardUI() {
-        if (!careerState) return;
-        const ovr = this.getOverall();
-
-        document.getElementById("hubPlayerNick").innerText = careerState.nick;
-        document.getElementById("hubPlayerTeam").innerText = careerState.team.name;
-        document.getElementById("hubPlayerRole").innerText = (careerState.role === "Top" ? "🛡️ Top" : careerState.role === "Jungle" ? "🌲 Jungle" : careerState.role === "Mid" ? "⚡ Mid" : careerState.role === "ADC" ? "🏹 ADC" : "💖 Suporte");
-        document.getElementById("hubPlayerElo").innerText = careerState.elo.tier + " (" + careerState.elo.lp + " PDL)";
-        document.getElementById("hubPlayerRegion").innerText = (careerState.region === "BR" ? "🇧🇷 Servidor BR" : careerState.region === "KR" ? "🇰🇷 Servidor KR" : careerState.region === "EUW" ? "🇪🇺 Servidor EUW" : "🇺🇸 Servidor NA");
-
-        const main = careerState.championPool[0] || (window.LOL_CHAMPIONS_DB && window.LOL_CHAMPIONS_DB[0]);
-        if (main) {
-          document.getElementById("hubPlayerAvatar").src = getChampImgUrl(main);
-          document.getElementById("hubPlayerAvatar").onerror = function() { this.src = getFallbackAvatar(main.name); };
-        }
-
-        document.getElementById("hubEnergyVal").innerText = careerState.energy + "%";
-        document.getElementById("hubGoldVal").innerText = "R$ " + careerState.gold.toLocaleString();
-        document.getElementById("hubFameVal").innerText = careerState.fame.toLocaleString();
-        document.getElementById("hubOverallRating").innerText = "OVR: " + ovr;
-
-        document.getElementById("valStatMech").innerText = careerState.stats.mechanics;
-        document.getElementById("barStatMech").style.width = Math.min(100, careerState.stats.mechanics) + "%";
-
-        document.getElementById("valStatMacro").innerText = careerState.stats.macro;
-        document.getElementById("barStatMacro").style.width = Math.min(100, careerState.stats.macro) + "%";
-
-        document.getElementById("valStatComm").innerText = careerState.stats.comm;
-        document.getElementById("barStatComm").style.width = Math.min(100, careerState.stats.comm) + "%";
-
-        document.getElementById("valStatCons").innerText = careerState.stats.consistency;
-        document.getElementById("barStatCons").style.width = Math.min(100, careerState.stats.consistency) + "%";
-
-        document.getElementById("valStatConf").innerText = careerState.stats.confidence + "%";
-        document.getElementById("barStatConf").style.width = Math.min(100, careerState.stats.confidence) + "%";
-
-        this.renderMainsList();
-
-        const tier = LEAGUES_DATA[careerState.currentTierId];
-        document.getElementById("hubMatchLeagueHeader").innerText = tier.name + " • Rodada " + careerState.team.week;
-        document.getElementById("hubSeasonRecord").innerText = careerState.team.wins + "V - " + careerState.team.losses + "D";
-        document.getElementById("hubMyTeamNameMatch").innerText = careerState.team.name;
-        document.getElementById("hubWeekNumber").innerText = careerState.team.week;
-
-        const opp = this.getCurrentOpponent();
-        document.getElementById("hubEnemyTeamNameMatch").innerText = opp.name;
-        document.getElementById("hubEnemyTeamTagMatch").innerText = "Rival (" + opp.tag + ")";
-
-        this.renderMiniStandings();
-        document.getElementById("hubSoloQPosition").innerText = "#" + careerState.elo.soloRank;
-        document.getElementById("hubSoloQRankDetailed").innerText = careerState.elo.tier + " (" + careerState.elo.lp + " PDL)";
-
-        const badgeTag = document.getElementById("hubSoloQBadgeTag");
-        badgeTag.className = "badge " + (careerState.elo.tier === "Desafiante" ? "badge-challenger" : careerState.elo.tier === "Grão-Mestre" ? "badge-gm" : "badge-master");
-        badgeTag.innerText = careerState.elo.tier.toUpperCase();
-
-        this.renderStandingsTable();
-        this.renderSoloQueueTable();
-        this.renderTransfersTab();
-        this.renderSocialFeedTab();
-      },
-
-      getCurrentOpponent() {
-        const tier = LEAGUES_DATA[careerState.currentTierId];
-        const rivals = tier.teams.filter(t => t.name !== careerState.team.name);
-        const idx = (careerState.team.week - 1) % rivals.length;
-        return rivals[idx] || rivals[0];
-      },
-
-      renderMainsList() {
-        const container = document.getElementById("hubPoolList");
-        container.innerHTML = "";
-        careerState.championPool.forEach((c) => {
-          const div = document.createElement("div");
-          div.style.display = "flex"; div.style.alignItems = "center"; div.style.justifyContent = "space-between";
-          div.style.background = "#090e18"; div.style.border = "1px solid #1c2b42";
-          div.style.borderRadius = "6px"; div.style.padding = "6px 10px";
-
-          const masteryLabel = c.masteryLevel >= 7 ? "M7" : c.masteryLevel >= 6 ? "M6" : "M5";
-          const wr = c.games > 0 ? Math.round((c.wins / c.games) * 100) + "%" : "0%";
-
-          div.innerHTML = `<div style="display:flex; align-items:center; gap:8px;">
-            <img src="${getChampImgUrl(c)}" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--hextech-gold);" onerror="this.onerror=null;this.src='${getFallbackAvatar(c.name)}';">
-            <div>
-              <strong style="font-size:0.88rem; color:#fff;">${c.name}</strong>
-              <span class="badge badge-gold" style="padding:1px 6px; font-size:0.68rem; margin-left:4px;">${masteryLabel}</span>
-              <div style="font-size:0.72rem; color:var(--text-muted);">${c.games}J (${wr} WR) • ${c.masteryPoints.toLocaleString()} MP</div>
-            </div>
-          </div>
-          <span style="font-size:0.75rem; color:var(--hextech-blue); font-weight:700;">+15% Duelo</span>`;
-          container.appendChild(div);
+        if (this.muted) return;
+        [320, 280, 240].forEach((f, i) => {
+          setTimeout(() => this.playTone(f, "sawtooth", 0.2), i * 110);
         });
       },
-
-      trainStat(statName) {
-        if (careerState.energy < 20) {
-          showToast("⚡ Energia esgotada! Descanse para se recuperar do cansaço.");
-          return;
-        }
-        gameAudio.playClick();
-        careerState.energy -= 20;
-        careerState.stats[statName] = Math.min(99, careerState.stats[statName] + 2);
-        this.save();
-        this.updateDashboardUI();
-
-        const labels = { mechanics: "Mecânica", macro: "Macro/Visão", comm: "Comunicação", consistency: "Consistência" };
-        showToast("🎯 Treino realizado com foco total! +2 em " + labels[statName] + ".");
-      },
-
-      startSoloQueueMatchmaking() {
-        if (careerState.energy < 25) {
-          showToast("⚡ Energia insuficiente para disputar a SoloQueue. Tire um descanso!");
-          return;
-        }
-
-        const region = careerState.region || "BR";
-        const players = REGIONAL_SOLOQ_PLAYERS[region] || REGIONAL_SOLOQ_PLAYERS.BR;
-        const shuffle = [...players].sort(() => 0.5 - Math.random());
-
-        const ally1 = shuffle[0] ? shuffle[0].name : "ProPlayer 1";
-        const ally2 = shuffle[1] ? shuffle[1].name : "Streamer 2";
-        const enemyMid = shuffle[2] ? shuffle[2].name : "Rival High Elo";
-        const enemyJg = shuffle[3] ? shuffle[3].name : "Mono Jungler";
-
-        document.getElementById("soloqModalRegionName").innerText = region;
-        document.getElementById("soloqLobbyRosterPreview").innerHTML = "<strong>Lobby Regional (" + region + "):</strong><br>• Time Azul: " + careerState.nick + " (Você), " + ally1 + ", " + ally2 + "<br>• Time Vermelho: " + enemyMid + ", " + enemyJg + ", Smurf Desafiante";
-
-        document.getElementById("soloqMatchmakingModal").classList.add("active");
-      },
-
-      cancelSoloQueue() {
-        document.getElementById("soloqMatchmakingModal").classList.remove("active");
-      },
-
-      confirmSoloQueuePlay() {
-        document.getElementById("soloqMatchmakingModal").classList.remove("active");
-        careerState.energy -= 25;
-
-        const ovr = this.getOverall();
-        const winChance = 0.46 + (ovr / 220) + (careerState.stats.confidence / 500);
-        const won = Math.random() < winChance;
-
-        const mainChamp = careerState.championPool[Math.floor(Math.random() * careerState.championPool.length)];
-        mainChamp.games++;
-
-        if (won) {
-          mainChamp.wins++;
-          mainChamp.masteryPoints += 900;
-          const pdlGain = Math.floor(Math.random() * 8) + 24;
-          careerState.elo.lp += pdlGain;
-          careerState.fame += 18;
-          careerState.stats.confidence = Math.min(100, careerState.stats.confidence + 5);
-          careerState.elo.soloRank = Math.max(1, Math.round(careerState.elo.soloRank * 0.91));
-
-          const statsArr = ["mechanics", "macro", "consistency"];
-          const statGrown = statsArr[Math.floor(Math.random() * statsArr.length)];
-          careerState.stats[statGrown] = Math.min(99, careerState.stats[statGrown] + 1);
-
-          gameAudio.playVictory();
-
-          if (careerState.elo.lp >= 650 && careerState.elo.tier !== "Desafiante") {
-            careerState.elo.tier = "Desafiante";
-            careerState.fame += 100;
-            showToast("👑 PARABÉNS! Você alcançou o cobiçado elo DESAFIANTE!");
-          } else if (careerState.elo.lp >= 300 && careerState.elo.tier === "Mestre") {
-            careerState.elo.tier = "Grão-Mestre";
-            careerState.fame += 50;
-            showToast("🔥 PROMOÇÃO! Você subiu para o elo GRÃO-MESTRE!");
-          } else {
-            showToast("✅ Vitória na SoloQueue de " + mainChamp.name + "! +" + pdlGain + " PDL e +1 " + statGrown + "!");
-          }
-
-          career.addSocialPost("SoloQ Tracker " + careerState.region, "@tracker" + careerState.region.toLowerCase(), "O @" + careerState.nick.toLowerCase() + " acabou de carregar um lobby no Alto Elo jogando de " + mainChamp.name + "!");
-        } else {
-          mainChamp.masteryPoints += 200;
-          const pdlLoss = Math.floor(Math.random() * 6) + 16;
-          careerState.elo.lp = Math.max(0, careerState.elo.lp - pdlLoss);
-          careerState.stats.confidence = Math.max(20, careerState.stats.confidence - 6);
-          careerState.elo.soloRank = Math.min(3000, Math.round(careerState.elo.soloRank * 1.04));
-          gameAudio.playFailure();
-          showToast("❌ Derrota acirrada na SoloQueue de " + mainChamp.name + ". -" + pdlLoss + " PDL.");
-        }
-
-        career.checkOffers();
-        career.save();
-        career.updateDashboardUI();
-      },
-
-      restDay() {
-        gameAudio.playClick();
-        careerState.energy = Math.min(100, careerState.energy + 50);
-        careerState.stats.confidence = Math.min(100, careerState.stats.confidence + 10);
-        this.save();
-        this.updateDashboardUI();
-        showToast("🛌 Dia de descanso e academia! Energia restaurada.");
-      },
-
-      renderMiniStandings() {
-        const container = document.getElementById("hubMiniStandingsList");
-        container.innerHTML = "";
-        const tier = LEAGUES_DATA[careerState.currentTierId];
-        document.getElementById("hubMiniTierBadge").innerText = tier.tierLabel;
-
-        tier.teams.slice(0, 4).forEach((t, i) => {
-          const row = document.createElement("div");
-          const isMyTeam = t.name === careerState.team.name;
-          row.style.display = "flex"; row.style.justifyContent = "space-between";
-          row.style.fontSize = "0.82rem"; row.style.padding = "4px 6px"; row.style.borderRadius = "4px";
-          if (isMyTeam) {
-            row.style.background = "rgba(0, 210, 255, 0.15)";
-            row.style.fontWeight = "bold"; row.style.color = "var(--hextech-blue)";
-          }
-          row.innerHTML = "<span>" + (i + 1) + "º " + t.name + "</span><span>" + (isMyTeam ? careerState.team.wins : t.wins) + "V - " + (isMyTeam ? careerState.team.losses : t.losses) + "D</span>";
-          container.appendChild(row);
-        });
-      },
-
-      renderStandingsTable() {
-        const tier = LEAGUES_DATA[careerState.currentTierId];
-        document.getElementById("tabStandingsLeagueTitle").innerText = "TABELA DE CLASSIFICAÇÃO • " + tier.name.toUpperCase();
-        document.getElementById("tabStandingsPromotionBadge").innerText = "Top 2 sobem para o Tier " + (tier.promotionTarget || 1) + "!";
-
-        const tbody = document.getElementById("tabLeagueStandingsTableBody");
-        tbody.innerHTML = "";
-
-        const sorted = [...tier.teams].map(t => {
-          if (t.name === careerState.team.name) return { ...t, wins: careerState.team.wins, losses: careerState.team.losses };
-          return t;
-        }).sort((a, b) => b.wins - a.wins);
-
-        sorted.forEach((team, idx) => {
-          const tr = document.createElement("tr");
-          const isMyTeam = team.name === careerState.team.name;
-          if (isMyTeam) tr.className = "highlight";
-          const games = team.wins + team.losses;
-          const wr = games > 0 ? Math.round((team.wins / games) * 100) + "%" : "0%";
-          const situation = idx < 2 ? "<span class='badge badge-green'>Zona de Acesso ⬆️</span>" : "<span style='color:var(--text-muted);'>Fase Regular</span>";
-
-          tr.innerHTML = "<td><strong>" + (idx + 1) + "º</strong></td><td><strong>" + team.name + "</strong> " + (isMyTeam ? "<span class='badge badge-gold'>Seu Time</span>" : "") + "</td><td>" + games + "</td><td style='color:var(--success-green); font-weight:bold;'>" + team.wins + "</td><td style='color:var(--danger-red);'>" + team.losses + "</td><td>" + wr + "</td><td>" + situation + "</td>";
-          tbody.appendChild(tr);
-        });
-      },
-
-      renderSoloQueueTable() {
-        const region = (careerState && careerState.region) || "BR";
-        document.getElementById("tabSoloQRegionBadge").innerText = "SERVIDOR " + region;
-        const tbody = document.getElementById("tabSoloQueueTableBody");
-        tbody.innerHTML = "";
-
-        const players = REGIONAL_SOLOQ_PLAYERS[region] || REGIONAL_SOLOQ_PLAYERS.BR;
-
-        players.forEach(p => {
-          const tr = document.createElement("tr");
-          const badgeClass = p.tier === "Desafiante" ? "badge-challenger" : "badge-gm";
-          tr.innerHTML = "<td><strong style='color:var(--hextech-gold);'>#" + p.rank + "</strong></td><td><strong>" + p.name + "</strong></td><td><span class='badge " + badgeClass + "'>" + p.tier + "</span></td><td>" + p.lp + " PDL</td><td>" + p.winrate + "</td><td>" + p.main + "</td>";
-          tbody.appendChild(tr);
-        });
-
-        const myTr = document.createElement("tr");
-        myTr.className = "highlight";
-        const mainChamp = careerState.championPool[0] || { name: "Ahri" };
-        const myBadge = careerState.elo.tier === "Desafiante" ? "badge-challenger" : careerState.elo.tier === "Grão-Mestre" ? "badge-gm" : "badge-master";
-        myTr.innerHTML = "<td><strong style='color:var(--hextech-blue);'>#" + careerState.elo.soloRank + "</strong></td><td><strong>" + careerState.nick + " (Você)</strong></td><td><span class='badge " + myBadge + "'>" + careerState.elo.tier + "</span></td><td>" + careerState.elo.lp + " PDL</td><td>64%</td><td>" + mainChamp.name + "</td>";
-        tbody.appendChild(myTr);
-      },
-
-      renderTransfersTab() {
-        const container = document.getElementById("tabTransfersList");
-        container.innerHTML = "";
-        document.getElementById("tabTransferFameCurrent").innerText = "Sua Fama: " + careerState.fame + " Fãs";
-        document.getElementById("tabTransferCountBadge").innerText = careerState.offers.length;
-
-        if (careerState.offers.length === 0) {
-          container.innerHTML = "<div style='text-align:center; padding:24px; color:var(--text-muted);'>Nenhuma proposta ativa no momento. Suba de elo e vença partidas para atrair times de elite!</div>";
-          return;
-        }
-
-        careerState.offers.forEach(o => {
-          const card = document.createElement("div");
-          card.style.background = "#0c1322"; card.style.border = "1px solid var(--border-hex)";
-          card.style.borderRadius = "8px"; card.style.padding = "16px";
-          card.style.display = "flex"; card.style.justifyContent = "space-between"; card.style.alignItems = "center";
-          card.style.flexWrap = "wrap"; card.style.gap = "10px";
-          card.innerHTML = "<div><div style='display:flex; align-items:center; gap:8px;'><h4 style='font-family:var(--font-tech); font-size:1.25rem; color:#fff;'>" + o.team + "</h4><span class='badge badge-gold'>" + o.tierName + "</span></div><div style='font-size:0.85rem; color:var(--text-muted); margin-top:4px;'>💰 Salário: R$ " + o.salary + "/semana • Exigência de Fama: " + o.reqFame + " Fãs</div></div><button class='btn btn-gold btn-sm' onclick='career.acceptOffer(" + o.id + ")'>Assinar Contrato ➔</button>";
-          container.appendChild(card);
-        });
-      },
-
-      checkOffers() {
-        const fame = careerState.fame;
-        if (fame >= 300 && !careerState.offers.some(o => o.team === "LOUD Academy")) {
-          careerState.offers.push({ id: 2, team: "LOUD Academy", tierId: 2, tierName: "Tier 2 (Circuito Desafiante)", salary: 1100, reqFame: 280 });
-        }
-        if (fame >= 750 && !careerState.offers.some(o => o.team === "paiN Gaming")) {
-          careerState.offers.push({ id: 3, team: "paiN Gaming", tierId: 1, tierName: "Tier 1 (CBLOL)", salary: 4200, reqFame: 650 });
-        }
-      },
-
-      acceptOffer(id) {
-        const off = careerState.offers.find(o => o.id === id);
-        if (!off) return;
-        if (careerState.fame < off.reqFame) {
-          showToast("⚠️ Você precisa de pelo menos " + off.reqFame + " de Fama para assinar com a " + off.team + "!");
-          return;
-        }
-
-        careerState.team.name = off.team;
-        careerState.team.tierId = off.tierId;
-        careerState.currentTierId = off.tierId;
-        careerState.team.wins = 0; careerState.team.losses = 0; careerState.team.week = 1;
-        careerState.offers = careerState.offers.filter(o => o.id !== id);
-
-        gameAudio.playVictory();
-        this.save();
-        this.updateDashboardUI();
-        showToast("🎉 CONTRATO ASSINADO! Você é o novo jogador da " + off.team + "!");
-      },
-
-      addSocialPost(user, handle, text) {
-        if (!careerState.socialFeed) careerState.socialFeed = [];
-        careerState.socialFeed.unshift({ user, handle, text });
-        if (careerState.socialFeed.length > 20) careerState.socialFeed.pop();
-      },
-
-      renderSocialFeedTab() {
-        const container = document.getElementById("tabSocialFeedContainer");
-        container.innerHTML = "";
-        (careerState.socialFeed || []).forEach(t => {
-          const div = document.createElement("div");
-          div.style.background = "#0c1322"; div.style.border = "1px solid #1c2b42";
-          div.style.borderRadius = "6px"; div.style.padding = "10px";
-          div.innerHTML = "<div style='display:flex; justify-content:space-between; margin-bottom:3px;'><strong style='color:var(--hextech-gold);'>" + t.user + "</strong><span style='font-size:0.75rem; color:var(--text-muted);'>" + t.handle + "</span></div><div style='font-size:0.85rem; color:#e2eaf5;'>" + t.text + "</div>";
-          container.appendChild(div);
-        });
+      toggleMute() {
+        this.muted = !this.muted;
+        const btn = document.getElementById("btnToggleSoundTitle");
+        if (btn) btn.innerText = this.muted ? "🔇 SOM: OFF" : "🔊 SOM: ON";
+        showToast(this.muted ? "Áudio Silenciado" : "Áudio Ativado");
       }
     };
 
@@ -2215,7 +2044,8 @@
       },
 
       onRoleChange() {
-        const role = document.getElementById("selectRole").value;
+        const roleEl = document.getElementById("selectRole");
+        const role = roleEl ? roleEl.value : "Mid";
         this.renderChampGrid(role);
       },
 
@@ -2224,13 +2054,15 @@
       },
 
       filterChamps(search) {
-        const role = document.getElementById("selectRole").value;
+        const roleEl = document.getElementById("selectRole");
+        const role = roleEl ? roleEl.value : "Mid";
         this.renderChampGrid(role, search);
       },
 
       renderChampGrid(roleFilter, search) {
         if (search === undefined) search = "";
         const grid = document.getElementById("creationChampGrid");
+        if (!grid) return;
         grid.innerHTML = "";
         const db = window.LOL_CHAMPIONS_DB || [];
 
@@ -2247,12 +2079,11 @@
           card.onclick = () => this.toggleSelect(champ);
 
           const imgUrl = getChampImgUrl(champ);
-          const fallback = getFallbackAvatar(champ.name);
 
-          card.innerHTML = `<div class="champ-img-wrap">
-            <img src="${imgUrl}" alt="${champ.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fallback}';">
-          </div>
-          <div class="champ-name-lbl" title="${champ.name}">${champ.name}</div>`;
+          card.innerHTML = "<div class='champ-img-wrap'>" +
+            "<img src='" + imgUrl + "' alt='" + champ.name + "' onerror='handleImgError(this);'>" +
+          "</div>" +
+          "<div class='champ-name-lbl' title='" + champ.name + "'>" + champ.name + "</div>";
           grid.appendChild(card);
         });
       },
@@ -2278,9 +2109,10 @@
 
       updateSelectedPreview() {
         const container = document.getElementById("creationSelectedPoolPreview");
+        if (!container) return;
         container.innerHTML = "<span style='font-size:0.85rem; color:var(--text-muted);'>Mains Selecionados:</span>";
         if (this.selectedMains.length === 0) {
-          container.innerHTML += "<span style='font-size:0.82rem; color:#667;'>(Nenhum)</span>";
+          container.innerHTML += "<span style='font-size:0.82rem; color:#667;'>(Nenhum - Auto-preenchimento ao avançar)</span>";
           return;
         }
         this.selectedMains.forEach((c, idx) => {
@@ -2289,14 +2121,17 @@
           slot.style.background = "#141f33"; slot.style.padding = "4px 10px";
           slot.style.border = "1px solid var(--border-hex)"; slot.style.borderRadius = "20px";
           slot.style.fontSize = "0.85rem";
-          slot.innerHTML = `<img src="${getChampImgUrl(c)}" style="width:20px; height:20px; border-radius:50%;" onerror="this.onerror=null;this.src='${getFallbackAvatar(c.name)}';"><span>${c.name} (#${idx + 1})</span>`;
+          slot.innerHTML = "<img src='" + getChampImgUrl(c) + "' style='width:20px; height:20px; border-radius:50%;' onerror='handleImgError(this);'><span>" + c.name + " (#" + (idx + 1) + ")</span>";
           container.appendChild(slot);
         });
       },
 
       updateStatPreview() {
-        const style = document.getElementById("selectStyle").value;
-        const startingElo = document.getElementById("selectStartingElo").value;
+        const styleEl = document.getElementById("selectStyle");
+        const startingEloEl = document.getElementById("selectStartingElo");
+        if (!styleEl || !startingEloEl) return;
+        const style = styleEl.value;
+        const startingElo = startingEloEl.value;
         let base = startingElo === "GraoMestre" ? 60 : 54;
         let stats = { mechanics: base, macro: base, comm: base - 4, consistency: base };
 
@@ -2304,7 +2139,10 @@
         if (style === "Tático") stats = { mechanics: base - 4, macro: base + 8, comm: base + 4, consistency: base };
         if (style === "Seguro") stats = { mechanics: base - 2, macro: base + 2, comm: base - 4, consistency: base + 8 };
 
-        document.getElementById("creationStatPreview").innerHTML = "<div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.mechanics + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Mecânica</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.macro + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Macro/Visão</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.comm + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Comunicação</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.consistency + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Consistência</div></div>";
+        const previewEl = document.getElementById("creationStatPreview");
+        if (previewEl) {
+          previewEl.innerHTML = "<div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.mechanics + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Mecânica</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.macro + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Macro/Visão</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.comm + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Comunicação</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.consistency + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Consistência</div></div>";
+        }
       },
 
       submitCharacter() {
@@ -2342,6 +2180,8 @@
           d: "Flash",
           f: role === "Jungle" ? "Smite" : role === "Suporte" ? "Ignite" : "Ignite"
         };
+        careerState.coach = { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" };
+        careerState.playoffs = { inPlayoffs: false, stage: "Fase Regular", wins: 0, losses: 0, seriesTarget: 3, opponentName: "" };
 
         if (startingElo === "GraoMestre") {
           careerState.elo = { tier: "Grão-Mestre", division: "I", lp: 380, soloRank: 420 };
@@ -2364,7 +2204,78 @@
       }
     };
 
-    
+    /* PROPOSTAS DA GO4LOL */
+    const go4LoLOffersUI = {
+      renderOffers() {
+        document.getElementById("offersSubtitle").innerText = 
+          "Parabéns, " + careerState.nick + "! O seu destaque no elo " + careerState.elo.tier + " chamou a atenção dos olheiros de base. Três organizações da 4ª divisão enviaram ofertas oficiais de contrato para você:";
+
+        const container = document.getElementById("offersCardsGrid");
+        container.innerHTML = "";
+
+        const offersList = [
+          {
+            team: "Academia Santos Dex",
+            desc: "Tradição em revelar jovens talentos e foco total no desenvolvimento mecânico.",
+            salary: 400, bonusGold: 300, bonusFame: 150, target: "Chegar às semifinais da Go4LoL"
+          },
+          {
+            team: "Ilha das Lendas Cup Team",
+            desc: "Time com grande apelo de público e streamers. Foco em jogadas plásticas e torcida engajada.",
+            salary: 250, bonusGold: 150, bonusFame: 450, target: "Fazer highlights e movimentar a comunidade"
+          },
+          {
+            team: "KaBuM! Black",
+            desc: "Treinamentos rigorosos, disciplina tática pesada e estrutura com foco absoluto no título.",
+            salary: 550, bonusGold: 500, bonusFame: 200, target: "Ser Campeão da Go4LoL e subir de divisão"
+          }
+        ];
+
+        offersList.forEach(off => {
+          const card = document.createElement("div");
+          card.className = "offer-entry-card";
+          card.innerHTML = "<div>" +
+            "<div class='offer-card-top'>" +
+              getTeamLogoSvg(off.team, 44) +
+              "<div class='offer-team-meta'>" +
+                "<h3>" + off.team + "</h3>" +
+                "<span>Go4LoL (Tier 4)</span>" +
+              "</div>" +
+            "</div>" +
+            "<p style='font-size:0.85rem; color:#cbd5e1; margin-bottom:14px; line-height:1.4;'>" + off.desc + "</p>" +
+            "<div class='offer-details-list'>" +
+              "<div class='offer-detail-row'><span>Salário Semanal:</span><strong>R$ " + off.salary + "</strong></div>" +
+              "<div class='offer-detail-row'><span>Luvas de Entrada:</span><strong>+R$ " + off.bonusGold + "</strong></div>" +
+              "<div class='offer-detail-row'><span>Bônus de Fãs:</span><strong>+" + off.bonusFame + " Fãs</strong></div>" +
+              "<div class='offer-detail-row'><span>Meta da Diretoria:</span><strong style='color:var(--hextech-gold);'>" + off.target + "</strong></div>" +
+            "</div>" +
+          "</div>";
+          const signBtn = document.createElement("button");
+          signBtn.className = "btn btn-gold";
+          signBtn.style.cssText = "width:100%; margin-top:14px;";
+          signBtn.innerText = "✍️ Assinar Contrato e Estrear";
+          signBtn.onclick = () => go4LoLOffersUI.signContract(off.team, off.bonusGold, off.bonusFame);
+          card.appendChild(signBtn);
+          container.appendChild(card);
+        });
+      },
+
+      signContract(teamName, bonusGold, bonusFame) {
+        gameAudio.playVictory();
+        careerState.team.name = teamName;
+        careerState.team.tierId = 4;
+        careerState.currentTierId = 4;
+        careerState.gold += bonusGold;
+        careerState.fame += bonusFame;
+
+        career.addSocialPost(teamName, "@" + teamName.toLowerCase().replace(/[^a-z0-9]/g, ""), "OFICIAL: Anunciamos a contratação do novo prodígio @" + careerState.nick.toLowerCase() + " para a disputa da Go4LoL! Seja bem-vindo à família!");
+        career.save();
+        career.updateDashboardUI();
+        gameRouter.showScreen("screenDashboard");
+        showToast("🎉 Contrato assinado com " + teamName + "! Bem-vindo ao cenário competitivo!");
+      }
+    };
+
     /* NAVEGADOR COMPLETO DAS 4 DIVISÕES COMPETITIVAS */
     const leagueNavigator = {
       activeTier: 4,
@@ -2401,6 +2312,7 @@
 
       renderTable(tierId) {
         const tbody = document.getElementById("tabLeagueStandingsTableBody");
+        if (!tbody) return;
         tbody.innerHTML = "";
         const league = LEAGUES_DATA[tierId];
         if (!league) return;
@@ -2443,7 +2355,10 @@
           if (isPlayerTeam) tr.style.background = "rgba(200, 170, 110, 0.15)";
 
           tr.innerHTML = "<td><strong>#" + (i + 1) + "</strong></td>" +
-            "<td><strong style='" + (isPlayerTeam ? "color:var(--hextech-gold);" : "") + "'>" + t.name + "</strong> " + (isPlayerTeam ? "(Seu Time)" : "") + "</td>" +
+            "<td><div style='display:flex; align-items:center; gap:8px;'>" +
+              getTeamLogoSvg(t.name, 26) +
+              "<strong style='" + (isPlayerTeam ? "color:var(--hextech-gold);" : "") + "'>" + t.name + "</strong> " + (isPlayerTeam ? "(Seu Time)" : "") +
+            "</div></td>" +
             "<td>" + total + "</td>" +
             "<td style='color:var(--success-green); font-weight:700;'>" + (t.wins || 0) + "</td>" +
             "<td style='color:var(--danger-red);'>" + (t.losses || 0) + "</td>" +
@@ -2454,87 +2369,7 @@
       }
     };
 
-    /* Propostas Iniciais da Go4LoL */
-    const go4LoLOffersUI = {
-      renderOffers() {
-        document.getElementById("offersSubtitle").innerText = "Parabéns, " + careerState.nick + "! O seu destaque no elo " + careerState.elo.tier + " chamou a atenção dos olheiros de base. Três organizações da 4ª divisão enviaram ofertas oficiais de contrato para você:";
-
-        const container = document.getElementById("offersCardsGrid");
-        container.innerHTML = "";
-
-        const offersList = [
-          {
-            team: "Academia Santos Dex",
-            icon: "🛡️",
-            desc: "Tradição em revelar jovens talentos e foco total no desenvolvimento mecânico.",
-            salary: 400,
-            bonusGold: 300,
-            bonusFame: 150,
-            target: "Chegar às semifinais da Go4LoL"
-          },
-          {
-            team: "Ilha das Lendas Cup Team",
-            icon: "🐒",
-            desc: "Time com grande apelo de público e streamers. Foco em jogadas plásticas e torcida engajada.",
-            salary: 250,
-            bonusGold: 150,
-            bonusFame: 450,
-            target: "Fazer highlights e movimentar a comunidade"
-          },
-          {
-            team: "KaBuM! Black (Sub-20)",
-            icon: "⚡",
-            desc: "Treinamentos rigorosos, disciplina tática pesada e estrutura com foco absoluto no título.",
-            salary: 550,
-            bonusGold: 500,
-            bonusFame: 200,
-            target: "Ser Campeão da Go4LoL e subir de divisão"
-          }
-        ];
-
-        offersList.forEach(off => {
-          const card = document.createElement("div");
-          card.className = "offer-entry-card";
-          card.innerHTML = `<div>
-            <div class="offer-card-top">
-              <div class="offer-team-icon">${off.icon}</div>
-              <div class="offer-team-meta">
-                <h3>${off.team}</h3>
-                <span>Go4LoL (Tier 4)</span>
-              </div>
-            </div>
-            <p style="font-size:0.85rem; color:#cbd5e1; margin-bottom:14px; line-height:1.4;">${off.desc}</p>
-            <div class="offer-details-list">
-              <div class="offer-detail-row"><span>Salário Semanal:</span><strong>R$ ${off.salary}</strong></div>
-              <div class="offer-detail-row"><span>Luvas de Entrada:</span><strong>+R$ ${off.bonusGold}</strong></div>
-              <div class="offer-detail-row"><span>Bônus de Fãs:</span><strong>+${off.bonusFame} Fãs</strong></div>
-              <div class="offer-detail-row"><span>Meta da Diretoria:</span><strong style="color:var(--hextech-gold);">${off.target}</strong></div>
-            </div>
-          </div>
-          <button class="btn btn-gold" style="width:100%;" onclick="go4LoLOffersUI.signContract('${off.team}', ${off.bonusGold}, ${off.bonusFame})">
-            ✍️ Assinar Contrato e Estrear
-          </button>`;
-          container.appendChild(card);
-        });
-      },
-
-      signContract(teamName, bonusGold, bonusFame) {
-        gameAudio.playVictory();
-        careerState.team.name = teamName;
-        careerState.team.tierId = 4;
-        careerState.currentTierId = 4;
-        careerState.gold += bonusGold;
-        careerState.fame += bonusFame;
-
-        career.addSocialPost(teamName, "@" + teamName.toLowerCase().replace(/[^a-z0-9]/g, ""), "OFICIAL: Anunciamos a contratação do novo prodígio @" + careerState.nick.toLowerCase() + " para a disputa da Go4LoL! Seja bem-vindo à família!");
-        career.save();
-        career.updateDashboardUI();
-        gameRouter.showScreen("screenDashboard");
-        showToast("🎉 Contrato assinado com " + teamName + "! Bem-vindo ao cenário competitivo!");
-      }
-    };
-
-    /* SISTEMA DE DRAFT ESTILO LEAGUE OF LEGENDS OFICIAL */
+    /* SISTEMA DE DRAFT ESTILO LEAGUE OF LEGENDS OFICIAL (COM BANS & COACH LEVEL) */
     const draftEngine = {
       selectedChamp: null,
       tacticalMatchupBonus: 0,
@@ -2542,6 +2377,7 @@
       timerInterval: null,
       enemyOpponentChamp: null,
       allyPicks: [],
+      bannedChampIds: [],
       activeSpellSlot: 'd',
 
       startChampionSelect() {
@@ -2558,12 +2394,14 @@
         this.tacticalMatchupBonus = 0;
         this.activeRoleFilter = "All";
 
-        // Inicializar feitiços se não existirem
         if (!careerState.spells) {
           careerState.spells = {
             d: "Flash",
             f: careerState.role === "Jungle" ? "Smite" : careerState.role === "Suporte" ? "Ignite" : "Ignite"
           };
+        }
+        if (!careerState.coach) {
+          careerState.coach = { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" };
         }
 
         const db = window.LOL_CHAMPIONS_DB || [];
@@ -2571,7 +2409,14 @@
         const shuffle = [...roleChamps].sort(() => 0.5 - Math.random());
         this.enemyOpponentChamp = shuffle[0] || db[0];
 
-        // Atualizar banner do rival
+        // Nível do Coach no Draft
+        const coachBadge = document.getElementById("draftCoachLevelBadge");
+        if (coachBadge) coachBadge.innerText = "👔 Coach " + careerState.coach.name + " (Nív. " + careerState.coach.level + " • " + careerState.coach.title + ")";
+
+        // FASE DE BANS OFICIAL
+        this.setupBansPhase(this.enemyOpponentChamp);
+
+        // Banner do rival
         const oppBadge = document.getElementById("draftOpponentRivalPreview");
         if (oppBadge) oppBadge.innerText = "Rival da Rota (" + careerState.role + "): " + this.enemyOpponentChamp.name;
 
@@ -2582,8 +2427,8 @@
         this.render168ChampionsGrid();
         this.initLobbyChat();
 
-        // Pré-selecionar o 1º campeão da pool do atleta
-        const firstMain = careerState.championPool[0];
+        // Pré-selecionar o 1º campeão disponível da pool que não esteja banido
+        const firstMain = careerState.championPool.find(m => !this.bannedChampIds.includes(m.id));
         if (firstMain) {
           const fullObj = db.find(c => c.id === firstMain.id) || firstMain;
           this.selectChampion(fullObj);
@@ -2593,7 +2438,47 @@
         gameRouter.showScreen("screenDraft");
       },
 
-      /* SELETOR INTERATIVO DE FEITIÇOS (D e F) */
+      setupBansPhase(enemyChamp) {
+        this.bannedChampIds = [];
+        const db = window.LOL_CHAMPIONS_DB || [];
+        const metaBans = ["Yone", "Zed", "LeBlanc", "Draven", "Viego", "Kassadin", "Sylas", "Akali"];
+        const shuffled = [...metaBans].sort(() => 0.5 - Math.random());
+
+        const allyBanList = shuffled.slice(0, 3);
+        const enemyBanList = [];
+        if (careerState.fame > 300 && careerState.championPool.length > 1) {
+          enemyBanList.push(careerState.championPool[1].id);
+        }
+        shuffled.slice(3, 6).forEach(id => {
+          if (enemyBanList.length < 3 && !enemyBanList.includes(id)) enemyBanList.push(id);
+        });
+
+        this.bannedChampIds = [...allyBanList, ...enemyBanList];
+
+        const allyBox = document.getElementById("draftAllyBansContainer");
+        const enemyBox = document.getElementById("draftEnemyBansContainer");
+        if (allyBox) allyBox.innerHTML = "";
+        if (enemyBox) enemyBox.innerHTML = "";
+
+        allyBanList.forEach(id => {
+          const c = db.find(ch => ch.id === id) || { name: id, img: id + ".png" };
+          const d = document.createElement("div");
+          d.className = "ban-slot-avatar";
+          d.title = "Banido: " + c.name;
+          d.innerHTML = "<img src='" + getChampImgUrl(c) + "' onerror='handleImgError(this);'><span class='ban-slash'>✕</span>";
+          if (allyBox) allyBox.appendChild(d);
+        });
+
+        enemyBanList.forEach(id => {
+          const c = db.find(ch => ch.id === id) || { name: id, img: id + ".png" };
+          const d = document.createElement("div");
+          d.className = "ban-slot-avatar";
+          d.title = "Banido pelo rival: " + c.name;
+          d.innerHTML = "<img src='" + getChampImgUrl(c) + "' onerror='handleImgError(this);'><span class='ban-slash'>✕</span>";
+          if (enemyBox) enemyBox.appendChild(d);
+        });
+      },
+
       openSpellPicker(slot) {
         gameAudio.playClick();
         this.activeSpellSlot = slot;
@@ -2610,7 +2495,7 @@
           card.className = "spell-card-option " + (isEquipped ? "equipped" : "");
           card.onclick = () => this.equipSpell(sp.id);
 
-          card.innerHTML = "<img src='" + sp.img + "' alt='" + sp.name + "' onerror='handleImgError(this)'>" +
+          card.innerHTML = "<img src='" + sp.img + "' alt='" + sp.name + "' onerror='handleImgError(this);'>" +
             "<h5>" + sp.name + " (" + sp.fallback + ")</h5>" +
             "<p>" + sp.tactical + "</p>";
           grid.appendChild(card);
@@ -2692,27 +2577,32 @@
         const container = document.getElementById("coachCounterList");
         container.innerHTML = "";
 
+        // Nível do Coach amplifica o bônus
+        const coachLvl = (careerState.coach && careerState.coach.level) || 1;
+        const coachExtraBonus = (coachLvl - 1) * 3;
+
         if (chosenStrategy) {
-          headerEl.innerText = "Coach Maestro (Técnico da Equipe):";
+          headerEl.innerText = "Coach Maestro (Técnico Nív. " + coachLvl + "):";
           dialogueEl.innerText = "O oponente travou " + enemyChamp.name + " no " + role + "! " + chosenStrategy.dialogue;
 
           chosenStrategy.counters.forEach(cnt => {
             const db = window.LOL_CHAMPIONS_DB || [];
             const champObj = db.find(c => c.id === cnt.champId) || { id: cnt.champId, name: cnt.champName, img: cnt.champId + ".png" };
+            const totalBonus = cnt.bonus + coachExtraBonus;
 
             const chip = document.createElement("div");
             chip.className = "coach-counter-card";
             chip.onclick = () => {
               this.selectChampion(champObj);
-              this.tacticalMatchupBonus = cnt.bonus;
-              this.updateMatchupBadge(cnt.bonus, cnt.champName);
-              showToast("🎯 Resposta Tática Escolhida: " + cnt.champName + " (+" + cnt.bonus + "% Vantagem de Matchup)!");
+              this.tacticalMatchupBonus = totalBonus;
+              this.updateMatchupBadge(totalBonus, cnt.champName);
+              showToast("🎯 Resposta Tática: " + cnt.champName + " (+" + totalBonus + "% Vantagem de Matchup)!");
             };
 
-            chip.innerHTML = "<img src='" + getChampImgUrl(champObj) + "' onerror='handleImgError(this)'>" +
+            chip.innerHTML = "<img src='" + getChampImgUrl(champObj) + "' onerror='handleImgError(this);'>" +
               "<div class='coach-counter-info'>" +
                 "<h5>" + cnt.champName + "</h5>" +
-                "<span>+" + cnt.bonus + "% Matchup</span>" +
+                "<span>+" + totalBonus + "% Matchup</span>" +
               "</div>";
             container.appendChild(chip);
           });
@@ -2740,6 +2630,7 @@
 
       renderTeamSlots() {
         const allyCol = document.getElementById("draftAllyTeamSlots");
+        if (!allyCol) return;
         allyCol.innerHTML = "";
 
         const roleLabels = { Top: "🛡️ Top", Jungle: "🌲 Selva", Mid: "⚡ Mid", ADC: "🏹 Atirador", Suporte: "💖 Suporte" };
@@ -2752,7 +2643,7 @@
           const champImg = isPlayer ? (this.selectedChamp ? getChampImgUrl(this.selectedChamp) : "") : getChampImgUrl(slot.champ);
 
           card.innerHTML = "<div class='slot-circle-wrap'>" +
-            (champImg ? "<img src='" + champImg + "' onerror='handleImgError(this)'>" : "<span style='font-size:1.1rem; color:var(--hextech-gold);'>⚔️</span>") +
+            (champImg ? "<img src='" + champImg + "' onerror='handleImgError(this);'>" : "<span style='font-size:1.1rem; color:var(--hextech-gold);'>⚔️</span>") +
             "</div>" +
             "<div class='slot-meta'>" +
               "<div class='slot-role-tag'>" + (roleLabels[slot.role] || slot.role) + "</div>" +
@@ -2779,6 +2670,7 @@
       render168ChampionsGrid(search) {
         if (search === undefined) search = "";
         const grid = document.getElementById("draftChampionsGrid");
+        if (!grid) return;
         grid.innerHTML = "";
         const db = window.LOL_CHAMPIONS_DB || [];
 
@@ -2794,16 +2686,26 @@
         });
 
         filtered.forEach(champ => {
+          const isBanned = (this.bannedChampIds || []).includes(champ.id);
           const isSelected = this.selectedChamp && this.selectedChamp.id === champ.id;
           const isMain = careerState.championPool.some(m => m.id === champ.id);
 
           const tile = document.createElement("div");
-          tile.className = "champ-select-tile " + (isSelected ? "selected" : "");
-          tile.onclick = () => this.selectChampion(champ);
+          tile.className = "champ-select-tile " + (isSelected ? "selected" : "") + (isBanned ? " is-banned" : "");
 
-          tile.innerHTML = (isMain ? "<div class='champ-tile-chest-badge' title='Campeão da sua Pool (Main / Baú de Maestria)'>★</div>" : "") +
+          if (isBanned) {
+            tile.style.opacity = "0.35";
+            tile.style.filter = "grayscale(1)";
+            tile.style.cursor = "not-allowed";
+            tile.onclick = () => showToast("🚫 " + champ.name + " está BANIDO nesta partida!");
+          } else {
+            tile.onclick = () => this.selectChampion(champ);
+          }
+
+          tile.innerHTML = (isBanned ? "<span style='position:absolute; top:2px; left:2px; font-size:10px; color:var(--danger-red); font-weight:900;'>🚫</span>" : "") +
+            (isMain && !isBanned ? "<div class='champ-tile-chest-badge' title='Campeão da sua Pool (Main / Baú de Maestria)'>★</div>" : "") +
             "<div class='champ-tile-img'>" +
-              "<img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this)'>" +
+              "<img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this);'>" +
             "</div>" +
             "<div class='champ-tile-name'>" + champ.name + "</div>";
           grid.appendChild(tile);
@@ -2819,9 +2721,7 @@
         const slotEl = document.getElementById("slotPlayerChampLiveName");
         if (slotEl) slotEl.innerText = champ.name;
 
-        // Calcular se o campeão escolhido tem matchup natural
         this.calculateNaturalMatchup(champ);
-
         this.renderTeamSlots();
         this.render168ChampionsGrid(document.getElementById("draftSearchInput").value || "");
       },
@@ -2846,7 +2746,6 @@
           }
         }
 
-        // Se é campeão main da pool, bônus adicional
         const isMain = careerState.championPool.some(m => m.id === champ.id);
         if (isMain && bonus === 0) bonus = 10;
 
@@ -2856,6 +2755,7 @@
 
       initLobbyChat() {
         const chat = document.getElementById("draftChatMessages");
+        if (!chat) return;
         const region = careerState.region || "BR";
         if (region === "BR") {
           chat.innerHTML = "<p style='color:#61738d;'><em>Summoner 1 conectou-se à sala.</em></p><p><strong>Summoner 2:</strong> salve time, foco no drag que eu puxo bot</p><p><strong>Summoner 4:</strong> confia no draft rapaziada, dá pra amassar!</p><p style='color:var(--hextech-blue);'><strong>Coach Maestro:</strong> executem o plano de feitiços e matchups!</p>";
@@ -2888,6 +2788,7 @@
         clearInterval(this.timerInterval);
         let timeLeft = seconds;
         const timerEl = document.getElementById("draftTimerCountdown");
+        if (!timerEl) return;
         timerEl.innerText = timeLeft;
 
         this.timerInterval = setInterval(() => {
@@ -2918,8 +2819,7 @@
       }
     };
 
-
-    /* SIMULAÇÃO DE PARTIDA & EVOLUÇÃO REAL DE ATRIBUTOS */
+    /* MOTOR DE SIMULAÇÃO DE PARTIDA COM BÔNUS DE FEITIÇOS, COACH EXP E SÉRIE MD5 */
     const matchEngine = {
       myChamp: null,
       oppChamp: null,
@@ -3081,7 +2981,6 @@
         const oppPower = career.getCurrentOpponent().power || 50;
         const diffPenalty = (oppPower - 50) * 0.3;
 
-        // Bônus reais dos Feitiços de Invocador escolhidos
         let spellBonus = 0;
         const spD = careerState.spells?.d;
         const spF = careerState.spells?.f;
@@ -3147,7 +3046,7 @@
         document.getElementById("matchScoreboardPhase").style.display = "block";
 
         const won = this.allyKills >= this.enemyKills;
-        const tier = LEAGUES_DATA[careerState.currentTierId];
+        const isSoloQ = !!this.isSoloQMatch;
 
         if (won) {
           gameAudio.playVictory();
@@ -3158,79 +3057,127 @@
         }
         careerState.team.week++;
 
-        if (careerState.team.wins >= tier.winTarget && tier.promotionTarget > 0) {
-          const nextTierId = tier.promotionTarget;
-          careerState.currentTierId = nextTierId;
-          careerState.team.tierId = nextTierId;
-          careerState.team.wins = 0; careerState.team.losses = 0; careerState.team.week = 1;
-          showToast("🏆 PARABÉNS! Seu time subiu para o " + LEAGUES_DATA[nextTierId].name + "!");
+        // Evolução de Atributos Real e Permanente (+1 ou +2 em cada)
+        const perfBonus = won ? 2 : 1;
+        const statUp = {
+          mechanics: Math.min(99, careerState.stats.mechanics + perfBonus),
+          macro: Math.min(99, careerState.stats.macro + (Math.random() > 0.4 ? perfBonus : 1)),
+          comm: Math.min(99, careerState.stats.comm + (Math.random() > 0.5 ? perfBonus : 1)),
+          consistency: Math.min(99, careerState.stats.consistency + (won ? 1 : 0))
+        };
+
+        const gains = {
+          mechanics: statUp.mechanics - careerState.stats.mechanics,
+          macro: statUp.macro - careerState.stats.macro,
+          comm: statUp.comm - careerState.stats.comm,
+          consistency: statUp.consistency - careerState.stats.consistency
+        };
+
+        careerState.stats = statUp;
+
+        // Progressão de SoloQueue
+        let lpDelta = won ? (Math.floor(Math.random() * 8) + 22) : -(Math.floor(Math.random() * 6) + 14);
+        let eloPromoMsg = "";
+        careerState.elo.lp += lpDelta;
+
+        if (careerState.elo.lp >= 300 && careerState.elo.tier === "Mestre") {
+          careerState.elo.tier = "Grão-Mestre";
+          eloPromoMsg = "🔥 PROMOVIDO A GRÃO-MESTRE NA SOLOQUEUE!";
+          careerState.elo.soloRank = Math.max(80, careerState.elo.soloRank - 800);
+        } else if (careerState.elo.lp >= 700 && careerState.elo.tier === "Grão-Mestre") {
+          careerState.elo.tier = "Desafiante";
+          eloPromoMsg = "👑 PROMOVIDO A DESAFIANTE! VOCÊ CHEGOU AO TOPO DO SERVIDOR!";
+          careerState.elo.soloRank = Math.max(1, careerState.elo.soloRank - 350);
+        } else if (won) {
+          careerState.elo.soloRank = Math.max(1, careerState.elo.soloRank - Math.floor(Math.random() * 40 + 20));
         }
 
-        const avg = this.scores.reduce((a, b) => a + b, 0) / this.scores.length;
-        let rating = (avg / 10).toFixed(1);
-        if (won && rating < 7.2) rating = "7.8";
+        careerState.gold += won ? 400 : 150;
+        careerState.fame += won ? 80 : 25;
 
-        document.getElementById("postGameOutcomeHeader").className = "outcome-header " + (won ? "victory" : "defeat");
-        document.getElementById("postGameOutcomeText").innerText = won ? "VITÓRIA ÉPICA!" : "DERROTA!";
-        document.getElementById("postGameRating").innerText = rating;
+        // Progressão do Treinador (Coach EXP & Level Up)
+        if (!careerState.coach) careerState.coach = { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" };
+        careerState.coach.exp += won ? 70 : 35;
+        let coachLevelUpMsg = "";
+        if (careerState.coach.exp >= careerState.coach.nextExp && careerState.coach.level < 5) {
+          careerState.coach.level++;
+          careerState.coach.exp = 0;
+          careerState.coach.nextExp += 80;
+          const titles = ["Treinador Novato", "Analista Tático", "Estrategista Pro", "Mestre dos Drafts", "Coach Lendário"];
+          careerState.coach.title = titles[careerState.coach.level - 1] || "Mestre";
+          coachLevelUpMsg = "👔 COACH SUBIU PARA O NÍVEL " + careerState.coach.level + " (" + careerState.coach.title + ")! (+Bônus Tático)";
+        }
 
-        const isMvp = parseFloat(rating) >= 8.5 && won;
-        document.getElementById("postGameMvpWrapper").style.display = isMvp ? "inline-block" : "none";
+        // Progresso em Série MD5 dos Playoffs
+        if (!careerState.playoffs) careerState.playoffs = { inPlayoffs: false, stage: "Fase Regular", wins: 0, losses: 0, seriesTarget: 3, opponentName: "" };
+        if (careerState.playoffs.inPlayoffs) {
+          if (won) careerState.playoffs.wins++;
+          else careerState.playoffs.losses++;
 
-        const chipsContainer = document.getElementById("postGameStatGrowthChips");
-        chipsContainer.innerHTML = "";
-
-        const statNames = { mechanics: "Mecânica", macro: "Macro/Visão", comm: "Comunicação", consistency: "Consistência" };
-        let hasGains = false;
-
-        for (const sKey in this.statGains) {
-          const gain = this.statGains[sKey] + (isMvp ? 1 : 0);
-          if (gain > 0) {
-            hasGains = true;
-            careerState.stats[sKey] = Math.min(99, careerState.stats[sKey] + gain);
-            const chip = document.createElement("span");
-            chip.className = "growth-chip";
-            chip.innerText = "+" + gain + " em " + statNames[sKey] + " (" + careerState.stats[sKey] + ")";
-            chipsContainer.appendChild(chip);
+          if (careerState.playoffs.wins >= 3) {
+            careerState.playoffs.inPlayoffs = false;
+            if (careerState.currentTierId === 1) {
+              showToast("🏆 CAMPEÃO DO CBLOL! CLASSIFICADO PARA O WORLDS!");
+            } else {
+              showToast("🎉 VITÓRIA NA SÉRIE MD5! VOCÊ SUBIU DE DIVISÃO!");
+              career.promoteToNextTier();
+            }
+          } else if (careerState.playoffs.losses >= 3) {
+            careerState.playoffs.inPlayoffs = false;
+            showToast("💔 Fim da linha nos Playoffs nesta temporada!");
           }
+        } else if (careerState.team.wins >= 5 && !careerState.playoffs.inPlayoffs) {
+          careerState.playoffs.inPlayoffs = true;
+          careerState.playoffs.wins = 0;
+          careerState.playoffs.losses = 0;
+          careerState.playoffs.stage = careerState.currentTierId === 1 ? "Grande Final do CBLOL (MD5)" : "Série de Acesso (MD5)";
+          showToast("🔥 CLASSIFICADO PARA OS PLAYOFFS EM SÉRIE MD5!");
         }
 
-        if (!hasGains) {
-          careerState.stats.consistency = Math.min(99, careerState.stats.consistency + 1);
-          chipsContainer.innerHTML = "<span class='growth-chip'>+1 em Consistência (" + careerState.stats.consistency + ")</span>";
-        }
+        // Post nas redes sociais
+        const postTexts = won
+          ? ["VITÓRIA GIGANTE! @" + careerState.nick.toLowerCase() + " destruiu a partida com outplays insanos! #Diff", "Simplesmente aula de draft e execução do time @" + careerState.team.name + "!"]
+          : ["Derrota dura hoje, mas a série continua. Força rapaziada!", "Draft difícil contra o rival. Hora de resetar o mental e focar no próximo jogo."];
+        const randomFan = won ? "Torcedor Apaixonado" : "Caster da Rodada";
+        career.addSocialPost(randomFan, "@fan_" + Math.floor(Math.random() * 900 + 100), postTexts[won ? 0 : 1]);
 
-        const exp = won ? 400 : 180;
-        const fame = won ? (isMvp ? 80 : 50) : 15;
-        const gold = won ? 700 : 300;
-        const mp = won ? 1800 : 700;
-
-        careerState.fame += fame;
-        careerState.gold += gold;
-
-        const main = careerState.championPool.find(c => c.id === this.myChamp.id);
-        if (main) {
-          main.games++;
-          if (won) main.wins++;
-          main.masteryPoints += mp;
-          if (main.masteryPoints >= 21600) main.masteryLevel = 7;
-          else if (main.masteryPoints >= 12600) main.masteryLevel = 6;
-          else if (main.masteryPoints >= 6000) main.masteryLevel = 5;
-        }
-
-        document.getElementById("rewardExp").innerText = "+" + exp + " EXP";
-        document.getElementById("rewardFame").innerText = "+" + fame + " Fãs";
-        document.getElementById("rewardGold").innerText = "+R$ " + gold;
-        document.getElementById("rewardMastery").innerText = "+" + mp.toLocaleString() + " MP";
-
-        this.renderScoreboardTable(rating, isMvp, won);
-        career.checkOffers();
         career.save();
+
+        const titleEl = document.getElementById("postGameOutcomeText");
+        if (titleEl) {
+          titleEl.innerText = won ? "VITÓRIA!" : "DERROTA";
+          document.getElementById("postGameOutcomeHeader").className = "outcome-header " + (won ? "victory" : "defeat");
+        }
+
+        // Evolução de Atributos exibida no Scoreboard
+        const growthChips = document.getElementById("postGameStatGrowthChips");
+        if (growthChips) {
+          growthChips.innerHTML = "<div class='stat-evolution-card'>" +
+            (coachLevelUpMsg ? "<div style='color:var(--hextech-gold); font-weight:800; font-size:1rem; margin-bottom:8px;'>🎉 " + coachLevelUpMsg + "</div>" : "") +
+            (eloPromoMsg ? "<div style='color:var(--hextech-blue); font-weight:800; font-size:1rem; margin-bottom:8px;'>👑 " + eloPromoMsg + "</div>" : "") +
+            "<div style='font-size:0.85rem; color:#cbd5e1; margin-bottom:8px;'>PDL na SoloQ: <strong style='color:" + (lpDelta > 0 ? "var(--success-green)" : "var(--danger-red)") + ";'>" + (lpDelta > 0 ? "+" + lpDelta : lpDelta) + " PDL</strong> (" + careerState.elo.tier + " • #" + careerState.elo.soloRank + ")</div>" +
+            "<div class='stat-evolution-grid'>" +
+              "<div class='stat-evolution-col'><div class='stat-lbl'>Mecânica</div><div class='stat-gain-val'>+" + gains.mechanics + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.mechanics + ")</span></div></div>" +
+              "<div class='stat-evolution-col'><div class='stat-lbl'>Macro / Visão</div><div class='stat-gain-val'>+" + gains.macro + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.macro + ")</span></div></div>" +
+              "<div class='stat-evolution-col'><div class='stat-lbl'>Comunicação</div><div class='stat-gain-val'>+" + gains.comm + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.comm + ")</span></div></div>" +
+              "<div class='stat-evolution-col'><div class='stat-lbl'>Consistência</div><div class='stat-gain-val'>+" + gains.consistency + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.consistency + ")</span></div></div>" +
+            "</div>" +
+          "</div>";
+        }
+
+        this.renderScoreboardTable(won);
       },
 
-      renderScoreboardTable(rating, isMvp, won) {
+      renderScoreboardTable(won) {
         const tbody = document.getElementById("scoreboardTableBody");
+        if (!tbody) return;
         tbody.innerHTML = "";
+
+        const avg = this.scores.reduce((a, b) => a + b, 0) / (this.scores.length || 1);
+        let rating = (avg / 10).toFixed(1);
+        if (won && parseFloat(rating) < 7.5) rating = (Math.random() * 1.5 + 8.0).toFixed(1);
+
+        const isMvp = parseFloat(rating) >= 8.5 && won;
 
         const myK = won ? Math.floor(Math.random() * 5) + 6 : Math.floor(Math.random() * 3) + 2;
         const myD = won ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 4) + 3;
@@ -3239,18 +3186,12 @@
         const myGold = (Math.floor(Math.random() * 3000) + (won ? 14500 : 9500)).toLocaleString();
 
         const tr = document.createElement("tr");
-        tr.className = "highlight";
-        tr.innerHTML = `<td><strong>${careerState.nick}</strong> ${isMvp ? "⭐ (MVP)" : ""}</td>
-        <td>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <img src="${getChampImgUrl(this.myChamp)}" style="width:28px; height:28px; border-radius:50%;" onerror="this.onerror=null;this.src='${getFallbackAvatar(this.myChamp.name)}';">
-            <span>${this.myChamp.name}</span>
-          </div>
-        </td>
-        <td>${myK}/${myD}/${myA}</td>
-        <td>${myDmg}</td>
-        <td>R$ ${myGold}</td>
-        <td><strong style="color:var(--hextech-gold);">${rating}</strong></td>`;
+        tr.innerHTML = "<td><strong>" + careerState.nick + "</strong> " + (isMvp ? "⭐ (MVP)" : "") + "</td>" +
+          "<td><div style='display:flex; align-items:center; gap:6px;'><img src='" + getChampImgUrl(this.myChamp) + "' style='width:28px; height:28px; border-radius:50%;' onerror='handleImgError(this);'><span>" + this.myChamp.name + "</span></div></td>" +
+          "<td>" + myK + "/" + myD + "/" + myA + "</td>" +
+          "<td>" + myDmg + "</td>" +
+          "<td>R$ " + myGold + "</td>" +
+          "<td><strong style='color:var(--hextech-gold);'>" + rating + "</strong></td>";
         tbody.appendChild(tr);
 
         const oppK = !won ? Math.floor(Math.random() * 5) + 5 : Math.floor(Math.random() * 3) + 1;
@@ -3261,17 +3202,12 @@
         const oppRating = (!won ? (Math.random() * 1.5 + 7.5) : (Math.random() * 1.5 + 5.0)).toFixed(1);
 
         const oppTr = document.createElement("tr");
-        oppTr.innerHTML = `<td><span style="color:var(--danger-red);">Rival (${career.getCurrentOpponent().name})</span></td>
-        <td>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <img src="${getChampImgUrl(this.oppChamp)}" style="width:28px; height:28px; border-radius:50%;" onerror="this.onerror=null;this.src='${getFallbackAvatar(this.oppChamp.name)}';">
-            <span>${this.oppChamp.name}</span>
-          </div>
-        </td>
-        <td>${oppK}/${oppD}/${oppA}</td>
-        <td>${oppDmg}</td>
-        <td>R$ ${oppGold}</td>
-        <td>${oppRating}</td>`;
+        oppTr.innerHTML = "<td><span style='color:var(--danger-red);'>Rival (" + career.getCurrentOpponent().name + ")</span></td>" +
+          "<td><div style='display:flex; align-items:center; gap:6px;'><img src='" + getChampImgUrl(this.oppChamp) + "' style='width:28px; height:28px; border-radius:50%;' onerror='handleImgError(this);'><span>" + this.oppChamp.name + "</span></div></td>" +
+          "<td>" + oppK + "/" + oppD + "/" + oppA + "</td>" +
+          "<td>" + oppDmg + "</td>" +
+          "<td>R$ " + oppGold + "</td>" +
+          "<td>" + oppRating + "</td>";
         tbody.appendChild(oppTr);
       },
 
@@ -3279,90 +3215,322 @@
         gameAudio.playClick();
         career.updateDashboardUI();
         gameRouter.showScreen("screenDashboard");
-        hubTabs.switchTab("tabOverview");
+      }
+    };
+
+    /* MOTOR DE REDES SOCIAIS INTERATIVAS (X / TWITTER) */
+    const socialEngine = {
+      playerTweet(type) {
+        gameAudio.playClick();
+        let tweetText = "";
+        let rewardFame = 0;
+
+        if (type === "provoke") {
+          tweetText = "O palco dos playoffs é meu. Pode vir quem quiser que hoje não tem chance pra ninguém! #CBLOL #Diff";
+          rewardFame = 60;
+          careerState.stats.confidence = Math.min(99, careerState.stats.confidence + 10);
+        } else if (type === "humble") {
+          tweetText = "Vitória importante hoje, mas o campeonato é longo. Pés no chão, muito treino amanhã e obrigado pela torcida! 🙏";
+          rewardFame = 40;
+          careerState.stats.consistency = Math.min(99, careerState.stats.consistency + 1);
+        } else if (type === "bo5") {
+          tweetText = "Série MD5 pegando fogo! O time tá fechado e focado no próximo draft. Vamos lutar até o último Nexus!";
+          rewardFame = 50;
+          careerState.stats.comm = Math.min(99, careerState.stats.comm + 1);
+        }
+
+        careerState.fame += rewardFame;
+        career.addSocialPost(careerState.nick, "@" + careerState.nick.toLowerCase(), tweetText);
+        showToast("📱 Tweet publicado! (+ " + rewardFame + " Fãs)");
+
+        setTimeout(() => {
+          const casters = [
+            { name: "Baiano", handle: "@baianolol", text: "SIMPLESMENTE @" + careerState.nick.toLowerCase() + " jogando o fino do League of Legends no Ilha das Lendas!" },
+            { name: "Schaeppi", handle: "@schaeppilol", text: "O garoto tem estrela! A comissão técnica acertou em cheio no draft de hoje!" },
+            { name: "TitaN", handle: "@titancblol", text: "Joga muito, o moleque tá amassando na rota. Merecido!" }
+          ];
+          const c = casters[Math.floor(Math.random() * casters.length)];
+          career.addSocialPost(c.name, c.handle, c.text);
+          career.updateSocialUI();
+        }, 1200);
+
+        career.save();
+        career.updateSocialUI();
+      }
+    };
+
+    /* CONTROLE CENTRAL DE CARREIRA */
+    const career = {
+      saveKey: "lol_career_save_v1",
+
+      load() {
+        const saved = localStorage.getItem(this.saveKey);
+        if (saved) {
+          try {
+            careerState = JSON.parse(saved);
+            return true;
+          } catch(e) {
+            careerState = JSON.parse(JSON.stringify(DEFAULT_CAREER));
+            return false;
+          }
+        }
+        return false;
+      },
+
+      save() {
+        if (!careerState) return;
+        localStorage.setItem(this.saveKey, JSON.stringify(careerState));
+      },
+
+      saveWithToast() {
+        this.save();
+        gameAudio.playVictory();
+        showToast("💾 Progresso da Carreira Salvo com Sucesso!");
+      },
+
+      getCurrentOpponent() {
+        const league = LEAGUES_DATA[careerState.currentTierId] || LEAGUES_DATA[4];
+        const rivals = league.teams.filter(t => t.name !== careerState.team.name);
+        return rivals[(careerState.team.week - 1) % rivals.length] || rivals[0];
+      },
+
+      calculateTeamOvr() {
+        if (!careerState) return 50;
+        const s = careerState.stats;
+        return (s.mechanics * 0.35 + s.macro * 0.35 + s.comm * 0.15 + s.consistency * 0.15);
+      },
+
+      promoteToNextTier() {
+        const next = LEAGUES_DATA[careerState.currentTierId]?.promotionTarget;
+        if (next && LEAGUES_DATA[next]) {
+          careerState.currentTierId = next;
+          careerState.team.tierId = next;
+          careerState.team.week = 1;
+          careerState.team.wins = 0;
+          careerState.team.losses = 0;
+          this.save();
+          showToast("🏆 PARABÉNS! VOCÊ FOI PROMOVIDO PARA: " + LEAGUES_DATA[next].name);
+        }
+      },
+
+      addSocialPost(author, handle, text) {
+        if (!careerState.socialFeed) careerState.socialFeed = [];
+        careerState.socialFeed.unshift({ author, handle, text, time: "Agora" });
+        if (careerState.socialFeed.length > 20) careerState.socialFeed.pop();
+      },
+
+      updateDashboardUI() {
+        if (!careerState) return;
+        document.getElementById("hubPlayerNick").innerText = careerState.nick;
+        document.getElementById("hubPlayerRole").innerText = "⚡ " + careerState.role;
+        document.getElementById("hubPlayerTeam").innerText = careerState.team.name;
+        document.getElementById("hubPlayerElo").innerText = careerState.elo.tier + " (" + careerState.elo.lp + " PDL)";
+        document.getElementById("hubEnergyVal").innerText = careerState.energy + "%";
+        document.getElementById("hubGoldVal").innerText = "R$ " + careerState.gold;
+        document.getElementById("hubFameVal").innerText = careerState.fame;
+
+        // Renderizar Logos Oficiais do Seu Time e do Rival
+        const myLogoEl = document.getElementById("hubMyTeamLogoBox");
+        const oppLogoEl = document.getElementById("hubEnemyTeamLogoBox");
+        if (myLogoEl) myLogoEl.innerHTML = getTeamLogoSvg(careerState.team.name, 48);
+        const oppTeam = this.getCurrentOpponent();
+        if (oppLogoEl) oppLogoEl.innerHTML = getTeamLogoSvg(oppTeam.name, 48);
+
+        // Nível do Coach no Hub
+        const coachBadge = document.getElementById("hubCoachLevelBadgeOverview");
+        if (coachBadge && careerState.coach) {
+          coachBadge.innerText = "👔 Coach " + careerState.coach.name + " (Nív. " + careerState.coach.level + " • " + careerState.coach.title + ")";
+        }
+
+        // Exibir Série MD5 se estiver em Playoffs
+        const seriesHud = document.getElementById("hubPlayoffsSeriesHud");
+        if (seriesHud) {
+          if (careerState.playoffs && careerState.playoffs.inPlayoffs) {
+            seriesHud.style.display = "flex";
+            document.getElementById("hubPlayoffsStageTag").innerText = careerState.playoffs.stage;
+            const w = careerState.playoffs.wins || 0;
+            const l = careerState.playoffs.losses || 0;
+            for (let i = 1; i <= 3; i++) {
+              const dW = document.getElementById("bo5Dot" + i);
+              const dL = document.getElementById("bo5DotOpp" + i);
+              if (dW) dW.className = "bo5-dot " + (i <= w ? "win" : "");
+              if (dL) dL.className = "bo5-dot " + (i <= l ? "loss" : "");
+            }
+          } else {
+            seriesHud.style.display = "none";
+          }
+        }
+
+        document.getElementById("hubMyTeamNameMatch").innerText = careerState.team.name;
+        document.getElementById("hubEnemyTeamNameMatch").innerText = oppTeam.name;
+        document.getElementById("hubEnemyTeamTagMatch").innerText = oppTeam.tag || "Rival";
+        document.getElementById("hubSeasonRecord").innerText = careerState.team.wins + "V - " + careerState.team.losses + "D";
+        document.getElementById("hubMatchLeagueHeader").innerText = (LEAGUES_DATA[careerState.currentTierId]?.name || "Liga") + " • Semana " + careerState.team.week;
+
+        this.updateStatsUI();
+        this.updatePoolPreview();
+        this.updateSocialUI();
+        if (window.leagueNavigator) {
+          window.leagueNavigator.renderTable(careerState.currentTierId);
+        }
+      },
+
+      updateStatsUI() {
+        const s = careerState.stats;
+        document.getElementById("valStatMech").innerText = s.mechanics;
+        document.getElementById("barStatMech").style.width = s.mechanics + "%";
+        document.getElementById("valStatMacro").innerText = s.macro;
+        document.getElementById("barStatMacro").style.width = s.macro + "%";
+        document.getElementById("valStatComm").innerText = s.comm;
+        document.getElementById("barStatComm").style.width = s.comm + "%";
+        document.getElementById("valStatCons").innerText = s.consistency;
+        document.getElementById("barStatCons").style.width = s.consistency + "%";
+        document.getElementById("valStatConf").innerText = s.confidence + "%";
+        document.getElementById("barStatConf").style.width = s.confidence + "%";
+        document.getElementById("hubOverallRating").innerText = "OVR: " + Math.round(this.calculateTeamOvr());
+      },
+
+      updatePoolPreview() {
+        const poolEl = document.getElementById("hubPoolList");
+        if (!poolEl) return;
+        poolEl.innerHTML = "";
+        careerState.championPool.forEach(c => {
+          const item = document.createElement("div");
+          item.className = "pool-champ-row";
+          item.innerHTML = "<div style='display:flex; align-items:center; gap:8px;'>" +
+            "<img src='" + getChampImgUrl(c) + "' style='width:32px; height:32px; border-radius:4px;' onerror='handleImgError(this);'>" +
+            "<div><strong>" + c.name + "</strong><div style='font-size:0.75rem; color:var(--text-muted);'>Maestria Nív. " + c.masteryLevel + "</div></div>" +
+          "</div>" +
+          "<span class='badge badge-gold'>" + (c.masteryPoints || 0) + " MP</span>";
+          poolEl.appendChild(item);
+        });
+      },
+
+      updateSocialUI() {
+        const container = document.getElementById("tabSocialFeedContainer");
+        if (!container) return;
+        container.innerHTML = "";
+        if (!careerState.socialFeed || careerState.socialFeed.length === 0) {
+          container.innerHTML = "<p style='color:var(--text-muted); font-size:0.85rem;'>Nenhum tweet ainda. Dispute sua primeira partida!</p>";
+          return;
+        }
+        careerState.socialFeed.forEach(post => {
+          const div = document.createElement("div");
+          div.className = "social-post-card";
+          div.innerHTML = "<div class='social-author-row'>" +
+            "<div class='social-author-info'>" +
+              "<div class='social-avatar'>💬</div>" +
+              "<div><strong>" + post.author + "</strong> <span style='color:var(--text-muted); font-size:0.8rem;'>" + post.handle + "</span></div>" +
+            "</div>" +
+            "<span style='font-size:0.75rem; color:var(--text-muted);'>" + post.time + "</span>" +
+          "</div>" +
+          "<p style='font-size:0.88rem; color:#dce5ef; margin:0; line-height:1.4;'>" + post.text + "</p>";
+          container.appendChild(div);
+        });
+      },
+
+      restDay() {
+        gameAudio.playVictory();
+        careerState.energy = Math.min(100, careerState.energy + 50);
+        careerState.stats.confidence = Math.min(99, careerState.stats.confidence + 10);
+        this.save();
+        this.updateDashboardUI();
+        showToast("🛌 Dia de descanso! Energia e confiança recuperadas.");
+      },
+
+      practiceMechanics() {
+        if (careerState.energy < 20) {
+          showToast("⚡ Energia insuficiente para treino intenso!");
+          return;
+        }
+        gameAudio.playClick();
+        careerState.energy -= 20;
+        careerState.stats.mechanics = Math.min(99, careerState.stats.mechanics + 1);
+        this.save();
+        this.updateDashboardUI();
+        showToast("⚔️ Treino Mecânico concluído! +1 em Mecânica.");
       }
     };
 
     /* GERENCIADOR DE SAVES */
     const saveManager = {
       openModal() {
-        document.getElementById("saveManagerModal").classList.add("active");
-        this.exportToTextarea();
+        gameAudio.playClick();
+        document.getElementById("saveCodeTextarea").value = "";
+        document.getElementById("saveModalBackdrop").classList.add("active");
       },
       closeModal() {
-        document.getElementById("saveManagerModal").classList.remove("active");
+        document.getElementById("saveModalBackdrop").classList.remove("active");
       },
       exportToTextarea() {
-        if (!careerState) career.load();
+        gameAudio.playVictory();
         const raw = JSON.stringify(careerState || DEFAULT_CAREER, null, 2);
         document.getElementById("saveCodeTextarea").value = raw;
+        showToast("📋 Código de save gerado!");
       },
       copyToClipboard() {
         const textarea = document.getElementById("saveCodeTextarea");
-        textarea.select();
-        try {
-          navigator.clipboard.writeText(textarea.value).then(() => {
-            showToast("📋 Código de save copiado para a área de transferência!");
-          }).catch(() => {
-            document.execCommand("copy");
-            showToast("📋 Código de save copiado!");
-          });
-        } catch (e) {
-          document.execCommand("copy");
-          showToast("📋 Código de save copiado!");
+        if (!textarea.value) {
+          this.exportToTextarea();
         }
+        navigator.clipboard.writeText(textarea.value).then(() => {
+          showToast("📋 Código copiado para a Área de Transferência!");
+        });
       },
       downloadJsonFile() {
-        if (!careerState) career.load();
         const data = JSON.stringify(careerState || DEFAULT_CAREER, null, 2);
         const blob = new Blob([data], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "lol_carreira_save_" + (careerState ? careerState.nick : "save") + ".json";
+        a.download = "lol_carreira_" + (careerState ? careerState.nick.toLowerCase() : "save") + ".json";
         a.click();
         URL.revokeObjectURL(url);
-        showToast("📁 Arquivo .JSON baixado!");
+        showToast("💾 Arquivo .JSON baixado!");
       },
       importFromTextarea() {
         const text = document.getElementById("saveCodeTextarea").value.trim();
         if (!text) {
-          showToast("⚠️ Cole um código JSON de save válido!");
+          showToast("⚠️ Cole o código do save primeiro!");
           return;
         }
         try {
           const parsed = JSON.parse(text);
-          if (!parsed.nick || !parsed.stats) throw new Error("Estrutura inválida");
-          careerState = parsed;
-          career.save();
-          career.updateDashboardUI();
-          this.closeModal();
-          gameRouter.showScreen("screenDashboard");
-          showToast("✅ Save importado com sucesso! Bem-vindo de volta, " + careerState.nick + "!");
-        } catch (e) {
-          showToast("❌ Erro ao importar: Formato de código de save inválido!");
+          if (parsed && parsed.nick && parsed.stats) {
+            careerState = parsed;
+            career.save();
+            gameAudio.playVictory();
+            this.closeModal();
+            career.updateDashboardUI();
+            gameRouter.showScreen("screenDashboard");
+            showToast("🎉 Save importado com sucesso! Bem-vindo de volta.");
+          } else {
+            showToast("❌ Código de save inválido!");
+          }
+        } catch(e) {
+          showToast("❌ Erro ao processar save. Verifique a formatação JSON.");
         }
       },
       resetSave() {
-        if (confirm("Tem certeza que deseja deletar sua carreira atual? Esta ação não pode ser desfeita.")) {
-          localStorage.removeItem(STORAGE_KEY);
+        if (confirm("Tem certeza que deseja apagar sua carreira? Todo o progresso será perdido.")) {
+          localStorage.removeItem("lol_career_save_v1");
           careerState = null;
           this.closeModal();
           gameRouter.updateTitleScreen();
           gameRouter.showScreen("screenTitle");
-          showToast("🗑️ Save deletado com sucesso!");
+          showToast("🗑️ Save apagado com sucesso.");
         }
       }
     };
 
-    /* ROTEADOR DE TELAS E ABAS */
+    /* ROTEADOR DO SPA */
     const gameRouter = {
       showScreen(screenId) {
         document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
         const target = document.getElementById(screenId);
         if (target) {
           target.classList.add("active");
-          if (typeof window.scrollTo === 'function') window.scrollTo({ top: 0, behavior: "smooth" });
+          window.scrollTo(0, 0);
         }
       },
       goTitle() {
@@ -3384,39 +3552,48 @@
         const hasSave = career.load();
         const continueCard = document.getElementById("btnContinueCareerCard");
         if (hasSave && careerState) {
-          continueCard.style.display = "flex";
-          document.getElementById("titleContinueDesc").innerText = 
-            careerState.nick + " • " + careerState.elo.tier + " (" + careerState.elo.lp + " PDL) • " + careerState.team.name;
-        } else {
+          if (continueCard) {
+            continueCard.style.display = "flex";
+            const descEl = document.getElementById("titleContinueDesc");
+            if (descEl) descEl.innerText = careerState.nick + " • " + careerState.team.name + " (" + careerState.elo.tier + " " + careerState.elo.lp + " PDL)";
+          }
+        } else if (continueCard) {
           continueCard.style.display = "none";
         }
       },
       openGuideModal() {
-        document.getElementById("guideModal").classList.add("active");
+        gameAudio.playClick();
+        const g = document.getElementById("guideModal");
+        if (g) g.classList.add("active");
       },
       closeGuideModal() {
-        document.getElementById("guideModal").classList.remove("active");
+        const g = document.getElementById("guideModal");
+        if (g) g.classList.remove("active");
       }
     };
 
+    /* CONTROLE DE ABAS DO DASHBOARD */
     const hubTabs = {
       switchTab(tabId, btnEl) {
         gameAudio.playClick();
-        document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
         document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.remove("active"));
+        if (btnEl) btnEl.classList.add("active");
+
+        document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
         const target = document.getElementById(tabId);
         if (target) target.classList.add("active");
-        if (btnEl) btnEl.classList.add("active");
       }
     };
 
-    /* TOAST HELPER & BOOTSTRAP */
+    /* NOTIFICAÇÃO TOAST */
     function showToast(msg) {
       const container = document.getElementById("toastContainer");
+      if (!container) return;
       const toast = document.createElement("div");
-      toast.className = "toast";
-      toast.innerHTML = "<span>⚡ " + msg + "</span>";
+      toast.className = "toast-message";
+      toast.innerText = msg;
       container.appendChild(toast);
+
       setTimeout(() => {
         toast.style.opacity = "0";
         toast.style.transition = "all 0.3s ease";
@@ -3424,6 +3601,19 @@
       }, 3500);
     }
 
+    /* CONTROLLER DE PARTIDA (DISPUTA SOLOQ DIRETA) */
+    const matchController = {
+      startSoloQMatch() {
+        if (careerState.energy < 20) {
+          showToast("⚡ Energia insuficiente para disputar a SoloQ. Descanse!");
+          return;
+        }
+        matchEngine.isSoloQMatch = true;
+        draftEngine.startChampionSelect();
+      }
+    };
+
+    /* ASSOCIAÇÕES GLOBAIS NO WINDOW (SEMPRE NO FINAL APÓS DECLARAÇÕES) */
     window.gameRouter = gameRouter;
     window.career = career;
     window.creationUI = creationUI;
@@ -3432,6 +3622,8 @@
     window.SUMMONER_SPELLS_DB = SUMMONER_SPELLS_DB;
     window.draftEngine = draftEngine;
     window.matchEngine = matchEngine;
+    window.matchController = matchController;
+    window.socialEngine = socialEngine;
     window.saveManager = saveManager;
     window.hubTabs = hubTabs;
     window.gameAudio = gameAudio;
@@ -3441,6 +3633,7 @@
       gameRouter.updateTitleScreen();
       gameRouter.showScreen("screenTitle");
     });
+
   </script>
 </body>
 </html>
