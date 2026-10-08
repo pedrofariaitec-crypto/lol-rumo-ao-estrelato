@@ -55,6 +55,86 @@
     ::-webkit-scrollbar-thumb { background: #1b283f; border-radius: 4px; border: 1px solid var(--border-hex); }
     ::-webkit-scrollbar-thumb:hover { background: var(--hextech-gold); }
 
+    
+    /* Feitiços de Invocador Clicáveis */
+    .spell-slot-btn {
+      width: 44px; height: 44px; border-radius: 4px; border: 2px solid var(--hextech-gold);
+      background: #090e18; cursor: pointer; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .spell-slot-btn:hover {
+      border-color: var(--hextech-blue); box-shadow: 0 0 14px var(--hextech-blue-glow);
+      transform: scale(1.05);
+    }
+    .spell-slot-btn img { width: 100%; height: 100%; object-fit: cover; }
+    .spell-key-badge {
+      position: absolute; bottom: 1px; right: 2px; font-family: var(--font-tech);
+      font-size: 0.75rem; font-weight: 900; color: #fff; background: rgba(0,0,0,0.85);
+      padding: 0 4px; border-radius: 2px; line-height: 1.1;
+    }
+
+    /* Modal do Seletor de Feitiços */
+    .spell-modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none;
+      align-items: center; justify-content: center; z-index: 9999;
+    }
+    .spell-modal-backdrop.active { display: flex; animation: fadeIn 0.2s ease; }
+    .spell-modal-box {
+      background: #0b121e; border: 2px solid var(--hextech-gold); border-radius: 8px;
+      width: 90%; max-width: 580px; padding: 20px; box-shadow: 0 0 40px rgba(0,0,0,0.9);
+    }
+    .spell-grid-picker {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0;
+    }
+    .spell-card-option {
+      background: #101b2d; border: 1px solid #1f2e46; border-radius: 6px; padding: 10px;
+      text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex;
+      flex-direction: column; align-items: center; gap: 6px;
+    }
+    .spell-card-option:hover {
+      border-color: var(--hextech-blue); background: #162640; transform: translateY(-2px);
+      box-shadow: 0 0 12px var(--hextech-blue-glow);
+    }
+    .spell-card-option.equipped {
+      border-color: var(--hextech-gold); background: rgba(200, 170, 110, 0.2);
+    }
+    .spell-card-option img { width: 44px; height: 44px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+    .spell-card-option h5 { font-family: var(--font-tech); font-size: 0.88rem; color: #fff; margin: 0; }
+    .spell-card-option p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.2; margin: 0; }
+
+    /* Navegador de Divisões da Liga */
+    .division-nav-bar {
+      display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .division-nav-btn {
+      flex: 1; min-width: 140px; padding: 10px 14px; background: #0c1424;
+      border: 1px solid #1d2c44; border-radius: 6px; color: #94a3b8;
+      font-family: var(--font-tech); font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; transition: all 0.2s ease; text-align: center;
+    }
+    .division-nav-btn:hover { border-color: var(--hextech-blue); color: #fff; }
+    .division-nav-btn.active {
+      border-color: var(--hextech-gold); background: linear-gradient(180deg, #241d10 0%, #120e06 100%);
+      color: var(--hextech-gold-bright); box-shadow: 0 0 15px rgba(200, 170, 110, 0.3);
+    }
+
+    /* Cartão de Evolução de Atributos no Scoreboard */
+    .stat-evolution-card {
+      background: linear-gradient(135deg, rgba(10, 200, 185, 0.12) 0%, rgba(13, 20, 36, 0.95) 100%);
+      border: 1px solid var(--success-green); border-radius: 8px; padding: 16px;
+      margin: 16px 0; text-align: center;
+    }
+    .stat-evolution-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px;
+    }
+    .stat-evolution-col {
+      background: #090e18; border: 1px solid #1c2b42; border-radius: 6px; padding: 10px;
+    }
+    .stat-evolution-col .stat-lbl { font-size: 0.76rem; color: var(--text-muted); text-transform: uppercase; }
+    .stat-evolution-col .stat-gain-val {
+      font-family: var(--font-tech); font-size: 1.4rem; font-weight: 800; color: var(--success-green);
+    }
+
     /* Buttons & Badges */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -388,35 +468,33 @@
     .draft-timer-sub { font-size: 0.7rem; font-family: var(--font-tech); color: var(--hextech-gold); text-transform: uppercase; letter-spacing: 1px; }
 
     .draft-arena-grid {
-      display: grid; grid-template-columns: 260px 1fr 260px; min-height: 600px;
-      background: radial-gradient(circle at 50% 50%, #0d1628 0%, #050810 100%);
+      display: grid; grid-template-columns: 280px 1fr; min-height: 590px;
+      background: radial-gradient(circle at 60% 40%, rgba(13, 22, 40, 0.95) 0%, #04070e 100%);
+      position: relative;
     }
 
     .draft-team-side {
-      padding: 12px; display: flex; flex-direction: column; gap: 8px;
-      background: rgba(7, 11, 19, 0.75);
+      padding: 14px 12px; display: flex; flex-direction: column; gap: 10px;
+      background: rgba(6, 10, 18, 0.85); border-right: 2px solid #1a283f;
     }
-    .draft-team-side.ally { border-right: 1px solid #19273d; }
-    .draft-team-side.enemy { border-left: 1px solid #19273d; }
 
     .slot-player-card {
-      background: linear-gradient(135deg, #0e1628 0%, #080d16 100%);
-      border: 1px solid #1c2b42; border-radius: 6px; padding: 8px 10px;
-      display: flex; align-items: center; gap: 10px; position: relative;
-      transition: all 0.2s ease;
+      background: linear-gradient(135deg, #0e1628 0%, #070c16 100%);
+      border: 1px solid #1c2b42; border-radius: 6px; padding: 10px 12px;
+      display: flex; align-items: center; gap: 12px; position: relative;
+      transition: all 0.22s ease;
     }
     .slot-player-card.is-current-player {
-      border-color: var(--hextech-gold); background: linear-gradient(135deg, #1b263d 0%, #0f182a 100%);
-      box-shadow: 0 0 15px var(--hextech-gold-glow);
+      border-color: var(--hextech-gold); background: linear-gradient(135deg, #1d273d 0%, #0e1728 100%);
+      box-shadow: 0 0 18px var(--hextech-gold-glow);
     }
     .slot-player-card.is-picking {
-      border-color: var(--hextech-blue); box-shadow: 0 0 15px var(--hextech-blue-glow);
+      border-color: var(--hextech-blue); box-shadow: 0 0 20px var(--hextech-blue-glow);
       animation: slotPulse 1.5s infinite;
     }
-    @keyframes slotPulse { 0%, 100% { border-color: var(--hextech-blue); } 50% { border-color: #fff; } }
 
     .slot-circle-wrap {
-      width: 44px; height: 44px; border-radius: 50%; overflow: hidden;
+      width: 48px; height: 48px; border-radius: 50%; overflow: hidden;
       border: 2px solid #283a54; background: #080d17; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
     }
@@ -424,64 +502,60 @@
     .slot-circle-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .slot-meta { overflow: hidden; flex: 1; }
     .slot-role-tag {
-      font-family: var(--font-tech); font-weight: 800; font-size: 0.74rem;
+      font-family: var(--font-tech); font-weight: 800; font-size: 0.76rem;
       letter-spacing: 1px; color: var(--hextech-gold); text-transform: uppercase;
     }
     .slot-nick-tag {
-      font-family: var(--font-tech); font-weight: 700; font-size: 0.95rem; color: #fff;
+      font-family: var(--font-tech); font-weight: 700; font-size: 1rem; color: #fff;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .slot-champ-selected-name { font-size: 0.74rem; color: var(--hextech-blue); font-weight: 600; }
-    .slot-swap-btn { color: #61738d; cursor: pointer; font-size: 1rem; padding: 2px 4px; }
+    .slot-champ-selected-name { font-size: 0.8rem; color: var(--hextech-blue); font-weight: 600; }
+    .slot-swap-btn { color: #61738d; cursor: pointer; font-size: 1.1rem; padding: 2px 4px; }
     .slot-swap-btn:hover { color: var(--hextech-gold); }
 
-    /* Center: Coach Advisory + Filters + 168 Champ Grid */
+    /* Palco Central do Draft com Arco Hextech */
     .draft-center-stage {
-      padding: 12px 18px; display: flex; flex-direction: column; justify-content: space-between;
+      padding: 12px 20px; display: flex; flex-direction: column; justify-content: space-between;
+      position: relative;
     }
 
-    .coach-matchup-panel {
-      background: linear-gradient(135deg, rgba(200, 170, 110, 0.12) 0%, rgba(12, 20, 34, 0.95) 100%);
-      border: 1px solid var(--hextech-gold); border-radius: 8px; padding: 12px 16px;
-      margin-bottom: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    /* Barra Elegante do Técnico Maestro */
+    .coach-matchup-bar {
+      background: linear-gradient(90deg, rgba(200, 170, 110, 0.15) 0%, rgba(10, 18, 32, 0.95) 100%);
+      border: 1px solid var(--hextech-gold); border-radius: 8px; padding: 8px 16px;
+      margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); flex-wrap: wrap;
     }
-    .coach-panel-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .coach-avatar-circle {
-      width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--hextech-gold);
-      background: #111a2d; display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display); font-size: 1.1rem; color: var(--hextech-gold); font-weight: 900;
-      flex-shrink: 0;
+    .coach-bar-left { display: flex; align-items: center; gap: 10px; }
+    .coach-bar-left .coach-icon { font-size: 1.4rem; }
+    .coach-bar-left h4 {
+      font-family: var(--font-tech); font-size: 0.88rem; font-weight: 800; color: var(--hextech-gold);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;
     }
-    .coach-briefing-text h4 {
-      font-family: var(--font-tech); font-size: 0.9rem; font-weight: 800; color: var(--hextech-gold);
-      letter-spacing: 1px; text-transform: uppercase;
-    }
-    .coach-briefing-text p { font-size: 0.82rem; color: #d9e3f0; line-height: 1.35; }
-    .coach-counter-recommendations {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px;
-    }
+    .coach-bar-left p { font-size: 0.82rem; color: #e2e8f0; line-height: 1.2; }
+    .coach-counter-recommendations { display: flex; gap: 8px; flex-wrap: wrap; }
     .coach-counter-card {
-      background: #090e18; border: 1px solid #24354f; border-radius: 6px; padding: 6px 10px;
-      display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.2s ease;
+      background: #090e18; border: 1px solid #24354f; border-radius: 6px; padding: 4px 10px;
+      display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s ease;
     }
     .coach-counter-card:hover, .coach-counter-card.active {
-      border-color: var(--hextech-blue); background: rgba(0, 210, 255, 0.15);
+      border-color: var(--hextech-blue); background: rgba(0, 210, 255, 0.2);
       transform: translateY(-2px); box-shadow: 0 0 12px var(--hextech-blue-glow);
     }
-    .coach-counter-card img { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hextech-gold); }
-    .coach-counter-info h5 { font-family: var(--font-tech); font-size: 0.9rem; color: #fff; font-weight: 700; }
-    .coach-counter-info span { font-size: 0.72rem; color: var(--success-green); font-weight: 600; display: block; }
+    .coach-counter-card img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--hextech-gold); }
+    .coach-counter-info h5 { font-family: var(--font-tech); font-size: 0.88rem; color: #fff; font-weight: 700; margin: 0; }
+    .coach-counter-info span { font-size: 0.72rem; color: var(--success-green); font-weight: 700; display: block; }
 
-    /* Filters Bar (Icons, Sort, Search) - Similar to Reference */
+    /* Barra de Filtros e Busca */
     .draft-filter-toolbar {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 10px; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 8px; flex-wrap: wrap; gap: 10px;
     }
-    .draft-role-icon-group { display: flex; gap: 4px; }
+    .draft-role-icon-group { display: flex; gap: 6px; }
     .role-filter-icon-btn {
-      width: 36px; height: 36px; border-radius: 4px; border: 1px solid #1e2c42;
+      width: 38px; height: 38px; border-radius: 4px; border: 1px solid #1e2c42;
       background: #0a101b; color: #7f93ac; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 1.1rem; transition: all 0.2s ease;
+      cursor: pointer; font-size: 1.15rem; transition: all 0.2s ease;
     }
     .role-filter-icon-btn:hover { border-color: var(--hextech-blue); color: #fff; }
     .role-filter-icon-btn.active {
@@ -490,45 +564,55 @@
 
     .draft-search-box {
       display: flex; align-items: center; gap: 8px; background: #070b13; border: 1px solid #1c2a3f;
-      border-radius: 4px; padding: 4px 10px;
+      border-radius: 4px; padding: 5px 12px;
     }
     .draft-search-box input {
       background: transparent; border: none; outline: none; color: #fff; font-family: var(--font-body);
-      font-size: 0.88rem; width: 160px;
+      font-size: 0.9rem; width: 190px;
     }
 
-    /* 168 Campeões Grid - Matching Official LoL Screen */
+    /* Grade Completa dos 168 Campeões (Estilo Oficial com Molduras e Baús) */
     .draft-168-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px;
-      max-height: 360px; overflow-y: auto; padding: 10px; background: #050810;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 10px;
+      max-height: 440px; overflow-y: auto; padding: 12px; background: rgba(5, 8, 16, 0.9);
       border: 1px solid #18253a; border-radius: 8px;
     }
     .champ-select-tile {
-      background: #0e1524; border: 1px solid #1d2a3f; border-radius: 6px;
-      padding: 5px 3px; text-align: center; cursor: pointer; transition: all 0.18s ease;
+      background: #0e1524; border: 1px solid #1d2a3f; border-radius: 4px;
+      padding: 4px; text-align: center; cursor: pointer; transition: all 0.18s ease;
       display: flex; flex-direction: column; align-items: center; position: relative;
     }
     .champ-select-tile:hover {
       border-color: var(--hextech-blue); transform: translateY(-2px);
-      box-shadow: 0 0 10px var(--hextech-blue-glow);
+      box-shadow: 0 0 12px var(--hextech-blue-glow);
     }
+    /* Moldura Dourada Ornamental quando selecionado (igual ao Alistar no print) */
     .champ-select-tile.selected {
-      border: 2px solid var(--hextech-gold); background: rgba(200, 170, 110, 0.2);
-      box-shadow: 0 0 15px var(--hextech-gold-glow);
+      border: 2px solid var(--hextech-gold); background: rgba(200, 170, 110, 0.25);
+      box-shadow: 0 0 18px var(--hextech-gold-glow);
     }
+    .champ-select-tile.selected::before, .champ-select-tile.selected::after {
+      content: ''; position: absolute; width: 8px; height: 8px;
+      border-color: #f0e6d2; pointer-events: none;
+    }
+    .champ-select-tile.selected::before { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
+    .champ-select-tile.selected::after { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
+
+    /* Baú de Maestria Azul no topo direito da foto (igual ao LoL Client) */
     .champ-tile-chest-badge {
-      position: absolute; top: 4px; right: 4px; width: 14px; height: 14px;
-      border-radius: 50%; background: #0ac8b9; color: #000; font-size: 9px;
+      position: absolute; top: 2px; right: 2px; width: 16px; height: 16px;
+      border-radius: 50%; background: #0ac8b9; color: #051419; font-size: 10px;
       font-weight: 900; display: flex; align-items: center; justify-content: center;
+      border: 1px solid #fff; box-shadow: 0 0 6px rgba(10, 200, 185, 0.8); z-index: 2;
     }
     .champ-tile-img {
-      width: 44px; height: 44px; border-radius: 4px; overflow: hidden; margin-bottom: 4px;
-      background: #111a2c;
+      width: 58px; height: 58px; border-radius: 3px; overflow: hidden; margin-bottom: 4px;
+      background: #111a2c; border: 1px solid rgba(255,255,255,0.06);
     }
     .champ-tile-img img { width: 100%; height: 100%; object-fit: cover; }
     .champ-tile-name {
-      font-size: 0.7rem; font-family: var(--font-tech); font-weight: 600;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 66px; color: #d1d9e6;
+      font-size: 0.72rem; font-family: var(--font-tech); font-weight: 700;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70px; color: #e2e8f0;
     }
 
     /* Bottom Bar estilo LoL Client (Chat + Runas/Feitiços + Lock In) */
@@ -715,12 +799,12 @@
         <div class="creation-body">
           <div class="form-group">
             <label>Nome Completo do Jogador</label>
-            <input type="text" id="inputPlayerName" class="form-control" value="Gabriel Santos">
+            <input type="text" id="inputPlayerName" class="form-control" placeholder="Ex: Gabriel Santos">
           </div>
 
           <div class="form-group">
             <label>Nickname Competitivo (Nick de Invocador)</label>
-            <input type="text" id="inputNickName" class="form-control" value="Revenge">
+            <input type="text" id="inputNickName" class="form-control" placeholder="Ex: Revenge">
           </div>
 
           <div class="form-group">
@@ -911,7 +995,10 @@
                 <div style="font-size: 0.85rem; color: #cbd5e1;">
                   ⚔️ Confronto Oficial com <strong style="color: var(--hextech-gold);">Draft & Treinador</strong>
                 </div>
-                <button class="btn btn-gold" style="padding: 12px 30px;" onclick="draftEngine.startChampionSelect()">
+                <button class="btn btn-primary" style="padding: 12px 20px;" onclick="matchController.startSoloQMatch()">
+                  🔥 Jogar SoloQueue
+                </button>
+                <button class="btn btn-gold" style="padding: 12px 26px;" onclick="draftEngine.startChampionSelect()">
                   ⚔️ Entrar na Seleção de Campeões
                 </button>
               </div>
@@ -985,13 +1072,38 @@
         </div>
       </div>
 
-      <!-- TAB 2: TABELA DA LIGA -->
+      <!-- TAB 2: TABELA DA LIGA (NAVEGADOR COMPLETO DE DIVISÕES) -->
       <div id="tabLeagueStandings" class="tab-content">
         <div class="card">
           <div class="card-title">
-            <span id="tabStandingsLeagueTitle">TABELA DE CLASSIFICAÇÃO DA LIGA</span>
-            <span class="badge badge-gold" id="tabStandingsPromotionBadge">Top 2 sobem de divisão</span>
+            <span id="tabStandingsLeagueTitle">NAVEGADOR DAS DIVISÕES DO CIRCUITO</span>
+            <span class="badge badge-gold" id="tabStandingsPromotionBadge">Selecione a Divisão para Visualizar</span>
           </div>
+
+          <!-- Botões de Navegação entre as 4 Divisões -->
+          <div class="division-nav-bar">
+            <button class="division-nav-btn active" id="divBtn4" onclick="leagueNavigator.showDivision(4, this)">
+              ⭐ Liga Go4LoL (Tier 4)
+            </button>
+            <button class="division-nav-btn" id="divBtn3" onclick="leagueNavigator.showDivision(3, this)">
+              🛡️ Circuito Desafiante (Tier 3)
+            </button>
+            <button class="division-nav-btn" id="divBtn2" onclick="leagueNavigator.showDivision(2, this)">
+              🏆 CBLOL Academy (Tier 2)
+            </button>
+            <button class="division-nav-btn" id="divBtn1" onclick="leagueNavigator.showDivision(1, this)">
+              ⚔️ CBLOL Oficial (Tier 1)
+            </button>
+          </div>
+
+          <div style="background: #080d17; border: 1px solid #1a273e; border-radius: 6px; padding: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h4 id="navTierHeading" style="font-family: var(--font-tech); color: var(--hextech-gold); font-size: 1.1rem; text-transform: uppercase;">Tier 4 - Liga Amadora Go4LoL</h4>
+              <p id="navTierDesc" style="font-size: 0.82rem; color: #94a3b8; margin: 0;">Porta de entrada do cenário semiprofissional. Os 2 melhores avançam para a disputa do Circuito Desafiante.</p>
+            </div>
+            <span class="badge badge-blue" id="navYourTeamStatusBadge">Sua Divisão Atual</span>
+          </div>
+
           <table class="scoreboard-table">
             <thead>
               <tr>
@@ -1001,7 +1113,7 @@
                 <th>Vitórias</th>
                 <th>Derrotas</th>
                 <th>Aproveitamento</th>
-                <th>Situação</th>
+                <th>Poder / Status</th>
               </tr>
             </thead>
             <tbody id="tabLeagueStandingsTableBody"></tbody>
@@ -1014,7 +1126,10 @@
         <div class="card">
           <div class="card-title">
             <span>🔥 RANKING DOS MELHORES DO SERVIDOR (TOP DESAFIANTES)</span>
-            <span class="badge badge-gold" id="tabSoloQRegionBadge">REGIÃO SELECIONADA</span>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span class="badge badge-gold" id="tabSoloQRegionBadge">REGIÃO SELECIONADA</span>
+              <button class="btn btn-sm btn-gold" onclick="matchController.startSoloQMatch()">⚔️ Jogar Ranqueada SoloQ</button>
+            </div>
           </div>
           <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 12px;">
             Apenas os melhores jogadores, streamers e profissionais que disputam as ranqueadas da sua região:
@@ -1066,35 +1181,40 @@
   <div id="screenDraft" class="screen">
     <div class="draft-screen-wrapper">
       <div class="draft-top-bar">
-        <div class="draft-top-title-banner">SUA VEZ DE ESCOLHER!</div>
+        <div class="draft-top-title-banner" id="draftBannerTopTitle">SUA VEZ DE ESCOLHER!</div>
         <div class="draft-center-timer-wrap">
           <div class="draft-circle-timer" id="draftTimerCountdown">15</div>
           <div class="draft-timer-sub">SELEÇÃO DE CAMPEÕES</div>
         </div>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="badge badge-gold" id="draftOpponentRivalPreview">Oponente: Rival (Carregando...)</span>
           <span style="color: var(--text-muted); font-size: 0.85rem;" id="draftMatchMetaHeader">RODADA OFICIAL</span>
         </div>
       </div>
 
       <div class="draft-arena-grid">
+        <!-- Coluna da Esquerda: Somente o seu Time (5 Slots verticais com ícones de rota) -->
         <div class="draft-team-side ally" id="draftAllyTeamSlots"></div>
 
+        <!-- Palco Central Grande (Arco Hextech com Técnico, Filtros e 168 Campeões) -->
         <div class="draft-center-stage">
-          <div class="coach-matchup-panel" id="coachMatchupPanel">
-            <div class="coach-panel-top">
-              <div class="coach-avatar-circle">👔</div>
-              <div class="coach-briefing-text">
-                <h4 id="coachBriefingHeader">Comissão Técnica • Tática de Matchup</h4>
-                <p id="coachBriefingDialogue">Analisando o pick adversário...</p>
+          <!-- Barra Sutil do Técnico com os Counters Instantâneos -->
+          <div class="coach-matchup-bar" id="coachMatchupPanel">
+            <div class="coach-bar-left">
+              <span class="coach-icon">👔</span>
+              <div>
+                <h4 id="coachBriefingHeader">Coach Maestro (Técnico da Equipe)</h4>
+                <p id="coachBriefingDialogue">O rival travou o campeão dele. Qual campeão você quer para responder a esse matchup?</p>
               </div>
             </div>
             <div class="coach-counter-recommendations" id="coachCounterList"></div>
           </div>
 
+          <!-- Barra de Filtros e Busca -->
           <div class="draft-filter-toolbar">
             <div class="draft-role-icon-group">
-              <div class="role-filter-icon-btn active" title="Todos" onclick="draftEngine.setRoleFilter('All', this)">⚔️</div>
-              <div class="role-filter-icon-btn" title="Favoritos / Mains" onclick="draftEngine.setRoleFilter('Mains', this)">⭐</div>
+              <div class="role-filter-icon-btn active" title="Todos os 168 Campeões" onclick="draftEngine.setRoleFilter('All', this)">⚔️</div>
+              <div class="role-filter-icon-btn" title="Favoritos / Mains da Pool" onclick="draftEngine.setRoleFilter('Mains', this)">⭐</div>
               <div class="role-filter-icon-btn" title="Top Lane" onclick="draftEngine.setRoleFilter('Top', this)">🛡️</div>
               <div class="role-filter-icon-btn" title="Jungle" onclick="draftEngine.setRoleFilter('Jungle', this)">🌲</div>
               <div class="role-filter-icon-btn" title="Mid Lane" onclick="draftEngine.setRoleFilter('Mid', this)">⚡</div>
@@ -1102,18 +1222,21 @@
               <div class="role-filter-icon-btn" title="Suporte" onclick="draftEngine.setRoleFilter('Suporte', this)">💖</div>
             </div>
 
-            <div class="draft-search-box">
-              <span>🔍</span>
-              <input type="text" id="draftSearchInput" placeholder="Procurar Campeão..." oninput="draftEngine.filterGrid(this.value)">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="draftMatchupAdvantageBadge" class="badge badge-green" style="display: none;">Vantagem de Matchup: +20%</span>
+              <div class="draft-search-box">
+                <span>🔍</span>
+                <input type="text" id="draftSearchInput" placeholder="Procurar Campeão..." oninput="draftEngine.filterGrid(this.value)">
+              </div>
             </div>
           </div>
 
+          <!-- Grade dos 168 Campeões com Baús de Maestria e Moldura de Seleção -->
           <div class="draft-168-grid" id="draftChampionsGrid"></div>
         </div>
-
-        <div class="draft-team-side enemy" id="draftEnemyTeamSlots"></div>
       </div>
 
+      <!-- Barra Inferior do Draft (Chat + Feitiços D & F + Travar Escolha) -->
       <div class="draft-bottom-bar">
         <div class="draft-chat-box">
           <div class="draft-chat-messages" id="draftChatMessages"></div>
@@ -1123,15 +1246,26 @@
           </div>
         </div>
 
-        <div class="draft-center-lockin-zone">
-          <div class="spells-and-runes">
-            <div class="spell-icon-box" title="Flash (Feitiço de Invocador)">⚡</div>
-            <div class="spell-icon-box" id="draftSecondSpellIcon" title="Feitiço Secundário">🔥</div>
-            <div style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--hextech-gold); margin-left: 6px;">
-              <span id="draftLockedChampLabel">Nenhum Selecionado</span>
+        <div class="draft-center-lockin-zone" style="display: flex; align-items: center; gap: 16px;">
+          <!-- Feitiços de Invocador Clicáveis D e F -->
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="spell-slot-btn" id="draftSpellBtnD" title="Clique para trocar o Feitiço (D)" onclick="draftEngine.openSpellPicker('d')">
+              <img id="draftSpellImgD" src="https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerFlash.png" alt="Spell D">
+              <span class="spell-key-badge">D</span>
+            </div>
+            <div class="spell-slot-btn" id="draftSpellBtnF" title="Clique para trocar o Feitiço (F)" onclick="draftEngine.openSpellPicker('f')">
+              <img id="draftSpellImgF" src="https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerDot.png" alt="Spell F">
+              <span class="spell-key-badge">F</span>
+            </div>
+            <div style="font-family: var(--font-tech); font-size: 0.9rem; color: var(--hextech-gold); min-width: 140px;">
+              <span id="draftLockedChampLabel" style="font-weight: 800; font-size: 1.1rem; color: #fff;">Nenhum Selecionado</span>
+              <div id="draftActiveSpellsDesc" style="font-size: 0.72rem; color: var(--hextech-blue);">D: Flash • F: Incendiar</div>
             </div>
           </div>
-          <button class="btn btn-gold btn-lockin-large" id="btnLockInDraft" onclick="draftEngine.confirmLockIn()">TRAVAR ESCOLHA</button>
+
+          <button class="btn btn-gold btn-lockin-large" id="btnLockInDraft" onclick="draftEngine.confirmLockIn()">
+            🔒 TRAVAR ESCOLHA
+          </button>
         </div>
 
         <div class="draft-mode-info">
@@ -1139,6 +1273,22 @@
           <div class="draft-queue-tag" id="draftQueueTag">RODADA REGULAR</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE ESCOLHA DE FEITIÇOS DE INVOCADOR -->
+  <div class="spell-modal-backdrop" id="spellPickerModal">
+    <div class="spell-modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e2c42; padding-bottom: 10px;">
+        <h3 style="font-family: var(--font-tech); color: var(--hextech-gold); text-transform: uppercase;">
+          ⚡ Escolha o Feitiço de Invocador (<span id="modalSpellSlotLabel">Tecla D</span>)
+        </h3>
+        <button class="btn btn-sm btn-danger" onclick="draftEngine.closeSpellPicker()">✕ Fechar</button>
+      </div>
+      <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 8px;">
+        Os feitiços de invocador afetam diretamente a sua jogabilidade, chances de vitória e bônus na partida:
+      </p>
+      <div class="spell-grid-picker" id="modalSpellGridPicker"></div>
     </div>
   </div>
 
@@ -1292,6 +1442,75 @@
       const initial = (name || "L").charAt(0).toUpperCase();
       return "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23111827'/><circle cx='40' cy='40' r='34' fill='%231f2937' stroke='%23c8aa6e' stroke-width='3'/><text x='50%25' y='55%25' font-family='sans-serif' font-weight='bold' font-size='30' fill='%23c8aa6e' dominant-baseline='middle' text-anchor='middle'>" + initial + "</text></svg>";
     }
+
+    
+    
+    function handleImgError(img) {
+      if (!img) return;
+      img.onerror = null;
+      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23111827"/><circle cx="40" cy="40" r="34" fill="%231f2937" stroke="%23c8aa6e" stroke-width="3"/><text x="50%" y="55%" font-family="sans-serif" font-weight="bold" font-size="26" fill="%23c8aa6e" dominant-baseline="middle" text-anchor="middle">LoL</text></svg>';
+    }
+    window.handleImgError = handleImgError;
+
+    /* BANCO DE DADOS DE FEITIÇOS DE INVOCADOR (SUMMONER SPELLS) */
+    const SUMMONER_SPELLS_DB = {
+      Flash: {
+        id: "Flash", name: "Flash", key: "D",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerFlash.png",
+        fallback: "⚡",
+        desc: "Teleporta seu campeão instantaneamente por uma curta distância.",
+        tactical: "+6% Sucesso Geral • Evita mortes e viabiliza outplays arriscados"
+      },
+      Ignite: {
+        id: "Ignite", name: "Incendiar", key: "F",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerDot.png",
+        fallback: "🔥",
+        desc: "Aplica dano verdadeiro contínuo e corta 40% das curas inimigas.",
+        tactical: "+8% em Duelos & All-in • Execução fatal na rota e cancela curas"
+      },
+      Teleport: {
+        id: "Teleport", name: "Teleporte", key: "F",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerTeleport.png",
+        fallback: "🌀",
+        desc: "Teleporta para sentinelas ou torres aliadas em qualquer ponto do mapa.",
+        tactical: "+8% em Macro & Objetivos • Presença instantânea no Barão/Dragão e Split-Push"
+      },
+      Smite: {
+        id: "Smite", name: "Golpear", key: "D",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerSmite.png",
+        fallback: "🌲",
+        desc: "Causa dano verdadeiro massivo a monstros neutros e épicos.",
+        tactical: "+12% em Monstros Épicos • Fundamental para caçadores garantirem Barão e Dragão"
+      },
+      Exhaust: {
+        id: "Exhaust", name: "Exaustão", key: "F",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerExhaust.png",
+        fallback: "💤",
+        desc: "Reduz em 35% o dano do alvo e 30% da velocidade por 3 segundos.",
+        tactical: "-20% Impacto do Rival • Neutraliza assassinos e atiradores adversários em lutas"
+      },
+      Heal: {
+        id: "Heal", name: "Curar", key: "F",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerHeal.png",
+        fallback: "💚",
+        desc: "Restaura vida imediata e concede velocidade para você e um aliado.",
+        tactical: "+7% Sobrevivência • Clássico da bot lane para salvar o 2v2 e lutas em equipe"
+      },
+      Cleanse: {
+        id: "Cleanse", name: "Purificar", key: "F",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerBoost.png",
+        fallback: "✨",
+        desc: "Remove todos os efeitos incapacitantes e atordoamentos do campeão.",
+        tactical: "+8% Contra Controle de Grupo • Anula composições inimigas cheias de atordoamentos"
+      },
+      Ghost: {
+        id: "Ghost", name: "Fantasma", key: "F",
+        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerHaste.png",
+        fallback: "💨",
+        desc: "Concede velocidade de movimento prolongada e ignora colisão.",
+        tactical: "+7% em Teamfights Longas • Excelente para perseguição e kiting contínuo"
+      }
+    };
 
     /* LIGAS E DIVISÕES (TIER 4 ATÉ TIER 1) */
     const LEAGUES_DATA = {
@@ -1603,6 +1822,7 @@
       elo: { tier: "Mestre", division: "I", lp: 140, soloRank: 2450 },
       team: { name: "KaBuM! Black", tierId: 4, week: 1, wins: 0, losses: 0 },
       championPool: [],
+      spells: { d: "Flash", f: "Ignite" },
       tacticalStance: "macro",
       socialFeed: [],
       offers: [],
@@ -2088,17 +2308,28 @@
       },
 
       submitCharacter() {
-        if (this.selectedMains.length < 3) {
-          showToast("⚠️ Escolha 3 campeões de assinatura para a sua pool!");
-          return;
-        }
-
-        const name = document.getElementById("inputPlayerName").value.trim() || "Gabriel Santos";
-        const nick = document.getElementById("inputNickName").value.trim() || "Revenge";
+        const nameInput = document.getElementById("inputPlayerName").value.trim();
+        const nickInput = document.getElementById("inputNickName").value.trim();
+        const name = nameInput || "Gabriel Santos";
+        const nick = nickInput || "Revenge";
         const region = document.getElementById("selectRegion").value;
         const role = document.getElementById("selectRole").value;
         const style = document.getElementById("selectStyle").value;
         const startingElo = document.getElementById("selectStartingElo").value;
+
+        // Se o jogador não escolheu 3 mains manualmente, auto-atribuir os campeões mais icônicos da rota
+        const db = window.LOL_CHAMPIONS_DB || [];
+        if (this.selectedMains.length === 0) {
+          const defaultRoleMains = {
+            Mid: ["Ahri", "Yasuo", "Zed"],
+            Suporte: ["Thresh", "Nautilus", "Lulu"],
+            Top: ["Aatrox", "Darius", "Fiora"],
+            Jungle: ["LeeSin", "Viego", "Elise"],
+            ADC: ["KaiSa", "Jinx", "Lucian"]
+          };
+          const targetIds = defaultRoleMains[role] || ["Ahri", "Aatrox", "Thresh"];
+          this.selectedMains = targetIds.map(id => db.find(c => c.id === id) || { id: id, name: id, img: id + ".png" });
+        }
 
         careerState = JSON.parse(JSON.stringify(DEFAULT_CAREER));
         careerState.name = name;
@@ -2107,6 +2338,10 @@
         careerState.role = role;
         careerState.style = style;
         careerState.currentTierId = 4;
+        careerState.spells = {
+          d: "Flash",
+          f: role === "Jungle" ? "Smite" : role === "Suporte" ? "Ignite" : "Ignite"
+        };
 
         if (startingElo === "GraoMestre") {
           careerState.elo = { tier: "Grão-Mestre", division: "I", lp: 380, soloRank: 420 };
@@ -2125,6 +2360,97 @@
 
         go4LoLOffersUI.renderOffers();
         gameRouter.showScreen("screenGo4LoLOffers");
+        showToast("✨ Atleta criado com sucesso! Escolha sua equipe da Go4LoL.");
+      }
+    };
+
+    
+    /* NAVEGADOR COMPLETO DAS 4 DIVISÕES COMPETITIVAS */
+    const leagueNavigator = {
+      activeTier: 4,
+
+      showDivision(tierId, btnEl) {
+        gameAudio.playClick();
+        this.activeTier = tierId;
+        document.querySelectorAll(".division-nav-btn").forEach(b => b.classList.remove("active"));
+        if (btnEl) btnEl.classList.add("active");
+
+        const league = LEAGUES_DATA[tierId];
+        if (!league) return;
+
+        document.getElementById("navTierHeading").innerText = league.name;
+        const descs = {
+          4: "Porta de entrada do cenário semiprofissional. Os 2 melhores avançam para a disputa do Circuito Desafiante.",
+          3: "Segunda divisão nacional de acesso. Os finalistas garantem vaga na Série de Promoção para o CBLOL.",
+          2: "Liga de desenvolvimento das grandes franquias. Revela os maiores prodígios das categorias de base.",
+          1: "Elite máxima do League of Legends nacional. O campeão garante vaga no Campeonato Mundial (Worlds)!"
+        };
+        document.getElementById("navTierDesc").innerText = descs[tierId] || "";
+
+        const badge = document.getElementById("navYourTeamStatusBadge");
+        if (careerState && careerState.currentTierId === tierId) {
+          badge.innerText = "Sua Divisão Atual (" + careerState.team.name + ")";
+          badge.className = "badge badge-gold";
+        } else {
+          badge.innerText = "Divisão Competitiva";
+          badge.className = "badge badge-blue";
+        }
+
+        this.renderTable(tierId);
+      },
+
+      renderTable(tierId) {
+        const tbody = document.getElementById("tabLeagueStandingsTableBody");
+        tbody.innerHTML = "";
+        const league = LEAGUES_DATA[tierId];
+        if (!league) return;
+
+        let teams = [...league.teams];
+        if (careerState && careerState.currentTierId === tierId) {
+          const exists = teams.some(t => t.name === careerState.team.name);
+          if (!exists) {
+            teams.unshift({
+              name: careerState.team.name,
+              tag: "VOCÊ",
+              wins: careerState.team.wins,
+              losses: careerState.team.losses,
+              power: Math.round(career.calculateTeamOvr())
+            });
+          }
+        }
+
+        teams.sort((a, b) => {
+          if (b.wins !== a.wins) return b.wins - a.wins;
+          return a.losses - b.losses;
+        });
+
+        teams.forEach((t, i) => {
+          const isPlayerTeam = careerState && careerState.team.name === t.name;
+          const total = (t.wins || 0) + (t.losses || 0);
+          const wr = total > 0 ? Math.round((t.wins / total) * 100) + "%" : "0%";
+          let statusLabel = "Meio de Tabela";
+          let statusBadgeClass = "badge";
+
+          if (i < 2) {
+            statusLabel = tierId === 1 ? "Playoffs / Worlds" : "Zona de Promoção ➔";
+            statusBadgeClass = "badge badge-green";
+          } else if (i >= teams.length - 2 && tierId < 4) {
+            statusLabel = "Zona de Rebaixamento";
+            statusBadgeClass = "badge badge-red";
+          }
+
+          const tr = document.createElement("tr");
+          if (isPlayerTeam) tr.style.background = "rgba(200, 170, 110, 0.15)";
+
+          tr.innerHTML = "<td><strong>#" + (i + 1) + "</strong></td>" +
+            "<td><strong style='" + (isPlayerTeam ? "color:var(--hextech-gold);" : "") + "'>" + t.name + "</strong> " + (isPlayerTeam ? "(Seu Time)" : "") + "</td>" +
+            "<td>" + total + "</td>" +
+            "<td style='color:var(--success-green); font-weight:700;'>" + (t.wins || 0) + "</td>" +
+            "<td style='color:var(--danger-red);'>" + (t.losses || 0) + "</td>" +
+            "<td>" + wr + "</td>" +
+            "<td><span class='" + statusBadgeClass + "'>" + statusLabel + "</span></td>";
+          tbody.appendChild(tr);
+        });
       }
     };
 
@@ -2216,15 +2542,15 @@
       timerInterval: null,
       enemyOpponentChamp: null,
       allyPicks: [],
-      enemyPicks: [],
+      activeSpellSlot: 'd',
 
       startChampionSelect() {
-        if (careerState.energy < 25) {
-          showToast("⚡ Energia insuficiente para disputar a partida. Descanse!");
+        if (careerState.energy < 20) {
+          showToast("⚡ Energia insuficiente para disputar a partida. Descanse na Central de Treinos!");
           return;
         }
 
-        careerState.energy -= 25;
+        careerState.energy -= 20;
         career.save();
         career.updateDashboardUI();
 
@@ -2232,22 +2558,91 @@
         this.tacticalMatchupBonus = 0;
         this.activeRoleFilter = "All";
 
+        // Inicializar feitiços se não existirem
+        if (!careerState.spells) {
+          careerState.spells = {
+            d: "Flash",
+            f: careerState.role === "Jungle" ? "Smite" : careerState.role === "Suporte" ? "Ignite" : "Ignite"
+          };
+        }
+
         const db = window.LOL_CHAMPIONS_DB || [];
         const roleChamps = db.filter(c => c.roles && c.roles.includes(careerState.role));
         const shuffle = [...roleChamps].sort(() => 0.5 - Math.random());
         this.enemyOpponentChamp = shuffle[0] || db[0];
 
+        // Atualizar banner do rival
+        const oppBadge = document.getElementById("draftOpponentRivalPreview");
+        if (oppBadge) oppBadge.innerText = "Rival da Rota (" + careerState.role + "): " + this.enemyOpponentChamp.name;
+
         this.setupLobbySlots(this.enemyOpponentChamp);
         this.setupCoachAdvisory(this.enemyOpponentChamp);
         this.renderTeamSlots();
+        this.updateSpellHud();
         this.render168ChampionsGrid();
         this.initLobbyChat();
 
+        // Pré-selecionar o 1º campeão da pool do atleta
         const firstMain = careerState.championPool[0];
-        if (firstMain) this.selectChampion(firstMain);
+        if (firstMain) {
+          const fullObj = db.find(c => c.id === firstMain.id) || firstMain;
+          this.selectChampion(fullObj);
+        }
 
         this.startTimer(15);
         gameRouter.showScreen("screenDraft");
+      },
+
+      /* SELETOR INTERATIVO DE FEITIÇOS (D e F) */
+      openSpellPicker(slot) {
+        gameAudio.playClick();
+        this.activeSpellSlot = slot;
+        document.getElementById("modalSpellSlotLabel").innerText = "Tecla " + slot.toUpperCase();
+        const grid = document.getElementById("modalSpellGridPicker");
+        grid.innerHTML = "";
+
+        const currentSpell = careerState.spells[slot];
+
+        for (const key in SUMMONER_SPELLS_DB) {
+          const sp = SUMMONER_SPELLS_DB[key];
+          const isEquipped = currentSpell === sp.id;
+          const card = document.createElement("div");
+          card.className = "spell-card-option " + (isEquipped ? "equipped" : "");
+          card.onclick = () => this.equipSpell(sp.id);
+
+          card.innerHTML = "<img src='" + sp.img + "' alt='" + sp.name + "' onerror='handleImgError(this)'>" +
+            "<h5>" + sp.name + " (" + sp.fallback + ")</h5>" +
+            "<p>" + sp.tactical + "</p>";
+          grid.appendChild(card);
+        }
+
+        document.getElementById("spellPickerModal").classList.add("active");
+      },
+
+      closeSpellPicker() {
+        document.getElementById("spellPickerModal").classList.remove("active");
+      },
+
+      equipSpell(spellId) {
+        gameAudio.playVictory();
+        careerState.spells[this.activeSpellSlot] = spellId;
+        career.save();
+        this.updateSpellHud();
+        this.closeSpellPicker();
+        showToast("⚡ Feitiço " + SUMMONER_SPELLS_DB[spellId].name + " equipado na Tecla " + this.activeSpellSlot.toUpperCase() + "!");
+      },
+
+      updateSpellHud() {
+        const spD = SUMMONER_SPELLS_DB[careerState.spells.d] || SUMMONER_SPELLS_DB.Flash;
+        const spF = SUMMONER_SPELLS_DB[careerState.spells.f] || SUMMONER_SPELLS_DB.Ignite;
+
+        const imgD = document.getElementById("draftSpellImgD");
+        const imgF = document.getElementById("draftSpellImgF");
+        if (imgD) imgD.src = spD.img;
+        if (imgF) imgF.src = spF.img;
+
+        const desc = document.getElementById("draftActiveSpellsDesc");
+        if (desc) desc.innerText = "D: " + spD.name + " • F: " + spF.name;
       },
 
       setupLobbySlots(enemyOpponent) {
@@ -2263,16 +2658,6 @@
             playerNick: isPlayer ? careerState.nick + " (Você)" : (pNames[i] || "Aliado " + (i + 1)),
             isPlayer: isPlayer,
             champ: isPlayer ? null : this.getRandomChampForRole(r)
-          };
-        });
-
-        this.enemyPicks = roles.map((r, i) => {
-          const isOpponent = r === careerState.role;
-          return {
-            role: r,
-            playerNick: isOpponent ? "Rival (" + enemyOpponent.name + ")" : (pNames[i + 5] || "Inimigo " + (i + 1)),
-            isOpponent: isOpponent,
-            champ: isOpponent ? enemyOpponent : this.getRandomChampForRole(r)
           };
         });
       },
@@ -2318,16 +2703,17 @@
             const chip = document.createElement("div");
             chip.className = "coach-counter-card";
             chip.onclick = () => {
-              this.tacticalMatchupBonus = cnt.bonus;
               this.selectChampion(champObj);
+              this.tacticalMatchupBonus = cnt.bonus;
+              this.updateMatchupBadge(cnt.bonus, cnt.champName);
               showToast("🎯 Resposta Tática Escolhida: " + cnt.champName + " (+" + cnt.bonus + "% Vantagem de Matchup)!");
             };
 
-            chip.innerHTML = `<img src="${getChampImgUrl(champObj)}" onerror="this.onerror=null;this.src='${getFallbackAvatar(cnt.champName)}';">
-            <div class="coach-counter-info">
-              <h5>${cnt.champName}</h5>
-              <span>+${cnt.bonus}% Matchup</span>
-            </div>`;
+            chip.innerHTML = "<img src='" + getChampImgUrl(champObj) + "' onerror='handleImgError(this)'>" +
+              "<div class='coach-counter-info'>" +
+                "<h5>" + cnt.champName + "</h5>" +
+                "<span>+" + cnt.bonus + "% Matchup</span>" +
+              "</div>";
             container.appendChild(chip);
           });
         } else {
@@ -2336,13 +2722,27 @@
         }
       },
 
+      updateMatchupBadge(bonus, name) {
+        const badge = document.getElementById("draftMatchupAdvantageBadge");
+        if (!badge) return;
+        badge.style.display = "inline-flex";
+        if (bonus > 0) {
+          badge.className = "badge badge-green";
+          badge.innerText = "Vantagem de Matchup: +" + bonus + "% (" + name + ")";
+        } else if (bonus < 0) {
+          badge.className = "badge badge-red";
+          badge.innerText = "Desvantagem de Matchup: " + bonus + "% (" + name + ")";
+        } else {
+          badge.className = "badge badge-blue";
+          badge.innerText = "Matchup Neutro: 0% (" + name + ")";
+        }
+      },
+
       renderTeamSlots() {
         const allyCol = document.getElementById("draftAllyTeamSlots");
-        const enemyCol = document.getElementById("draftEnemyTeamSlots");
         allyCol.innerHTML = "";
-        enemyCol.innerHTML = "";
 
-        const roleLabels = { Top: "TOP", Jungle: "JUNGLE", Mid: "MID", ADC: "BOTTOM", Suporte: "SUPPORT" };
+        const roleLabels = { Top: "🛡️ Top", Jungle: "🌲 Selva", Mid: "⚡ Mid", ADC: "🏹 Atirador", Suporte: "💖 Suporte" };
 
         this.allyPicks.forEach(slot => {
           const card = document.createElement("div");
@@ -2351,30 +2751,16 @@
           const champName = isPlayer ? (this.selectedChamp ? this.selectedChamp.name : "Escolhendo...") : slot.champ.name;
           const champImg = isPlayer ? (this.selectedChamp ? getChampImgUrl(this.selectedChamp) : "") : getChampImgUrl(slot.champ);
 
-          card.innerHTML = `<div class="slot-circle-wrap">
-            ${champImg ? `<img src="${champImg}" onerror="this.onerror=null;this.src='${getFallbackAvatar(champName)}';">` : '<span style="font-size:1.1rem; color:var(--hextech-gold);">🛡️</span>'}
-          </div>
-          <div class="slot-meta">
-            <div class="slot-role-tag">${roleLabels[slot.role] || slot.role}</div>
-            <div class="slot-nick-tag">${slot.playerNick}</div>
-            <div class="slot-champ-selected-name" id="slotPlayerChampLiveName">${champName}</div>
-          </div>
-          <span class="slot-swap-btn" title="Trocar ordem de escolha">⇄</span>`;
+          card.innerHTML = "<div class='slot-circle-wrap'>" +
+            (champImg ? "<img src='" + champImg + "' onerror='handleImgError(this)'>" : "<span style='font-size:1.1rem; color:var(--hextech-gold);'>⚔️</span>") +
+            "</div>" +
+            "<div class='slot-meta'>" +
+              "<div class='slot-role-tag'>" + (roleLabels[slot.role] || slot.role) + "</div>" +
+              "<div class='slot-nick-tag'>" + slot.playerNick + "</div>" +
+              "<div class='slot-champ-selected-name' id='slotPlayerChampLiveName'>" + champName + "</div>" +
+            "</div>" +
+            "<span class='slot-swap-btn' title='Trocar ordem de escolha'>⇄</span>";
           allyCol.appendChild(card);
-        });
-
-        this.enemyPicks.forEach(slot => {
-          const card = document.createElement("div");
-          card.className = "slot-player-card";
-          card.innerHTML = `<div class="slot-circle-wrap" style="border-color:var(--danger-red);">
-            <img src="${getChampImgUrl(slot.champ)}" onerror="this.onerror=null;this.src='${getFallbackAvatar(slot.champ.name)}';">
-          </div>
-          <div class="slot-meta">
-            <div class="slot-role-tag" style="color:var(--danger-red);">${roleLabels[slot.role] || slot.role}</div>
-            <div class="slot-nick-tag">${slot.playerNick}</div>
-            <div class="slot-champ-selected-name" style="color:var(--danger-red);">${slot.champ.name}</div>
-          </div>`;
-          enemyCol.appendChild(card);
         });
       },
 
@@ -2383,7 +2769,7 @@
         this.activeRoleFilter = role;
         document.querySelectorAll(".role-filter-icon-btn").forEach(b => b.classList.remove("active"));
         if (btnEl) btnEl.classList.add("active");
-        this.render168ChampionsGrid();
+        this.render168ChampionsGrid(document.getElementById("draftSearchInput").value || "");
       },
 
       filterGrid(search) {
@@ -2415,11 +2801,11 @@
           tile.className = "champ-select-tile " + (isSelected ? "selected" : "");
           tile.onclick = () => this.selectChampion(champ);
 
-          tile.innerHTML = `${isMain ? '<div class="champ-tile-chest-badge" title="Campeão da sua Pool (Main)">★</div>' : ''}
-          <div class="champ-tile-img">
-            <img src="${getChampImgUrl(champ)}" alt="${champ.name}" loading="lazy" onerror="this.onerror=null;this.src='${getFallbackAvatar(champ.name)}';">
-          </div>
-          <div class="champ-tile-name">${champ.name}</div>`;
+          tile.innerHTML = (isMain ? "<div class='champ-tile-chest-badge' title='Campeão da sua Pool (Main / Baú de Maestria)'>★</div>" : "") +
+            "<div class='champ-tile-img'>" +
+              "<img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this)'>" +
+            "</div>" +
+            "<div class='champ-tile-name'>" + champ.name + "</div>";
           grid.appendChild(tile);
         });
       },
@@ -2433,19 +2819,48 @@
         const slotEl = document.getElementById("slotPlayerChampLiveName");
         if (slotEl) slotEl.innerText = champ.name;
 
-        const secSpell = document.getElementById("draftSecondSpellIcon");
-        if (secSpell) secSpell.innerText = careerState.role === "Jungle" ? "🌲" : careerState.role === "Suporte" ? "🛡️" : "🔥";
+        // Calcular se o campeão escolhido tem matchup natural
+        this.calculateNaturalMatchup(champ);
 
+        this.renderTeamSlots();
         this.render168ChampionsGrid(document.getElementById("draftSearchInput").value || "");
+      },
+
+      calculateNaturalMatchup(champ) {
+        if (!this.enemyOpponentChamp) return;
+        const enemy = this.enemyOpponentChamp;
+        const role = careerState.role;
+        const roleMatchups = MATCHUP_COUNTERS[role];
+        let bonus = 0;
+
+        if (roleMatchups) {
+          for (const k in roleMatchups) {
+            const cat = roleMatchups[k];
+            const enemyInCat = cat.champs && cat.champs.some(c => c.toLowerCase() === enemy.id.toLowerCase() || c.toLowerCase() === enemy.name.toLowerCase());
+            if (enemyInCat) {
+              const counterMatch = cat.counters && cat.counters.find(c => c.champId.toLowerCase() === champ.id.toLowerCase() || c.champName.toLowerCase() === champ.name.toLowerCase());
+              if (counterMatch) {
+                bonus = counterMatch.bonus;
+              }
+            }
+          }
+        }
+
+        // Se é campeão main da pool, bônus adicional
+        const isMain = careerState.championPool.some(m => m.id === champ.id);
+        if (isMain && bonus === 0) bonus = 10;
+
+        this.tacticalMatchupBonus = bonus;
+        this.updateMatchupBadge(bonus, champ.name);
       },
 
       initLobbyChat() {
         const chat = document.getElementById("draftChatMessages");
         const region = careerState.region || "BR";
         if (region === "BR") {
-          chat.innerHTML = "<p style='color:#61738d;'><em>Summoner 1 conectou-se à sala.</em></p><p><strong>Summoner 2:</strong> salve time, foco no drag que eu puxo bot</p><p><strong>Summoner 4:</strong> me dá mid or int kkkk brinks</p><p style='color:var(--hextech-blue);'><strong>Coach Maestro:</strong> confiem nas rotas e joguem calmos!</p>";
+          chat.innerHTML = "<p style='color:#61738d;'><em>Summoner 1 conectou-se à sala.</em></p><p><strong>Summoner 2:</strong> salve time, foco no drag que eu puxo bot</p><p><strong>Summoner 4:</strong> confia no draft rapaziada, dá pra amassar!</p><p style='color:var(--hextech-blue);'><strong>Coach Maestro:</strong> executem o plano de feitiços e matchups!</p>";
         } else {
-          chat.innerHTML = "<p style='color:#61738d;'><em>Summoner 1 joined the lobby.</em></p><p><strong>Summoner 2:</strong> mid diff incoming, lets go team</p><p style='color:var(--hextech-blue);'><strong>Coach:</strong> stick to the matchup plan.</p>";
+          chat.innerHTML = "<p style='color:#61738d;'><em>Summoner 1 joined the lobby.</em></p><p><strong>Summoner 2:</strong> mid diff incoming, lets go team</p><p style='color:var(--hextech-blue);'><strong>Coach:</strong> stick to the matchup and spell plan.</p>";
         }
       },
 
@@ -2463,10 +2878,10 @@
 
         setTimeout(() => {
           const resp = document.createElement("p");
-          resp.innerHTML = "<strong>Summoner 2:</strong> boa call, vamos amassar eles!";
+          resp.innerHTML = "<strong>Summoner 2:</strong> boa call, vamos vencer essa!";
           chat.appendChild(resp);
           chat.scrollTop = chat.scrollHeight;
-        }, 800);
+        }, 700);
       },
 
       startTimer(seconds) {
@@ -2499,9 +2914,10 @@
 
         setTimeout(() => {
           matchEngine.startMatchSimulation(this.selectedChamp, this.enemyOpponentChamp, this.tacticalMatchupBonus);
-        }, 700);
+        }, 600);
       }
     };
+
 
     /* SIMULAÇÃO DE PARTIDA & EVOLUÇÃO REAL DE ATRIBUTOS */
     const matchEngine = {
@@ -2659,13 +3075,27 @@
       calculateOdds(stat) {
         const base = careerState.stats[stat] || 50;
         const isMain = careerState.championPool.some(m => m.id === this.myChamp.id);
-        const mainBonus = isMain ? 15 : 0;
+        const mainBonus = isMain ? 12 : 0;
         const coachBonus = this.matchupBonus || 0;
         const confBonus = (careerState.stats.confidence - 50) * 0.15;
         const oppPower = career.getCurrentOpponent().power || 50;
-        const diffPenalty = (oppPower - 50) * 0.35;
+        const diffPenalty = (oppPower - 50) * 0.3;
 
-        return Math.max(25, Math.min(95, Math.round(base * 0.72 + mainBonus + coachBonus + confBonus - diffPenalty)));
+        // Bônus reais dos Feitiços de Invocador escolhidos
+        let spellBonus = 0;
+        const spD = careerState.spells?.d;
+        const spF = careerState.spells?.f;
+
+        if (spD === "Flash" || spF === "Flash") spellBonus += 6;
+        if ((spD === "Ignite" || spF === "Ignite") && stat === "mechanics") spellBonus += 8;
+        if ((spD === "Teleport" || spF === "Teleport") && stat === "macro") spellBonus += 8;
+        if ((spD === "Smite" || spF === "Smite") && (stat === "macro" || stat === "mechanics")) spellBonus += 10;
+        if ((spD === "Exhaust" || spF === "Exhaust") && stat === "consistency") spellBonus += 7;
+        if ((spD === "Cleanse" || spF === "Cleanse") && stat === "consistency") spellBonus += 8;
+        if ((spD === "Heal" || spF === "Heal") && stat === "comm") spellBonus += 7;
+        if ((spD === "Ghost" || spF === "Ghost") && stat === "mechanics") spellBonus += 7;
+
+        return Math.max(25, Math.min(95, Math.round(base * 0.7 + mainBonus + coachBonus + confBonus + spellBonus - diffPenalty)));
       },
 
       resolveChoice(choice, odds) {
@@ -2998,6 +3428,8 @@
     window.career = career;
     window.creationUI = creationUI;
     window.go4LoLOffersUI = go4LoLOffersUI;
+    window.leagueNavigator = leagueNavigator;
+    window.SUMMONER_SPELLS_DB = SUMMONER_SPELLS_DB;
     window.draftEngine = draftEngine;
     window.matchEngine = matchEngine;
     window.saveManager = saveManager;
