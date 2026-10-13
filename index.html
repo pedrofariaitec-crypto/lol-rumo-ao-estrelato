@@ -934,6 +934,69 @@
       .draft-168-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)) !important; }
       .champ-tile-img { width: 32px !important; height: 32px !important; }
     }
+  
+    .champ-tag-badge {
+      font-size: 0.65rem;
+      color: var(--hextech-blue);
+      background: rgba(10, 30, 50, 0.7);
+      border: 1px solid rgba(0, 180, 216, 0.25);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+    .btn-filter-role {
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #101827;
+      color: #94a3b8;
+      border: 1px solid #1e293b;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-filter-role:hover {
+      border-color: var(--hextech-blue);
+      color: #fff;
+    }
+    .btn-filter-role.active {
+      background: var(--hextech-blue);
+      color: #050b14;
+      border-color: var(--hextech-blue);
+      font-weight: 800;
+    }
+
+  
+    #toastContainer {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 99999;
+      pointer-events: none;
+      max-width: 380px;
+    }
+    .toast-message {
+      background: rgba(11, 19, 34, 0.95);
+      border: 1px solid var(--hextech-gold);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 12px var(--hextech-gold-glow);
+      color: #f1f5f9;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      line-height: 1.4;
+      backdrop-filter: blur(10px);
+      pointer-events: auto;
+      animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes toastSlideIn {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
@@ -1013,12 +1076,12 @@
         <div class="creation-body">
           <div class="form-group">
             <label>Nome Completo do Jogador</label>
-            <input type="text" id="inputPlayerName" class="form-control" placeholder="Ex: Gabriel Santos">
+            <input type="text" id="inputPlayerName" class="form-control" placeholder="Ex: Gabriel Santos" value="">
           </div>
 
           <div class="form-group">
             <label>Nickname Competitivo (Nick de Invocador)</label>
-            <input type="text" id="inputNickName" class="form-control" placeholder="Ex: Revenge">
+            <input type="text" id="inputNickName" class="form-control" placeholder="Ex: Revenge" value="">
           </div>
 
           <div class="form-group">
@@ -1052,11 +1115,14 @@
           </div>
 
           <div class="form-group">
-            <label>Elo Inicial na SoloQueue</label>
-            <select id="selectStartingElo" class="form-control" onchange="creationUI.updateStatPreview()">
-              <option value="Mestre">💜 Mestre (140 PDL - Prodígio em Alta)</option>
-              <option value="GraoMestre">🔥 Grão-Mestre (380 PDL - Quase Desafiante)</option>
-            </select>
+            <label>Elo Inicial na SoloQueue (Padronizado)</label>
+            <div class="form-control" style="background: #090f1a; border-color: #1d2c44; color: var(--hextech-blue); display: flex; align-items: center; justify-content: space-between; font-weight: 700; height: 42px;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <span class="badge badge-blue">Diamante I</span>
+                <span style="color: #cbd5e1; font-weight: 600; font-size: 0.85rem;">Prodígio Amador (0 PDL)</span>
+              </span>
+              <span style="font-size: 0.75rem; color: var(--hextech-gold);">Escale até o Desafiante! ➔</span>
+            </div>
           </div>
 
           <!-- Atributos Preview -->
@@ -1072,6 +1138,14 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
               <label style="margin-bottom:0;">Escolha seus 3 Campeões de Assinatura (Mains da Pool)</label>
               <span class="badge badge-gold"><span id="creationChampCount">0</span> / 3 Selecionados</span>
+            </div>
+            <div style="display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap;" id="creationRoleFilterButtons">
+              <button type="button" class="btn btn-sm btn-filter-role active" data-role="All" onclick="creationUI.setRoleFilter('All', this)">Todos</button>
+              <button type="button" class="btn btn-sm btn-filter-role" data-role="Mid" onclick="creationUI.setRoleFilter('Mid', this)">Mid</button>
+              <button type="button" class="btn btn-sm btn-filter-role" data-role="Suporte" onclick="creationUI.setRoleFilter('Suporte', this)">Suporte</button>
+              <button type="button" class="btn btn-sm btn-filter-role" data-role="Top" onclick="creationUI.setRoleFilter('Top', this)">Top</button>
+              <button type="button" class="btn btn-sm btn-filter-role" data-role="Jungle" onclick="creationUI.setRoleFilter('Jungle', this)">Jungle</button>
+              <button type="button" class="btn btn-sm btn-filter-role" data-role="ADC" onclick="creationUI.setRoleFilter('ADC', this)">ADC</button>
             </div>
             <div style="margin-bottom: 10px; display: flex; gap: 10px;">
               <input type="text" id="creationChampSearch" class="form-control" placeholder="🔍 Filtrar campeão por nome..." oninput="creationUI.filterChamps(this.value)">
@@ -1253,9 +1327,12 @@
 
             <!-- Rotina e Ações Diárias -->
             <div class="card">
-              <div class="card-title">
+              <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                 <span>Ações Diárias & Rotina de Atleta</span>
-                <span style="font-size: 0.8rem; color: var(--text-muted);">Semana <span id="hubWeekNumber">1</span></span>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span class="badge badge-gold" id="hubWeeklyActionsBadge">⚡ 3 / 3 Ações Restantes</span>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Semana <span id="hubWeekNumber">1</span></span>
+                </div>
               </div>
               <div class="actions-grid" id="hubActionsGridContainer">
                 <div class="action-tile" onclick="career.trainStat('mechanics')">
@@ -1748,7 +1825,7 @@
     function handleImgError(img) {
       if (!img) return;
       img.onerror = null;
-      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23111827"/><circle cx="40" cy="40" r="34" fill="%231f2937" stroke="%23c8aa6e" stroke-width="3"/><text x="50%" y="55%" font-family="sans-serif" font-weight="bold" font-size="24" fill="%23c8aa6e" dominant-baseline="middle" text-anchor="middle">LoL</text></svg>';
+      const initial = (img.alt || "L").charAt(0).toUpperCase(); img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23111827"/><circle cx="40" cy="40" r="34" fill="%2318263e" stroke="%23c8aa6e" stroke-width="2.5"/><text x="50%" y="54%" font-family="sans-serif" font-weight="bold" font-size="28" fill="%23c8aa6e" dominant-baseline="middle" text-anchor="middle">' + initial + '</text></svg>';
     }
     window.handleImgError = handleImgError;
 
@@ -2044,8 +2121,11 @@
     window.LEAGUES_DATA = LEAGUES_DATA;
 
 
+/* =========================================================================
+       PARTE 2: ESTADO DE CARREIRA, ELO PROGRESSIVO, CRIAÇÃO E OFERTAS GO4LOL
+       ========================================================================= */
 
-    /* ESTADO PADRÃO DE CARREIRA */
+    /* ESTADO PADRÃO DE CARREIRA: INÍCIO NO DIAMANTE I (0 PDL) */
     const DEFAULT_CAREER = {
       name: "Gabriel Santos",
       nick: "Revenge",
@@ -2053,22 +2133,51 @@
       role: "Mid",
       style: "Assassino",
       currentTierId: 4,
-      team: { name: "Santos Dex", tierId: 4, week: 1, wins: 0, losses: 0 },
-      elo: { tier: "Mestre", division: "I", lp: 140, soloRank: 2450 },
-      stats: { mechanics: 60, macro: 52, comm: 50, consistency: 54, confidence: 75 },
-      energy: 100, gold: 500, fame: 150,
+      team: { name: "Santos Dex", tierId: 4, week: 1, wins: 0, losses: 0, salary: 450 },
+      elo: { tier: "Diamante I", division: "I", lp: 0, totalLp: 0, soloRank: 8500 },
+      stats: { mechanics: 52, macro: 48, comm: 46, consistency: 50, confidence: 70 },
+      energy: 100, gold: 300, fame: 50,
+      actionsLeft: 3, maxActions: 3,
       championPool: [],
       spells: { d: "Flash", f: "Ignite" },
       coach: { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" },
       playoffs: { inPlayoffs: false, stage: "Fase Regular", wins: 0, losses: 0, seriesTarget: 3, opponentName: "" },
-      socialFeed: [],
-      offers: [
-        { id: 1, team: "KaBuM! Black", tierId: 4, salary: 500, bonusGold: 300, bonusFame: 100, reqFame: 0 },
-        { id: 2, team: "Santos Dex", tierId: 4, salary: 450, bonusGold: 400, bonusFame: 150, reqFame: 0 }
-      ]
+      socialFeed: []
     };
 
     let careerState = null;
+
+    /* TABELA PROGRESSIVA DE ELO:
+       0 - 99 PDL: Diamante I
+       100 - 399 PDL: Mestre
+       400 - 799 PDL: Grão-Mestre
+       800+ PDL: Desafiante
+    */
+    function getEloInfo(totalLp) {
+      totalLp = Math.max(0, totalLp || 0);
+      if (totalLp >= 800) {
+        return { tier: "Desafiante", division: "I", lp: totalLp - 800, badge: "badge-gold", next: null };
+      }
+      if (totalLp >= 400) {
+        return { tier: "Grão-Mestre", division: "I", lp: totalLp - 400, badge: "badge-danger", next: "Desafiante (" + (800 - totalLp) + " PDL)" };
+      }
+      if (totalLp >= 100) {
+        return { tier: "Mestre", division: "I", lp: totalLp - 100, badge: "badge-purple", next: "Grão-Mestre (" + (400 - totalLp) + " PDL)" };
+      }
+      return { tier: "Diamante I", division: "I", lp: totalLp, badge: "badge-blue", next: "Mestre (" + (100 - totalLp) + " PDL)" };
+    }
+
+    function calculateSoloRank(totalLp) {
+      // De #8500 (D1 0 PDL) até #1 (Desafiante 1200+ PDL)
+      return Math.max(1, Math.round(8500 - (totalLp * 8.5)));
+    }
+
+    function eloLabel() {
+      if (!careerState || !careerState.elo) return "Diamante I (0 PDL)";
+      const tLp = careerState.elo.totalLp !== undefined ? careerState.elo.totalLp : careerState.elo.lp;
+      const info = getEloInfo(tLp);
+      return info.tier + " (" + info.lp + " PDL)";
+    }
 
     /* RANKING REGIONAL DE SOLOQUEUE HIGH ELO */
     const REGIONAL_SOLOQ_PLAYERS = {
@@ -2104,7 +2213,7 @@
       ]
     };
 
-    /* GERENCIADOR DE AUDIO COM WEBAUDIO */
+    /* GERENCIADOR DE ÁUDIO WEBAUDIO */
     const gameAudio = {
       muted: false,
       ctx: null,
@@ -2147,25 +2256,45 @@
       },
       toggleMute() {
         this.muted = !this.muted;
-        const btn = document.getElementById("audioToggleBtn");
+        const btn = document.getElementById("audioToggleBtn") || document.getElementById("btnToggleSoundTitle");
         if (btn) btn.innerText = this.muted ? "🔇 SOM: OFF" : "🔊 SOM: ON";
         showToast(this.muted ? "Áudio desativado" : "Áudio ativado!");
       }
     };
 
-    /* INTERFACE DE CRIAÇÃO DE PERSONAGEM ADAPTATIVA (ROTA & SUPORTE COMPLETO) */
+    /* TRADUÇÃO DE CLASSES/TAGS DOS CAMPEÕES */
+    const CHAMP_TAGS_PT = {
+      Fighter: "Lutador",
+      Mage: "Mago",
+      Assassin: "Assassino",
+      Tank: "Tanque",
+      Marksman: "Atirador",
+      Support: "Suporte"
+    };
+
+    /* CRIAÇÃO DE PERSONAGEM CLEAN E DINÂMICA */
     const creationUI = {
       selectedMains: [],
+      activeFilterRole: "All",
 
       init() {
         this.selectedMains = [];
-        this.updateRoleStyles();
-        this.onRoleChange();
-        this.updateSelectedPreview();
-        this.updateStatPreview();
-      },
+        this.activeFilterRole = "All";
+        const roleEl = document.getElementById("selectRole");
+        if (roleEl) this.activeFilterRole = roleEl.value;
 
-      onRegionChange() {
+        // Limpar inputs de nome para mostrar placeholders "Ex: ..."
+        const inputName = document.getElementById("inputPlayerName");
+        const inputNick = document.getElementById("inputNickName");
+        if (inputName && !inputName.value) inputName.value = "";
+        if (inputNick && !inputNick.value) inputNick.value = "";
+
+        const searchEl = document.getElementById("creationChampSearch");
+        if (searchEl) searchEl.value = "";
+
+        this.updateRoleStyles();
+        this.renderChampGrid();
+        this.updateSelectedPreview();
         this.updateStatPreview();
       },
 
@@ -2175,33 +2304,33 @@
         if (!roleEl || !styleEl) return;
         const role = roleEl.value;
 
-        // Estilos específicos para cada rota, com destaque absoluto para Suporte!
+        // Estilos limpos e objetivos por rota
         const roleStyles = {
           Suporte: [
-            { val: "Iniciador", label: "🛡️ Iniciador / Engage (Leona, Nautilus, Rell - CC e Luta)" },
-            { val: "Protetor", label: "💖 Protetor / Enchanter (Lulu, Janna, Milio - Peel e Escudos)" },
-            { val: "Roamer", label: "👁️ Roamer / Visão (Thresh, Bard, Pyke - Ganks e Mapa)" },
-            { val: "MagoPoke", label: "🔥 Mago de Poke (Karma, Brand, Zyra - Dano e Pressão de Rota)" }
+            { val: "Iniciador", label: "🛡️ Iniciador / Engage (CC & Lutas)" },
+            { val: "Protetor", label: "💖 Protetor / Enchanter (Peel & Escudos)" },
+            { val: "Roamer", label: "👁️ Roamer / Visão (Ganks & Mapa)" },
+            { val: "MagoPoke", label: "🔥 Mago de Poke (Dano & Pressão)" }
           ],
           ADC: [
-            { val: "LaneBully", label: "🔥 Agressivo / Lane Bully (Draven, Lucian, Kalista - Duelo e Pressão)" },
-            { val: "Hypercarry", label: "⚡ Hypercarry de Late Game (Jinx, Kog'Maw, Vayne - Dano Massivo)" },
-            { val: "Utilidade", label: "🎯 Utilidade / Caster (Ezreal, Jhin, Ashe - Poke e Iniciação Segura)" }
+            { val: "LaneBully", label: "🔥 Lane Bully (Duelo & Pressão de Rota)" },
+            { val: "Hypercarry", label: "⚡ Hypercarry (Dano Massivo Late Game)" },
+            { val: "Utilidade", label: "🎯 Utilidade / Caster (Iniciação & Poke)" }
           ],
           Mid: [
-            { val: "Assassino", label: "🗡️ Assassino Mecânico (Zed, Akali, LeBlanc - Outplay e Dano)" },
-            { val: "MagoControle", label: "🧠 Mago de Controle (Orianna, Syndra, Viktor - Teamfight e Escala)" },
-            { val: "Roamer", label: "⚡ Roamer de Impacto (Ahri, Twisted Fate, Taliyah - Pressão de Mapa)" }
+            { val: "Assassino", label: "🗡️ Assassino (Outplay & Burst Rápido)" },
+            { val: "MagoControle", label: "🧠 Mago de Controle (Teamfights & Macro)" },
+            { val: "Roamer", label: "⚡ Roamer de Impacto (Pressão de Mapa)" }
           ],
           Jungle: [
-            { val: "Ganker", label: "🐺 Ganker Agressivo (Lee Sin, Jarvan IV, Elise - Early Game Forte)" },
-            { val: "Controlador", label: "🌲 Controlador de Selva (Sejuani, Trundle, Amumu - Objetivos e Lutas)" },
-            { val: "CarrySelva", label: "⚔️ Carry da Selva (Viego, Graves, Kindred - Duelo e Dano)" }
+            { val: "Ganker", label: "🐺 Ganker Agressivo (Early Game & Emboscadas)" },
+            { val: "Controlador", label: "🌲 Controlador (Objetivos Neutros & Tanque)" },
+            { val: "CarrySelva", label: "⚔️ Carry da Selva (Duelo & Escala)" }
           ],
           Top: [
-            { val: "Duelista", label: "⚔️ Lutador / Duelista (Aatrox, Fiora, Jax - 1v1 e Flanco)" },
-            { val: "Tanque", label: "🛡️ Colosso / Tanque (Malphite, Ornn, Sion - Linha de Frente)" },
-            { val: "Splitpusher", label: "⚡ Splitpusher Implacável (Camille, Gwen, Tryndamere - Pressão Lateral)" }
+            { val: "Duelista", label: "⚔️ Lutador / Duelista (1v1 & Flanco)" },
+            { val: "Tanque", label: "🛡️ Tanque / Colosso (Linha de Frente)" },
+            { val: "Splitpusher", label: "⚡ Splitpusher (Pressão Lateral)" }
           ]
         };
 
@@ -2218,122 +2347,176 @@
       onRoleChange() {
         const roleEl = document.getElementById("selectRole");
         const role = roleEl ? roleEl.value : "Mid";
+        this.activeFilterRole = role;
+
+        // Atualizar botões de filtro rápido
+        const btnContainer = document.getElementById("creationRoleFilterButtons");
+        if (btnContainer) {
+          btnContainer.querySelectorAll(".btn-filter-role").forEach(b => {
+            b.classList.toggle("active", b.dataset.role === role);
+          });
+        }
+
         this.updateRoleStyles();
-        this.renderChampGrid(role);
+        this.renderChampGrid();
         this.updateStatPreview();
       },
 
-      renderChampGrid(role, search) {
-        const grid = document.getElementById("creationChampPoolGrid");
+      onRegionChange() {
+        this.updateStatPreview();
+      },
+
+      setRoleFilter(role, btnEl) {
+        gameAudio.playClick();
+        this.activeFilterRole = role;
+        if (btnEl) {
+          const parent = btnEl.parentElement;
+          if (parent) parent.querySelectorAll(".btn-filter-role").forEach(b => b.classList.remove("active"));
+          btnEl.classList.add("active");
+        }
+        this.renderChampGrid();
+      },
+
+      filterChamps(search) {
+        this.renderChampGrid(search);
+      },
+
+      renderChampGrid(search) {
+        const grid = document.getElementById("creationChampGrid") || document.getElementById("creationChampPoolGrid");
         if (!grid) return;
         grid.innerHTML = "";
+
         const db = window.LOL_CHAMPIONS_DB || [];
-        search = (search || "").toLowerCase().trim();
+        const roleFilter = this.activeFilterRole || "All";
+        search = (search !== undefined ? search : (document.getElementById("creationChampSearch")?.value || "")).toLowerCase().trim();
 
         const filtered = db.filter(c => {
-          const matchRole = !role || (c.roles && c.roles.includes(role));
-          const matchSearch = !search || c.name.toLowerCase().includes(search) || c.id.toLowerCase().includes(search);
+          const matchRole = roleFilter === "All" || (c.roles && c.roles.includes(roleFilter));
+          const matchSearch = !search || 
+            c.name.toLowerCase().includes(search) || 
+            c.id.toLowerCase().includes(search) ||
+            (c.tags && c.tags.some(t => (CHAMP_TAGS_PT[t] || t).toLowerCase().includes(search)));
           return matchRole && matchSearch;
         });
 
-        filtered.slice(0, 32).forEach(champ => {
-          const isSelected = this.selectedMains.some(m => m.id === champ.id);
-          const tile = document.createElement("div");
-          tile.className = "champ-select-tile" + (isSelected ? " selected" : "");
-          tile.title = champ.name + " (" + (champ.roles ? champ.roles.join(", ") : "") + ")";
-          tile.onclick = () => this.toggleMainChamp(champ);
+        if (filtered.length === 0) {
+          grid.innerHTML = "<div style='grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.9rem;'>Nenhum campeão encontrado para o filtro.</div>";
+          return;
+        }
 
-          tile.innerHTML = "<div class='champ-tile-img'><img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this);'></div>" +
-            "<div class='champ-tile-name'>" + champ.name + "</div>" +
-            "<div class='champ-tile-chest-badge'>★</div>";
-          grid.appendChild(tile);
+        filtered.forEach(champ => {
+          const isSelected = this.selectedMains.some(m => m.id === champ.id);
+          const card = document.createElement("div");
+          card.className = "champ-card-selectable " + (isSelected ? "selected" : "");
+          card.title = champ.name + " (" + (champ.roles ? champ.roles.join(", ") : "") + ")";
+          card.onclick = () => this.toggleSelect(champ);
+
+          const primaryTag = (champ.tags && champ.tags[0]) ? (CHAMP_TAGS_PT[champ.tags[0]] || champ.tags[0]) : "Campeão";
+          const imgUrl = getChampImgUrl(champ);
+
+          card.innerHTML = 
+            "<div class='champ-img-wrap'>" +
+              "<img src='" + imgUrl + "' alt='" + champ.name + "' onerror='handleImgError(this);'>" +
+            "</div>" +
+            "<div class='champ-name-lbl' title='" + champ.name + "'>" + champ.name + "</div>" +
+            "<span class='champ-tag-badge'>" + primaryTag + "</span>";
+
+          grid.appendChild(card);
         });
       },
 
-      toggleMainChamp(champ) {
+      toggleSelect(champ) {
         gameAudio.playClick();
         const idx = this.selectedMains.findIndex(m => m.id === champ.id);
         if (idx !== -1) {
           this.selectedMains.splice(idx, 1);
         } else {
           if (this.selectedMains.length >= 3) {
-            this.selectedMains.shift();
+            this.selectedMains.shift(); // Remove o primeiro para manter os 3 mais recentes
           }
           this.selectedMains.push(champ);
         }
-        this.updateSelectedPreview();
-        const role = document.getElementById("selectRole").value;
-        const search = document.getElementById("creationChampSearch") ? document.getElementById("creationChampSearch").value : "";
-        this.renderChampGrid(role, search);
-      },
 
-      filterCreationGrid(search) {
-        const role = document.getElementById("selectRole").value;
-        this.renderChampGrid(role, search);
+        const countEl = document.getElementById("creationChampCount");
+        if (countEl) countEl.innerText = this.selectedMains.length;
+
+        this.updateSelectedPreview();
+        this.renderChampGrid();
       },
 
       updateSelectedPreview() {
         const container = document.getElementById("creationSelectedPoolPreview");
         if (!container) return;
-        container.innerHTML = "<span style='font-size:0.85rem; color:var(--text-muted);'>Mains Selecionados:</span>";
+        container.innerHTML = "<span style='font-size:0.85rem; color:var(--text-muted); font-weight:600;'>Mains Escolhidos:</span>";
+
         if (this.selectedMains.length === 0) {
-          container.innerHTML += "<span style='font-size:0.82rem; color:#667;'>(Nenhum - Auto-preenchimento ao avançar)</span>";
+          container.innerHTML += "<span style='font-size:0.82rem; color:#64748b;'> (Nenhum selecionado — 3 serão auto-atribuídos da sua rota ao avançar)</span>";
           return;
         }
+
         this.selectedMains.forEach((c, idx) => {
-          const slot = document.createElement("div");
-          slot.style.display = "inline-flex"; slot.style.alignItems = "center"; slot.style.gap = "6px";
-          slot.style.background = "#141f33"; slot.style.padding = "4px 10px";
-          slot.style.border = "1px solid var(--border-hex)"; slot.style.borderRadius = "20px";
-          slot.style.fontSize = "0.85rem";
-          slot.innerHTML = "<img src='" + getChampImgUrl(c) + "' style='width:20px; height:20px; border-radius:50%;' onerror='handleImgError(this);'><span>" + c.name + " (#" + (idx + 1) + ")</span>";
-          container.appendChild(slot);
+          const pill = document.createElement("div");
+          pill.style.cssText = "display:inline-flex; align-items:center; gap:6px; background:#101a2e; padding:4px 10px; border:1px solid var(--hextech-gold); border-radius:20px; font-size:0.84rem; color:#fff;";
+          pill.innerHTML = 
+            "<img src='" + getChampImgUrl(c) + "' style='width:22px; height:22px; border-radius:50%;' onerror='handleImgError(this);'>" +
+            "<strong>" + c.name + " (#" + (idx + 1) + ")</strong>" +
+            "<span style='cursor:pointer; color:#ef4444; margin-left:4px; font-weight:bold;' title='Remover'>✕</span>";
+
+          pill.onclick = (e) => {
+            e.stopPropagation();
+            this.toggleSelect(c);
+          };
+          container.appendChild(pill);
         });
       },
 
       updateStatPreview() {
         const roleEl = document.getElementById("selectRole");
         const styleEl = document.getElementById("selectStyle");
-        const startingEloEl = document.getElementById("selectStartingElo");
-        if (!roleEl || !styleEl || !startingEloEl) return;
+        if (!roleEl || !styleEl) return;
         const role = roleEl.value;
         const style = styleEl.value;
-        const startingElo = startingEloEl.value;
-        let base = startingElo === "GraoMestre" ? 60 : 54;
-        let stats = { mechanics: base, macro: base, comm: base - 2, consistency: base };
 
-        // Ajuste por Estilo & Rota
+        // Base padronizada para talento Diamante I (Prodígio das Ranqueadas)
+        let base = 50;
+        let stats = { mechanics: base + 2, macro: base, comm: base - 4, consistency: base };
+
+        // Bônus específicos por estilo tático
         if (role === "Suporte") {
-          if (style === "Iniciador") stats = { mechanics: base + 6, macro: base, comm: base + 2, consistency: base + 6 };
-          else if (style === "Protetor") stats = { mechanics: base - 4, macro: base + 8, comm: base + 6, consistency: base + 4 };
-          else if (style === "Roamer") stats = { mechanics: base + 4, macro: base + 8, comm: base + 4, consistency: base - 2 };
-          else if (style === "MagoPoke") stats = { mechanics: base + 8, macro: base - 2, comm: base + 2, consistency: base + 2 };
+          if (style === "Iniciador") stats = { mechanics: base + 4, macro: base + 2, comm: base + 2, consistency: base + 4 };
+          else if (style === "Protetor") stats = { mechanics: base - 2, macro: base + 6, comm: base + 6, consistency: base + 4 };
+          else if (style === "Roamer") stats = { mechanics: base + 4, macro: base + 6, comm: base + 4, consistency: base - 2 };
+          else if (style === "MagoPoke") stats = { mechanics: base + 6, macro: base, comm: base, consistency: base + 2 };
         } else {
           if (style.includes("Agressivo") || style === "Assassino" || style === "LaneBully" || style === "Duelista" || style === "Ganker") {
-            stats = { mechanics: base + 8, macro: base - 2, comm: base - 4, consistency: base };
+            stats = { mechanics: base + 6, macro: base - 2, comm: base - 4, consistency: base };
           } else if (style.includes("Controle") || style === "Protetor" || style === "Controlador" || style === "Tanque") {
-            stats = { mechanics: base - 2, macro: base + 8, comm: base + 6, consistency: base + 4 };
+            stats = { mechanics: base - 2, macro: base + 6, comm: base + 4, consistency: base + 4 };
           } else {
-            stats = { mechanics: base + 2, macro: base + 4, comm: base + 2, consistency: base + 6 };
+            stats = { mechanics: base + 2, macro: base + 2, comm: base, consistency: base + 6 };
           }
         }
 
         const previewEl = document.getElementById("creationStatPreview");
         if (previewEl) {
-          previewEl.innerHTML = "<div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.mechanics + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Mecânica</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.macro + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Macro/Visão</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.comm + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Comunicação</div></div><div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.5rem; color:var(--hextech-blue); font-weight:700;'>" + stats.consistency + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Consistência</div></div>";
+          previewEl.innerHTML = 
+            "<div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.4rem; color:var(--hextech-blue); font-weight:800;'>" + stats.mechanics + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Mecânica</div></div>" +
+            "<div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.4rem; color:var(--hextech-blue); font-weight:800;'>" + stats.macro + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Macro/Visão</div></div>" +
+            "<div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.4rem; color:var(--hextech-blue); font-weight:800;'>" + stats.comm + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Comunicação</div></div>" +
+            "<div style='text-align:center;'><div style='font-family:var(--font-tech); font-size:1.4rem; color:var(--hextech-blue); font-weight:800;'>" + stats.consistency + "</div><div style='font-size:0.75rem; color:var(--text-muted);'>Consistência</div></div>";
         }
       },
 
       submitCharacter() {
-        const nameInput = document.getElementById("inputPlayerName").value.trim();
-        const nickInput = document.getElementById("inputNickName").value.trim();
+        const nameInput = (document.getElementById("inputPlayerName")?.value || "").trim();
+        const nickInput = (document.getElementById("inputNickName")?.value || "").trim();
         const name = nameInput || "Gabriel Santos";
         const nick = nickInput || "Revenge";
-        const region = document.getElementById("selectRegion").value;
-        const role = document.getElementById("selectRole").value;
-        const style = document.getElementById("selectStyle").value;
-        const startingElo = document.getElementById("selectStartingElo").value;
+        const region = document.getElementById("selectRegion")?.value || "BR";
+        const role = document.getElementById("selectRole")?.value || "Mid";
+        const style = document.getElementById("selectStyle")?.value || "Assassino";
 
+        // Auto-atribuir campeões ícones se o atleta não selecionou 3
         const db = window.LOL_CHAMPIONS_DB || [];
         if (this.selectedMains.length === 0) {
           const defaultRoleMains = {
@@ -2354,94 +2537,124 @@
         careerState.role = role;
         careerState.style = style;
         careerState.currentTierId = 4;
+        careerState.actionsLeft = 3;
+        careerState.maxActions = 3;
+        careerState.energy = 100;
+        careerState.gold = 300;
+        careerState.fame = 50;
+
+        // O atleta começa estritamente no Diamante I (0 PDL)
+        careerState.elo = { tier: "Diamante I", division: "I", lp: 0, totalLp: 0, soloRank: 8500 };
+
+        // Feitiços iniciais
         careerState.spells = {
           d: "Flash",
-          f: role === "Jungle" ? "Smite" : role === "Suporte" ? "Ignite" : "Ignite"
+          f: role === "Jungle" ? "Smite" : (role === "Suporte" ? "Ignite" : "Ignite")
         };
+
+        // Coach novato
         careerState.coach = { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" };
         careerState.playoffs = { inPlayoffs: false, stage: "Fase Regular", wins: 0, losses: 0, seriesTarget: 3, opponentName: "" };
 
-        if (startingElo === "GraoMestre") {
-          careerState.elo = { tier: "Grão-Mestre", division: "I", lp: 380, soloRank: 420 };
-          careerState.stats = { mechanics: 65, macro: 62, comm: 58, consistency: 63, confidence: 80 };
-          careerState.fame = 350;
-          careerState.gold = 1000;
-        } else {
-          careerState.elo = { tier: "Mestre", division: "I", lp: 140, soloRank: 2450 };
-          careerState.stats = { mechanics: 60, macro: 54, comm: 50, consistency: 56, confidence: 75 };
-          careerState.fame = 150;
-          careerState.gold = 500;
-        }
-
+        // Atribuir maestrias iniciais da pool
         careerState.championPool = this.selectedMains.map((c, idx) => ({
           id: c.id,
           name: c.name,
           img: c.img || (c.id + ".png"),
           masteryLevel: 5 - idx,
-          masteryPoints: (5 - idx) * 4500
+          masteryPoints: (5 - idx) * 4500,
+          games: 0,
+          wins: 0
         }));
 
         career.save();
         gameAudio.playVictory();
-        showToast("✨ Atleta criado com sucesso! Escolha sua equipe da Go4LoL.");
+        showToast("✨ Atleta criado com sucesso! Escolha sua organização na Go4LoL.");
+
         go4LoLOffersUI.renderOffers();
         gameRouter.showScreen("screenGo4LoLOffers");
       }
     };
 
-    /* PROPOSTAS INICIAIS DA GO4LOL COM BRASÕES OFICIAIS */
+    /* PROPOSTAS DA LIGA GO4LOL (TELA DE CONTRATOS SEM TRAVAMENTO) */
     const go4LoLOffersUI = {
       renderOffers() {
-        const container = document.getElementById("go4LoLOffersCardsContainer");
-        if (!container) return;
+        const subtitle = document.getElementById("offersSubtitle");
+        if (subtitle && careerState) {
+          subtitle.innerText = "Parabéns, " + careerState.nick + "! O seu destaque na SoloQueue Diamante I chamou a atenção dos olheiros de base. Três organizações da 4ª divisão enviaram propostas oficiais de contrato para a sua estreia competitiva:";
+        }
+
+        const container = document.getElementById("offersCardsGrid") || document.getElementById("go4LoLOffersCardsContainer");
+        if (!container) {
+          console.error("Offers container not found!");
+          return;
+        }
         container.innerHTML = "";
 
         const offersList = [
           {
             team: "Santos Dex",
-            desc: "Tradição em revelar jovens prodígios. Filosofia focada em dar espaço aos novos talentos com liberdade tática.",
-            salary: 450, bonusGold: 400, bonusFame: 150, target: "Terminar no Top 3 da Go4LoL"
+            desc: "Tradição em revelar jovens prodígios. Foco em dar espaço ao atleta para brilhar com liberdade tática e protagonismo.",
+            salary: 450,
+            bonusGold: 400,
+            bonusFame: 150,
+            target: "Terminar no Top 3 da Go4LoL"
           },
           {
             team: "KaBuM! Black",
-            desc: "Treinamentos rigorosos, disciplina tática pesada e estrutura com foco absoluto no título.",
-            salary: 550, bonusGold: 500, bonusFame: 200, target: "Ser Campeão da Go4LoL e subir de divisão"
+            desc: "Treinamentos rigorosos, disciplina tática pesada e estrutura com foco absoluto no título e acesso ao Circuito Desafiante.",
+            salary: 550,
+            bonusGold: 500,
+            bonusFame: 200,
+            target: "Ser Campeão da Go4LoL e Subir de Divisão"
+          },
+          {
+            team: "Ilha das Lendas Cup",
+            desc: "Equipe com enorme tração comunitária, streamers e torcida apaixonada. Foco em jogadas plásticas e engajamento viral.",
+            salary: 350,
+            bonusGold: 300,
+            bonusFame: 450,
+            target: "Chegar às Semifinais e Produzir Highlights"
           }
         ];
 
         offersList.forEach(off => {
           const card = document.createElement("div");
           card.className = "offer-entry-card";
-          card.innerHTML = "<div>" +
-            "<div class='offer-card-top'>" +
-              getTeamLogoSvg(off.team, 44) +
-              "<div class='offer-team-meta'>" +
-                "<h3>" + off.team + "</h3>" +
-                "<span>Go4LoL (Tier 4)</span>" +
+          card.innerHTML = 
+            "<div>" +
+              "<div class='offer-card-top' style='display:flex; align-items:center; gap:12px; margin-bottom:12px;'>" +
+                getTeamLogoSvg(off.team, 48) +
+                "<div class='offer-team-meta'>" +
+                  "<h3 style='margin:0; font-family:var(--font-tech); font-size:1.25rem; color:var(--hextech-gold-bright);'>" + off.team + "</h3>" +
+                  "<span class='badge badge-gold' style='font-size:0.75rem;'>Go4LoL • Tier 4</span>" +
+                "</div>" +
               "</div>" +
-            "</div>" +
-            "<p style='font-size:0.85rem; color:#cbd5e1; margin-bottom:14px; line-height:1.4;'>" + off.desc + "</p>" +
-            "<div class='offer-details-list'>" +
-              "<div class='offer-detail-row'><span>Salário Semanal:</span><strong>R$ " + off.salary + "</strong></div>" +
-              "<div class='offer-detail-row'><span>Luvas de Entrada:</span><strong>+R$ " + off.bonusGold + "</strong></div>" +
-              "<div class='offer-detail-row'><span>Bônus de Fãs:</span><strong>+" + off.bonusFame + " Fãs</strong></div>" +
-              "<div class='offer-detail-row'><span>Meta da Diretoria:</span><strong style='color:var(--hextech-gold);'>" + off.target + "</strong></div>" +
-            "</div>" +
-          "</div>";
+              "<p style='font-size:0.86rem; color:#cbd5e1; margin-bottom:14px; line-height:1.45;'>" + off.desc + "</p>" +
+              "<div class='offer-details-list'>" +
+                "<div class='offer-detail-row'><span>Salário Semanal:</span><strong style='color:var(--success-green);'>R$ " + off.salary + "</strong></div>" +
+                "<div class='offer-detail-row'><span>Luvas de Entrada:</span><strong style='color:var(--hextech-gold);'>+R$ " + off.bonusGold + "</strong></div>" +
+                "<div class='offer-detail-row'><span>Bônus de Fãs:</span><strong style='color:var(--hextech-blue);'>+" + off.bonusFame + " Fãs</strong></div>" +
+                "<div class='offer-detail-row'><span>Meta da Diretoria:</span><strong style='color:#f87171;'>" + off.target + "</strong></div>" +
+              "</div>" +
+            "</div>";
+
           const signBtn = document.createElement("button");
           signBtn.className = "btn btn-gold";
-          signBtn.style.cssText = "width:100%; margin-top:14px;";
+          signBtn.style.cssText = "width:100%; margin-top:14px; font-weight:800; font-size:0.95rem; padding:12px;";
           signBtn.innerText = "✍️ Assinar Contrato e Estrear";
-          signBtn.onclick = () => go4LoLOffersUI.signContract(off.team, off.bonusGold, off.bonusFame);
+          signBtn.onclick = () => go4LoLOffersUI.signContract(off.team, off.bonusGold, off.bonusFame, off.salary);
+
           card.appendChild(signBtn);
           container.appendChild(card);
         });
       },
 
-      signContract(teamName, bonusGold, bonusFame) {
+      signContract(teamName, bonusGold, bonusFame, salary) {
         gameAudio.playVictory();
         careerState.team.name = teamName;
         careerState.team.tierId = 4;
+        careerState.team.salary = salary || 450;
         careerState.currentTierId = 4;
         careerState.gold += bonusGold;
         careerState.fame += bonusFame;
@@ -2449,16 +2662,15 @@
         career.addSocialPost(
           "CBLOL & Esports Insider",
           "@cblol_insider",
-          "🚨 OFICIAL! O prodígio @" + careerState.nick + " assina com a " + teamName + " para a disputa da Go4LoL! Olhos abertos para essa estreia."
+          "🚨 OFICIAL! O prodígio @" + careerState.nick + " assina contrato formal com a " + teamName + " para a disputa da Go4LoL! Olhos abertos para essa estreia."
         );
 
         career.save();
         career.updateDashboardUI();
-        showToast("🎉 Contrato assinado com " + teamName + "! Bem-vindo ao cenário competitivo!");
+        showToast("🎉 Contrato assinado com " + teamName + "! Bem-vindo à Go4LoL!");
         gameRouter.showScreen("screenDashboard");
       }
     };
-
 
 
     /* NAVEGADOR DAS 4 DIVISÕES DO CENÁRIO */
@@ -3482,26 +3694,28 @@
         // Se for SoloQ Match:
         if (this.isSoloQMatch) {
           const lpDelta = isVictory ? (Math.floor(Math.random() * 8) + 20) : -(Math.floor(Math.random() * 5) + 14);
-          careerState.elo.lp = Math.max(0, careerState.elo.lp + lpDelta);
+          const currentTotal = careerState.elo.totalLp !== undefined ? careerState.elo.totalLp : careerState.elo.lp;
+          careerState.elo.totalLp = Math.max(0, currentTotal + lpDelta);
 
-          // Promoções de SoloQ
-          if (careerState.elo.lp >= 700) {
-            careerState.elo.tier = "Desafiante";
-            careerState.elo.soloRank = Math.max(1, (careerState.elo.soloRank || 200) - 25);
-          } else if (careerState.elo.lp >= 300) {
-            careerState.elo.tier = "Grão-Mestre";
-            careerState.elo.soloRank = Math.max(50, (careerState.elo.soloRank || 800) - 20);
-          } else {
-            careerState.elo.tier = "Mestre";
-            careerState.elo.soloRank = Math.max(300, (careerState.elo.soloRank || 2450) - 15);
-          }
+          const eloInfo = getEloInfo(careerState.elo.totalLp);
+          careerState.elo.tier = eloInfo.tier;
+          careerState.elo.division = eloInfo.division;
+          careerState.elo.lp = eloInfo.lp;
+          careerState.elo.soloRank = calculateSoloRank(careerState.elo.totalLp);
 
-          showToast("🔥 Ranqueada SoloQ: " + (lpDelta > 0 ? "+" + lpDelta : lpDelta) + " PDL • " + careerState.elo.tier + " (" + careerState.elo.lp + " PDL)");
+          showToast("🔥 Ranqueada SoloQ: " + (lpDelta > 0 ? "+" + lpDelta : lpDelta) + " PDL • " + eloInfo.tier + " (" + eloInfo.lp + " PDL)");
         } else {
           // Partida de Campeonato / Liga Oficial
           if (isVictory) careerState.team.wins += 1;
           else careerState.team.losses += 1;
           careerState.team.week += 1;
+
+          // Restaurar ações semanais e pagar salário semanal
+          careerState.actionsLeft = careerState.maxActions || 3;
+          careerState.energy = Math.min(100, careerState.energy + 40);
+          const salary = careerState.team.salary || 450;
+          careerState.gold += salary;
+          showToast("📅 Rodada finalizada! Nova Semana " + careerState.team.week + " (+R$ " + salary + " de Salário e 3 Ações restauradas).");
 
           // Se estiver em Playoffs MD5:
           if (careerState.playoffs && careerState.playoffs.inPlayoffs) {
@@ -3550,8 +3764,10 @@
     };
 
 
+/* =========================================================================
+       PARTE 5: CARREIRA, AÇÕES SEMANAIS LIMITADAS, SOLOQUEUE E EXPORTAÇÕES
+       ========================================================================= */
 
-    /* ENGINE DE CARREIRA, ROTINAS DE SUPORTE E SOLOQUEUE HIGH ELO */
     const career = {
       saveKey: "lol_career_save_v1",
 
@@ -3560,6 +3776,11 @@
         if (saved) {
           try {
             careerState = JSON.parse(saved);
+            // Migração de estado para garantir integridade
+            if (!careerState.elo) careerState.elo = { tier: "Diamante I", division: "I", lp: 0, totalLp: 0, soloRank: 8500 };
+            if (careerState.actionsLeft === undefined) careerState.actionsLeft = 3;
+            if (!careerState.maxActions) careerState.maxActions = 3;
+            if (!careerState.team.salary) careerState.team.salary = 450;
             return true;
           } catch(e) {
             careerState = JSON.parse(JSON.stringify(DEFAULT_CAREER));
@@ -3600,6 +3821,8 @@
           careerState.team.week = 1;
           careerState.team.wins = 0;
           careerState.team.losses = 0;
+          careerState.actionsLeft = careerState.maxActions || 3;
+          careerState.energy = 100;
           this.save();
           showToast("🏆 PARABÉNS! VOCÊ FOI PROMOVIDO PARA: " + LEAGUES_DATA[next].name);
         }
@@ -3611,14 +3834,20 @@
         if (careerState.socialFeed.length > 20) careerState.socialFeed.pop();
       },
 
-      /* ROTINA DIÁRIA E TREINOS DO ATLETA (ESPECÍFICOS PARA SUPORTE E DEMAIS ROTAS) */
+      /* ROTINA DIÁRIA E TREINOS COM LIMITE DE 3 AÇÕES POR SEMANA */
       trainStat(stat) {
+        if (careerState.actionsLeft <= 0) {
+          showToast("⏳ Limite de 3 ações da semana atingido! Jogue a partida oficial da rodada ou descanse para abrir a próxima semana.");
+          return;
+        }
+
         if (careerState.energy < 20) {
-          showToast("⚡ Energia insuficiente para treino intenso! Descanse primeiro.");
+          showToast("⚡ Energia insuficiente para treino intenso! Faça uma sessão de descanso primeiro.");
           return;
         }
 
         gameAudio.playClick();
+        careerState.actionsLeft -= 1;
         careerState.energy = Math.max(0, careerState.energy - 20);
         careerState.stats[stat] = Math.min(99, (careerState.stats[stat] || 50) + 2);
 
@@ -3631,20 +3860,38 @@
 
         this.save();
         this.updateDashboardUI();
-        showToast("⚡ Treino concluído! +2 em " + (statLabels[stat] || stat) + ".");
+        showToast("⚡ Treino concluído! +2 em " + (statLabels[stat] || stat) + " (" + careerState.actionsLeft + " ações restantes nesta semana).");
       },
 
       restDay() {
         gameAudio.playVictory();
-        careerState.energy = Math.min(100, careerState.energy + 50);
-        careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 75) + 10);
+        if (careerState.actionsLeft > 0) {
+          careerState.actionsLeft -= 1;
+          careerState.energy = Math.min(100, careerState.energy + 40);
+          careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 70) + 10);
+          showToast("🛌 Sessão de descanso! +40 Energia e +10 Confiança (" + careerState.actionsLeft + " ações restantes).");
+        } else {
+          // Quando as ações acabaram, descansar avança a semana
+          careerState.team.week += 1;
+          careerState.actionsLeft = careerState.maxActions || 3;
+          careerState.energy = 100;
+          careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 70) + 15);
+          const salary = careerState.team.salary || 450;
+          careerState.gold += salary;
+          showToast("📅 Nova Semana " + careerState.team.week + "! Energia restaurada, +R$ " + salary + " de Salário e 3 Ações renovadas.");
+        }
+
         this.save();
         this.updateDashboardUI();
-        showToast("🛌 Dia de descanso! Energia e confiança recuperadas.");
       },
 
       /* MATCHMAKING DA SOLOQUEUE HIGH ELO */
       startSoloQueueMatchmaking() {
+        if (careerState.actionsLeft <= 0) {
+          showToast("⏳ Limite de 3 ações da semana atingido! Jogue a partida oficial da rodada ou descanse para abrir a próxima semana.");
+          return;
+        }
+
         if (careerState.energy < 20) {
           showToast("⚡ Energia insuficiente para disputar a SoloQ. Descanse na rotina!");
           return;
@@ -3664,17 +3911,18 @@
           const bluePicks = shuffle.slice(0, 4);
           const redPicks = shuffle.slice(4, 9);
 
-          previewEl.innerHTML = "<div style='display:grid; grid-template-columns:1fr 1fr; gap:12px;'>" +
-            "<div>" +
-              "<div style='font-weight:700; color:var(--hextech-blue); margin-bottom:6px;'>🔷 SEU TIME:</div>" +
-              "<div style='color:var(--hextech-gold); font-weight:bold;'>⭐ " + careerState.nick + " (Você - " + careerState.role + ")</div>" +
-              bluePicks.map(p => "<div style='font-size:0.8rem; color:#cbd5e1;'>• " + p.name + " (" + p.tier + ")</div>").join("") +
-            "</div>" +
-            "<div>" +
-              "<div style='font-weight:700; color:var(--danger-red); margin-bottom:6px;'>🔴 TIME INIMIGO:</div>" +
-              redPicks.map(p => "<div style='font-size:0.8rem; color:#cbd5e1;'>• " + p.name + " (" + p.tier + " - " + p.champ + ")</div>").join("") +
-            "</div>" +
-          "</div>";
+          previewEl.innerHTML = 
+            "<div style='display:grid; grid-template-columns:1fr 1fr; gap:12px;'>" +
+              "<div>" +
+                "<div style='font-weight:700; color:var(--hextech-blue); margin-bottom:6px;'>🔷 SEU TIME:</div>" +
+                "<div style='color:var(--hextech-gold); font-weight:bold;'>⭐ " + careerState.nick + " (Você - " + careerState.role + ")</div>" +
+                bluePicks.map(p => "<div style='font-size:0.8rem; color:#cbd5e1;'>• " + p.name + " (" + p.tier + ")</div>").join("") +
+              "</div>" +
+              "<div>" +
+                "<div style='font-weight:700; color:var(--danger-red); margin-bottom:6px;'>🔴 TIME INIMIGO:</div>" +
+                redPicks.map(p => "<div style='font-size:0.8rem; color:#cbd5e1;'>• " + p.name + " (" + p.tier + " - " + p.champ + ")</div>").join("") +
+              "</div>" +
+            "</div>";
         }
 
         if (modal) modal.classList.add("active");
@@ -3689,11 +3937,16 @@
       confirmSoloQueuePlay() {
         const modal = document.getElementById("soloqMatchmakingModal");
         if (modal) modal.classList.remove("active");
+
+        if (careerState.actionsLeft > 0) {
+          careerState.actionsLeft -= 1;
+        }
+
         matchEngine.isSoloQMatch = true;
         draftEngine.startChampionSelect();
       },
 
-      /* TABELA OFICIAL DE SOLOQUEUE REGIONAL (LEADERBOARD DE DESAFIANTES) */
+      /* TABELA OFICIAL DE SOLOQUEUE REGIONAL */
       renderSoloQueueTable() {
         const reg = careerState ? (careerState.region || "BR") : "BR";
         const badge = document.getElementById("tabSoloQRegionBadge");
@@ -3704,11 +3957,14 @@
         tbody.innerHTML = "";
 
         const list = REGIONAL_SOLOQ_PLAYERS[reg] || REGIONAL_SOLOQ_PLAYERS.BR;
-        const pElo = careerState ? careerState.elo : { tier: "Mestre", lp: 140, soloRank: 2450 };
+        const tLp = careerState ? (careerState.elo.totalLp !== undefined ? careerState.elo.totalLp : careerState.elo.lp) : 0;
+        const pElo = getEloInfo(tLp);
+        const pRank = careerState ? (careerState.elo.soloRank || calculateSoloRank(tLp)) : 8500;
 
         list.forEach(p => {
           const tr = document.createElement("tr");
-          tr.innerHTML = "<td><strong>#" + p.rank + "</strong></td>" +
+          tr.innerHTML = 
+            "<td><strong>#" + p.rank + "</strong></td>" +
             "<td><strong style='color:#fff;'>" + p.name + "</strong></td>" +
             "<td><span class='badge badge-gold'>" + p.tier + "</span></td>" +
             "<td><strong style='color:var(--hextech-blue);'>" + p.lp + " PDL</strong></td>" +
@@ -3717,15 +3973,16 @@
           tbody.appendChild(tr);
         });
 
-        // Linha do próprio jogador destacada no ranking!
+        // Linha do atleta destacada
         const playerTr = document.createElement("tr");
-        playerTr.style.background = "rgba(200, 170, 110, 0.25)";
+        playerTr.style.background = "rgba(200, 170, 110, 0.22)";
         playerTr.style.border = "1px solid var(--hextech-gold)";
-        playerTr.innerHTML = "<td><strong style='color:var(--hextech-gold);'>#" + pElo.soloRank + "</strong></td>" +
+        playerTr.innerHTML = 
+          "<td><strong style='color:var(--hextech-gold);'>#" + pRank + "</strong></td>" +
           "<td><strong style='color:var(--hextech-gold);'>⭐ " + (careerState ? careerState.nick : "Você") + " (Você)</strong></td>" +
-          "<td><span class='badge " + (pElo.tier === "Desafiante" ? "badge-gold" : pElo.tier === "Grão-Mestre" ? "badge-danger" : "badge-purple") + "'>" + pElo.tier + "</span></td>" +
+          "<td><span class='badge " + pElo.badge + "'>" + pElo.tier + "</span></td>" +
           "<td><strong style='color:var(--hextech-gold);'>" + pElo.lp + " PDL</strong></td>" +
-          "<td>62%</td>" +
+          "<td>64%</td>" +
           "<td>" + (careerState && careerState.championPool[0] ? careerState.championPool[0].name : "Favorito") + "</td>";
         tbody.appendChild(playerTr);
       },
@@ -3733,21 +3990,46 @@
       updateDashboardUI() {
         if (!careerState) return;
 
-        document.getElementById("hubPlayerNick").innerText = careerState.nick;
-        document.getElementById("hubPlayerRole").innerText = "⚡ " + careerState.role;
-        document.getElementById("hubPlayerTeam").innerText = careerState.team.name;
-        document.getElementById("hubPlayerElo").innerText = careerState.elo.tier + " (" + careerState.elo.lp + " PDL)";
-        document.getElementById("hubEnergyVal").innerText = careerState.energy + "%";
-        document.getElementById("hubGoldVal").innerText = "R$ " + careerState.gold;
-        document.getElementById("hubFameVal").innerText = careerState.fame;
+        const tLp = careerState.elo.totalLp !== undefined ? careerState.elo.totalLp : careerState.elo.lp;
+        const eloInfo = getEloInfo(tLp);
+        const soloRankNum = careerState.elo.soloRank || calculateSoloRank(tLp);
 
-        // Atualizar SoloQ Card
+        // Header do Hub
+        const nickEl = document.getElementById("hubPlayerNick");
+        const roleEl = document.getElementById("hubPlayerRole");
+        const teamEl = document.getElementById("hubPlayerTeam");
+        const eloEl = document.getElementById("hubPlayerElo");
+        const energyEl = document.getElementById("hubEnergyVal");
+        const goldEl = document.getElementById("hubGoldVal");
+        const fameEl = document.getElementById("hubFameVal");
+
+        if (nickEl) nickEl.innerText = careerState.nick;
+        if (roleEl) roleEl.innerText = "⚡ " + careerState.role;
+        if (teamEl) teamEl.innerText = careerState.team.name;
+        if (eloEl) eloEl.innerText = eloInfo.tier + " (" + eloInfo.lp + " PDL)";
+        if (energyEl) energyEl.innerText = careerState.energy + "%";
+        if (goldEl) goldEl.innerText = "R$ " + careerState.gold;
+        if (fameEl) fameEl.innerText = careerState.fame;
+
+        // SoloQ Card
         const soloBadge = document.getElementById("hubSoloQBadgeTag");
         const soloPos = document.getElementById("hubSoloQPosition");
         const soloDetailed = document.getElementById("hubSoloQRankDetailed");
-        if (soloBadge) soloBadge.innerText = careerState.elo.tier.toUpperCase();
-        if (soloPos) soloPos.innerText = "#" + careerState.elo.soloRank;
-        if (soloDetailed) soloDetailed.innerText = careerState.elo.tier + " (" + careerState.elo.lp + " PDL)";
+        if (soloBadge) {
+          soloBadge.innerText = eloInfo.tier.toUpperCase();
+          soloBadge.className = "badge " + eloInfo.badge;
+        }
+        if (soloPos) soloPos.innerText = "#" + soloRankNum;
+        if (soloDetailed) soloDetailed.innerText = eloInfo.tier + " (" + eloInfo.lp + " PDL)";
+
+        // Badge de Ações Restantes na Semana
+        const actionsBadge = document.getElementById("hubWeeklyActionsBadge");
+        if (actionsBadge) {
+          const left = careerState.actionsLeft !== undefined ? careerState.actionsLeft : 3;
+          const maxA = careerState.maxActions || 3;
+          actionsBadge.innerText = "⚡ " + left + " / " + maxA + " Ações Restantes";
+          actionsBadge.className = "badge " + (left > 0 ? "badge-gold" : "badge-danger");
+        }
 
         // Logos Oficiais dos Times
         const myLogoEl = document.getElementById("hubMyTeamLogoBox");
@@ -3784,20 +4066,25 @@
         }
 
         // Card do Próximo Jogo
-        document.getElementById("hubMyTeamNameMatch").innerText = careerState.team.name;
-        document.getElementById("hubEnemyTeamNameMatch").innerText = oppTeam.name;
-        document.getElementById("hubEnemyTeamTagMatch").innerText = oppTeam.tag || "Rival";
-        document.getElementById("hubSeasonRecord").innerText = careerState.team.wins + "V - " + careerState.team.losses + "D";
-        document.getElementById("hubMatchLeagueHeader").innerText = (LEAGUES_DATA[careerState.currentTierId]?.name || "Liga") + " • Semana " + careerState.team.week;
+        const myNameMatch = document.getElementById("hubMyTeamNameMatch");
+        const oppNameMatch = document.getElementById("hubEnemyTeamNameMatch");
+        const oppTagMatch = document.getElementById("hubEnemyTeamTagMatch");
+        const recordEl = document.getElementById("hubSeasonRecord");
+        const leagueHeader = document.getElementById("hubMatchLeagueHeader");
         const weekNum = document.getElementById("hubWeekNumber");
+
+        if (myNameMatch) myNameMatch.innerText = careerState.team.name;
+        if (oppNameMatch) oppNameMatch.innerText = oppTeam.name;
+        if (oppTagMatch) oppTagMatch.innerText = oppTeam.tag || "Rival";
+        if (recordEl) recordEl.innerText = careerState.team.wins + "V - " + careerState.team.losses + "D";
+        if (leagueHeader) leagueHeader.innerText = (LEAGUES_DATA[careerState.currentTierId]?.name || "Liga") + " • Semana " + careerState.team.week;
         if (weekNum) weekNum.innerText = careerState.team.week;
 
-        // RENDERIZAR ROTINA DE TREINOS DINÂMICA (SUPORTE VS DEMAIS ROTAS)
         this.renderActionsGrid();
-
         this.updateStatsUI();
         this.updatePoolPreview();
         this.updateSocialUI();
+
         if (window.leagueNavigator) {
           window.leagueNavigator.renderTable(careerState.currentTierId);
         }
@@ -3825,7 +4112,8 @@
           const tile = document.createElement("div");
           tile.className = "action-tile";
           tile.onclick = () => career.trainStat(a.stat);
-          tile.innerHTML = "<h4>" + a.icon + " " + a.title + "</h4>" +
+          tile.innerHTML = 
+            "<h4>" + a.icon + " " + a.title + "</h4>" +
             "<p>" + a.desc + "</p>" +
             "<div class='action-tile-cost'>" + a.cost + "</div>";
           grid.appendChild(tile);
@@ -3836,9 +4124,10 @@
         soloTile.className = "action-tile";
         soloTile.style.borderColor = "#c39bd3";
         soloTile.onclick = () => career.startSoloQueueMatchmaking();
-        soloTile.innerHTML = "<h4>🔥 Jogar SoloQueue High Elo</h4>" +
-          "<p>Disputar ranqueadas contra os melhores do seu servidor.</p>" +
-          "<div class='action-tile-cost'>±PDL | -20 Energia | Sobe Ranking</div>";
+        soloTile.innerHTML = 
+          "<h4>🔥 Jogar SoloQueue High Elo</h4>" +
+          "<p>Disputar ranqueadas para escalar do Diamante ao Desafiante.</p>" +
+          "<div class='action-tile-cost'>1 Ação | ±PDL | -20 Energia</div>";
         grid.appendChild(soloTile);
 
         // Rest tile
@@ -3846,25 +4135,30 @@
         restTile.className = "action-tile";
         restTile.style.borderColor = "var(--success-green)";
         restTile.onclick = () => career.restDay();
-        restTile.innerHTML = "<h4>🛌 Descanso & Academia</h4>" +
-          "<p>Recuperação física e mental para evitar o desgaste e tilt.</p>" +
-          "<div class='action-tile-cost'>+50 Energia | +10 Confiança</div>";
+        const hasActions = (careerState.actionsLeft || 0) > 0;
+        restTile.innerHTML = 
+          "<h4>🛌 " + (hasActions ? "Descanso & Recuperação" : "Finalizar Semana & Descansar") + "</h4>" +
+          "<p>" + (hasActions ? "Recuperação física e mental para evitar o desgaste." : "Renova as 3 ações semanais, restaura energia e recebe salário.") + "</p>" +
+          "<div class='action-tile-cost'>" + (hasActions ? "+40 Energia | +10 Confiança" : "Nova Semana • 3 Ações • Salário") + "</div>";
         grid.appendChild(restTile);
       },
 
       updateStatsUI() {
         const s = careerState.stats;
-        document.getElementById("valStatMech").innerText = s.mechanics;
-        document.getElementById("barStatMech").style.width = s.mechanics + "%";
-        document.getElementById("valStatMacro").innerText = s.macro;
-        document.getElementById("barStatMacro").style.width = s.macro + "%";
-        document.getElementById("valStatComm").innerText = s.comm;
-        document.getElementById("barStatComm").style.width = s.comm + "%";
-        document.getElementById("valStatCons").innerText = s.consistency;
-        document.getElementById("barStatCons").style.width = s.consistency + "%";
-        document.getElementById("valStatConf").innerText = s.confidence + "%";
-        document.getElementById("barStatConf").style.width = s.confidence + "%";
-        document.getElementById("hubOverallRating").innerText = "OVR: " + Math.round(this.calculateTeamOvr());
+        const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+        const setWidth = (id, v) => { const el = document.getElementById(id); if (el) el.style.width = v + "%"; };
+
+        setVal("valStatMech", s.mechanics);
+        setWidth("barStatMech", s.mechanics);
+        setVal("valStatMacro", s.macro);
+        setWidth("barStatMacro", s.macro);
+        setVal("valStatComm", s.comm);
+        setWidth("barStatComm", s.comm);
+        setVal("valStatCons", s.consistency);
+        setWidth("barStatCons", s.consistency);
+        setVal("valStatConf", s.confidence + "%");
+        setWidth("barStatConf", s.confidence);
+        setVal("hubOverallRating", "OVR: " + Math.round(this.calculateTeamOvr()));
       },
 
       updatePoolPreview() {
@@ -3874,11 +4168,12 @@
         careerState.championPool.forEach(c => {
           const item = document.createElement("div");
           item.className = "pool-champ-row";
-          item.innerHTML = "<div style='display:flex; align-items:center; gap:8px;'>" +
-            "<img src='" + getChampImgUrl(c) + "' style='width:32px; height:32px; border-radius:4px;' onerror='handleImgError(this);'>" +
-            "<div><strong>" + c.name + "</strong><div style='font-size:0.75rem; color:var(--text-muted);'>Maestria Nív. " + c.masteryLevel + "</div></div>" +
-          "</div>" +
-          "<span class='badge badge-gold'>" + (c.masteryPoints || 0) + " MP</span>";
+          item.innerHTML = 
+            "<div style='display:flex; align-items:center; gap:8px;'>" +
+              "<img src='" + getChampImgUrl(c) + "' style='width:32px; height:32px; border-radius:4px;' onerror='handleImgError(this);'>" +
+              "<div><strong>" + c.name + "</strong><div style='font-size:0.75rem; color:var(--text-muted);'>Maestria Nív. " + c.masteryLevel + "</div></div>" +
+            "</div>" +
+            "<span class='badge badge-gold'>" + (c.masteryPoints || 0) + " MP</span>";
           poolEl.appendChild(item);
         });
       },
@@ -3894,14 +4189,15 @@
         careerState.socialFeed.forEach(post => {
           const div = document.createElement("div");
           div.className = "social-post-card";
-          div.innerHTML = "<div class='social-author-row'>" +
-            "<div class='social-author-info'>" +
-              "<div class='social-avatar'>💬</div>" +
-              "<div><strong>" + post.author + "</strong> <span style='color:var(--text-muted); font-size:0.8rem;'>" + post.handle + "</span></div>" +
+          div.innerHTML = 
+            "<div class='social-author-row'>" +
+              "<div class='social-author-info'>" +
+                "<div class='social-avatar'>💬</div>" +
+                "<div><strong>" + post.author + "</strong> <span style='color:var(--text-muted); font-size:0.8rem;'>" + post.handle + "</span></div>" +
+              "</div>" +
+              "<span style='font-size:0.75rem; color:var(--text-muted);'>" + post.time + "</span>" +
             "</div>" +
-            "<span style='font-size:0.75rem; color:var(--text-muted);'>" + post.time + "</span>" +
-          "</div>" +
-          "<p style='font-size:0.88rem; color:#dce5ef; margin:0; line-height:1.4;'>" + post.text + "</p>";
+            "<p style='font-size:0.88rem; color:#dce5ef; margin:0; line-height:1.4;'>" + post.text + "</p>";
           container.appendChild(div);
         });
       }
@@ -3954,7 +4250,7 @@
       }
     };
 
-    /* GERENCIADOR DE SAVES COM SUPORTE TOTAL A AMBOS OS IDS DE MODAL */
+    /* GERENCIADOR DE SAVES */
     const saveManager = {
       getModal() {
         return document.getElementById("saveManagerModal") || document.getElementById("saveModalBackdrop");
@@ -4001,7 +4297,7 @@
         showToast("💾 Arquivo de save baixado com sucesso!");
       },
       importFromTextarea() {
-        const raw = document.getElementById("saveCodeTextarea").value.trim();
+        const raw = document.getElementById("saveCodeTextarea")?.value.trim();
         if (!raw) {
           showToast("Cole o código do save primeiro!");
           return;
@@ -4059,7 +4355,9 @@
 
         if (hasSave && continueBtn && continueDesc) {
           continueBtn.style.display = "flex";
-          continueDesc.innerText = careerState.nick + " • " + careerState.team.name + " (" + careerState.role + ") • " + careerState.elo.tier;
+          const tLp = careerState.elo.totalLp !== undefined ? careerState.elo.totalLp : careerState.elo.lp;
+          const eloInfo = getEloInfo(tLp);
+          continueDesc.innerText = careerState.nick + " • " + careerState.team.name + " (" + careerState.role + ") • " + eloInfo.tier;
         } else if (continueBtn) {
           continueBtn.style.display = "none";
         }
@@ -4114,8 +4412,15 @@
 
     /* NOTIFICAÇÃO TOAST */
     function showToast(msg) {
-      const container = document.getElementById("toastContainer");
-      if (!container) return;
+      let container = document.getElementById("toastContainer");
+      if (!container) {
+        container = document.createElement("div");
+        container.id = "toastContainer";
+        document.body.appendChild(container);
+      }
+      if (container.children.length >= 3) {
+        container.firstElementChild?.remove();
+      }
       const toast = document.createElement("div");
       toast.className = "toast-message";
       toast.innerText = msg;
@@ -4123,12 +4428,13 @@
 
       setTimeout(() => {
         toast.style.opacity = "0";
+        toast.style.transform = "translateX(50px)";
         toast.style.transition = "all 0.3s ease";
         setTimeout(() => toast.remove(), 300);
       }, 3500);
     }
 
-    /* CONTROLLER DE PARTIDA (DISPUTA SOLOQ DIRETA) */
+    /* CONTROLLER DE PARTIDA */
     const matchController = {
       startSoloQMatch() {
         career.startSoloQueueMatchmaking();
@@ -4156,7 +4462,6 @@
       gameRouter.updateTitleScreen();
       gameRouter.showScreen("screenTitle");
     });
-
 
 
   </script>
