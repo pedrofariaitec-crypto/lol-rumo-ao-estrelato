@@ -832,6 +832,108 @@
       font-weight: 700; box-shadow: 0 8px 25px rgba(0,0,0,0.6); animation: slideIn 0.25s ease;
     }
     @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+  
+    /* ==========================================================
+       MOBILE RESPONSIVENESS & TOUCH OPTIMIZATIONS (SMARTPHONES)
+       ========================================================== */
+    @media (max-width: 900px) {
+      body { font-size: 14px; overflow-x: hidden; }
+      .app-container { padding: 8px 6px; }
+
+      /* Top Hub Header */
+      .hub-header {
+        flex-direction: column !important; align-items: stretch !important; gap: 12px !important; padding: 12px 14px !important;
+      }
+      .hub-profile-bar {
+        justify-content: space-between !important; width: 100% !important; flex-wrap: wrap; gap: 8px;
+      }
+      .hub-quick-stats {
+        display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; width: 100% !important;
+      }
+      .quick-stat-box { padding: 6px 4px !important; text-align: center !important; }
+      .quick-stat-val { font-size: 1.1rem !important; }
+
+      /* Nav Tabs */
+      .nav-tabs-wrap {
+        display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important;
+        gap: 6px !important; padding-bottom: 6px !important; scrollbar-width: none;
+      }
+      .nav-tabs-wrap::-webkit-scrollbar { display: none; }
+      .nav-tab-btn {
+        padding: 8px 12px !important; font-size: 0.82rem !important; white-space: nowrap !important; flex-shrink: 0 !important;
+      }
+
+      /* Dashboard Grid */
+      .dashboard-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+      .actions-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+
+      /* Title Screen */
+      .title-screen-wrap { width: 95% !important; padding: 20px 10px !important; }
+      .title-main-heading { font-size: 1.8rem !important; letter-spacing: 2px !important; }
+      .title-sub-heading { font-size: 0.82rem !important; letter-spacing: 1px !important; }
+      .title-card-btn { padding: 12px 16px !important; }
+
+      /* Character Creation */
+      .creation-container { padding: 14px 10px !important; }
+      .creation-form-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+      .creation-form-grid > div[style*="span 2"] { grid-column: span 1 !important; }
+
+      /* Draft Arena Screen */
+      .draft-screen-wrapper { min-height: unset !important; margin: 0 !important; border-radius: 6px !important; }
+      .draft-top-bar { padding: 8px 10px !important; flex-wrap: wrap !important; gap: 6px !important; justify-content: center !important; }
+      .draft-top-title-banner { font-size: 1.05rem !important; letter-spacing: 1px !important; }
+      .draft-bans-hud { flex-direction: column !important; gap: 6px !important; width: 100% !important; align-items: center !important; }
+      .draft-bans-row { justify-content: center !important; width: 100% !important; }
+
+      .draft-arena-grid {
+        grid-template-columns: 1fr !important; display: flex !important; flex-direction: column !important;
+      }
+      .draft-team-side.ally {
+        display: flex !important; flex-direction: row !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important;
+        padding: 8px !important; gap: 6px !important; border-right: none !important; border-bottom: 1px solid #19273d !important;
+      }
+      .draft-team-side.ally .slot-player-card {
+        min-width: 130px !important; flex-shrink: 0 !important; padding: 6px 8px !important; gap: 6px !important;
+      }
+      .slot-circle-wrap { width: 34px !important; height: 34px !important; }
+      .slot-nick-tag { font-size: 0.8rem !important; }
+      .slot-role-tag { font-size: 0.68rem !important; }
+
+      .draft-center-stage { padding: 10px 8px !important; }
+      .coach-matchup-panel { padding: 10px !important; }
+      .coach-counter-recommendations { grid-template-columns: 1fr !important; }
+      
+      .draft-168-grid {
+        grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)) !important;
+        max-height: 280px !important; gap: 6px !important; padding: 6px !important;
+      }
+      .champ-tile-img { width: 36px !important; height: 36px !important; }
+      .champ-tile-name { max-width: 52px !important; font-size: 0.65rem !important; }
+
+      .draft-bottom-bar {
+        grid-template-columns: 1fr !important; display: flex !important; flex-direction: column !important;
+        padding: 10px !important; gap: 10px !important;
+      }
+      .draft-chat-box { height: 75px !important; width: 100% !important; }
+      .draft-spells-selection-wrap { justify-content: center !important; width: 100% !important; }
+      .draft-lock-btn { width: 100% !important; padding: 14px 20px !important; font-size: 1.1rem !important; }
+
+      /* Match Screen */
+      .match-screen-wrap { padding: 10px 8px !important; }
+      .match-hud-bar { flex-direction: column !important; gap: 8px !important; padding: 10px !important; }
+      .match-scoreboard-row { width: 100% !important; justify-content: space-around !important; }
+      .choice-card-btn { padding: 12px 14px !important; min-height: 52px !important; }
+
+      /* Modals */
+      .modal-box { width: 94% !important; padding: 16px 14px !important; max-height: 90vh !important; overflow-y: auto !important; }
+      .toast-container { left: 10px !important; right: 10px !important; bottom: 10px !important; }
+    }
+
+    @media (max-width: 480px) {
+      .actions-grid { grid-template-columns: 1fr !important; }
+      .draft-168-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)) !important; }
+      .champ-tile-img { width: 32px !important; height: 32px !important; }
+    }
   </style>
 </head>
 <body>
@@ -1103,18 +1205,37 @@
           <!-- Coluna Central: Próximo Jogo & Rotina Diária -->
           <div style="display: flex; flex-direction: column; gap: 16px;">
             <div class="card" style="border-color: var(--hextech-gold); background: linear-gradient(135deg, rgba(200, 170, 110, 0.1) 0%, #0c1424 100%);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
                 <span class="badge badge-gold" id="hubMatchLeagueHeader">Liga Go4LoL • Rodada 1</span>
+                <span class="badge badge-purple" id="hubCoachLevelBadgeOverview">👔 Coach Maestro (Nív. 1)</span>
                 <span class="badge badge-blue" id="hubSeasonRecord">0V - 0D</span>
+              </div>
+
+              <!-- HUD Oficial de Playoffs Séries MD5 -->
+              <div id="hubPlayoffsSeriesHud" style="display: none; align-items: center; justify-content: center; gap: 10px; margin: 8px 0; padding: 8px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-hex); border-radius: 6px;">
+                <span class="badge badge-danger" id="hubPlayoffsStageTag">SEMIFINAL MD5</span>
+                <div style="display: flex; gap: 5px;">
+                  <div id="bo5Dot1" class="bo5-dot"></div>
+                  <div id="bo5Dot2" class="bo5-dot"></div>
+                  <div id="bo5Dot3" class="bo5-dot"></div>
+                </div>
+                <span style="font-weight: 800; color: var(--hextech-gold); font-size: 0.85rem;">VS</span>
+                <div style="display: flex; gap: 5px;">
+                  <div id="bo5DotOpp1" class="bo5-dot"></div>
+                  <div id="bo5DotOpp2" class="bo5-dot"></div>
+                  <div id="bo5DotOpp3" class="bo5-dot"></div>
+                </div>
               </div>
 
               <div style="display: flex; align-items: center; justify-content: space-around; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 14px;">
                 <div style="text-align: center;">
+                  <div id="hubMyTeamLogoBox" style="margin-bottom: 6px; display: flex; justify-content: center;"></div>
                   <div style="font-family: var(--font-tech); font-weight: 800; font-size: 1.15rem; color: #fff;" id="hubMyTeamNameMatch">Seu Time</div>
                   <div style="font-size: 0.75rem; color: var(--hextech-blue);">Time Azul</div>
                 </div>
                 <div style="font-family: var(--font-display); font-size: 1.4rem; color: var(--danger-red); font-weight: 900;">VS</div>
                 <div style="text-align: center;">
+                  <div id="hubEnemyTeamLogoBox" style="margin-bottom: 6px; display: flex; justify-content: center;"></div>
                   <div style="font-family: var(--font-tech); font-weight: 800; font-size: 1.15rem; color: #fff;" id="hubEnemyTeamNameMatch">Rival</div>
                   <div style="font-size: 0.75rem; color: var(--danger-red);" id="hubEnemyTeamTagMatch">Time Vermelho</div>
                 </div>
@@ -1136,7 +1257,7 @@
                 <span>Ações Diárias & Rotina de Atleta</span>
                 <span style="font-size: 0.8rem; color: var(--text-muted);">Semana <span id="hubWeekNumber">1</span></span>
               </div>
-              <div class="actions-grid">
+              <div class="actions-grid" id="hubActionsGridContainer">
                 <div class="action-tile" onclick="career.trainStat('mechanics')">
                   <h4>🎯 Treino 1v1 Mecânico</h4>
                   <p>Micro-movimentação, cancelamento de animações e reflexos.</p>
@@ -1366,6 +1487,11 @@
               </div>
             </div>
             <div class="coach-counter-recommendations" id="coachCounterList"></div>
+            <!-- Painel de Sinergia e Combos de Rota (Duo Bot / Mid-Jungle) -->
+            <div id="draftSynergyPanel" style="display: none; margin-top: 10px; padding: 8px 12px; background: rgba(0, 210, 255, 0.12); border: 1px solid var(--hextech-blue); border-radius: 6px; font-size: 0.85rem; color: #fff; align-items: center; gap: 8px;">
+              <span style="font-size: 1.2rem;">✨</span>
+              <div id="draftSynergyText"><strong>Sinergia Ativa:</strong> Duo Bot S+ detectado!</div>
+            </div>
           </div>
 
           <!-- Barra de Filtros e Busca -->
@@ -1561,7 +1687,7 @@
   </div>
 
   <!-- Modal do Gerenciador de Saves -->
-  <div id="saveManagerModal" class="modal-overlay">
+  <div id="saveManagerModal" class="modal-overlay" data-backdrop="saveModalBackdrop">
     <div class="modal-box">
       <h3>Gerenciador de Saves</h3>
       <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
@@ -1604,6 +1730,7 @@
   </div>
 
   <script>
+
     /* BANCO DE DADOS OFICIAL DOS 168 CAMPEÕES */
     window.LOL_CHAMPIONS_DB = [{"id":"Aatrox","name":"Aatrox","img":"Aatrox.png","roles":["Top"],"tags":["Fighter"]},{"id":"Ahri","name":"Ahri","img":"Ahri.png","roles":["Mid"],"tags":["Mage","Assassin"]},{"id":"Akali","name":"Akali","img":"Akali.png","roles":["Mid","Top"],"tags":["Assassin"]},{"id":"Akshan","name":"Akshan","img":"Akshan.png","roles":["Mid","Top"],"tags":["Marksman","Assassin"]},{"id":"Alistar","name":"Alistar","img":"Alistar.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Amumu","name":"Amumu","img":"Amumu.png","roles":["Jungle"],"tags":["Tank","Support"]},{"id":"Anivia","name":"Anivia","img":"Anivia.png","roles":["Mid"],"tags":["Mage"]},{"id":"Annie","name":"Annie","img":"Annie.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Aphelios","name":"Aphelios","img":"Aphelios.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Ashe","name":"Ashe","img":"Ashe.png","roles":["ADC","Suporte"],"tags":["Marksman","Support"]},{"id":"AurelionSol","name":"Aurelion Sol","img":"AurelionSol.png","roles":["Mid"],"tags":["Mage"]},{"id":"Aurora","name":"Aurora","img":"Aurora.png","roles":["Mid","Top"],"tags":["Mage","Assassin"]},{"id":"Azir","name":"Azir","img":"Azir.png","roles":["Mid"],"tags":["Mage","Marksman"]},{"id":"Bard","name":"Bard","img":"Bard.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Belveth","name":"Bel'Veth","img":"Belveth.png","roles":["Jungle"],"tags":["Fighter"]},{"id":"Blitzcrank","name":"Blitzcrank","img":"Blitzcrank.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Brand","name":"Brand","img":"Brand.png","roles":["Suporte","Mid","Jungle"],"tags":["Mage","Support"]},{"id":"Braum","name":"Braum","img":"Braum.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Briar","name":"Briar","img":"Briar.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Caitlyn","name":"Caitlyn","img":"Caitlyn.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Camille","name":"Camille","img":"Camille.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Cassiopeia","name":"Cassiopeia","img":"Cassiopeia.png","roles":["Mid","Top"],"tags":["Mage"]},{"id":"Chogath","name":"Cho'Gath","img":"Chogath.png","roles":["Top","Mid"],"tags":["Tank","Mage"]},{"id":"Corki","name":"Corki","img":"Corki.png","roles":["Mid","ADC"],"tags":["Marksman","Mage"]},{"id":"Darius","name":"Darius","img":"Darius.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Diana","name":"Diana","img":"Diana.png","roles":["Jungle","Mid"],"tags":["Fighter","Assassin"]},{"id":"Draven","name":"Draven","img":"Draven.png","roles":["ADC"],"tags":["Marksman"]},{"id":"DrMundo","name":"Dr. Mundo","img":"DrMundo.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Ekko","name":"Ekko","img":"Ekko.png","roles":["Jungle","Mid"],"tags":["Assassin","Mage"]},{"id":"Elise","name":"Elise","img":"Elise.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Evelynn","name":"Evelynn","img":"Evelynn.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Ezreal","name":"Ezreal","img":"Ezreal.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Fiddlesticks","name":"Fiddlesticks","img":"Fiddlesticks.png","roles":["Jungle"],"tags":["Mage","Support"]},{"id":"Fiora","name":"Fiora","img":"Fiora.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Fizz","name":"Fizz","img":"Fizz.png","roles":["Mid"],"tags":["Assassin","Fighter"]},{"id":"Galio","name":"Galio","img":"Galio.png","roles":["Mid","Suporte"],"tags":["Tank","Mage"]},{"id":"Gangplank","name":"Gangplank","img":"Gangplank.png","roles":["Top"],"tags":["Fighter"]},{"id":"Garen","name":"Garen","img":"Garen.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Gnar","name":"Gnar","img":"Gnar.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Gragas","name":"Gragas","img":"Gragas.png","roles":["Jungle","Top","Mid"],"tags":["Fighter","Mage"]},{"id":"Graves","name":"Graves","img":"Graves.png","roles":["Jungle"],"tags":["Marksman"]},{"id":"Gwen","name":"Gwen","img":"Gwen.png","roles":["Top"],"tags":["Fighter"]},{"id":"Hecarim","name":"Hecarim","img":"Hecarim.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Heimerdinger","name":"Heimerdinger","img":"Heimerdinger.png","roles":["Mid","Top","Suporte"],"tags":["Mage","Support"]},{"id":"Hwei","name":"Hwei","img":"Hwei.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Illaoi","name":"Illaoi","img":"Illaoi.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Irelia","name":"Irelia","img":"Irelia.png","roles":["Top","Mid"],"tags":["Fighter","Assassin"]},{"id":"Ivern","name":"Ivern","img":"Ivern.png","roles":["Jungle"],"tags":["Support","Mage"]},{"id":"Janna","name":"Janna","img":"Janna.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"JarvanIV","name":"Jarvan IV","img":"JarvanIV.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Jax","name":"Jax","img":"Jax.png","roles":["Top","Jungle"],"tags":["Fighter"]},{"id":"Jayce","name":"Jayce","img":"Jayce.png","roles":["Top","Mid"],"tags":["Marksman","Fighter"]},{"id":"Jhin","name":"Jhin","img":"Jhin.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Jinx","name":"Jinx","img":"Jinx.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Kaisa","name":"Kai'Sa","img":"Kaisa.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Kalista","name":"Kalista","img":"Kalista.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Karma","name":"Karma","img":"Karma.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Karthus","name":"Karthus","img":"Karthus.png","roles":["Jungle","Mid"],"tags":["Mage"]},{"id":"Kassadin","name":"Kassadin","img":"Kassadin.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"Katarina","name":"Katarina","img":"Katarina.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"Kayle","name":"Kayle","img":"Kayle.png","roles":["Top","Mid"],"tags":["Mage","Marksman"]},{"id":"Kayn","name":"Kayn","img":"Kayn.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Kennen","name":"Kennen","img":"Kennen.png","roles":["Top"],"tags":["Mage"]},{"id":"Khazix","name":"Kha'Zix","img":"Khazix.png","roles":["Jungle"],"tags":["Assassin"]},{"id":"Kindred","name":"Kindred","img":"Kindred.png","roles":["Jungle"],"tags":["Marksman"]},{"id":"Kled","name":"Kled","img":"Kled.png","roles":["Top"],"tags":["Fighter"]},{"id":"KogMaw","name":"Kog'Maw","img":"KogMaw.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"KSante","name":"K'Sante","img":"KSante.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Leblanc","name":"LeBlanc","img":"Leblanc.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"LeeSin","name":"Lee Sin","img":"LeeSin.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Leona","name":"Leona","img":"Leona.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Lillia","name":"Lillia","img":"Lillia.png","roles":["Jungle"],"tags":["Fighter","Mage"]},{"id":"Lissandra","name":"Lissandra","img":"Lissandra.png","roles":["Mid"],"tags":["Mage"]},{"id":"Lucian","name":"Lucian","img":"Lucian.png","roles":["ADC","Mid"],"tags":["Marksman","Assassin"]},{"id":"Lulu","name":"Lulu","img":"Lulu.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Lux","name":"Lux","img":"Lux.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Malphite","name":"Malphite","img":"Malphite.png","roles":["Top"],"tags":["Tank","Mage"]},{"id":"Malzahar","name":"Malzahar","img":"Malzahar.png","roles":["Mid"],"tags":["Mage"]},{"id":"Maokai","name":"Maokai","img":"Maokai.png","roles":["Suporte","Jungle","Top"],"tags":["Tank","Support"]},{"id":"MasterYi","name":"Master Yi","img":"MasterYi.png","roles":["Jungle"],"tags":["Assassin","Fighter"]},{"id":"Milio","name":"Milio","img":"Milio.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"MissFortune","name":"Miss Fortune","img":"MissFortune.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"MonkeyKing","name":"Wukong","img":"MonkeyKing.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Mordekaiser","name":"Mordekaiser","img":"Mordekaiser.png","roles":["Top"],"tags":["Fighter","Mage"]},{"id":"Morgana","name":"Morgana","img":"Morgana.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Naafiri","name":"Naafiri","img":"Naafiri.png","roles":["Mid"],"tags":["Assassin","Fighter"]},{"id":"Nami","name":"Nami","img":"Nami.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Nasus","name":"Nasus","img":"Nasus.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Nautilus","name":"Nautilus","img":"Nautilus.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Neeko","name":"Neeko","img":"Neeko.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Nidalee","name":"Nidalee","img":"Nidalee.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Nilah","name":"Nilah","img":"Nilah.png","roles":["ADC"],"tags":["Fighter","Assassin"]},{"id":"Nocturne","name":"Nocturne","img":"Nocturne.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Nunu","name":"Nunu & Willump","img":"Nunu.png","roles":["Jungle"],"tags":["Tank","Mage"]},{"id":"Olaf","name":"Olaf","img":"Olaf.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Orianna","name":"Orianna","img":"Orianna.png","roles":["Mid"],"tags":["Mage","Support"]},{"id":"Ornn","name":"Ornn","img":"Ornn.png","roles":["Top"],"tags":["Tank"]},{"id":"Pantheon","name":"Pantheon","img":"Pantheon.png","roles":["Mid","Top","Suporte"],"tags":["Fighter","Assassin"]},{"id":"Poppy","name":"Poppy","img":"Poppy.png","roles":["Top","Jungle","Suporte"],"tags":["Tank","Fighter"]},{"id":"Pyke","name":"Pyke","img":"Pyke.png","roles":["Suporte"],"tags":["Support","Assassin"]},{"id":"Qiyana","name":"Qiyana","img":"Qiyana.png","roles":["Mid"],"tags":["Assassin"]},{"id":"Quinn","name":"Quinn","img":"Quinn.png","roles":["Top"],"tags":["Marksman","Assassin"]},{"id":"Rakan","name":"Rakan","img":"Rakan.png","roles":["Suporte"],"tags":["Support"]},{"id":"Rammus","name":"Rammus","img":"Rammus.png","roles":["Jungle"],"tags":["Tank"]},{"id":"RekSai","name":"Rek'Sai","img":"RekSai.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Rell","name":"Rell","img":"Rell.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Renata","name":"Renata Glasc","img":"Renata.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Renekton","name":"Renekton","img":"Renekton.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Rengar","name":"Rengar","img":"Rengar.png","roles":["Jungle","Top"],"tags":["Assassin","Fighter"]},{"id":"Riven","name":"Riven","img":"Riven.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Rumble","name":"Rumble","img":"Rumble.png","roles":["Top","Mid"],"tags":["Fighter","Mage"]},{"id":"Ryze","name":"Ryze","img":"Ryze.png","roles":["Mid","Top"],"tags":["Mage"]},{"id":"Samira","name":"Samira","img":"Samira.png","roles":["ADC"],"tags":["Marksman","Assassin"]},{"id":"Sejuani","name":"Sejuani","img":"Sejuani.png","roles":["Jungle","Top"],"tags":["Tank"]},{"id":"Senna","name":"Senna","img":"Senna.png","roles":["Suporte","ADC"],"tags":["Support","Marksman"]},{"id":"Seraphine","name":"Seraphine","img":"Seraphine.png","roles":["Suporte","ADC","Mid"],"tags":["Support","Mage"]},{"id":"Sett","name":"Sett","img":"Sett.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Shaco","name":"Shaco","img":"Shaco.png","roles":["Jungle"],"tags":["Assassin"]},{"id":"Shen","name":"Shen","img":"Shen.png","roles":["Top","Suporte"],"tags":["Tank"]},{"id":"Shyvana","name":"Shyvana","img":"Shyvana.png","roles":["Jungle"],"tags":["Fighter","Mage"]},{"id":"Singed","name":"Singed","img":"Singed.png","roles":["Top"],"tags":["Tank","Mage"]},{"id":"Sion","name":"Sion","img":"Sion.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Sivir","name":"Sivir","img":"Sivir.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Skarner","name":"Skarner","img":"Skarner.png","roles":["Jungle","Top"],"tags":["Tank","Fighter"]},{"id":"Smolder","name":"Smolder","img":"Smolder.png","roles":["ADC","Mid"],"tags":["Marksman","Mage"]},{"id":"Sona","name":"Sona","img":"Sona.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Soraka","name":"Soraka","img":"Soraka.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Swain","name":"Swain","img":"Swain.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Sylas","name":"Sylas","img":"Sylas.png","roles":["Mid","Top"],"tags":["Mage","Assassin"]},{"id":"Syndra","name":"Syndra","img":"Syndra.png","roles":["Mid"],"tags":["Mage"]},{"id":"TahmKench","name":"Tahm Kench","img":"TahmKench.png","roles":["Top","Suporte"],"tags":["Tank","Support"]},{"id":"Taliyah","name":"Taliyah","img":"Taliyah.png","roles":["Jungle","Mid"],"tags":["Mage","Support"]},{"id":"Talon","name":"Talon","img":"Talon.png","roles":["Mid","Jungle"],"tags":["Assassin"]},{"id":"Taric","name":"Taric","img":"Taric.png","roles":["Suporte"],"tags":["Support","Tank"]},{"id":"Teemo","name":"Teemo","img":"Teemo.png","roles":["Top"],"tags":["Marksman","Mage"]},{"id":"Thresh","name":"Thresh","img":"Thresh.png","roles":["Suporte"],"tags":["Support","Tank"]},{"id":"Tristana","name":"Tristana","img":"Tristana.png","roles":["ADC","Mid"],"tags":["Marksman","Assassin"]},{"id":"Trundle","name":"Trundle","img":"Trundle.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Tryndamere","name":"Tryndamere","img":"Tryndamere.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"TwistedFate","name":"Twisted Fate","img":"TwistedFate.png","roles":["Mid"],"tags":["Mage","Marksman"]},{"id":"Twitch","name":"Twitch","img":"Twitch.png","roles":["ADC"],"tags":["Marksman","Assassin"]},{"id":"Udyr","name":"Udyr","img":"Udyr.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Urgot","name":"Urgot","img":"Urgot.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Varus","name":"Varus","img":"Varus.png","roles":["ADC","Mid"],"tags":["Marksman","Mage"]},{"id":"Vayne","name":"Vayne","img":"Vayne.png","roles":["ADC","Top"],"tags":["Marksman","Assassin"]},{"id":"Veigar","name":"Veigar","img":"Veigar.png","roles":["Mid"],"tags":["Mage"]},{"id":"Velkoz","name":"Vel'Koz","img":"Velkoz.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Vex","name":"Vex","img":"Vex.png","roles":["Mid"],"tags":["Mage"]},{"id":"Vi","name":"Vi","img":"Vi.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Viego","name":"Viego","img":"Viego.png","roles":["Jungle","Mid"],"tags":["Fighter","Assassin"]},{"id":"Viktor","name":"Viktor","img":"Viktor.png","roles":["Mid"],"tags":["Mage"]},{"id":"Vladimir","name":"Vladimir","img":"Vladimir.png","roles":["Mid","Top"],"tags":["Mage","Fighter"]},{"id":"Volibear","name":"Volibear","img":"Volibear.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Warwick","name":"Warwick","img":"Warwick.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Xayah","name":"Xayah","img":"Xayah.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Xerath","name":"Xerath","img":"Xerath.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"XinZhao","name":"Xin Zhao","img":"XinZhao.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Yasuo","name":"Yasuo","img":"Yasuo.png","roles":["Mid","Top"],"tags":["Fighter","Assassin"]},{"id":"Yone","name":"Yone","img":"Yone.png","roles":["Mid","Top"],"tags":["Fighter","Assassin"]},{"id":"Yorick","name":"Yorick","img":"Yorick.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Yuumi","name":"Yuumi","img":"Yuumi.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Zac","name":"Zac","img":"Zac.png","roles":["Jungle","Top"],"tags":["Tank","Fighter"]},{"id":"Zed","name":"Zed","img":"Zed.png","roles":["Mid"],"tags":["Assassin"]},{"id":"Zeri","name":"Zeri","img":"Zeri.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Ziggs","name":"Ziggs","img":"Ziggs.png","roles":["ADC","Mid"],"tags":["Mage"]},{"id":"Zilean","name":"Zilean","img":"Zilean.png","roles":["Suporte","Mid"],"tags":["Support","Mage"]},{"id":"Zoe","name":"Zoe","img":"Zoe.png","roles":["Mid"],"tags":["Mage"]},{"id":"Zyra","name":"Zyra","img":"Zyra.png","roles":["Suporte","Jungle"],"tags":["Mage","Support"]}];
 
@@ -1646,313 +1773,277 @@
       "KaBuM! Academy": { color: "#ff7700", bg: "#281200", tag: "KBM.A", icon: "💥" },
       
       // Circuito Desafiante
-      "Santos eSports": { color: "#c8aa6e", bg: "#0a1322", tag: "SAN", icon: "🐟" },
-      "Team oNe eSports": { color: "#ffd700", bg: "#201a03", tag: "ONE", icon: "1️⃣" },
-      "ProGaming Esports": { color: "#00ffff", bg: "#051d24", tag: "PRG", icon: "🎮" },
-      "Havan Liberty": { color: "#2563eb", bg: "#081533", tag: "HL", icon: "🗽" },
-      "CNB e-Sports Club": { color: "#3b82f6", bg: "#071329", tag: "CNB", icon: "🛡️" },
-      "Submarino Stars": { color: "#06b6d4", bg: "#041a24", tag: "SUB", icon: "⚓" },
+      "Flamengo Esports": { color: "#e32636", bg: "#200305", tag: "FLA", icon: "🔴" },
+      "Santos e-Sports": { color: "#f1f2f6", bg: "#111419", tag: "SAN", icon: "🐟" },
+      "Team oNe eSports": { color: "#f5a623", bg: "#211402", tag: "ONE", icon: "🥇" },
+      "Operation Kino": { color: "#2ed573", bg: "#031c0c", tag: "OPK", icon: "🎬" },
+      "ProGaming Esports": { color: "#1e90ff", bg: "#031528", tag: "PRG", icon: "🎮" },
+      "Iron Hawks Esports": { color: "#747d8c", bg: "#14161a", tag: "IHW", icon: "🦅" },
       
-      // Go4LoL
-      "Academia Santos Dex": { color: "#00d2ff", bg: "#071728", tag: "SAN.D", icon: "🔱" },
-      "KaBuM! Black": { color: "#ff6600", bg: "#1c0d03", tag: "KBM.B", icon: "🥷" },
-      "Ilha das Lendas Cup Team": { color: "#ef4444", bg: "#290707", tag: "ILHA", icon: "🏝️" },
-      "Falkol Reborn": { color: "#38bdf8", bg: "#071c26", tag: "FLK", icon: "🦅" },
-      "Rensga Amador": { color: "#facc15", bg: "#261d02", tag: "RNG.A", icon: "🤠" },
-      "Team One Sub-20": { color: "#eab308", bg: "#1f1601", tag: "ONE.J", icon: "🌟" },
+      // Go4LoL (Tier 4)
+      "KaBuM! Black": { color: "#ff7700", bg: "#150a00", tag: "KBM.B", icon: "💣" },
+      "Santos Dex": { color: "#ffffff", bg: "#09101d", tag: "SDX", icon: "⚡" },
+      "Team Genesis": { color: "#00d2ff", bg: "#031a24", tag: "GEN", icon: "🌀" },
+      "Ilha da Macacada Gaming": { color: "#2ecc71", bg: "#051f0f", tag: "IDM", icon: "🍌" },
+      "Sobregaming": { color: "#e67e22", bg: "#1c0d02", tag: "SBG", icon: "🔥" },
+      "Keyd Warriors": { color: "#9b59b6", bg: "#17061f", tag: "KDW", icon: "🗡️" },
+      "Remo Brave": { color: "#16a085", bg: "#041a15", tag: "RMB", icon: "🦁" },
+      "Big Gods": { color: "#f39c12", bg: "#221301", tag: "BG", icon: "⚡" },
 
-      // Worlds
-      "T1 (Faker)": { color: "#e11d48", bg: "#2b030b", tag: "T1", icon: "🏆" },
-      "Gen.G (Chovy)": { color: "#ca8a04", bg: "#261801", tag: "GEN", icon: "🐯" },
-      "G2 Esports": { color: "#e2e8f0", bg: "#0f172a", tag: "G2", icon: "⚔️" },
-      "Bilibili Gaming": { color: "#38bdf8", bg: "#051e2b", tag: "BLG", icon: "⚡" }
+      // Mundiais (Worlds)
+      "T1": { color: "#e2012d", bg: "#260107", tag: "T1", icon: "👑" },
+      "Gen.G": { color: "#aa8a59", bg: "#1f180d", tag: "GEN", icon: "🐅" },
+      "Bilibili Gaming": { color: "#00a1d6", bg: "#021721", tag: "BLG", icon: "⚡" },
+      "G2 Esports": { color: "#e84118", bg: "#1c0803", tag: "G2", icon: "👺" }
     };
 
     function getTeamLogoSvg(teamName, size) {
-      size = size || 36;
-      const meta = TEAM_METADATA[teamName] || { color: "#c8aa6e", bg: "#111827", tag: (teamName || "LOL").slice(0,3).toUpperCase(), icon: "🛡️" };
-      return "<div class='team-flag-crest' style='width:" + size + "px; height:" + size + "px; background:" + meta.bg + "; border:2px solid " + meta.color + "; box-shadow:0 0 10px " + meta.color + "44;' title='" + teamName + "'>" +
-        "<span style='font-size:" + Math.round(size * 0.48) + "px; line-height:1;'>" + meta.icon + "</span>" +
-      "</div>";
+      size = size || 44;
+      const meta = TEAM_METADATA[teamName] || { color: "#c8aa6e", bg: "#0c1527", tag: (teamName || "LOL").slice(0, 3).toUpperCase(), icon: "🛡️" };
+      return '<div style="width:' + size + 'px; height:' + size + 'px; border-radius:50%; background:' + meta.bg + '; border:2px solid ' + meta.color + '; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 12px ' + meta.color + '40;" title="' + teamName + '">' +
+        '<span style="font-size:' + Math.round(size * 0.44) + 'px;">' + meta.icon + '</span>' +
+      '</div>';
     }
     window.getTeamLogoSvg = getTeamLogoSvg;
 
-    /* BANCO DE DADOS DE FEITIÇOS DE INVOCADOR (SUMMONER SPELLS) */
-    const SUMMONER_SPELLS_DB = {
-      Flash: {
-        id: "Flash", name: "Flash", key: "D",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerFlash.png",
-        fallback: "⚡",
-        desc: "Teleporta seu campeão instantaneamente por uma curta distância.",
-        tactical: "+6% Sucesso Geral • Evita mortes e viabiliza outplays arriscados"
-      },
-      Ignite: {
-        id: "Ignite", name: "Incendiar", key: "F",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerDot.png",
-        fallback: "🔥",
-        desc: "Aplica dano verdadeiro contínuo e corta 40% das curas inimigas.",
-        tactical: "+8% em Duelos & All-in • Execução fatal na rota e cancela curas"
-      },
-      Teleport: {
-        id: "Teleport", name: "Teleporte", key: "F",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerTeleport.png",
-        fallback: "🌀",
-        desc: "Teleporta para sentinelas ou torres aliadas em qualquer ponto do mapa.",
-        tactical: "+8% em Macro & Objetivos • Presença instantânea no Barão/Dragão e Split-Push"
-      },
-      Smite: {
-        id: "Smite", name: "Golpear", key: "D",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerSmite.png",
-        fallback: "🌲",
-        desc: "Causa dano verdadeiro massivo a monstros neutros e épicos.",
-        tactical: "+12% em Monstros Épicos • Fundamental para caçadores garantirem Barão e Dragão"
-      },
-      Exhaust: {
-        id: "Exhaust", name: "Exaustão", key: "F",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerExhaust.png",
-        fallback: "💤",
-        desc: "Reduz em 35% o dano do alvo e 30% da velocidade por 3 segundos.",
-        tactical: "-20% Impacto do Rival • Neutraliza assassinos e atiradores adversários em lutas"
-      },
-      Heal: {
-        id: "Heal", name: "Curar", key: "F",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerHeal.png",
-        fallback: "💚",
-        desc: "Restaura vida imediata e concede velocidade para você e um aliado.",
-        tactical: "+7% Sobrevivência • Clássico da bot lane para salvar o 2v2 e lutas em equipe"
-      },
-      Cleanse: {
-        id: "Cleanse", name: "Purificar", key: "F",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerBoost.png",
-        fallback: "✨",
-        desc: "Remove todos os efeitos incapacitantes e atordoamentos do campeão.",
-        tactical: "+8% Contra Controle de Grupo • Anula composições inimigas cheias de atordoamentos"
-      },
-      Ghost: {
-        id: "Ghost", name: "Fantasma", key: "F",
-        img: "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/SummonerHaste.png",
-        fallback: "💨",
-        desc: "Concede velocidade de movimento prolongada e ignora colisão.",
-        tactical: "+7% em Teamfights Longas • Excelente para perseguição e kiting contínuo"
-      }
-    };
+    /* BANCO DE DADOS OFICIAL DE FEITIÇOS DE INVOCADOR */
+    const SUMMONER_SPELLS_DB = [
+      { id: "Flash", name: "Flash", key: "SummonerFlash", desc: "Teleporta seu campeão instantaneamente a curta distância. Essencial para outplays.", bonus: "+6% em todas as jogadas" },
+      { id: "Ignite", name: "Incendiar", key: "SummonerDot", desc: "Causa dano verdadeiro e corta a cura do alvo. Aumenta agressividade e pressão de kill.", bonus: "+8% em jogadas de Mecânica" },
+      { id: "Teleport", name: "Teleporte", key: "SummonerTeleport", desc: "Canaliza para se teleportar para uma estrutura ou sentinela aliada. Impacto de mapa.", bonus: "+8% em jogadas de Macro/Visão" },
+      { id: "Smite", name: "Golpear", key: "SummonerSmite", desc: "Causa dano verdadeiro em monstros neutros. Obrigatório para Caçadores (Jungle).", bonus: "+10% em Objetivos Neutros (Barão/Dragão)" },
+      { id: "Exhaust", name: "Exaustão", key: "SummonerExhaust", desc: "Diminui o dano e a velocidade de movimento do adversário. Excelente para Suportes.", bonus: "+7% em jogadas de Consistência e Peel" },
+      { id: "Cleanse", name: "Purificar", key: "SummonerBoost", desc: "Remove todos os efeitos de controle de grupo e debuffs de feitiços de invocador.", bonus: "+8% em Sobrevivência e Consistência" },
+      { id: "Barrier", name: "Barreira", key: "SummonerBarrier", desc: "Concede um escudo protetor contra dano instantâneo por 2.5 segundos.", bonus: "+6% em Sobrevivência sob pressão" },
+      { id: "Ghost", name: "Fantasma", key: "SummonerHaste", desc: "Aumenta drasticamente a velocidade de movimento e permite atravessar tropas.", bonus: "+7% em Perseguição e Mecânica" }
+    ];
+    window.SUMMONER_SPELLS_DB = SUMMONER_SPELLS_DB;
 
-    /* LIGAS E DIVISÕES (TIER 4 ATÉ TIER 1) */
+    /* BANCO DE DADOS DE SINERGIAS OFICIAIS (DUO BOT & MID/JUNGLE COMBOS) */
+    const SYNERGIES_DB = [
+      // DUO BOT COMBOS
+      {
+        champs: ["Draven", "Leona"],
+        name: "All-in Brutal",
+        type: "bot",
+        desc: "Stuns em cadeia da Leona ativam dano de Adoração do Draven para abates rápidos.",
+        bonus: 15,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Ezreal", "Karma"],
+        name: "Poke & Kiting Absoluto",
+        type: "bot",
+        desc: "Pressão de longo alcance, desengaje com escudos do Mantra e controle de rota seguro.",
+        bonus: 13,
+        tag: "Duo Bot S"
+      },
+      {
+        champs: ["Lucian", "Nami"],
+        name: "Eletrocutar Flamejante",
+        type: "bot",
+        desc: "Bênção da Convocadora projeta dano duplo instantâneo nas rajadas do Lucian.",
+        bonus: 15,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Samira", "Nautilus"],
+        name: "Cadeia de CC & Massacre",
+        type: "bot",
+        desc: "Arremesso ao ar ativa aproximação de Samira e engatilha Gatilho Infernal.",
+        bonus: 15,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Caitlyn", "Lux"],
+        name: "Cerco de Armadilha & Raio",
+        type: "bot",
+        desc: "Prisão de Luz garante acerto da armadilha de Caitlyn com dano crítico inescapável.",
+        bonus: 14,
+        tag: "Duo Bot S"
+      },
+      {
+        champs: ["KogMaw", "Lulu"],
+        name: "Hypercarry Protetor",
+        type: "bot",
+        desc: "Metamorfose, escudos e Pix transformam Kog'Maw em uma metralhadora intocável.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Kalista", "Thresh"],
+        name: "Pacto de Almas & Sentença",
+        type: "bot",
+        desc: "Destino do Chamado arremessa Thresh no meio dos inimigos, garantindo lanterna de fuga.",
+        bonus: 14,
+        tag: "Duo Bot S"
+      },
+      {
+        champs: ["Xayah", "Rakan"],
+        name: "Amantes de Ionia",
+        type: "bot",
+        desc: "Dança das Plumas compartilhada com engage acrobático e retorno seguro.",
+        bonus: 15,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Jhin", "Morgana"],
+        name: "Florescer no Escuro",
+        type: "bot",
+        desc: "Ligação das Trevas de 3 segundos com Florescer Fatal e Aclamação Final.",
+        bonus: 13,
+        tag: "Duo Bot S"
+      },
+      {
+        champs: ["Ashe", "Braum"],
+        name: "Gelo Eterno de Freljord",
+        type: "bot",
+        desc: "Rajada de Ashe empilha os Golpes Concussivos de Braum com máxima facilidade.",
+        bonus: 14,
+        tag: "Duo Bot S"
+      },
+
+      // MID + JUNGLE COMBOS
+      {
+        champs: ["Vi", "Orianna"],
+        name: "Entrega de Onda de Choque",
+        type: "mid_jg",
+        desc: "Vi mergulha na backline inimiga carregando a Esfera de Orianna para Shockwave letal.",
+        bonus: 16,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["Yasuo", "Sejuani"],
+        name: "Prisão Glacial & Tempestade",
+        type: "mid_jg",
+        desc: "Ultimates com knockup garantem ativação instantânea do Último Suspiro de Yasuo.",
+        bonus: 15,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["Yasuo", "Gragas"],
+        name: "Barris Explosivos & Espadas",
+        type: "mid_jg",
+        desc: "Barril Explosivo arremessa os inimigos no ar ativando o combo letal de Yasuo.",
+        bonus: 15,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["JarvanIV", "Galio"],
+        name: "Cataclismo & Entrada Heroica",
+        type: "mid_jg",
+        desc: "Inimigos presos na arena de Jarvan são destruídos pela queda maciça de Galio.",
+        bonus: 16,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["LeeSin", "Ahri"],
+        name: "Charme & Chute Insec",
+        type: "mid_jg",
+        desc: "Encanto de Ahri desorienta o alvo permitindo Insec perfeito de Lee Sin para o abate.",
+        bonus: 14,
+        tag: "Mid/Jg S"
+      },
+      {
+        champs: ["Nocturne", "TwistedFate"],
+        name: "Apagão & Destino Global",
+        type: "mid_jg",
+        desc: "Paranoia cega o mapa enquanto Destino revela os inimigos isolados para o gank.",
+        bonus: 16,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["Viego", "Ahri"],
+        name: "Alma Perdida & Reset",
+        type: "mid_jg",
+        desc: "Dano explosivo garantindo o primeiro abate para Viego resetar sua possessão.",
+        bonus: 13,
+        tag: "Mid/Jg S"
+      }
+    ];
+    window.SYNERGIES_DB = SYNERGIES_DB;
+
+    /* DADOS DE LIGAS, DIVISÕES E ADVERSÁRIOS COM IA ESCALONADA */
     const LEAGUES_DATA = {
       4: {
-        id: 4, name: "Tier 4 - Liga Amadora Go4LoL", tierLabel: "Go4LoL (Tier 4)",
+        id: 4,
+        name: "Go4LoL (Liga Amadora Tier 4)",
+        tierTag: "TIER 4 • AMADOR",
+        desc: "Onde nascem as lendas. Torneios semanais com premiação modesta, olheiros e equipes amadoras.",
+        salaryRange: "R$ 400 - R$ 800",
+        promotionTarget: 3,
+        targetWinsForPlayoffs: 4,
+        aiPower: 50,
         teams: [
-          { name: "KaBuM! Black", tag: "KBM.B", wins: 0, losses: 0, power: 48 },
-          { name: "Academia Santos Dex", tag: "SAN.D", wins: 0, losses: 0, power: 46 },
-          { name: "Ilha das Lendas Cup Team", tag: "ILHA", wins: 0, losses: 0, power: 45 },
-          { name: "Falkol Reborn", tag: "FLK", wins: 0, losses: 0, power: 44 },
-          { name: "Rensga Amador", tag: "RNG.A", wins: 0, losses: 0, power: 43 },
-          { name: "Team One Sub-20", tag: "ONE.J", wins: 0, losses: 0, power: 47 }
-        ],
-        promotionTarget: 3, winTarget: 6
+          { name: "Santos Dex", wins: 0, losses: 0, power: 50, tag: "SDX" },
+          { name: "KaBuM! Black", wins: 0, losses: 0, power: 52, tag: "KBM.B" },
+          { name: "Team Genesis", wins: 0, losses: 0, power: 48, tag: "GEN" },
+          { name: "Ilha da Macacada Gaming", wins: 0, losses: 0, power: 51, tag: "IDM" },
+          { name: "Sobregaming", wins: 0, losses: 0, power: 49, tag: "SBG" },
+          { name: "Keyd Warriors", wins: 0, losses: 0, power: 53, tag: "KDW" },
+          { name: "Remo Brave", wins: 0, losses: 0, power: 47, tag: "RMB" },
+          { name: "Big Gods", wins: 0, losses: 0, power: 50, tag: "BG" }
+        ]
       },
       3: {
-        id: 3, name: "Tier 3 - Circuito Desafiante (Série de Promoção)", tierLabel: "Circuito Desafiante (Tier 3)",
+        id: 3,
+        name: "Circuito Desafiante (Tier 3)",
+        tierTag: "TIER 3 • SEMI-PRO",
+        desc: "Acesso direto à elite. Jogos transmitidos, gaming houses profissionais e torcidas apaixonadas.",
+        salaryRange: "R$ 1.500 - R$ 3.500",
+        promotionTarget: 2,
+        targetWinsForPlayoffs: 6,
+        aiPower: 65,
         teams: [
-          { name: "Santos eSports", tag: "SAN", wins: 0, losses: 0, power: 60 },
-          { name: "Team oNe eSports", tag: "ONE", wins: 0, losses: 0, power: 62 },
-          { name: "ProGaming Esports", tag: "PRG", wins: 0, losses: 0, power: 59 },
-          { name: "Havan Liberty", tag: "HL", wins: 0, losses: 0, power: 61 },
-          { name: "CNB e-Sports Club", tag: "CNB", wins: 0, losses: 0, power: 58 },
-          { name: "Submarino Stars", tag: "SUB", wins: 0, losses: 0, power: 57 }
-        ],
-        promotionTarget: 2, winTarget: 8
+          { name: "Flamengo Esports", wins: 0, losses: 0, power: 67, tag: "FLA" },
+          { name: "Santos e-Sports", wins: 0, losses: 0, power: 65, tag: "SAN" },
+          { name: "Team oNe eSports", wins: 0, losses: 0, power: 66, tag: "ONE" },
+          { name: "Operation Kino", wins: 0, losses: 0, power: 62, tag: "OPK" },
+          { name: "ProGaming Esports", wins: 0, losses: 0, power: 64, tag: "PRG" },
+          { name: "Iron Hawks Esports", wins: 0, losses: 0, power: 61, tag: "IHW" }
+        ]
       },
       2: {
-        id: 2, name: "Tier 2 - CBLOL Academy (Segunda Divisão)", tierLabel: "CBLOL Academy (Tier 2)",
+        id: 2,
+        name: "CBLOL (Campeonato Brasileiro Tier 2)",
+        tierTag: "TIER 2 • ELITE NACIONAL",
+        desc: "O topo do cenário brasileiro. Arena presencial, transmissões mundiais e o sonho do título.",
+        salaryRange: "R$ 6.000 - R$ 20.000",
+        promotionTarget: 1,
+        targetWinsForPlayoffs: 8,
+        aiPower: 80,
         teams: [
-          { name: "LOUD Academy", tag: "LOUD.A", wins: 0, losses: 0, power: 74 },
-          { name: "paiN Gaming Academy", tag: "PNG.A", wins: 0, losses: 0, power: 76 },
-          { name: "RED Canids Academy", tag: "RED.A", wins: 0, losses: 0, power: 73 },
-          { name: "Vivo Keyd Stars Academy", tag: "VKS.A", wins: 0, losses: 0, power: 72 },
-          { name: "FURIA Academy", tag: "FUR.A", wins: 0, losses: 0, power: 71 },
-          { name: "KaBuM! Academy", tag: "KBM.A", wins: 0, losses: 0, power: 75 }
-        ],
-        promotionTarget: 1, winTarget: 10
+          { name: "LOUD", wins: 0, losses: 0, power: 84, tag: "LOUD" },
+          { name: "paiN Gaming", wins: 0, losses: 0, power: 83, tag: "PNG" },
+          { name: "RED Canids Kalunga", wins: 0, losses: 0, power: 81, tag: "RED" },
+          { name: "Vivo Keyd Stars", wins: 0, losses: 0, power: 79, tag: "VKS" },
+          { name: "FURIA", wins: 0, losses: 0, power: 77, tag: "FUR" },
+          { name: "KaBuM! Esports", wins: 0, losses: 0, power: 78, tag: "KBM" },
+          { name: "Fluxo", wins: 0, losses: 0, power: 76, tag: "FX" },
+          { name: "INTZ", wins: 0, losses: 0, power: 75, tag: "ITZ" },
+          { name: "Los Grandes", wins: 0, losses: 0, power: 74, tag: "LOS" }
+        ]
       },
       1: {
-        id: 1, name: "Tier 1 - CBLOL (Primeira Divisão Oficial)", tierLabel: "CBLOL (Tier 1)",
+        id: 1,
+        name: "Campeonato Mundial (Worlds Tier 1)",
+        tierTag: "TIER 1 • MUNDIAL",
+        desc: "O pináculo dos esportes eletrônicos globais. Os maiores titãs da Coreia, China e Europa.",
+        salaryRange: "R$ 35.000 - R$ 120.000",
+        promotionTarget: null,
+        targetWinsForPlayoffs: 5,
+        aiPower: 92,
         teams: [
-          { name: "LOUD", tag: "LOUD", wins: 0, losses: 0, power: 89 },
-          { name: "paiN Gaming", tag: "PNG", wins: 0, losses: 0, power: 90 },
-          { name: "RED Canids Kalunga", tag: "RED", wins: 0, losses: 0, power: 86 },
-          { name: "Vivo Keyd Stars", tag: "VKS", wins: 0, losses: 0, power: 87 },
-          { name: "FURIA", tag: "FUR", wins: 0, losses: 0, power: 85 },
-          { name: "KaBuM! Esports", tag: "KBM", wins: 0, losses: 0, power: 84 },
-          { name: "Fluxo", tag: "FX", wins: 0, losses: 0, power: 82 },
-          { name: "INTZ", tag: "ITZ", wins: 0, losses: 0, power: 81 },
-          { name: "Los Grandes", tag: "LOS", wins: 0, losses: 0, power: 83 }
-        ],
-        promotionTarget: 0, winTarget: 14
+          { name: "T1", wins: 0, losses: 0, power: 95, tag: "T1" },
+          { name: "Gen.G", wins: 0, losses: 0, power: 94, tag: "GEN" },
+          { name: "Bilibili Gaming", wins: 0, losses: 0, power: 92, tag: "BLG" },
+          { name: "G2 Esports", wins: 0, losses: 0, power: 89, tag: "G2" }
+        ]
       }
     };
+    window.LEAGUES_DATA = LEAGUES_DATA;
 
-    /* RANKING DE SOLOQUEUE POR REGIÃO */
-    const REGIONAL_SOLOQ_PLAYERS = {
-      BR: [
-        { rank: 1, name: "Robo", tier: "Desafiante", lp: 1490, winrate: "64%", main: "Renekton" },
-        { rank: 2, name: "Tinowns", tier: "Desafiante", lp: 1430, winrate: "62%", main: "Azir" },
-        { rank: 3, name: "Cariok", tier: "Desafiante", lp: 1380, winrate: "61%", main: "LeeSin" },
-        { rank: 4, name: "TitaN", tier: "Desafiante", lp: 1340, winrate: "60%", main: "Lucian" },
-        { rank: 5, name: "Ayu", tier: "Desafiante", lp: 1290, winrate: "59%", main: "KaiSa" },
-        { rank: 6, name: "Ceos", tier: "Desafiante", lp: 1240, winrate: "59%", main: "Nautilus" },
-        { rank: 7, name: "Baiano", tier: "Desafiante", lp: 1190, winrate: "58%", main: "Xerath" },
-        { rank: 8, name: "Brance", tier: "Desafiante", lp: 1150, winrate: "58%", main: "Zeri" },
-        { rank: 9, name: "Dynquedo", tier: "Desafiante", lp: 1110, winrate: "57%", main: "Syndra" },
-        { rank: 10, name: "Aegis", tier: "Desafiante", lp: 1070, winrate: "57%", main: "Viego" },
-        { rank: 11, name: "Ranger", tier: "Desafiante", lp: 1030, winrate: "56%", main: "JarvanIV" },
-        { rank: 12, name: "fNb", tier: "Desafiante", lp: 990, winrate: "56%", main: "Fiora" },
-        { rank: 13, name: "Kami", tier: "Desafiante", lp: 960, winrate: "55%", main: "Ahri" },
-        { rank: 14, name: "Yoda", tier: "Desafiante", lp: 920, winrate: "55%", main: "Katarina" },
-        { rank: 15, name: "Grevthar", tier: "Grão-Mestre", lp: 560, winrate: "54%", main: "Galio" },
-        { rank: 16, name: "Netuno", tier: "Grão-Mestre", lp: 520, winrate: "54%", main: "Jinx" },
-        { rank: 17, name: "RedBert", tier: "Grão-Mestre", lp: 480, winrate: "53%", main: "Rakan" }
-      ],
-      KR: [
-        { rank: 1, name: "Faker", tier: "Desafiante", lp: 1680, winrate: "66%", main: "Ahri" },
-        { rank: 2, name: "Chovy", tier: "Desafiante", lp: 1620, winrate: "65%", main: "Yone" },
-        { rank: 3, name: "Canyon", tier: "Desafiante", lp: 1570, winrate: "64%", main: "Nidalee" },
-        { rank: 4, name: "Viper", tier: "Desafiante", lp: 1520, winrate: "63%", main: "Lucian" },
-        { rank: 5, name: "Keria", tier: "Desafiante", lp: 1480, winrate: "62%", main: "Thresh" },
-        { rank: 6, name: "ShowMaker", tier: "Desafiante", lp: 1440, winrate: "61%", main: "Syndra" },
-        { rank: 7, name: "Zeus", tier: "Desafiante", lp: 1400, winrate: "60%", main: "Jayce" },
-        { rank: 8, name: "Ruler", tier: "Desafiante", lp: 1350, winrate: "60%", main: "Ezreal" },
-        { rank: 9, name: "Oner", tier: "Desafiante", lp: 1300, winrate: "59%", main: "LeeSin" },
-        { rank: 10, name: "BeryL", tier: "Grão-Mestre", lp: 610, winrate: "55%", main: "Braum" }
-      ],
-      EUW: [
-        { rank: 1, name: "Caps", tier: "Desafiante", lp: 1630, winrate: "65%", main: "Sylas" },
-        { rank: 2, name: "Jankos", tier: "Desafiante", lp: 1560, winrate: "63%", main: "LeeSin" },
-        { rank: 3, name: "BrokenBlade", tier: "Desafiante", lp: 1510, winrate: "62%", main: "Riven" },
-        { rank: 4, name: "Mikyx", tier: "Desafiante", lp: 1460, winrate: "61%", main: "Gragas" },
-        { rank: 5, name: "Hans Sama", tier: "Desafiante", lp: 1420, winrate: "60%", main: "Draven" }
-      ],
-      NA: [
-        { rank: 1, name: "Jojopyun", tier: "Desafiante", lp: 1540, winrate: "64%", main: "Akali" },
-        { rank: 2, name: "Blaber", tier: "Desafiante", lp: 1490, winrate: "63%", main: "Olaf" },
-        { rank: 3, name: "Berserker", tier: "Desafiante", lp: 1450, winrate: "62%", main: "Jinx" },
-        { rank: 4, name: "Inspired", tier: "Desafiante", lp: 1410, winrate: "61%", main: "Viego" },
-        { rank: 5, name: "Bjergsen", tier: "Desafiante", lp: 1370, winrate: "60%", main: "Zilean" }
-      ]
-    };
 
-    /* SISTEMA DE COUNTERS E MATCHUPS POR ROTA (INCLUINDO SUPORTE) */
-    const MATCHUP_COUNTERS = {
-      Suporte: {
-        engageTanks: {
-          champs: ["Leona", "Nautilus", "Blitzcrank", "Alistar", "Rell", "Thresh", "Pyke", "Taric"],
-          dialogue: "O adversário lockou suporte de engage pesado! Eles querem forçar all-in cedo. Como vamos responder?",
-          counters: [
-            { champId: "Braum", champName: "Braum", bonus: 18, desc: "Muralha Protetora: Intercepta o dano no ADC e atordoa com concussão (+18% Peel)" },
-            { champId: "Morgana", champName: "Morgana", bonus: 20, desc: "Escudo Negro Anti-CC: Anula puxões e engages, neutralizando a lane (+20% Anti-CC)" },
-            { champId: "Janna", champName: "Janna", bonus: 16, desc: "Desarme em Área: Reseta as lutas com tornado e o R Monção (+16% Desarme)" }
-          ]
-        },
-        enchanters: {
-          champs: ["Lulu", "Janna", "Soraka", "Yuumi", "Sona", "Nami", "Milio"],
-          dialogue: "O adversário travou suporte de cura/escudo! Eles querem jogar recuado e escalar no late game. Qual é a call?",
-          counters: [
-            { champId: "Blitzcrank", champName: "Blitzcrank", bonus: 20, desc: "Puxão Explosivo: Punição instantânea para deletar o suporte frágil (+20% All-in)" },
-            { champId: "Nautilus", champName: "Nautilus", bonus: 18, desc: "Controle de Grupo em Cadeia: Não dá tempo para curas ou escudos entrarem (+18% Engage)" },
-            { champId: "Pyke", champName: "Pyke", bonus: 17, desc: "Execução com R: Acumula ouro e snowballa a bot lane (+17% Snowball)" }
-          ]
-        },
-        pokeMages: {
-          champs: ["Lux", "Zyra", "Brand", "Velkoz", "Xerath", "Senna"],
-          dialogue: "Eles escolheram suporte mago de alto dano e poke! Se ficarmos parados levaremos pressão. Como você quer jogar?",
-          counters: [
-            { champId: "Leona", champName: "Leona", bonus: 20, desc: "Engage Imparável: Pula antes do poke baixar a vida do seu ADC (+20% Pressão)" },
-            { champId: "Nami", champName: "Nami", bonus: 17, desc: "Sustentação & Troca Dinâmica: Cura o dano de poke e devolve dano aumentado (+17% Trocas)" },
-            { champId: "Rakan", champName: "Rakan", bonus: 18, desc: "Mobilidade Eletrizante: Inicia com W, protege com E e sai ileso (+18% Mobilidade)" }
-          ]
-        }
-      },
-      Top: {
-        bruisers: {
-          champs: ["Darius", "Renekton", "Sett", "Aatrox", "Mordekaiser", "Garen"],
-          dialogue: "O adversário travou um colosso brigador na Top Lane! Qual é o nosso plano de resposta?",
-          counters: [
-            { champId: "Fiora", champName: "Fiora", bonus: 20, desc: "Duelo & Ripostar: Punição de habilidades vitais com dano verdadeiro (+20% Duelo)" },
-            { champId: "Jax", champName: "Jax", bonus: 18, desc: "Contra-Ataque: Bloqueia ataques básicos e vira no atordoamento (+18% Trocas)" },
-            { champId: "Gnar", champName: "Gnar", bonus: 16, desc: "Kiting Seguro: Punição à distância na forma mini e engage na forma mega (+16% Kiting)" }
-          ]
-        },
-        tanks: {
-          champs: ["Malphite", "Ornn", "Sion", "Shen", "ChoGath"],
-          dialogue: "O oponente optou por um tanque de linha de frente no Top! Como vamos quebrar a resistência dele?",
-          counters: [
-            { champId: "Gwen", champName: "Gwen", bonus: 20, desc: "Dano Mágico Percentual: Retalha tanques ignorando a armadura (+20% Anti-Tank)" },
-            { champId: "Camille", champName: "Camille", bonus: 18, desc: "Dano Verdadeiro com Q2: Escala monstrousamente e isola o alvo com o R (+18% Escala)" },
-            { champId: "Fiora", champName: "Fiora", bonus: 17, desc: "Golpes Vitais: Cura nas trocas e derrete vida máxima (+17% Sustentação)" }
-          ]
-        }
-      },
-      Mid: {
-        assassins: {
-          champs: ["Zed", "Katarina", "Akali", "Talon", "LeBlanc", "Yasuo", "Yone", "Jayce"],
-          dialogue: "O mid inimigo lockou um assassino mecânico de alta mobilidade! Como pretendemos neutralizá-lo?",
-          counters: [
-            { champId: "Lissandra", champName: "Lissandra", bonus: 20, desc: "Túmulo Glacial Defensivo: Cancela o burst inimigo e contra-ataca em área (+20% Sobrevivência)" },
-            { champId: "Malzahar", champName: "Malzahar", bonus: 18, desc: "Supressão Inescapável: Trava o assassino no lugar com o R sem reação (+18% Lockdown)" },
-            { champId: "Galio", champName: "Galio", bonus: 17, desc: "Escudo Anti-Magia & Provocação: Linha de frente robusta e presença global (+17% Roaming)" }
-          ]
-        },
-        mages: {
-          champs: ["Syndra", "Orianna", "Viktor", "Azir", "Hwei", "Ahri", "Vex"],
-          dialogue: "Eles escolheram um mago de controle com alto dano em lutas de equipe! Qual é o contra-ataque?",
-          counters: [
-            { champId: "Ahri", champName: "Ahri", bonus: 18, desc: "Mobilidade e Pick-Off: Desvia dos disparos com o R e acerta o Charme (+18% Mobilidade)" },
-            { champId: "Kassadin", champName: "Kassadin", bonus: 20, desc: "Anti-Mago por Excelência: Silencia e escala para o terror do late game (+20% Late Game)" },
-            { champId: "Xerath", champName: "Xerath", bonus: 16, desc: "Alcance Absoluto: Bate fora do alcance das habilidades deles (+16% Alcance)" }
-          ]
-        }
-      },
-      ADC: {
-        hypercarries: {
-          champs: ["Jinx", "KogMaw", "Vayne", "Twitch", "Zeri", "Aphelios"],
-          dialogue: "O atirador rival escala forte para o late game! Como vamos encerrar o jogo antes que eles fiquem gigantes?",
-          counters: [
-            { champId: "Lucian", champName: "Lucian", bonus: 20, desc: "Pressão Inicial Agressiva: Amassa a bot lane nos primeiros 15 minutos (+20% Early Game)" },
-            { champId: "Draven", champName: "Draven", bonus: 20, desc: "Machados Giratórios: Snowball brutal que não dá espaço para farm (+20% Snowball)" },
-            { champId: "MissFortune", champName: "Miss Fortune", bonus: 17, desc: "Chuva de Disparos: Pressiona a lane com Q e derrete em lutas de dragão (+17% Lutas)" }
-          ]
-        },
-        laneBullies: {
-          champs: ["Caitlyn", "Draven", "Lucian", "Kalista", "Varus"],
-          dialogue: "Eles escolheram atirador agressivo de pressão de rota! Qual é a nossa resposta?",
-          counters: [
-            { champId: "Ezreal", champName: "Ezreal", bonus: 18, desc: "Disparo Místico Seguro: Farma de longe com o Q e escapa com o E (+18% Segurança)" },
-            { champId: "Jhin", champName: "Jhin", bonus: 17, desc: "Controle & 4º Disparo: Responde às trocas com W e inicia do fog com o R (+17% Controle)" },
-            { champId: "Ashe", champName: "Ashe", bonus: 16, desc: "Lentidão Constante: Segura a agressividade rival com rajadas de gelo (+16% Kiting)" }
-          ]
-        }
-      },
-      Jungle: {
-        invaders: {
-          champs: ["LeeSin", "Nidalee", "Graves", "Shaco", "Kindred"],
-          dialogue: "O caçador rival adora invadir a selva e duelar cedo! Qual é o plano de contenção?",
-          counters: [
-            { champId: "Warwick", champName: "Warwick", bonus: 20, desc: "Duelo Imbatível: Cura absurda em vida baixa e rastreio de sangue (+20% Duelos)" },
-            { champId: "Poppy", champName: "Poppy", bonus: 18, desc: "Firmeza Inabalável: Bloqueia saltos e investidas dos caçadores ágeis (+18% Anti-Dash)" },
-            { champId: "Trundle", champName: "Trundle", bonus: 17, desc: "Roubo de Atributos: Destrói qualquer invasor em combate corpo a corpo (+17% Invasão)" }
-          ]
-        },
-        farmers: {
-          champs: ["Karthus", "Hecarim", "Fiddlesticks", "Shyvana", "Evelynn"],
-          dialogue: "O caçador inimigo quer farmar a selva inteira e aparecer forte no late game. Como aceleramos?",
-          counters: [
-            { champId: "XinZhao", champName: "Xin Zhao", bonus: 20, desc: "Ganks Devastadores: Pressiona as rotas antes que o caçador deles termine o farm (+20% Pressão)" },
-            { champId: "JarvanIV", champName: "Jarvan IV", bonus: 18, desc: "Cataclisma Fatal: Garante eliminações rápidas com E-Q e o R (+18% Ganks)" },
-            { champId: "Vi", champName: "Vi", bonus: 17, desc: "Arrombadora de Defesas: Lockdown direto e ganks certeiros (+17% Lockdown)" }
-          ]
-        }
-      }
-    };
 
     /* ESTADO PADRÃO DE CARREIRA */
     const DEFAULT_CAREER = {
@@ -1960,9 +2051,9 @@
       nick: "Revenge",
       region: "BR",
       role: "Mid",
-      style: "Agressivo",
+      style: "Assassino",
       currentTierId: 4,
-      team: { name: "Academia Santos Dex", tierId: 4, week: 1, wins: 0, losses: 0 },
+      team: { name: "Santos Dex", tierId: 4, week: 1, wins: 0, losses: 0 },
       elo: { tier: "Mestre", division: "I", lp: 140, soloRank: 2450 },
       stats: { mechanics: 60, macro: 52, comm: 50, consistency: 54, confidence: 75 },
       energy: 100, gold: 500, fame: 150,
@@ -1973,11 +2064,45 @@
       socialFeed: [],
       offers: [
         { id: 1, team: "KaBuM! Black", tierId: 4, salary: 500, bonusGold: 300, bonusFame: 100, reqFame: 0 },
-        { id: 2, team: "Academia Santos Dex", tierId: 4, salary: 450, bonusGold: 400, bonusFame: 150, reqFame: 0 }
+        { id: 2, team: "Santos Dex", tierId: 4, salary: 450, bonusGold: 400, bonusFame: 150, reqFame: 0 }
       ]
     };
 
     let careerState = null;
+
+    /* RANKING REGIONAL DE SOLOQUEUE HIGH ELO */
+    const REGIONAL_SOLOQ_PLAYERS = {
+      BR: [
+        { rank: 1, name: "Robo Pro", tier: "Desafiante", lp: 1240, winrate: "68%", champ: "Renekton" },
+        { rank: 2, name: "Tinowns", tier: "Desafiante", lp: 1195, winrate: "66%", champ: "Ahri" },
+        { rank: 3, name: "Cariok Smurf", tier: "Desafiante", lp: 1150, winrate: "64%", champ: "LeeSin" },
+        { rank: 4, name: "Titan", tier: "Desafiante", lp: 1110, winrate: "65%", champ: "Lucian" },
+        { rank: 5, name: "Ceos God", tier: "Desafiante", lp: 1080, winrate: "63%", champ: "Nautilus" },
+        { rank: 6, name: "Ayu Pro", tier: "Desafiante", lp: 1040, winrate: "62%", champ: "Lulu" },
+        { rank: 7, name: "Brance", tier: "Desafiante", lp: 990, winrate: "61%", champ: "Draven" },
+        { rank: 8, name: "dyNquedo", tier: "Desafiante", lp: 960, winrate: "60%", champ: "Azir" },
+        { rank: 9, name: "Disamis", tier: "Desafiante", lp: 920, winrate: "59%", champ: "Vi" },
+        { rank: 10, name: "Wizer", tier: "Desafiante", lp: 890, winrate: "58%", champ: "Aatrox" }
+      ],
+      KR: [
+        { rank: 1, name: "Hide on bush", tier: "Desafiante", lp: 1680, winrate: "72%", champ: "Orianna" },
+        { rank: 2, name: "Chovy", tier: "Desafiante", lp: 1610, winrate: "71%", champ: "Yone" },
+        { rank: 3, name: "Canyon", tier: "Desafiante", lp: 1540, winrate: "69%", champ: "Nidalee" },
+        { rank: 4, name: "Ruler", tier: "Desafiante", lp: 1490, winrate: "68%", champ: "Ezreal" },
+        { rank: 5, name: "Keria", tier: "Desafiante", lp: 1450, winrate: "67%", champ: "Thresh" }
+      ],
+      EUW: [
+        { rank: 1, name: "Caps", tier: "Desafiante", lp: 1420, winrate: "67%", champ: "LeBlanc" },
+        { rank: 2, name: "Jankos Pro", tier: "Desafiante", lp: 1380, winrate: "65%", champ: "Sejuani" },
+        { rank: 3, name: "Upset", tier: "Desafiante", lp: 1340, winrate: "64%", champ: "Kalista" },
+        { rank: 4, name: "Mikyx", tier: "Desafiante", lp: 1290, winrate: "63%", champ: "Leona" }
+      ],
+      NA: [
+        { rank: 1, name: "Bjergsen", tier: "Desafiante", lp: 1310, winrate: "65%", champ: "Syndra" },
+        { rank: 2, name: "Doublelift", tier: "Desafiante", lp: 1280, winrate: "63%", champ: "Jinx" },
+        { rank: 3, name: "CoreJJ", tier: "Desafiante", lp: 1240, winrate: "62%", champ: "Rakan" }
+      ]
+    };
 
     /* GERENCIADOR DE AUDIO COM WEBAUDIO */
     const gameAudio = {
@@ -2006,104 +2131,144 @@
           osc.stop(this.ctx.currentTime + duration);
         } catch(e) {}
       },
-      playClick() { this.playTone(580, "sine", 0.08); },
-      playLockIn() {
-        if (this.muted) return;
-        this.playTone(320, "triangle", 0.15);
-        setTimeout(() => this.playTone(520, "triangle", 0.3), 120);
-      },
+      playClick() { this.playTone(480, "triangle", 0.08); },
       playVictory() {
-        if (this.muted) return;
-        [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
-          setTimeout(() => this.playTone(f, "triangle", 0.25), i * 90);
-        });
+        this.playTone(523.25, "sine", 0.12);
+        setTimeout(() => this.playTone(659.25, "sine", 0.15), 120);
+        setTimeout(() => this.playTone(783.99, "sine", 0.28), 260);
       },
       playFailure() {
-        if (this.muted) return;
-        [320, 280, 240].forEach((f, i) => {
-          setTimeout(() => this.playTone(f, "sawtooth", 0.2), i * 110);
-        });
+        this.playTone(330, "sawtooth", 0.15);
+        setTimeout(() => this.playTone(260, "sawtooth", 0.3), 160);
+      },
+      playLockIn() {
+        this.playTone(880, "sine", 0.1);
+        setTimeout(() => this.playTone(1174.66, "sine", 0.25), 110);
       },
       toggleMute() {
         this.muted = !this.muted;
-        const btn = document.getElementById("btnToggleSoundTitle");
+        const btn = document.getElementById("audioToggleBtn");
         if (btn) btn.innerText = this.muted ? "🔇 SOM: OFF" : "🔊 SOM: ON";
-        showToast(this.muted ? "Áudio Silenciado" : "Áudio Ativado");
+        showToast(this.muted ? "Áudio desativado" : "Áudio ativado!");
       }
     };
 
-    /* CRIAÇÃO DE PERSONAGEM & PROPOSTAS DA GO4LOL */
+    /* INTERFACE DE CRIAÇÃO DE PERSONAGEM ADAPTATIVA (ROTA & SUPORTE COMPLETO) */
     const creationUI = {
       selectedMains: [],
 
       init() {
         this.selectedMains = [];
+        this.updateRoleStyles();
         this.onRoleChange();
-        this.updateStatPreview();
         this.updateSelectedPreview();
-      },
-
-      onRoleChange() {
-        const roleEl = document.getElementById("selectRole");
-        const role = roleEl ? roleEl.value : "Mid";
-        this.renderChampGrid(role);
+        this.updateStatPreview();
       },
 
       onRegionChange() {
         this.updateStatPreview();
       },
 
-      filterChamps(search) {
+      updateRoleStyles() {
         const roleEl = document.getElementById("selectRole");
-        const role = roleEl ? roleEl.value : "Mid";
-        this.renderChampGrid(role, search);
+        const styleEl = document.getElementById("selectStyle");
+        if (!roleEl || !styleEl) return;
+        const role = roleEl.value;
+
+        // Estilos específicos para cada rota, com destaque absoluto para Suporte!
+        const roleStyles = {
+          Suporte: [
+            { val: "Iniciador", label: "🛡️ Iniciador / Engage (Leona, Nautilus, Rell - CC e Luta)" },
+            { val: "Protetor", label: "💖 Protetor / Enchanter (Lulu, Janna, Milio - Peel e Escudos)" },
+            { val: "Roamer", label: "👁️ Roamer / Visão (Thresh, Bard, Pyke - Ganks e Mapa)" },
+            { val: "MagoPoke", label: "🔥 Mago de Poke (Karma, Brand, Zyra - Dano e Pressão de Rota)" }
+          ],
+          ADC: [
+            { val: "LaneBully", label: "🔥 Agressivo / Lane Bully (Draven, Lucian, Kalista - Duelo e Pressão)" },
+            { val: "Hypercarry", label: "⚡ Hypercarry de Late Game (Jinx, Kog'Maw, Vayne - Dano Massivo)" },
+            { val: "Utilidade", label: "🎯 Utilidade / Caster (Ezreal, Jhin, Ashe - Poke e Iniciação Segura)" }
+          ],
+          Mid: [
+            { val: "Assassino", label: "🗡️ Assassino Mecânico (Zed, Akali, LeBlanc - Outplay e Dano)" },
+            { val: "MagoControle", label: "🧠 Mago de Controle (Orianna, Syndra, Viktor - Teamfight e Escala)" },
+            { val: "Roamer", label: "⚡ Roamer de Impacto (Ahri, Twisted Fate, Taliyah - Pressão de Mapa)" }
+          ],
+          Jungle: [
+            { val: "Ganker", label: "🐺 Ganker Agressivo (Lee Sin, Jarvan IV, Elise - Early Game Forte)" },
+            { val: "Controlador", label: "🌲 Controlador de Selva (Sejuani, Trundle, Amumu - Objetivos e Lutas)" },
+            { val: "CarrySelva", label: "⚔️ Carry da Selva (Viego, Graves, Kindred - Duelo e Dano)" }
+          ],
+          Top: [
+            { val: "Duelista", label: "⚔️ Lutador / Duelista (Aatrox, Fiora, Jax - 1v1 e Flanco)" },
+            { val: "Tanque", label: "🛡️ Colosso / Tanque (Malphite, Ornn, Sion - Linha de Frente)" },
+            { val: "Splitpusher", label: "⚡ Splitpusher Implacável (Camille, Gwen, Tryndamere - Pressão Lateral)" }
+          ]
+        };
+
+        const currentStyles = roleStyles[role] || roleStyles.Mid;
+        styleEl.innerHTML = "";
+        currentStyles.forEach(s => {
+          const opt = document.createElement("option");
+          opt.value = s.val;
+          opt.innerText = s.label;
+          styleEl.appendChild(opt);
+        });
       },
 
-      renderChampGrid(roleFilter, search) {
-        if (search === undefined) search = "";
-        const grid = document.getElementById("creationChampGrid");
+      onRoleChange() {
+        const roleEl = document.getElementById("selectRole");
+        const role = roleEl ? roleEl.value : "Mid";
+        this.updateRoleStyles();
+        this.renderChampGrid(role);
+        this.updateStatPreview();
+      },
+
+      renderChampGrid(role, search) {
+        const grid = document.getElementById("creationChampPoolGrid");
         if (!grid) return;
         grid.innerHTML = "";
         const db = window.LOL_CHAMPIONS_DB || [];
+        search = (search || "").toLowerCase().trim();
 
         const filtered = db.filter(c => {
-          const matchRole = roleFilter === "All" || (c.roles && c.roles.includes(roleFilter));
-          const matchSearch = c.name.toLowerCase().includes(search.toLowerCase());
+          const matchRole = !role || (c.roles && c.roles.includes(role));
+          const matchSearch = !search || c.name.toLowerCase().includes(search) || c.id.toLowerCase().includes(search);
           return matchRole && matchSearch;
         });
 
-        filtered.forEach(champ => {
+        filtered.slice(0, 32).forEach(champ => {
           const isSelected = this.selectedMains.some(m => m.id === champ.id);
-          const card = document.createElement("div");
-          card.className = "champ-card-selectable " + (isSelected ? "selected" : "");
-          card.onclick = () => this.toggleSelect(champ);
+          const tile = document.createElement("div");
+          tile.className = "champ-select-tile" + (isSelected ? " selected" : "");
+          tile.title = champ.name + " (" + (champ.roles ? champ.roles.join(", ") : "") + ")";
+          tile.onclick = () => this.toggleMainChamp(champ);
 
-          const imgUrl = getChampImgUrl(champ);
-
-          card.innerHTML = "<div class='champ-img-wrap'>" +
-            "<img src='" + imgUrl + "' alt='" + champ.name + "' onerror='handleImgError(this);'>" +
-          "</div>" +
-          "<div class='champ-name-lbl' title='" + champ.name + "'>" + champ.name + "</div>";
-          grid.appendChild(card);
+          tile.innerHTML = "<div class='champ-tile-img'><img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this);'></div>" +
+            "<div class='champ-tile-name'>" + champ.name + "</div>" +
+            "<div class='champ-tile-chest-badge'>★</div>";
+          grid.appendChild(tile);
         });
       },
 
-      toggleSelect(champ) {
+      toggleMainChamp(champ) {
         gameAudio.playClick();
         const idx = this.selectedMains.findIndex(m => m.id === champ.id);
-        if (idx > -1) {
+        if (idx !== -1) {
           this.selectedMains.splice(idx, 1);
         } else {
           if (this.selectedMains.length >= 3) {
-            showToast("Você já escolheu seus 3 mains! Desmarque um para substituir.");
-            return;
+            this.selectedMains.shift();
           }
           this.selectedMains.push(champ);
         }
-        document.getElementById("creationChampCount").innerText = this.selectedMains.length;
         this.updateSelectedPreview();
         const role = document.getElementById("selectRole").value;
-        const search = document.getElementById("creationChampSearch").value;
+        const search = document.getElementById("creationChampSearch") ? document.getElementById("creationChampSearch").value : "";
+        this.renderChampGrid(role, search);
+      },
+
+      filterCreationGrid(search) {
+        const role = document.getElementById("selectRole").value;
         this.renderChampGrid(role, search);
       },
 
@@ -2127,17 +2292,31 @@
       },
 
       updateStatPreview() {
+        const roleEl = document.getElementById("selectRole");
         const styleEl = document.getElementById("selectStyle");
         const startingEloEl = document.getElementById("selectStartingElo");
-        if (!styleEl || !startingEloEl) return;
+        if (!roleEl || !styleEl || !startingEloEl) return;
+        const role = roleEl.value;
         const style = styleEl.value;
         const startingElo = startingEloEl.value;
         let base = startingElo === "GraoMestre" ? 60 : 54;
-        let stats = { mechanics: base, macro: base, comm: base - 4, consistency: base };
+        let stats = { mechanics: base, macro: base, comm: base - 2, consistency: base };
 
-        if (style === "Agressivo") stats = { mechanics: base + 8, macro: base - 4, comm: base - 6, consistency: base - 2 };
-        if (style === "Tático") stats = { mechanics: base - 4, macro: base + 8, comm: base + 4, consistency: base };
-        if (style === "Seguro") stats = { mechanics: base - 2, macro: base + 2, comm: base - 4, consistency: base + 8 };
+        // Ajuste por Estilo & Rota
+        if (role === "Suporte") {
+          if (style === "Iniciador") stats = { mechanics: base + 6, macro: base, comm: base + 2, consistency: base + 6 };
+          else if (style === "Protetor") stats = { mechanics: base - 4, macro: base + 8, comm: base + 6, consistency: base + 4 };
+          else if (style === "Roamer") stats = { mechanics: base + 4, macro: base + 8, comm: base + 4, consistency: base - 2 };
+          else if (style === "MagoPoke") stats = { mechanics: base + 8, macro: base - 2, comm: base + 2, consistency: base + 2 };
+        } else {
+          if (style.includes("Agressivo") || style === "Assassino" || style === "LaneBully" || style === "Duelista" || style === "Ganker") {
+            stats = { mechanics: base + 8, macro: base - 2, comm: base - 4, consistency: base };
+          } else if (style.includes("Controle") || style === "Protetor" || style === "Controlador" || style === "Tanque") {
+            stats = { mechanics: base - 2, macro: base + 8, comm: base + 6, consistency: base + 4 };
+          } else {
+            stats = { mechanics: base + 2, macro: base + 4, comm: base + 2, consistency: base + 6 };
+          }
+        }
 
         const previewEl = document.getElementById("creationStatPreview");
         if (previewEl) {
@@ -2155,7 +2334,6 @@
         const style = document.getElementById("selectStyle").value;
         const startingElo = document.getElementById("selectStartingElo").value;
 
-        // Se o jogador não escolheu 3 mains manualmente, auto-atribuir os campeões mais icônicos da rota
         const db = window.LOL_CHAMPIONS_DB || [];
         if (this.selectedMains.length === 0) {
           const defaultRoleMains = {
@@ -2185,44 +2363,44 @@
 
         if (startingElo === "GraoMestre") {
           careerState.elo = { tier: "Grão-Mestre", division: "I", lp: 380, soloRank: 420 };
-          careerState.stats = { mechanics: 66, macro: 62, comm: 56, consistency: 60, confidence: 80 };
+          careerState.stats = { mechanics: 65, macro: 62, comm: 58, consistency: 63, confidence: 80 };
+          careerState.fame = 350;
+          careerState.gold = 1000;
         } else {
           careerState.elo = { tier: "Mestre", division: "I", lp: 140, soloRank: 2450 };
-          careerState.stats = { mechanics: 62, macro: 54, comm: 50, consistency: 56, confidence: 75 };
+          careerState.stats = { mechanics: 60, macro: 54, comm: 50, consistency: 56, confidence: 75 };
+          careerState.fame = 150;
+          careerState.gold = 500;
         }
 
-        careerState.championPool = this.selectedMains.map((c, i) => ({
-          id: c.id, name: c.name, img: c.img,
-          masteryLevel: i === 0 ? 5 : 4,
-          masteryPoints: i === 0 ? 24500 : 12000,
-          games: 0, wins: 0
+        careerState.championPool = this.selectedMains.map((c, idx) => ({
+          id: c.id,
+          name: c.name,
+          img: c.img || (c.id + ".png"),
+          masteryLevel: 5 - idx,
+          masteryPoints: (5 - idx) * 4500
         }));
 
+        career.save();
+        gameAudio.playVictory();
+        showToast("✨ Atleta criado com sucesso! Escolha sua equipe da Go4LoL.");
         go4LoLOffersUI.renderOffers();
         gameRouter.showScreen("screenGo4LoLOffers");
-        showToast("✨ Atleta criado com sucesso! Escolha sua equipe da Go4LoL.");
       }
     };
 
-    /* PROPOSTAS DA GO4LOL */
+    /* PROPOSTAS INICIAIS DA GO4LOL COM BRASÕES OFICIAIS */
     const go4LoLOffersUI = {
       renderOffers() {
-        document.getElementById("offersSubtitle").innerText = 
-          "Parabéns, " + careerState.nick + "! O seu destaque no elo " + careerState.elo.tier + " chamou a atenção dos olheiros de base. Três organizações da 4ª divisão enviaram ofertas oficiais de contrato para você:";
-
-        const container = document.getElementById("offersCardsGrid");
+        const container = document.getElementById("go4LoLOffersCardsContainer");
+        if (!container) return;
         container.innerHTML = "";
 
         const offersList = [
           {
-            team: "Academia Santos Dex",
-            desc: "Tradição em revelar jovens talentos e foco total no desenvolvimento mecânico.",
-            salary: 400, bonusGold: 300, bonusFame: 150, target: "Chegar às semifinais da Go4LoL"
-          },
-          {
-            team: "Ilha das Lendas Cup Team",
-            desc: "Time com grande apelo de público e streamers. Foco em jogadas plásticas e torcida engajada.",
-            salary: 250, bonusGold: 150, bonusFame: 450, target: "Fazer highlights e movimentar a comunidade"
+            team: "Santos Dex",
+            desc: "Tradição em revelar jovens prodígios. Filosofia focada em dar espaço aos novos talentos com liberdade tática.",
+            salary: 450, bonusGold: 400, bonusFame: 150, target: "Terminar no Top 3 da Go4LoL"
           },
           {
             team: "KaBuM! Black",
@@ -2268,115 +2446,91 @@
         careerState.gold += bonusGold;
         careerState.fame += bonusFame;
 
-        career.addSocialPost(teamName, "@" + teamName.toLowerCase().replace(/[^a-z0-9]/g, ""), "OFICIAL: Anunciamos a contratação do novo prodígio @" + careerState.nick.toLowerCase() + " para a disputa da Go4LoL! Seja bem-vindo à família!");
+        career.addSocialPost(
+          "CBLOL & Esports Insider",
+          "@cblol_insider",
+          "🚨 OFICIAL! O prodígio @" + careerState.nick + " assina com a " + teamName + " para a disputa da Go4LoL! Olhos abertos para essa estreia."
+        );
+
         career.save();
         career.updateDashboardUI();
-        gameRouter.showScreen("screenDashboard");
         showToast("🎉 Contrato assinado com " + teamName + "! Bem-vindo ao cenário competitivo!");
+        gameRouter.showScreen("screenDashboard");
       }
     };
 
-    /* NAVEGADOR COMPLETO DAS 4 DIVISÕES COMPETITIVAS */
-    const leagueNavigator = {
-      activeTier: 4,
 
+
+    /* NAVEGADOR DAS 4 DIVISÕES DO CENÁRIO */
+    const leagueNavigator = {
       showDivision(tierId, btnEl) {
         gameAudio.playClick();
-        this.activeTier = tierId;
-        document.querySelectorAll(".division-nav-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".league-tier-btn").forEach(b => b.classList.remove("active"));
         if (btnEl) btnEl.classList.add("active");
-
-        const league = LEAGUES_DATA[tierId];
-        if (!league) return;
-
-        document.getElementById("navTierHeading").innerText = league.name;
-        const descs = {
-          4: "Porta de entrada do cenário semiprofissional. Os 2 melhores avançam para a disputa do Circuito Desafiante.",
-          3: "Segunda divisão nacional de acesso. Os finalistas garantem vaga na Série de Promoção para o CBLOL.",
-          2: "Liga de desenvolvimento das grandes franquias. Revela os maiores prodígios das categorias de base.",
-          1: "Elite máxima do League of Legends nacional. O campeão garante vaga no Campeonato Mundial (Worlds)!"
-        };
-        document.getElementById("navTierDesc").innerText = descs[tierId] || "";
-
-        const badge = document.getElementById("navYourTeamStatusBadge");
-        if (careerState && careerState.currentTierId === tierId) {
-          badge.innerText = "Sua Divisão Atual (" + careerState.team.name + ")";
-          badge.className = "badge badge-gold";
-        } else {
-          badge.innerText = "Divisão Competitiva";
-          badge.className = "badge badge-blue";
-        }
-
         this.renderTable(tierId);
       },
 
       renderTable(tierId) {
-        const tbody = document.getElementById("tabLeagueStandingsTableBody");
+        const league = LEAGUES_DATA[tierId] || LEAGUES_DATA[4];
+        const titleEl = document.getElementById("tabLeagueNameHeader");
+        const tagEl = document.getElementById("tabLeagueTierBadge");
+        const descEl = document.getElementById("tabLeagueDesc");
+        const salaryEl = document.getElementById("tabLeagueSalaryRange");
+        const tbody = document.getElementById("tabLeagueStandingsBody");
+
+        if (titleEl) titleEl.innerText = league.name;
+        if (tagEl) tagEl.innerText = league.tierTag;
+        if (descEl) descEl.innerText = league.desc;
+        if (salaryEl) salaryEl.innerText = league.salaryRange;
+
         if (!tbody) return;
         tbody.innerHTML = "";
-        const league = LEAGUES_DATA[tierId];
-        if (!league) return;
 
-        let teams = [...league.teams];
-        if (careerState && careerState.currentTierId === tierId) {
-          const exists = teams.some(t => t.name === careerState.team.name);
-          if (!exists) {
-            teams.unshift({
-              name: careerState.team.name,
-              tag: "VOCÊ",
-              wins: careerState.team.wins,
-              losses: careerState.team.losses,
-              power: Math.round(career.calculateTeamOvr())
-            });
+        const teamsList = [...league.teams];
+        if (careerState && careerState.team.tierId === tierId) {
+          const myIdx = teamsList.findIndex(t => t.name === careerState.team.name);
+          if (myIdx !== -1) {
+            teamsList[myIdx].wins = careerState.team.wins;
+            teamsList[myIdx].losses = careerState.team.losses;
           }
         }
 
-        teams.sort((a, b) => {
-          if (b.wins !== a.wins) return b.wins - a.wins;
-          return a.losses - b.losses;
-        });
+        teamsList.sort((a, b) => b.wins - a.wins || a.losses - b.losses);
 
-        teams.forEach((t, i) => {
-          const isPlayerTeam = careerState && careerState.team.name === t.name;
-          const total = (t.wins || 0) + (t.losses || 0);
-          const wr = total > 0 ? Math.round((t.wins / total) * 100) + "%" : "0%";
-          let statusLabel = "Meio de Tabela";
-          let statusBadgeClass = "badge";
-
-          if (i < 2) {
-            statusLabel = tierId === 1 ? "Playoffs / Worlds" : "Zona de Promoção ➔";
-            statusBadgeClass = "badge badge-green";
-          } else if (i >= teams.length - 2 && tierId < 4) {
-            statusLabel = "Zona de Rebaixamento";
-            statusBadgeClass = "badge badge-red";
-          }
-
+        teamsList.forEach((tm, idx) => {
+          const isMyTeam = careerState && careerState.team.name === tm.name;
           const tr = document.createElement("tr");
-          if (isPlayerTeam) tr.style.background = "rgba(200, 170, 110, 0.15)";
+          if (isMyTeam) tr.className = "my-team-row";
 
-          tr.innerHTML = "<td><strong>#" + (i + 1) + "</strong></td>" +
-            "<td><div style='display:flex; align-items:center; gap:8px;'>" +
-              getTeamLogoSvg(t.name, 26) +
-              "<strong style='" + (isPlayerTeam ? "color:var(--hextech-gold);" : "") + "'>" + t.name + "</strong> " + (isPlayerTeam ? "(Seu Time)" : "") +
-            "</div></td>" +
-            "<td>" + total + "</td>" +
-            "<td style='color:var(--success-green); font-weight:700;'>" + (t.wins || 0) + "</td>" +
-            "<td style='color:var(--danger-red);'>" + (t.losses || 0) + "</td>" +
-            "<td>" + wr + "</td>" +
-            "<td><span class='" + statusBadgeClass + "'>" + statusLabel + "</span></td>";
+          const totalGames = tm.wins + tm.losses;
+          const wr = totalGames > 0 ? Math.round((tm.wins / totalGames) * 100) : 50;
+
+          tr.innerHTML = "<td><strong>#" + (idx + 1) + "</strong></td>" +
+            "<td>" +
+              "<div style='display:flex; align-items:center; gap:10px;'>" +
+                getTeamLogoSvg(tm.name, 30) +
+                "<strong style='color:" + (isMyTeam ? "var(--hextech-gold)" : "#fff") + ";'>" + tm.name + (isMyTeam ? " (Você)" : "") + "</strong>" +
+              "</div>" +
+            "</td>" +
+            "<td><strong style='color:var(--success-green);'>" + tm.wins + "</strong></td>" +
+            "<td><strong style='color:var(--danger-red);'>" + tm.losses + "</strong></td>" +
+            "<td>" + wr + "%</td>" +
+            "<td><span class='badge " + (idx < 4 ? "badge-gold" : "badge-blue") + "'>" + (idx < 4 ? "Zona de Playoffs" : "Permanência") + "</span></td>";
           tbody.appendChild(tr);
         });
       }
     };
 
-    /* SISTEMA DE DRAFT ESTILO LEAGUE OF LEGENDS OFICIAL (COM BANS & COACH LEVEL) */
+    /* ENGINE OFICIAL DE DRAFT COM BANS, SINERGIAS DUO BOT / MID-JG E IA INTELIGENTE */
     const draftEngine = {
       selectedChamp: null,
       tacticalMatchupBonus: 0,
+      activeSynergy: null,
       activeRoleFilter: "All",
       timerInterval: null,
       enemyOpponentChamp: null,
       allyPicks: [],
+      enemyPicks: [],
       bannedChampIds: [],
       activeSpellSlot: 'd',
 
@@ -2392,6 +2546,7 @@
 
         this.selectedChamp = null;
         this.tacticalMatchupBonus = 0;
+        this.activeSynergy = null;
         this.activeRoleFilter = "All";
 
         if (!careerState.spells) {
@@ -2406,14 +2561,26 @@
 
         const db = window.LOL_CHAMPIONS_DB || [];
         const roleChamps = db.filter(c => c.roles && c.roles.includes(careerState.role));
-        const shuffle = [...roleChamps].sort(() => 0.5 - Math.random());
-        this.enemyOpponentChamp = shuffle[0] || db[0];
+
+        // IA INTELIGENTE: Adversário escolhe campeão com base no nível da liga
+        const tier = careerState.currentTierId || 4;
+        if (tier <= 2) {
+          // CBLOL e Worlds: Rival escolhe campeões S-Tier meta ou hard counter da rota
+          const metaPicks = roleChamps.slice(0, 8);
+          this.enemyOpponentChamp = metaPicks[Math.floor(Math.random() * metaPicks.length)] || roleChamps[0];
+        } else {
+          // Amador / Circuito: Escolha variada
+          const shuffle = [...roleChamps].sort(() => 0.5 - Math.random());
+          this.enemyOpponentChamp = shuffle[0] || db[0];
+        }
 
         // Nível do Coach no Draft
         const coachBadge = document.getElementById("draftCoachLevelBadge");
-        if (coachBadge) coachBadge.innerText = "👔 Coach " + careerState.coach.name + " (Nív. " + careerState.coach.level + " • " + careerState.coach.title + ")";
+        if (coachBadge) {
+          coachBadge.innerText = "👔 Coach " + careerState.coach.name + " (Nív. " + careerState.coach.level + " • " + careerState.coach.title + ")";
+        }
 
-        // FASE DE BANS OFICIAL
+        // FASE DE BANS INTELIGENTE (Bans direcionados nos seus mains no CBLOL/Worlds!)
         this.setupBansPhase(this.enemyOpponentChamp);
 
         // Banner do rival
@@ -2441,218 +2608,279 @@
       setupBansPhase(enemyChamp) {
         this.bannedChampIds = [];
         const db = window.LOL_CHAMPIONS_DB || [];
-        const metaBans = ["Yone", "Zed", "LeBlanc", "Draven", "Viego", "Kassadin", "Sylas", "Akali"];
-        const shuffled = [...metaBans].sort(() => 0.5 - Math.random());
-
-        const allyBanList = shuffled.slice(0, 3);
+        const tier = careerState.currentTierId || 4;
         const enemyBanList = [];
-        if (careerState.fame > 300 && careerState.championPool.length > 1) {
-          enemyBanList.push(careerState.championPool[1].id);
+        const allyBanList = [];
+
+        // IA INTELIGENTE DE BANS:
+        // No CBLOL (Tier 2) e Worlds (Tier 1), o adversário estuda você e BANE seu campeão mais jogado!
+        if (tier <= 2 && careerState.championPool && careerState.championPool.length > 0) {
+          const topMain = careerState.championPool[0].id;
+          enemyBanList.push(topMain);
         }
-        shuffled.slice(3, 6).forEach(id => {
-          if (enemyBanList.length < 3 && !enemyBanList.includes(id)) enemyBanList.push(id);
-        });
+
+        // Completa bans inimigos com campeões fortes da meta
+        const generalMetaBans = ["Yone", "Zed", "LeBlanc", "Draven", "Viego", "Kassadin", "Sylas", "Akali", "KhaZix", "Briar"];
+        const shuffledMeta = generalMetaBans.filter(b => !enemyBanList.includes(b)).sort(() => 0.5 - Math.random());
+        while (enemyBanList.length < 3) {
+          enemyBanList.push(shuffledMeta.pop());
+        }
+
+        // Bans do seu time (Coach Maestro bane counters perigosos)
+        const allyMetaBans = ["Blitzcrank", "Malphite", "Nocturne", "Caitlyn", "Jax", "Evelynn"];
+        const shuffledAlly = allyMetaBans.sort(() => 0.5 - Math.random());
+        while (allyBanList.length < 3) {
+          allyBanList.push(shuffledAlly.pop());
+        }
 
         this.bannedChampIds = [...allyBanList, ...enemyBanList];
 
-        const allyBox = document.getElementById("draftAllyBansContainer");
-        const enemyBox = document.getElementById("draftEnemyBansContainer");
-        if (allyBox) allyBox.innerHTML = "";
-        if (enemyBox) enemyBox.innerHTML = "";
+        // Renderizar nos 6 slots visuais de Bans com 🚫
+        for (let i = 0; i < 3; i++) {
+          const allySlot = document.getElementById("allyBanSlot" + (i + 1));
+          const enemySlot = document.getElementById("enemyBanSlot" + (i + 1));
 
-        allyBanList.forEach(id => {
-          const c = db.find(ch => ch.id === id) || { name: id, img: id + ".png" };
-          const d = document.createElement("div");
-          d.className = "ban-slot-avatar";
-          d.title = "Banido: " + c.name;
-          d.innerHTML = "<img src='" + getChampImgUrl(c) + "' onerror='handleImgError(this);'><span class='ban-slash'>✕</span>";
-          if (allyBox) allyBox.appendChild(d);
-        });
+          if (allySlot) {
+            const cId = allyBanList[i];
+            const champObj = db.find(c => c.id === cId) || { id: cId, name: cId, img: cId + ".png" };
+            allySlot.innerHTML = "<div class='ban-box-inner banned'>" +
+              "<img src='" + getChampImgUrl(champObj) + "' alt='" + champObj.name + "' onerror='handleImgError(this);'>" +
+              "<span class='ban-cancel-cross'>🚫</span>" +
+            "</div>";
+            allySlot.title = "Banido por você: " + champObj.name;
+          }
 
-        enemyBanList.forEach(id => {
-          const c = db.find(ch => ch.id === id) || { name: id, img: id + ".png" };
-          const d = document.createElement("div");
-          d.className = "ban-slot-avatar";
-          d.title = "Banido pelo rival: " + c.name;
-          d.innerHTML = "<img src='" + getChampImgUrl(c) + "' onerror='handleImgError(this);'><span class='ban-slash'>✕</span>";
-          if (enemyBox) enemyBox.appendChild(d);
-        });
-      },
-
-      openSpellPicker(slot) {
-        gameAudio.playClick();
-        this.activeSpellSlot = slot;
-        document.getElementById("modalSpellSlotLabel").innerText = "Tecla " + slot.toUpperCase();
-        const grid = document.getElementById("modalSpellGridPicker");
-        grid.innerHTML = "";
-
-        const currentSpell = careerState.spells[slot];
-
-        for (const key in SUMMONER_SPELLS_DB) {
-          const sp = SUMMONER_SPELLS_DB[key];
-          const isEquipped = currentSpell === sp.id;
-          const card = document.createElement("div");
-          card.className = "spell-card-option " + (isEquipped ? "equipped" : "");
-          card.onclick = () => this.equipSpell(sp.id);
-
-          card.innerHTML = "<img src='" + sp.img + "' alt='" + sp.name + "' onerror='handleImgError(this);'>" +
-            "<h5>" + sp.name + " (" + sp.fallback + ")</h5>" +
-            "<p>" + sp.tactical + "</p>";
-          grid.appendChild(card);
+          if (enemySlot) {
+            const cId = enemyBanList[i];
+            const champObj = db.find(c => c.id === cId) || { id: cId, name: cId, img: cId + ".png" };
+            enemySlot.innerHTML = "<div class='ban-box-inner banned'>" +
+              "<img src='" + getChampImgUrl(champObj) + "' alt='" + champObj.name + "' onerror='handleImgError(this);'>" +
+              "<span class='ban-cancel-cross'>🚫</span>" +
+            "</div>";
+            enemySlot.title = "Banido pelo rival: " + champObj.name;
+          }
         }
-
-        document.getElementById("spellPickerModal").classList.add("active");
       },
 
-      closeSpellPicker() {
-        document.getElementById("spellPickerModal").classList.remove("active");
-      },
-
-      equipSpell(spellId) {
-        gameAudio.playVictory();
-        careerState.spells[this.activeSpellSlot] = spellId;
-        career.save();
-        this.updateSpellHud();
-        this.closeSpellPicker();
-        showToast("⚡ Feitiço " + SUMMONER_SPELLS_DB[spellId].name + " equipado na Tecla " + this.activeSpellSlot.toUpperCase() + "!");
-      },
-
-      updateSpellHud() {
-        const spD = SUMMONER_SPELLS_DB[careerState.spells.d] || SUMMONER_SPELLS_DB.Flash;
-        const spF = SUMMONER_SPELLS_DB[careerState.spells.f] || SUMMONER_SPELLS_DB.Ignite;
-
-        const imgD = document.getElementById("draftSpellImgD");
-        const imgF = document.getElementById("draftSpellImgF");
-        if (imgD) imgD.src = spD.img;
-        if (imgF) imgF.src = spF.img;
-
-        const desc = document.getElementById("draftActiveSpellsDesc");
-        if (desc) desc.innerText = "D: " + spD.name + " • F: " + spF.name;
-      },
-
-      setupLobbySlots(enemyOpponent) {
+      setupLobbySlots(enemyChamp) {
         const roles = ["Top", "Jungle", "Mid", "ADC", "Suporte"];
-        const region = careerState.region || "BR";
-        const players = REGIONAL_SOLOQ_PLAYERS[region] || REGIONAL_SOLOQ_PLAYERS.BR;
-        const pNames = players.map(p => p.name);
-
-        this.allyPicks = roles.map((r, i) => {
-          const isPlayer = r === careerState.role;
-          return {
-            role: r,
-            playerNick: isPlayer ? careerState.nick + " (Você)" : (pNames[i] || "Aliado " + (i + 1)),
-            isPlayer: isPlayer,
-            champ: isPlayer ? null : this.getRandomChampForRole(r)
-          };
-        });
-      },
-
-      getRandomChampForRole(role) {
         const db = window.LOL_CHAMPIONS_DB || [];
-        const pool = db.filter(c => c.roles && c.roles.includes(role));
-        return pool[Math.floor(Math.random() * pool.length)] || db[0];
+        const isWorlds = careerState.currentTierId === 1;
+
+        const allyNames = isWorlds 
+          ? { Top: "Kiin", Jungle: "Canyon", Mid: "Chovy", ADC: "Peyz", Suporte: "Lehends" }
+          : { Top: "Robo", Jungle: "Tinowns", Mid: "dyNquedo", ADC: "TitaN", Suporte: "Ayu" };
+
+        const enemyNames = isWorlds 
+          ? { Top: "Zeus", Jungle: "Oner", Mid: "Faker", ADC: "Gumayusi", Suporte: "Keria" }
+          : { Top: "Wizer", Jungle: "Cariok", Mid: "Grevthar", ADC: "Brance", Suporte: "Ceos" };
+
+        this.allyPicks = roles.map(r => {
+          if (r === careerState.role) {
+            return { role: r, nick: careerState.nick + " (Você)", isPlayer: true, champ: null };
+          }
+          const pool = db.filter(c => c.roles && c.roles.includes(r) && !this.bannedChampIds.includes(c.id));
+          const pick = pool[Math.floor(Math.random() * pool.length)] || pool[0];
+          return { role: r, nick: allyNames[r] || "Aliado", isPlayer: false, champ: pick };
+        });
+
+        // Configuração inteligente de Sinergia no time aliado:
+        // Se o jogador for ADC e Suporte for aliado, ou se jogador for Suporte e ADC for aliado,
+        // preparar um parceiro de rota clássico para viabilizar combos incríveis!
+        if (careerState.role === "Suporte") {
+          const adcSlot = this.allyPicks.find(p => p.role === "ADC");
+          if (adcSlot) {
+            const possibleADCs = ["Draven", "Lucian", "Samira", "Ezreal", "KogMaw", "Caitlyn", "Xayah"];
+            const chosenId = possibleADCs[Math.floor(Math.random() * possibleADCs.length)];
+            const champObj = db.find(c => c.id === chosenId);
+            if (champObj && !this.bannedChampIds.includes(champObj.id)) {
+              adcSlot.champ = champObj;
+            }
+          }
+        } else if (careerState.role === "ADC") {
+          const supSlot = this.allyPicks.find(p => p.role === "Suporte");
+          if (supSlot) {
+            const possibleSups = ["Leona", "Nami", "Nautilus", "Karma", "Lulu", "Lux", "Thresh"];
+            const chosenId = possibleSups[Math.floor(Math.random() * possibleSups.length)];
+            const champObj = db.find(c => c.id === chosenId);
+            if (champObj && !this.bannedChampIds.includes(champObj.id)) {
+              supSlot.champ = champObj;
+            }
+          }
+        } else if (careerState.role === "Mid") {
+          const jgSlot = this.allyPicks.find(p => p.role === "Jungle");
+          if (jgSlot) {
+            const possibleJgs = ["Vi", "JarvanIV", "Sejuani", "LeeSin"];
+            const chosenId = possibleJgs[Math.floor(Math.random() * possibleJgs.length)];
+            const champObj = db.find(c => c.id === chosenId);
+            if (champObj && !this.bannedChampIds.includes(champObj.id)) {
+              jgSlot.champ = champObj;
+            }
+          }
+        }
       },
 
       setupCoachAdvisory(enemyChamp) {
-        const role = careerState.role;
-        const roleMatchups = MATCHUP_COUNTERS[role];
-        let chosenStrategy = null;
+        const coach = careerState.coach || { level: 1, title: "Treinador Novato" };
+        const coachLvlBonus = Math.min(30, 10 + coach.level * 4); // Coach nível 1 a 5 da +14% a +30%
 
-        if (roleMatchups) {
-          for (const catKey in roleMatchups) {
-            const cat = roleMatchups[catKey];
-            if (cat.champs && cat.champs.some(c => c.toLowerCase() === enemyChamp.id.toLowerCase() || c.toLowerCase() === enemyChamp.name.toLowerCase())) {
-              chosenStrategy = cat;
-              break;
-            }
-          }
-          if (!chosenStrategy) {
-            const keys = Object.keys(roleMatchups);
-            chosenStrategy = roleMatchups[keys[0]];
-          }
+        const briefingH = document.getElementById("coachBriefingHeader");
+        const briefingP = document.getElementById("coachBriefingDialogue");
+        const counterList = document.getElementById("coachCounterList");
+
+        if (briefingH) briefingH.innerText = "Coach Maestro (Técnico Nív. " + coach.level + "):";
+        if (briefingP) {
+          briefingP.innerText = "O oponente travou " + enemyChamp.name + " no " + careerState.role + "! Nossos estudos táticos apontam escolhas ideais e sinergias para neutralizá-lo:";
         }
 
-        const headerEl = document.getElementById("coachBriefingHeader");
-        const dialogueEl = document.getElementById("coachBriefingDialogue");
-        const container = document.getElementById("coachCounterList");
-        container.innerHTML = "";
+        if (!counterList) return;
+        counterList.innerHTML = "";
 
-        // Nível do Coach amplifica o bônus
-        const coachLvl = (careerState.coach && careerState.coach.level) || 1;
-        const coachExtraBonus = (coachLvl - 1) * 3;
+        const db = window.LOL_CHAMPIONS_DB || [];
+        const rolePool = db.filter(c => c.roles && c.roles.includes(careerState.role) && c.id !== enemyChamp.id && !this.bannedChampIds.includes(c.id));
+        const recs = rolePool.slice(0, 3);
 
-        if (chosenStrategy) {
-          headerEl.innerText = "Coach Maestro (Técnico Nív. " + coachLvl + "):";
-          dialogueEl.innerText = "O oponente travou " + enemyChamp.name + " no " + role + "! " + chosenStrategy.dialogue;
-
-          chosenStrategy.counters.forEach(cnt => {
-            const db = window.LOL_CHAMPIONS_DB || [];
-            const champObj = db.find(c => c.id === cnt.champId) || { id: cnt.champId, name: cnt.champName, img: cnt.champId + ".png" };
-            const totalBonus = cnt.bonus + coachExtraBonus;
-
-            const chip = document.createElement("div");
-            chip.className = "coach-counter-card";
-            chip.onclick = () => {
-              this.selectChampion(champObj);
-              this.tacticalMatchupBonus = totalBonus;
-              this.updateMatchupBadge(totalBonus, cnt.champName);
-              showToast("🎯 Resposta Tática: " + cnt.champName + " (+" + totalBonus + "% Vantagem de Matchup)!");
-            };
-
-            chip.innerHTML = "<img src='" + getChampImgUrl(champObj) + "' onerror='handleImgError(this);'>" +
-              "<div class='coach-counter-info'>" +
-                "<h5>" + cnt.champName + "</h5>" +
-                "<span>+" + totalBonus + "% Matchup</span>" +
-              "</div>";
-            container.appendChild(chip);
-          });
-        } else {
-          headerEl.innerText = "Coach Maestro (Técnico da Equipe):";
-          dialogueEl.innerText = "O oponente jogará de " + enemyChamp.name + " no " + role + ". Confie nos seus campeões de assinatura da pool!";
-        }
-      },
-
-      updateMatchupBadge(bonus, name) {
-        const badge = document.getElementById("draftMatchupAdvantageBadge");
-        if (!badge) return;
-        badge.style.display = "inline-flex";
-        if (bonus > 0) {
-          badge.className = "badge badge-green";
-          badge.innerText = "Vantagem de Matchup: +" + bonus + "% (" + name + ")";
-        } else if (bonus < 0) {
-          badge.className = "badge badge-red";
-          badge.innerText = "Desvantagem de Matchup: " + bonus + "% (" + name + ")";
-        } else {
-          badge.className = "badge badge-blue";
-          badge.innerText = "Matchup Neutro: 0% (" + name + ")";
-        }
+        recs.forEach((champ, idx) => {
+          const bonus = coachLvlBonus - (idx * 3);
+          const card = document.createElement("div");
+          card.className = "coach-counter-card";
+          card.onclick = () => this.selectChampion(champ, bonus);
+          card.innerHTML = "<img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this);'>" +
+            "<div class='coach-counter-info'>" +
+              "<h5>" + champ.name + "</h5>" +
+              "<span>+" + bonus + "% Matchup</span>" +
+            "</div>";
+          counterList.appendChild(card);
+        });
       },
 
       renderTeamSlots() {
-        const allyCol = document.getElementById("draftAllyTeamSlots");
-        if (!allyCol) return;
-        allyCol.innerHTML = "";
+        const allyContainer = document.getElementById("draftAllyTeamSlots");
+        if (!allyContainer) return;
+        allyContainer.innerHTML = "";
 
-        const roleLabels = { Top: "🛡️ Top", Jungle: "🌲 Selva", Mid: "⚡ Mid", ADC: "🏹 Atirador", Suporte: "💖 Suporte" };
+        const roleIcons = { Top: "🛡️", Jungle: "🌲", Mid: "⚡", ADC: "🏹", Suporte: "💖" };
 
         this.allyPicks.forEach(slot => {
           const card = document.createElement("div");
-          const isPlayer = slot.isPlayer;
-          card.className = "slot-player-card " + (isPlayer ? "is-current-player is-picking" : "");
-          const champName = isPlayer ? (this.selectedChamp ? this.selectedChamp.name : "Escolhendo...") : slot.champ.name;
-          const champImg = isPlayer ? (this.selectedChamp ? getChampImgUrl(this.selectedChamp) : "") : getChampImgUrl(slot.champ);
+          card.className = "slot-player-card" + (slot.isPlayer ? " is-current-player" : "");
+          const champImg = slot.champ ? getChampImgUrl(slot.champ) : (slot.isPlayer && this.selectedChamp ? getChampImgUrl(this.selectedChamp) : "");
+          const champName = slot.champ ? slot.champ.name : (slot.isPlayer && this.selectedChamp ? this.selectedChamp.name : "Escolhendo...");
 
           card.innerHTML = "<div class='slot-circle-wrap'>" +
-            (champImg ? "<img src='" + champImg + "' onerror='handleImgError(this);'>" : "<span style='font-size:1.1rem; color:var(--hextech-gold);'>⚔️</span>") +
-            "</div>" +
-            "<div class='slot-meta'>" +
-              "<div class='slot-role-tag'>" + (roleLabels[slot.role] || slot.role) + "</div>" +
-              "<div class='slot-nick-tag'>" + slot.playerNick + "</div>" +
-              "<div class='slot-champ-selected-name' id='slotPlayerChampLiveName'>" + champName + "</div>" +
-            "</div>" +
-            "<span class='slot-swap-btn' title='Trocar ordem de escolha'>⇄</span>";
-          allyCol.appendChild(card);
+            (champImg ? "<img src='" + champImg + "' onerror='handleImgError(this);'>" : "<span style='font-size:1.2rem;'>" + (roleIcons[slot.role] || "⚔️") + "</span>") +
+          "</div>" +
+          "<div class='slot-meta'>" +
+            "<div class='slot-role-tag'>" + (roleIcons[slot.role] || "") + " " + slot.role + "</div>" +
+            "<div class='slot-nick-tag'>" + slot.nick + "</div>" +
+            "<div class='slot-champ-selected-name' id='" + (slot.isPlayer ? "playerSlotChampName" : "") + "'>" + champName + "</div>" +
+          "</div>";
+          allyContainer.appendChild(card);
         });
+      },
+
+      render168ChampionsGrid() {
+        const grid = document.getElementById("draftChampionsGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+
+        const db = window.LOL_CHAMPIONS_DB || [];
+        const searchInput = document.getElementById("draftSearchInput");
+        const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+        const filtered = db.filter(champ => {
+          const isBanned = this.bannedChampIds.includes(champ.id);
+          const matchQuery = !query || champ.name.toLowerCase().includes(query) || champ.id.toLowerCase().includes(query);
+
+          let matchRole = true;
+          if (this.activeRoleFilter === "Mains") {
+            matchRole = careerState.championPool.some(m => m.id === champ.id);
+          } else if (this.activeRoleFilter !== "All") {
+            matchRole = champ.roles && champ.roles.includes(this.activeRoleFilter);
+          }
+          return matchQuery && matchRole;
+        });
+
+        filtered.forEach(champ => {
+          const isBanned = this.bannedChampIds.includes(champ.id);
+          const isSelected = this.selectedChamp && this.selectedChamp.id === champ.id;
+          const isMain = careerState.championPool.some(m => m.id === champ.id);
+
+          const tile = document.createElement("div");
+          tile.className = "champ-select-tile" + (isSelected ? " selected" : "") + (isBanned ? " banned" : "");
+          tile.title = isBanned ? "🚫 BANIDO - Não pode ser selecionado" : champ.name + " (" + (champ.roles ? champ.roles.join(", ") : "") + ")";
+
+          if (!isBanned) {
+            tile.onclick = () => this.selectChampion(champ);
+          }
+
+          tile.innerHTML = "<div class='champ-tile-img'>" +
+            "<img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this);'>" +
+          "</div>" +
+          "<div class='champ-tile-name'>" + champ.name + "</div>" +
+          (isBanned ? "<span class='banned-overlay-badge'>🚫</span>" : (isMain ? "<div class='champ-tile-chest-badge'>★</div>" : ""));
+
+          grid.appendChild(tile);
+        });
+      },
+
+      selectChampion(champ, bonus) {
+        if (this.bannedChampIds.includes(champ.id)) {
+          showToast("🚫 " + champ.name + " está banido nesta partida!");
+          return;
+        }
+
+        gameAudio.playClick();
+        this.selectedChamp = champ;
+        this.tacticalMatchupBonus = bonus || 10;
+
+        // VERIFICAÇÃO INTELIGENTE DE SINERGIA COM OS ALIADOS
+        this.checkSynergy(champ);
+
+        const lbl = document.getElementById("draftLockedChampLabel");
+        if (lbl) lbl.innerText = champ.name;
+
+        const badge = document.getElementById("draftMatchupAdvantageBadge");
+        if (badge) {
+          const totalBonus = this.tacticalMatchupBonus + (this.activeSynergy ? this.activeSynergy.bonus : 0);
+          badge.style.display = "inline-block";
+          badge.innerText = "Vantagem de Matchup: +" + totalBonus + "% (" + champ.name + ")";
+        }
+
+        const slotLbl = document.getElementById("playerSlotChampName");
+        if (slotLbl) slotLbl.innerText = champ.name;
+
+        this.render168ChampionsGrid();
+        this.renderTeamSlots();
+      },
+
+      checkSynergy(champ) {
+        this.activeSynergy = null;
+        const synPanel = document.getElementById("draftSynergyPanel");
+        const synText = document.getElementById("draftSynergyText");
+
+        // Procurar nos aliados se algum campeão faz combo clássico com o campeão escolhido
+        for (const ally of this.allyPicks) {
+          if (ally.isPlayer || !ally.champ) continue;
+
+          const matchSyn = SYNERGIES_DB.find(s => 
+            s.champs.includes(champ.id) && s.champs.includes(ally.champ.id)
+          );
+
+          if (matchSyn) {
+            this.activeSynergy = matchSyn;
+            if (synPanel && synText) {
+              synPanel.style.display = "flex";
+              synText.innerHTML = "<strong>Sinergia Ativa (" + matchSyn.tag + "):</strong> " + matchSyn.name + " com " + ally.champ.name + " • <span style='color:var(--success-green);'>+" + matchSyn.bonus + "% Bônus de Luta</span>";
+            }
+            this.addChatMessage("Coach Maestro", "Sensacional! Formamos a clássica sinergia de " + matchSyn.name + " (" + champ.name + " + " + ally.champ.name + ")! Isso nos dá uma vantagem brutal!");
+            break;
+          }
+        }
+
+        if (!this.activeSynergy && synPanel) {
+          synPanel.style.display = "none";
+        }
       },
 
       setRoleFilter(role, btnEl) {
@@ -2660,144 +2888,112 @@
         this.activeRoleFilter = role;
         document.querySelectorAll(".role-filter-icon-btn").forEach(b => b.classList.remove("active"));
         if (btnEl) btnEl.classList.add("active");
-        this.render168ChampionsGrid(document.getElementById("draftSearchInput").value || "");
+        this.render168ChampionsGrid();
       },
 
-      filterGrid(search) {
-        this.render168ChampionsGrid(search);
+      filterGrid(query) {
+        this.render168ChampionsGrid();
       },
 
-      render168ChampionsGrid(search) {
-        if (search === undefined) search = "";
-        const grid = document.getElementById("draftChampionsGrid");
-        if (!grid) return;
-        grid.innerHTML = "";
-        const db = window.LOL_CHAMPIONS_DB || [];
-
-        const filtered = db.filter(c => {
-          let matchRole = true;
-          if (this.activeRoleFilter === "Mains") {
-            matchRole = careerState.championPool.some(m => m.id === c.id);
-          } else if (this.activeRoleFilter !== "All") {
-            matchRole = c.roles && c.roles.includes(this.activeRoleFilter);
-          }
-          const matchSearch = c.name.toLowerCase().includes(search.toLowerCase());
-          return matchRole && matchSearch;
-        });
-
-        filtered.forEach(champ => {
-          const isBanned = (this.bannedChampIds || []).includes(champ.id);
-          const isSelected = this.selectedChamp && this.selectedChamp.id === champ.id;
-          const isMain = careerState.championPool.some(m => m.id === champ.id);
-
-          const tile = document.createElement("div");
-          tile.className = "champ-select-tile " + (isSelected ? "selected" : "") + (isBanned ? " is-banned" : "");
-
-          if (isBanned) {
-            tile.style.opacity = "0.35";
-            tile.style.filter = "grayscale(1)";
-            tile.style.cursor = "not-allowed";
-            tile.onclick = () => showToast("🚫 " + champ.name + " está BANIDO nesta partida!");
-          } else {
-            tile.onclick = () => this.selectChampion(champ);
-          }
-
-          tile.innerHTML = (isBanned ? "<span style='position:absolute; top:2px; left:2px; font-size:10px; color:var(--danger-red); font-weight:900;'>🚫</span>" : "") +
-            (isMain && !isBanned ? "<div class='champ-tile-chest-badge' title='Campeão da sua Pool (Main / Baú de Maestria)'>★</div>" : "") +
-            "<div class='champ-tile-img'>" +
-              "<img src='" + getChampImgUrl(champ) + "' alt='" + champ.name + "' onerror='handleImgError(this);'>" +
-            "</div>" +
-            "<div class='champ-tile-name'>" + champ.name + "</div>";
-          grid.appendChild(tile);
-        });
-      },
-
-      selectChampion(champ) {
+      /* SELETOR DE FEITIÇOS D & F */
+      openSpellPicker(slot) {
         gameAudio.playClick();
-        this.selectedChamp = champ;
+        this.activeSpellSlot = slot;
+        const modal = document.getElementById("spellPickerModal");
+        const title = document.getElementById("spellPickerSlotTitle");
+        const grid = document.getElementById("spellPickerGrid");
 
-        document.getElementById("draftLockedChampLabel").innerText = champ.name;
-
-        const slotEl = document.getElementById("slotPlayerChampLiveName");
-        if (slotEl) slotEl.innerText = champ.name;
-
-        this.calculateNaturalMatchup(champ);
-        this.renderTeamSlots();
-        this.render168ChampionsGrid(document.getElementById("draftSearchInput").value || "");
-      },
-
-      calculateNaturalMatchup(champ) {
-        if (!this.enemyOpponentChamp) return;
-        const enemy = this.enemyOpponentChamp;
-        const role = careerState.role;
-        const roleMatchups = MATCHUP_COUNTERS[role];
-        let bonus = 0;
-
-        if (roleMatchups) {
-          for (const k in roleMatchups) {
-            const cat = roleMatchups[k];
-            const enemyInCat = cat.champs && cat.champs.some(c => c.toLowerCase() === enemy.id.toLowerCase() || c.toLowerCase() === enemy.name.toLowerCase());
-            if (enemyInCat) {
-              const counterMatch = cat.counters && cat.counters.find(c => c.champId.toLowerCase() === champ.id.toLowerCase() || c.champName.toLowerCase() === champ.name.toLowerCase());
-              if (counterMatch) {
-                bonus = counterMatch.bonus;
-              }
-            }
-          }
+        if (title) title.innerText = "Escolha o Feitiço de Invocador (" + slot.toUpperCase() + ")";
+        if (grid) {
+          grid.innerHTML = "";
+          SUMMONER_SPELLS_DB.forEach(sp => {
+            const isEquipped = careerState.spells && (careerState.spells.d === sp.id || careerState.spells.f === sp.id);
+            const card = document.createElement("div");
+            card.className = "spell-pick-card" + (isEquipped ? " active" : "");
+            card.onclick = () => this.selectSpell(sp.id);
+            card.innerHTML = "<img src='https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/" + sp.key + ".png' alt='" + sp.name + "'>" +
+              "<div class='spell-pick-info'>" +
+                "<h4>" + sp.name + "</h4>" +
+                "<p>" + sp.desc + "</p>" +
+                "<span>" + sp.bonus + "</span>" +
+              "</div>";
+            grid.appendChild(card);
+          });
         }
-
-        const isMain = careerState.championPool.some(m => m.id === champ.id);
-        if (isMain && bonus === 0) bonus = 10;
-
-        this.tacticalMatchupBonus = bonus;
-        this.updateMatchupBadge(bonus, champ.name);
+        if (modal) modal.classList.add("active");
       },
 
-      initLobbyChat() {
-        const chat = document.getElementById("draftChatMessages");
-        if (!chat) return;
-        const region = careerState.region || "BR";
-        if (region === "BR") {
-          chat.innerHTML = "<p style='color:#61738d;'><em>Summoner 1 conectou-se à sala.</em></p><p><strong>Summoner 2:</strong> salve time, foco no drag que eu puxo bot</p><p><strong>Summoner 4:</strong> confia no draft rapaziada, dá pra amassar!</p><p style='color:var(--hextech-blue);'><strong>Coach Maestro:</strong> executem o plano de feitiços e matchups!</p>";
+      selectSpell(spellId) {
+        gameAudio.playClick();
+        if (this.activeSpellSlot === 'd') {
+          if (careerState.spells.f === spellId) careerState.spells.f = careerState.spells.d;
+          careerState.spells.d = spellId;
         } else {
-          chat.innerHTML = "<p style='color:#61738d;'><em>Summoner 1 joined the lobby.</em></p><p><strong>Summoner 2:</strong> mid diff incoming, lets go team</p><p style='color:var(--hextech-blue);'><strong>Coach:</strong> stick to the matchup and spell plan.</p>";
+          if (careerState.spells.d === spellId) careerState.spells.d = careerState.spells.f;
+          careerState.spells.f = spellId;
         }
+        career.save();
+        this.updateSpellHud();
+        this.closeSpellPicker();
+        showToast("Feitiço atualizado para: " + spellId);
+      },
+
+      closeSpellPicker() {
+        const modal = document.getElementById("spellPickerModal");
+        if (modal) modal.classList.remove("active");
+      },
+
+      updateSpellHud() {
+        const spD = SUMMONER_SPELLS_DB.find(s => s.id === (careerState.spells?.d || "Flash"));
+        const spF = SUMMONER_SPELLS_DB.find(s => s.id === (careerState.spells?.f || "Ignite"));
+
+        const imgD = document.getElementById("draftSpellImgD");
+        const imgF = document.getElementById("draftSpellImgF");
+        const desc = document.getElementById("draftActiveSpellsDesc");
+
+        if (imgD && spD) imgD.src = "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/" + spD.key + ".png";
+        if (imgF && spF) imgF.src = "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/spell/" + spF.key + ".png";
+        if (desc && spD && spF) desc.innerText = "D: " + spD.name + " • F: " + spF.name;
+      },
+
+      /* CHAT DO LOBBY */
+      initLobbyChat() {
+        const chatBox = document.getElementById("draftChatMessages");
+        if (!chatBox) return;
+        chatBox.innerHTML = "";
+        this.addChatMessage("Sistema", "Seleção de Campeões iniciada. Boa sorte no Rift!");
+        this.addChatMessage("Coach Maestro", "Confiem nas escolhas e mantenham o foco na vitória!");
+      },
+
+      addChatMessage(author, text) {
+        const chatBox = document.getElementById("draftChatMessages");
+        if (!chatBox) return;
+        const msg = document.createElement("div");
+        msg.className = "draft-chat-msg";
+        msg.innerHTML = "<strong>" + author + ":</strong> <span>" + text + "</span>";
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
       },
 
       sendChatMessage() {
         const input = document.getElementById("draftChatInput");
-        const text = input.value.trim();
-        if (!text) return;
+        if (!input || !input.value.trim()) return;
+        this.addChatMessage(careerState.nick, input.value.trim());
         input.value = "";
-
-        const chat = document.getElementById("draftChatMessages");
-        const p = document.createElement("p");
-        p.innerHTML = "<strong style='color:var(--hextech-gold);'>" + careerState.nick + ":</strong> " + text;
-        chat.appendChild(p);
-        chat.scrollTop = chat.scrollHeight;
-
-        setTimeout(() => {
-          const resp = document.createElement("p");
-          resp.innerHTML = "<strong>Summoner 2:</strong> boa call, vamos vencer essa!";
-          chat.appendChild(resp);
-          chat.scrollTop = chat.scrollHeight;
-        }, 700);
       },
 
       startTimer(seconds) {
         clearInterval(this.timerInterval);
-        let timeLeft = seconds;
-        const timerEl = document.getElementById("draftTimerCountdown");
-        if (!timerEl) return;
-        timerEl.innerText = timeLeft;
+        let current = seconds;
+        const timerEl = document.getElementById("draftCountdownTimer");
+        if (timerEl) timerEl.innerText = current;
 
         this.timerInterval = setInterval(() => {
-          timeLeft--;
-          if (timeLeft >= 0) {
-            timerEl.innerText = timeLeft;
-            if (timeLeft <= 4) timerEl.style.color = "var(--danger-red)";
-            else timerEl.style.color = "#fff";
-          } else {
+          current--;
+          if (timerEl) timerEl.innerText = current;
+          if (current <= 5 && current > 0) gameAudio.playTone(440, "sine", 0.05);
+
+          if (current <= 0) {
             clearInterval(this.timerInterval);
             this.confirmLockIn();
           }
@@ -2807,140 +3003,277 @@
       confirmLockIn() {
         clearInterval(this.timerInterval);
         if (!this.selectedChamp) {
-          this.selectedChamp = careerState.championPool[0] || (window.LOL_CHAMPIONS_DB && window.LOL_CHAMPIONS_DB[0]);
+          const available = window.LOL_CHAMPIONS_DB.find(c => !this.bannedChampIds.includes(c.id));
+          this.selectedChamp = available || { id: "Ahri", name: "Ahri", img: "Ahri.png" };
         }
 
         gameAudio.playLockIn();
         showToast("🔒 " + this.selectedChamp.name + " TRAVADO COM SUCESSO! Carregando Summoner's Rift...");
 
+        // Passa para o Match Engine
+        const totalBonus = this.tacticalMatchupBonus + (this.activeSynergy ? this.activeSynergy.bonus : 0);
         setTimeout(() => {
-          matchEngine.startMatchSimulation(this.selectedChamp, this.enemyOpponentChamp, this.tacticalMatchupBonus);
-        }, 600);
+          matchEngine.startMatch(this.selectedChamp, this.enemyOpponentChamp, totalBonus, this.activeSynergy);
+        }, 900);
       }
     };
 
-    /* MOTOR DE SIMULAÇÃO DE PARTIDA COM BÔNUS DE FEITIÇOS, COACH EXP E SÉRIE MD5 */
+
+
+    /* ENGINE OFICIAL DE SIMULAÇÃO DE PARTIDA COM MISSÕES DE SUPORTE E IA ESCALONADA */
     const matchEngine = {
       myChamp: null,
-      oppChamp: null,
+      enemyChamp: null,
       matchupBonus: 0,
+      activeSynergy: null,
       currentTurn: 1,
+      maxTurns: 3,
       allyKills: 0,
       enemyKills: 0,
       goldDiff: 0,
       scores: [],
-      statGains: { mechanics: 0, macro: 0, comm: 0, consistency: 0 },
+      statGains: {},
+      isSoloQMatch: false,
 
-      startMatchSimulation(myChamp, oppChamp, matchupBonus) {
+      startMatch(myChamp, enemyChamp, bonus, activeSynergy) {
         this.myChamp = myChamp;
-        this.oppChamp = oppChamp;
-        this.matchupBonus = matchupBonus || 0;
+        this.enemyChamp = enemyChamp;
+        this.matchupBonus = bonus || 0;
+        this.activeSynergy = activeSynergy || null;
         this.currentTurn = 1;
-        this.allyKills = 0;
-        this.enemyKills = 0;
+        this.allyKills = Math.floor(Math.random() * 2);
+        this.enemyKills = Math.floor(Math.random() * 2);
         this.goldDiff = 0;
         this.scores = [];
-        this.statGains = { mechanics: 0, macro: 0, comm: 0, consistency: 0 };
+        this.statGains = {};
 
-        document.getElementById("matchAllyScoreHud").innerText = careerState.team.name + ": 0 Kills";
-        document.getElementById("matchEnemyScoreHud").innerText = "0 Kills :" + career.getCurrentOpponent().name;
-        document.getElementById("matchGoldDiffText").innerText = "Diferença de Ouro: 0g";
+        // HUD Inicial
+        const interPhase = document.getElementById("matchInteractivePhase");
+        const scorePhase = document.getElementById("matchScoreboardPhase");
+        if (interPhase) interPhase.style.display = "block";
+        if (scorePhase) scorePhase.style.display = "none";
 
-        document.getElementById("matchInteractivePhase").style.display = "block";
-        document.getElementById("matchScoreboardPhase").style.display = "none";
-
-        gameRouter.showScreen("screenMatch");
+        this.updateScoreHud();
         this.loadTurn(1);
+        gameRouter.showScreen("screenMatch");
       },
 
-      getScenarios() {
-        const isMain = careerState.championPool.some(m => m.id === this.myChamp.id);
+      updateScoreHud() {
+        const allyHud = document.getElementById("matchAllyScoreHud");
+        const enemyHud = document.getElementById("matchEnemyScoreHud");
+        const diffText = document.getElementById("matchGoldDiffText");
 
+        const myName = this.isSoloQMatch ? (careerState.nick + " (SoloQ)") : careerState.team.name;
+        const opp = career.getCurrentOpponent();
+        const oppName = this.isSoloQMatch ? "High Elo Inimigo" : opp.name;
+
+        if (allyHud) allyHud.innerText = myName + ": " + this.allyKills + " Kills";
+        if (enemyHud) enemyHud.innerText = this.enemyKills + " Kills :" + oppName;
+
+        if (diffText) {
+          if (this.goldDiff >= 0) {
+            diffText.innerText = "Diferença de Ouro: +" + this.goldDiff + "g";
+            diffText.style.color = "var(--hextech-blue)";
+          } else {
+            diffText.innerText = "Diferença de Ouro: -" + Math.abs(this.goldDiff) + "g";
+            diffText.style.color = "var(--danger-red)";
+          }
+        }
+      },
+
+      /* CENÁRIOS INTELIGENTES ADAPTADOS POR ROTA - COM DESTAQUE TOTAL PARA SUPORTE! */
+      getScenarios() {
+        const role = careerState.role || "Mid";
+
+        // ==========================================================
+        // MISSÕES E ESCOLHAS EXCLUSIVAS PARA SUPORTE
+        // ==========================================================
+        if (role === "Suporte") {
+          return [
+            {
+              badge: "Fase de Rotas 2v2 • Bot Lane",
+              botStance: "Pressão de Rota & Arbustos",
+              time: "07:15",
+              title: "Disputa pelo Nível 2 e Controle dos Arbustos da Bot Lane",
+              desc: "O Atirador rival deu um passo em falso para tentar pegar uma tropa de canhão. A linha de visão dos arbustos é sua!",
+              choices: [
+                {
+                  title: "⚡ All-in Agressivo com CC no Atirador",
+                  desc: "Combar controle de grupo e queimar Feitiços",
+                  stat: "mechanics",
+                  feedbackWin: "INICIAÇÃO PERFEITA! Você acertou todo o controle de grupo no ADC adversário, forçando Flash e garantindo o First Blood para sua bot lane!",
+                  feedbackLoss: "Contra-iniciação rival! O suporte inimigo virou o dano no seu atirador e vocês precisaram recuar gastando feitiços de defesa."
+                },
+                {
+                  title: "👁️ Controle de Visão Profunda & Peel Seguro",
+                  desc: "Warding no rio e garantir farm seguro ao ADC",
+                  stat: "macro",
+                  feedbackWin: "VISÃO IMPECÁVEL! Sua sentinela profunda no rio detectou o Caçador inimigo antes do gank. Você salvou seu parceiro e manteve a lane em freeze perfeito!",
+                  feedbackLoss: "Falta de sentinelas! O caçador rival chegou pelas costas e forçou uma troca desfavorável para sua rota."
+                },
+                {
+                  title: "🗺️ Roaming Surpresa pelo Rio até o Mid",
+                  desc: "Sincronizar rotação e criar superioridade numérica",
+                  stat: "comm",
+                  feedbackWin: "ROAMING MAGISTRAL! Sua aparição surpresa no Mid garantiu abate limpo e aliviou toda a pressão da equipe!",
+                  feedbackLoss: "Timing descoordenado! Seu atirador tomou dive no bot enquanto você subia o rio."
+                }
+              ]
+            },
+            {
+              badge: "Luta de Objetivo • 17 min",
+              botStance: "Disputa de Visão & Flancos",
+              time: "17:40",
+              title: "Controle de Sentinelas no Covil do 3º Dragão",
+              desc: "O Dragão Elemental está nascendo em 30 segundos. A equipe rival tenta dominar a escuridão do rio.",
+              choices: [
+                {
+                  title: "🔭 Limpeza com Lente do Oráculo & Emboscada",
+                  desc: "Destruir visão inimiga e montar emboscada no arbusto",
+                  stat: "macro",
+                  feedbackWin: "EMBOSCADA LETAL! Você desativou 3 sentinelas inimigas e preparou o pickoff perfeito no caçador adversário. Dragão garantido!",
+                  feedbackLoss: "Pego na escuridão! A equipe rival colapsou enquanto você limpava sentinelas sem cobertura."
+                },
+                {
+                  title: "🛡️ Peel Defensivo Total no Hipercarregador",
+                  desc: "Neutralizar assassinos e proteger o dano do time",
+                  stat: "consistency",
+                  feedbackWin: "PROTEÇÃO HEROICA! O assassino inimigo pulou com tudo, mas você aplicou desengaje, escudos e exaustão, mantendo seu ADC vivo para destruir a luta!",
+                  feedbackLoss: "Dano excessivo! O assassino rival passou pelo seu peel e eliminou o atirador antes do combate."
+                },
+                {
+                  title: "⚔️ Flash + Ultimate Coletivo no Meio do Time Inimigo",
+                  desc: "Iniciação agressiva para virar a teamfight",
+                  stat: "mechanics",
+                  feedbackWin: "TEAMFIGHT ESPETACULAR! Seu engage atingiu 4 membros do time adversário, permitindo wombo-combo devastador!",
+                  feedbackLoss: "Iniciação precipitada! Seu time estava longe demais para acompanhar o engage."
+                }
+              ]
+            },
+            {
+              badge: "Late Game Decisivo • 28 min",
+              botStance: "Luta Final pelo Barão / Base",
+              time: "28:50",
+              title: "O Ponto de Virada no Covil do Barão Na'Shor",
+              desc: "As duas equipes estão agrupadas na selva superior. Uma única chamada define o campeão da partida!",
+              choices: [
+                {
+                  title: "💖 Sacrifício Heroico Absorvendo Habilidades Letais",
+                  desc: "Proteger o carregador com o próprio corpo",
+                  stat: "consistency",
+                  feedbackWin: "JOGADA DE MVP! Você bloqueou os projéteis letais e usou seus recursos até o fim. Seu time varreu a luta com um ACE!",
+                  feedbackLoss: "Morte sem retorno! Você foi eliminado sem tempo de soltar as habilidades principais."
+                },
+                {
+                  title: "👁️ Zoneamento de Visão & Negação de Aproximação",
+                  desc: "Controlar entradas com sentinelas e habilidades",
+                  stat: "macro",
+                  feedbackWin: "BARÃO GARANTIDO! Sua leitura de jogo negou qualquer chance de roubo do caçador adversário. Buff de Barão conquistado!",
+                  feedbackLoss: "Visão perdida nos momentos finais e o rival contestou o objetivo."
+                },
+                {
+                  title: "🎙️ Shotcall Preciso e Iniciação Decisiva da Vitória",
+                  desc: "Liderar a chamada da teamfight final",
+                  stat: "comm",
+                  feedbackWin: "VITÓRIA ÉPICA! Sua chamada de luta foi impecável! O time adversário foi aniquilado e o Nexus inimigo foi destruído!",
+                  feedbackLoss: "Chamada contestada e luta dividida causaram a derrota no confronto."
+                }
+              ]
+            }
+          ];
+        }
+
+        // ==========================================================
+        // CENÁRIOS PARA DEMAIS ROTAS (MID, ADC, JUNGLE, TOP)
+        // ==========================================================
         return [
           {
-            turn: 1, time: "08:15", badge: "MOMENTO 1 DE 3 • EARLY GAME (FASE DE ROTAS)",
-            botStance: "IA Agressiva: Pressiona Wave",
-            title: "Disputa Feroz na Rota contra " + this.oppChamp.name,
-            desc: "O " + this.oppChamp.name + " adversário tentou encaixar uma troca pesada para forçar seu Flash e invadir o rio junto com o caçador dele. Você está pilotando " + this.myChamp.name + (isMain ? " (Pocket Pick da sua Pool)" : "") + (this.matchupBonus > 0 ? " com Vantagem de Matchup Tática" : "") + ". Qual é a sua ação?",
+            badge: "Fase de Rotas • Early Game",
+            botStance: "Trocas de Rota",
+            time: "06:40",
+            title: "Duelo 1v1 e Pressão de Rota contra " + this.enemyChamp.name,
+            desc: "O adversário avançou sem visão e tentou uma troca agressiva. Como você responde?",
             choices: [
               {
-                title: "1. Forçar All-in Mecânico com Flash Ofensivo e Feitiço",
+                title: "⚔️ Troca Mecânica Agressiva",
+                desc: "Outplay individual e agressão direta",
                 stat: "mechanics",
-                desc: "Mecânica & Frieza",
-                win: "Outplay magistral! Você esquivou da habilidade do " + this.oppChamp.name + ", garantiu o First Blood e colocou seu time em vantagem!",
-                fail: "O oponente previu seu avanço, usou o terreno e puniu seu avanço arriscado."
+                feedbackWin: "SOLOKILL! Você desviou das habilidades principais e garantiu um abate espetacular!",
+                feedbackLoss: "O rival antecipou sua jogada e venceu a troca na rota."
               },
               {
-                title: "2. Congelar a Wave sob Torre e Chamar o Jungler para Emboscada",
+                title: "🧠 Congelar Rota & Controle de Wave",
+                desc: "Manter a tropa próxima à sua torre",
                 stat: "macro",
-                desc: "Macro & Visão",
-                win: "Leitura de mapa perfeita! O " + this.oppChamp.name + " estendeu a rota demais, seu jungler apareceu e vocês garantiram a eliminação limpa.",
-                fail: "A call atrasou por desencontro de visão e eles escaparam com pouca vida."
+                feedbackWin: "CONTROLE DE ROTA IMPECÁVEL! Você negou 2 ondas inteiras de minions e chamou o Caçador para o abate!",
+                feedbackLoss: "A onda de tropas quebrou na torre e o adversário conseguiu reset gratuito."
               },
               {
-                title: "3. Rotação Rápida para Ajudar o Caçador no Objetivo do Rio",
+                title: "🎙️ Chamar o Caçador para Emboscada",
+                desc: "Coordenação de tempo e engage conjunto",
                 stat: "comm",
-                desc: "Comunicação & Rotação",
-                win: "Sincronia perfeita com o time! O objetivo do rio foi garantido e você pegou uma assistência decisiva.",
-                fail: "Sentinelas adversárias revelaram sua descida e você perdeu duas barricadas na rota."
+                feedbackWin: "GANK PERFEITO! A sincronia de controle de grupo rendeu um abate limpo e placas da torre!",
+                feedbackLoss: "Falta de comunicação! O caçador rival chegou para o contra-gank."
               }
             ]
           },
           {
-            turn: 2, time: "21:30", badge: "MOMENTO 2 DE 3 • MID GAME (CONTROLE DE OBJETIVOS)",
-            botStance: "IA Tática: Cerco no Dragão",
-            title: "Disputa pelo 3º Dragão da Alma",
-            desc: "Os dois times se agrupam no rio. O oponente montou uma formação fechada com sentinelas de controle. A equipe inimiga tenta iniciar o Dragão. Qual a sua instrução para a equipe?",
+            badge: "Meio de Jogo • 18 min",
+            botStance: "Luta pelo Dragão Elemental",
+            time: "18:25",
+            title: "Teamfight Decisiva no Rio pelo Buff do Dragão",
+            desc: "As equipes se encaram no rio. Quem errar o posicionamento entrega a partida!",
             choices: [
               {
-                title: "1. Flanco Mortal pelas Costas para Explodir a Fonte de Dano Inimiga",
-                stat: "mechanics",
-                desc: "Mecânica de Flanco",
-                win: "Execução cirúrgica! Você flanqueou de " + this.myChamp.name + ", deletou a fonte de dano deles e seu time limpou a luta com Ace!",
-                fail: "Você tomou controle de grupo na entrada do flanco e foi neutralizado antes que seu dano entrasse."
-              },
-              {
-                title: "2. Puxar a Rota Lateral (Split-Push) e Forçar Teleporte",
+                title: "🎯 Flanco nos Carregadores Inimigos",
+                desc: "Atravessar a selva e assassinar a backline",
                 stat: "macro",
-                desc: "Macro & Pressão de Mapa",
-                win: "Visão estratégica de nível internacional! Você levou a torre de inibidor na lateral e seu time fez o Dragão de graça!",
-                fail: "A equipe adversária ignorou seu avanço, acelerou o 5v4 no rio e eliminou seus companheiros."
+                feedbackWin: "FLANCO DEVASTADOR! Você eliminou o principal causador de dano adversário e venceu a luta!",
+                feedbackLoss: "Você foi interceptado por uma sentinela de controle antes do flanco."
               },
               {
-                title: "3. Manter Formação Disciplinada e Lutar no Kiting Lento",
+                title: "🛡️ Luta Front-to-Back e Dano Consistente",
+                desc: "Bater na linha de frente com segurança",
                 stat: "consistency",
-                desc: "Consistência & Paciência",
-                win: "Paciência de aço! O oponente gastou os recursos na linha de frente e seu time virou a luta com superioridade absoluta.",
-                fail: "A formação quebrou sob os disparos de longa distância do oponente."
+                feedbackWin: "DPS PERFEITO! Posicionamento exemplar garantiu vitória esmagadora na teamfight!",
+                feedbackLoss: "A linha de frente rival colapsou com muito controle de grupo."
+              },
+              {
+                title: "⚡ Outplay Mecânico no Meio da Luta",
+                desc: "Flash ofensivo e combinação rápida",
+                stat: "mechanics",
+                feedbackWin: "OUTPLAY SENSACIONAL! Você esquivou do engage inimigo e destruiu a luta com jogada brilhante!",
+                feedbackLoss: "O Flash ofensivo colocou você em alcance de controle de grupo e você foi focado."
               }
             ]
           },
           {
-            turn: 3, time: "33:45", badge: "MOMENTO 3 DE 3 • LATE GAME (DECISÃO DO NEXUS)",
-            botStance: "IA Competitiva: All-in Barão",
-            title: "O Destino da Partida no Covil do Barão Nashor",
-            desc: "O Barão está com 4.000 de vida! Os 10 jogadores colapsam no covil. Um único lance define a vitória da partida!",
+            badge: "Fim de Jogo • 29 min",
+            botStance: "Barão Na'Shor / Base",
+            time: "29:10",
+            title: "A Disputa Final pelo Nexus Inimigo",
+            desc: "Com o buff de Barão ativo, seu time avança pela rota do meio para finalizar o jogo!",
             choices: [
               {
-                title: "1. Roubo Heroico de Barão com Flash + Smite / Habilidade Suprema",
+                title: "⚔️ Iniciação Decisiva na Torre de Inibidor",
+                desc: "Forçar o combate antes que o rival reorganize",
                 stat: "mechanics",
-                desc: "Mecânica & Frieza Extrema",
-                win: "INACREDITÁVEL! Você roubou o Barão Nashor no último milésimo de segundo com " + this.myChamp.name + "! A TORCIDA NO GINÁSIO ENLOUQUECE!",
-                fail: "O Smite do caçador adversário foi mais rápido. Você foi abatido e seu time ficou encurralado na base."
+                feedbackWin: "QUADRAKILL E VITÓRIA! Seus combos foram mortais e o Nexus rival foi pelos ares!",
+                feedbackLoss: "A defesa sob a torre foi forte e o rival conseguiu segurar o jogo."
               },
               {
-                title: "2. Emboscada Tática no Arbusto da Visão Cega",
+                title: "🧠 Cerco Tático 1-3-1 pelas Rotas Laterais",
+                desc: "Dividir a pressão e quebrar inibidores",
                 stat: "macro",
-                desc: "Visão & Leitura de Jogo",
-                win: "Uma obra de arte tática! Toda a equipe inimiga caiu na sua emboscada de visão. Ace limpo e marcha triunfal até o Nexus!",
-                fail: "Uma sentinela revelou sua posição e eles descarregaram o dano com vantagem de terreno."
+                feedbackWin: "MACROGENIAL! Super tropas inundaram a base inimiga e garantiram a vitória com tranquilidade!",
+                feedbackLoss: "O time adversário forçou 5v4 no meio antes das tropas laterais chegarem."
               },
               {
-                title: "3. Call de Backdoor Sincronizado no Nexus Inimigo",
+                title: "🎙️ Comandar a Chamada Final com o Time",
+                desc: "Manter disciplina e foco nos objetivos",
                 stat: "comm",
-                desc: "Shotcalling de Líder",
-                win: "CALL DE GÊNIO! Enquanto eles se distraíam no covil, você comandou o avanço e detonou o Nexus adversário com o Teleporte!",
-                fail: "Recall milagroso de defensores impediu o avanço por 100 de vida do Nexus e gerou o contragolpe fatal."
+                feedbackWin: "CHAMADA DE CAMPEÃO! Foco nos alvos certos e vitória conquistada com louvor!",
+                feedbackLoss: "Chamadas conflitantes causaram hesitação nos momentos finais."
               }
             ]
           }
@@ -2967,7 +3300,11 @@
           const btn = document.createElement("div");
           btn.className = "choice-card-btn";
           btn.onclick = () => this.resolveChoice(ch, odds);
-          btn.innerHTML = "<div><div style='font-family:var(--font-tech); font-weight:700; font-size:1.08rem; color:#fff;'>" + ch.title + "</div><div style='font-size:0.78rem; color:var(--text-muted);'>Requisito: " + ch.desc + " • Atributo Base: " + careerState.stats[ch.stat] + "</div></div><div style='font-family:var(--font-tech); font-size:1.25rem; font-weight:800; color:var(--success-green);'>" + odds + "% Sucesso</div>";
+          btn.innerHTML = "<div>" +
+            "<div style='font-family:var(--font-tech); font-weight:700; font-size:1.08rem; color:#fff;'>" + ch.title + "</div>" +
+            "<div style='font-size:0.78rem; color:var(--text-muted);'>Requisito: " + ch.desc + " • Atributo Base: " + (careerState.stats[ch.stat] || 50) + "</div>" +
+          "</div>" +
+          "<div style='font-family:var(--font-tech); font-size:1.25rem; font-weight:800; color:var(--success-green);'>" + odds + "% Sucesso</div>";
           container.appendChild(btn);
         });
       },
@@ -2977,10 +3314,13 @@
         const isMain = careerState.championPool.some(m => m.id === this.myChamp.id);
         const mainBonus = isMain ? 12 : 0;
         const coachBonus = this.matchupBonus || 0;
-        const confBonus = (careerState.stats.confidence - 50) * 0.15;
-        const oppPower = career.getCurrentOpponent().power || 50;
-        const diffPenalty = (oppPower - 50) * 0.3;
+        const confBonus = ((careerState.stats.confidence || 75) - 50) * 0.15;
 
+        // IA ESCALONADA: Dificuldade varia com o nível da equipe adversária
+        const oppPower = this.isSoloQMatch ? 62 : (career.getCurrentOpponent().power || 50);
+        const diffPenalty = (oppPower - 50) * 0.35;
+
+        // Bônus de Feitiços de Invocador
         let spellBonus = 0;
         const spD = careerState.spells?.d;
         const spF = careerState.spells?.f;
@@ -2989,9 +3329,8 @@
         if ((spD === "Ignite" || spF === "Ignite") && stat === "mechanics") spellBonus += 8;
         if ((spD === "Teleport" || spF === "Teleport") && stat === "macro") spellBonus += 8;
         if ((spD === "Smite" || spF === "Smite") && (stat === "macro" || stat === "mechanics")) spellBonus += 10;
-        if ((spD === "Exhaust" || spF === "Exhaust") && stat === "consistency") spellBonus += 7;
+        if ((spD === "Exhaust" || spF === "Exhaust") && (stat === "consistency" || stat === "macro")) spellBonus += 8;
         if ((spD === "Cleanse" || spF === "Cleanse") && stat === "consistency") spellBonus += 8;
-        if ((spD === "Heal" || spF === "Heal") && stat === "comm") spellBonus += 7;
         if ((spD === "Ghost" || spF === "Ghost") && stat === "mechanics") spellBonus += 7;
 
         return Math.max(25, Math.min(95, Math.round(base * 0.7 + mainBonus + coachBonus + confBonus + spellBonus - diffPenalty)));
@@ -3017,249 +3356,202 @@
           gameAudio.playFailure();
         }
 
-        document.getElementById("matchAllyScoreHud").innerText = careerState.team.name + ": " + this.allyKills + " Kills";
-        document.getElementById("matchEnemyScoreHud").innerText = this.enemyKills + " Kills :" + career.getCurrentOpponent().name;
-        document.getElementById("matchGoldDiffText").innerText = "Diferença de Ouro: " + (this.goldDiff >= 0 ? "+" + this.goldDiff : this.goldDiff) + "g";
-        document.getElementById("matchGoldDiffText").style.color = this.goldDiff >= 0 ? "var(--hextech-blue)" : "var(--danger-red)";
+        this.updateScoreHud();
 
         const banner = document.getElementById("resolutionBanner");
-        banner.style.display = "block";
-        document.getElementById("resolutionResultTitle").innerText = success ? "⭐ JOGADA SUCEDIDA!" : "⚠️ JOGADA FALHOU!";
-        document.getElementById("resolutionBadgeRoll").innerText = "Rolagem: " + roll + " (Meta: ≤ " + odds + "%)";
-        document.getElementById("resolutionBadgeRoll").className = "badge " + (success ? "badge-green" : "badge-red");
-        document.getElementById("resolutionNarrative").innerText = success ? choice.win : choice.fail;
+        const titleEl = document.getElementById("resolutionResultTitle");
+        const textEl = document.getElementById("resolutionNarrative");
+        const badgeRoll = document.getElementById("resolutionBadgeRoll");
 
-        document.getElementById("btnNextScenario").innerText = this.currentTurn >= 3 ? "Ver Scoreboard Final ➔" : "Avançar para Momento " + (this.currentTurn + 1) + " ➔";
+        if (badgeRoll) {
+          badgeRoll.innerText = "Dado: " + roll + " (Chance: " + odds + "%)";
+          badgeRoll.className = "badge " + (success ? "badge-gold" : "badge-danger");
+        }
+
+        if (titleEl) {
+          titleEl.innerText = success ? "🎉 DECISÃO BEM-SUCEDIDA!" : "⚠️ JOGADA NEUTRALIZADA!";
+          titleEl.style.color = success ? "var(--hextech-blue)" : "var(--danger-red)";
+        }
+        if (textEl) {
+          textEl.innerText = success ? choice.feedbackWin : choice.feedbackLoss;
+        }
+        if (banner) {
+          banner.style.display = "block";
+          banner.style.borderColor = success ? "var(--hextech-blue)" : "var(--danger-red)";
+        }
       },
 
       proceedNextTurn() {
-        gameAudio.playClick();
-        if (this.currentTurn < 3) {
+        if (this.currentTurn < this.maxTurns) {
           this.loadTurn(this.currentTurn + 1);
         } else {
-          this.showScoreboard();
+          this.showFinalScoreboard();
         }
       },
 
-      showScoreboard() {
-        document.getElementById("matchInteractivePhase").style.display = "none";
-        document.getElementById("matchScoreboardPhase").style.display = "block";
+      showFinalScoreboard() {
+        const isVictory = this.allyKills >= this.enemyKills;
+        const isSupport = careerState.role === "Suporte";
 
-        const won = this.allyKills >= this.enemyKills;
-        const isSoloQ = !!this.isSoloQMatch;
+        const interPhase = document.getElementById("matchInteractivePhase");
+        const scorePhase = document.getElementById("matchScoreboardPhase");
+        if (interPhase) interPhase.style.display = "none";
+        if (scorePhase) scorePhase.style.display = "block";
 
-        if (won) {
-          gameAudio.playVictory();
-          careerState.team.wins++;
-        } else {
-          gameAudio.playFailure();
-          careerState.team.losses++;
-        }
-        careerState.team.week++;
+        const outcomeH = document.getElementById("postGameOutcomeHeader");
+        const outcomeT = document.getElementById("postGameOutcomeText");
+        const ratingEl = document.getElementById("postGameRating");
+        const mvpWrapper = document.getElementById("postGameMvpWrapper");
 
-        // Evolução de Atributos Real e Permanente (+1 ou +2 em cada)
-        const perfBonus = won ? 2 : 1;
-        const statUp = {
-          mechanics: Math.min(99, careerState.stats.mechanics + perfBonus),
-          macro: Math.min(99, careerState.stats.macro + (Math.random() > 0.4 ? perfBonus : 1)),
-          comm: Math.min(99, careerState.stats.comm + (Math.random() > 0.5 ? perfBonus : 1)),
-          consistency: Math.min(99, careerState.stats.consistency + (won ? 1 : 0))
-        };
+        if (outcomeH) outcomeH.className = "outcome-header " + (isVictory ? "victory" : "defeat");
+        if (outcomeT) outcomeT.innerText = isVictory ? "VITÓRIA!" : "DERROTA";
 
-        const gains = {
-          mechanics: statUp.mechanics - careerState.stats.mechanics,
-          macro: statUp.macro - careerState.stats.macro,
-          comm: statUp.comm - careerState.stats.comm,
-          consistency: statUp.consistency - careerState.stats.consistency
-        };
+        const avgScore = this.scores.reduce((a,b) => a+b, 0) / (this.scores.length || 1);
+        const rating = isVictory ? (avgScore > 85 ? "9.8" : "9.2") : (avgScore > 65 ? "7.4" : "6.1");
+        if (ratingEl) ratingEl.innerText = rating;
+        if (mvpWrapper) mvpWrapper.style.display = isVictory ? "inline-block" : "none";
 
-        careerState.stats = statUp;
-
-        // Progressão de SoloQueue
-        let lpDelta = won ? (Math.floor(Math.random() * 8) + 22) : -(Math.floor(Math.random() * 6) + 14);
-        let eloPromoMsg = "";
-        careerState.elo.lp += lpDelta;
-
-        if (careerState.elo.lp >= 300 && careerState.elo.tier === "Mestre") {
-          careerState.elo.tier = "Grão-Mestre";
-          eloPromoMsg = "🔥 PROMOVIDO A GRÃO-MESTRE NA SOLOQUEUE!";
-          careerState.elo.soloRank = Math.max(80, careerState.elo.soloRank - 800);
-        } else if (careerState.elo.lp >= 700 && careerState.elo.tier === "Grão-Mestre") {
-          careerState.elo.tier = "Desafiante";
-          eloPromoMsg = "👑 PROMOVIDO A DESAFIANTE! VOCÊ CHEGOU AO TOPO DO SERVIDOR!";
-          careerState.elo.soloRank = Math.max(1, careerState.elo.soloRank - 350);
-        } else if (won) {
-          careerState.elo.soloRank = Math.max(1, careerState.elo.soloRank - Math.floor(Math.random() * 40 + 20));
+        // Ganhos de atributos no pós-jogo
+        const chipsContainer = document.getElementById("postGameStatGrowthChips");
+        if (chipsContainer) {
+          chipsContainer.innerHTML = "";
+          const names = { mechanics: "Mecânica", macro: "Macro/Visão", comm: "Comunicação", consistency: "Consistência" };
+          Object.keys(this.statGains).forEach(st => {
+            const chip = document.createElement("div");
+            chip.className = "growth-chip";
+            chip.innerText = "+" + this.statGains[st] + " " + (names[st] || st);
+            chipsContainer.appendChild(chip);
+          });
         }
 
-        careerState.gold += won ? 400 : 150;
-        careerState.fame += won ? 80 : 25;
+        // Tabela do Scoreboard
+        const tableBody = document.getElementById("scoreboardTableBody");
+        if (tableBody) {
+          tableBody.innerHTML = "";
+          const kdaStr = isSupport ? "2/1/" + (isVictory ? "19" : "9") + " (84 Visão)" : (isVictory ? "11/2/7" : "4/5/3");
+          const dmgStr = isSupport ? "12.450" : (isVictory ? "32.890" : "18.420");
+          const goldStr = isVictory ? "14.200" : "10.100";
 
-        // Progressão do Treinador (Coach EXP & Level Up)
-        if (!careerState.coach) careerState.coach = { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" };
-        careerState.coach.exp += won ? 70 : 35;
-        let coachLevelUpMsg = "";
+          const playerTr = document.createElement("tr");
+          playerTr.className = "highlight";
+          playerTr.innerHTML = "<td><strong>⭐ " + careerState.nick + " (Você)</strong></td>" +
+            "<td>" + (this.myChamp ? this.myChamp.name : "Campeão") + "</td>" +
+            "<td><strong>" + kdaStr + "</strong></td>" +
+            "<td>" + dmgStr + "</td>" +
+            "<td>" + goldStr + "</td>" +
+            "<td><span class='badge badge-gold'>" + (isVictory ? "S+" : "A") + "</span></td>";
+          tableBody.appendChild(playerTr);
+
+          // Rival da Rota
+          const oppTr = document.createElement("tr");
+          oppTr.innerHTML = "<td>Rival (" + (this.enemyChamp ? this.enemyChamp.name : "Inimigo") + ")</td>" +
+            "<td>" + (this.enemyChamp ? this.enemyChamp.name : "Inimigo") + "</td>" +
+            "<td>" + (isVictory ? "3/7/2" : "8/2/5") + "</td>" +
+            "<td>" + (isVictory ? "16.200" : "28.500") + "</td>" +
+            "<td>" + (isVictory ? "9.800" : "13.600") + "</td>" +
+            "<td><span class='badge " + (isVictory ? "badge-blue" : "badge-gold") + "'>" + (isVictory ? "B" : "S") + "</span></td>";
+          tableBody.appendChild(oppTr);
+        }
+
+        // Recompensas
+        const fameGain = isVictory ? 120 : 30;
+        const goldGain = isVictory ? 450 : 150;
+        const expGain = isVictory ? 45 : 20;
+
+        const expEl = document.getElementById("rewardExp");
+        const fameEl = document.getElementById("rewardFame");
+        const goldEl = document.getElementById("rewardGold");
+        const masteryEl = document.getElementById("rewardMastery");
+
+        if (expEl) expEl.innerText = "+" + expGain + " Coach EXP";
+        if (fameEl) fameEl.innerText = "+" + fameGain + " Fãs";
+        if (goldEl) goldEl.innerText = "+R$ " + goldGain;
+        if (masteryEl) masteryEl.innerText = "+" + (isVictory ? "1.200" : "400") + " MP";
+
+        // XP do Coach Maestro
+        careerState.coach.exp += expGain;
         if (careerState.coach.exp >= careerState.coach.nextExp && careerState.coach.level < 5) {
-          careerState.coach.level++;
+          careerState.coach.level += 1;
           careerState.coach.exp = 0;
           careerState.coach.nextExp += 80;
-          const titles = ["Treinador Novato", "Analista Tático", "Estrategista Pro", "Mestre dos Drafts", "Coach Lendário"];
-          careerState.coach.title = titles[careerState.coach.level - 1] || "Mestre";
-          coachLevelUpMsg = "👔 COACH SUBIU PARA O NÍVEL " + careerState.coach.level + " (" + careerState.coach.title + ")! (+Bônus Tático)";
+          const coachTitles = ["Novato", "Estrategista", "Analista Sênior", "Mestre Tático", "Lenda dos Bastidores"];
+          careerState.coach.title = coachTitles[careerState.coach.level - 1] || "Mestre Tático";
+          showToast("👔 O Coach Maestro subiu para o Nível " + careerState.coach.level + " (" + careerState.coach.title + ")!");
         }
 
-        // Progresso em Série MD5 dos Playoffs
-        if (!careerState.playoffs) careerState.playoffs = { inPlayoffs: false, stage: "Fase Regular", wins: 0, losses: 0, seriesTarget: 3, opponentName: "" };
-        if (careerState.playoffs.inPlayoffs) {
-          if (won) careerState.playoffs.wins++;
-          else careerState.playoffs.losses++;
+        // Se for SoloQ Match:
+        if (this.isSoloQMatch) {
+          const lpDelta = isVictory ? (Math.floor(Math.random() * 8) + 20) : -(Math.floor(Math.random() * 5) + 14);
+          careerState.elo.lp = Math.max(0, careerState.elo.lp + lpDelta);
 
-          if (careerState.playoffs.wins >= 3) {
-            careerState.playoffs.inPlayoffs = false;
-            if (careerState.currentTierId === 1) {
-              showToast("🏆 CAMPEÃO DO CBLOL! CLASSIFICADO PARA O WORLDS!");
-            } else {
-              showToast("🎉 VITÓRIA NA SÉRIE MD5! VOCÊ SUBIU DE DIVISÃO!");
-              career.promoteToNextTier();
-            }
-          } else if (careerState.playoffs.losses >= 3) {
-            careerState.playoffs.inPlayoffs = false;
-            showToast("💔 Fim da linha nos Playoffs nesta temporada!");
+          // Promoções de SoloQ
+          if (careerState.elo.lp >= 700) {
+            careerState.elo.tier = "Desafiante";
+            careerState.elo.soloRank = Math.max(1, (careerState.elo.soloRank || 200) - 25);
+          } else if (careerState.elo.lp >= 300) {
+            careerState.elo.tier = "Grão-Mestre";
+            careerState.elo.soloRank = Math.max(50, (careerState.elo.soloRank || 800) - 20);
+          } else {
+            careerState.elo.tier = "Mestre";
+            careerState.elo.soloRank = Math.max(300, (careerState.elo.soloRank || 2450) - 15);
           }
-        } else if (careerState.team.wins >= 5 && !careerState.playoffs.inPlayoffs) {
-          careerState.playoffs.inPlayoffs = true;
-          careerState.playoffs.wins = 0;
-          careerState.playoffs.losses = 0;
-          careerState.playoffs.stage = careerState.currentTierId === 1 ? "Grande Final do CBLOL (MD5)" : "Série de Acesso (MD5)";
-          showToast("🔥 CLASSIFICADO PARA OS PLAYOFFS EM SÉRIE MD5!");
+
+          showToast("🔥 Ranqueada SoloQ: " + (lpDelta > 0 ? "+" + lpDelta : lpDelta) + " PDL • " + careerState.elo.tier + " (" + careerState.elo.lp + " PDL)");
+        } else {
+          // Partida de Campeonato / Liga Oficial
+          if (isVictory) careerState.team.wins += 1;
+          else careerState.team.losses += 1;
+          careerState.team.week += 1;
+
+          // Se estiver em Playoffs MD5:
+          if (careerState.playoffs && careerState.playoffs.inPlayoffs) {
+            if (isVictory) careerState.playoffs.wins += 1;
+            else careerState.playoffs.losses += 1;
+
+            if (careerState.playoffs.wins >= 3) {
+              if (careerState.playoffs.stage === "Grande Final") {
+                showToast("🏆 CAMPEÃO DO " + (LEAGUES_DATA[careerState.currentTierId]?.name || "TORNEIO") + "!");
+                career.promoteToNextTier();
+              } else {
+                careerState.playoffs.stage = "Grande Final";
+                careerState.playoffs.wins = 0;
+                careerState.playoffs.losses = 0;
+                showToast("🔥 Vitória na MD5! Avançou para a Grande Final!");
+              }
+            } else if (careerState.playoffs.losses >= 3) {
+              showToast("💔 Derrota na série MD5. Fim da campanha nos playoffs.");
+              careerState.playoffs.inPlayoffs = false;
+            }
+          }
         }
 
-        // Post nas redes sociais
-        const postTexts = won
-          ? ["VITÓRIA GIGANTE! @" + careerState.nick.toLowerCase() + " destruiu a partida com outplays insanos! #Diff", "Simplesmente aula de draft e execução do time @" + careerState.team.name + "!"]
-          : ["Derrota dura hoje, mas a série continua. Força rapaziada!", "Draft difícil contra o rival. Hora de resetar o mental e focar no próximo jogo."];
-        const randomFan = won ? "Torcedor Apaixonado" : "Caster da Rodada";
-        career.addSocialPost(randomFan, "@fan_" + Math.floor(Math.random() * 900 + 100), postTexts[won ? 0 : 1]);
+        careerState.fame += fameGain;
+        careerState.gold += goldGain;
+        Object.keys(this.statGains).forEach(st => {
+          careerState.stats[st] = Math.min(99, (careerState.stats[st] || 50) + this.statGains[st]);
+        });
+
+        const opp = career.getCurrentOpponent();
+        const oppName = this.isSoloQMatch ? "High Elo" : opp.name;
+        career.addSocialPost(
+          "CBLOL & Notícias",
+          "@cblol_feed",
+          (isVictory ? "🔥 VITÓRIA ESPETACULAR! @" : "⚠️ DIA DIFÍCIL! @") + careerState.nick + " teve atuação de destaque na rota de " + careerState.role + " no confronto contra " + oppName + "!"
+        );
 
         career.save();
-
-        const titleEl = document.getElementById("postGameOutcomeText");
-        if (titleEl) {
-          titleEl.innerText = won ? "VITÓRIA!" : "DERROTA";
-          document.getElementById("postGameOutcomeHeader").className = "outcome-header " + (won ? "victory" : "defeat");
-        }
-
-        // Evolução de Atributos exibida no Scoreboard
-        const growthChips = document.getElementById("postGameStatGrowthChips");
-        if (growthChips) {
-          growthChips.innerHTML = "<div class='stat-evolution-card'>" +
-            (coachLevelUpMsg ? "<div style='color:var(--hextech-gold); font-weight:800; font-size:1rem; margin-bottom:8px;'>🎉 " + coachLevelUpMsg + "</div>" : "") +
-            (eloPromoMsg ? "<div style='color:var(--hextech-blue); font-weight:800; font-size:1rem; margin-bottom:8px;'>👑 " + eloPromoMsg + "</div>" : "") +
-            "<div style='font-size:0.85rem; color:#cbd5e1; margin-bottom:8px;'>PDL na SoloQ: <strong style='color:" + (lpDelta > 0 ? "var(--success-green)" : "var(--danger-red)") + ";'>" + (lpDelta > 0 ? "+" + lpDelta : lpDelta) + " PDL</strong> (" + careerState.elo.tier + " • #" + careerState.elo.soloRank + ")</div>" +
-            "<div class='stat-evolution-grid'>" +
-              "<div class='stat-evolution-col'><div class='stat-lbl'>Mecânica</div><div class='stat-gain-val'>+" + gains.mechanics + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.mechanics + ")</span></div></div>" +
-              "<div class='stat-evolution-col'><div class='stat-lbl'>Macro / Visão</div><div class='stat-gain-val'>+" + gains.macro + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.macro + ")</span></div></div>" +
-              "<div class='stat-evolution-col'><div class='stat-lbl'>Comunicação</div><div class='stat-gain-val'>+" + gains.comm + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.comm + ")</span></div></div>" +
-              "<div class='stat-evolution-col'><div class='stat-lbl'>Consistência</div><div class='stat-gain-val'>+" + gains.consistency + " <span style='font-size:0.85rem; color:#fff;'>(" + careerState.stats.consistency + ")</span></div></div>" +
-            "</div>" +
-          "</div>";
-        }
-
-        this.renderScoreboardTable(won);
-      },
-
-      renderScoreboardTable(won) {
-        const tbody = document.getElementById("scoreboardTableBody");
-        if (!tbody) return;
-        tbody.innerHTML = "";
-
-        const avg = this.scores.reduce((a, b) => a + b, 0) / (this.scores.length || 1);
-        let rating = (avg / 10).toFixed(1);
-        if (won && parseFloat(rating) < 7.5) rating = (Math.random() * 1.5 + 8.0).toFixed(1);
-
-        const isMvp = parseFloat(rating) >= 8.5 && won;
-
-        const myK = won ? Math.floor(Math.random() * 5) + 6 : Math.floor(Math.random() * 3) + 2;
-        const myD = won ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 4) + 3;
-        const myA = Math.floor(Math.random() * 6) + 5;
-        const myDmg = (Math.floor(Math.random() * 12000) + (won ? 28000 : 16000)).toLocaleString();
-        const myGold = (Math.floor(Math.random() * 3000) + (won ? 14500 : 9500)).toLocaleString();
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = "<td><strong>" + careerState.nick + "</strong> " + (isMvp ? "⭐ (MVP)" : "") + "</td>" +
-          "<td><div style='display:flex; align-items:center; gap:6px;'><img src='" + getChampImgUrl(this.myChamp) + "' style='width:28px; height:28px; border-radius:50%;' onerror='handleImgError(this);'><span>" + this.myChamp.name + "</span></div></td>" +
-          "<td>" + myK + "/" + myD + "/" + myA + "</td>" +
-          "<td>" + myDmg + "</td>" +
-          "<td>R$ " + myGold + "</td>" +
-          "<td><strong style='color:var(--hextech-gold);'>" + rating + "</strong></td>";
-        tbody.appendChild(tr);
-
-        const oppK = !won ? Math.floor(Math.random() * 5) + 5 : Math.floor(Math.random() * 3) + 1;
-        const oppD = !won ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 4) + 4;
-        const oppA = Math.floor(Math.random() * 6) + 3;
-        const oppDmg = (Math.floor(Math.random() * 10000) + (!won ? 25000 : 14000)).toLocaleString();
-        const oppGold = (Math.floor(Math.random() * 3000) + (!won ? 14000 : 9000)).toLocaleString();
-        const oppRating = (!won ? (Math.random() * 1.5 + 7.5) : (Math.random() * 1.5 + 5.0)).toFixed(1);
-
-        const oppTr = document.createElement("tr");
-        oppTr.innerHTML = "<td><span style='color:var(--danger-red);'>Rival (" + career.getCurrentOpponent().name + ")</span></td>" +
-          "<td><div style='display:flex; align-items:center; gap:6px;'><img src='" + getChampImgUrl(this.oppChamp) + "' style='width:28px; height:28px; border-radius:50%;' onerror='handleImgError(this);'><span>" + this.oppChamp.name + "</span></div></td>" +
-          "<td>" + oppK + "/" + oppD + "/" + oppA + "</td>" +
-          "<td>" + oppDmg + "</td>" +
-          "<td>R$ " + oppGold + "</td>" +
-          "<td>" + oppRating + "</td>";
-        tbody.appendChild(oppTr);
       },
 
       finishAndReturnHub() {
-        gameAudio.playClick();
-        career.updateDashboardUI();
+        this.isSoloQMatch = false;
         gameRouter.showScreen("screenDashboard");
+        career.updateDashboardUI();
       }
     };
 
-    /* MOTOR DE REDES SOCIAIS INTERATIVAS (X / TWITTER) */
-    const socialEngine = {
-      playerTweet(type) {
-        gameAudio.playClick();
-        let tweetText = "";
-        let rewardFame = 0;
 
-        if (type === "provoke") {
-          tweetText = "O palco dos playoffs é meu. Pode vir quem quiser que hoje não tem chance pra ninguém! #CBLOL #Diff";
-          rewardFame = 60;
-          careerState.stats.confidence = Math.min(99, careerState.stats.confidence + 10);
-        } else if (type === "humble") {
-          tweetText = "Vitória importante hoje, mas o campeonato é longo. Pés no chão, muito treino amanhã e obrigado pela torcida! 🙏";
-          rewardFame = 40;
-          careerState.stats.consistency = Math.min(99, careerState.stats.consistency + 1);
-        } else if (type === "bo5") {
-          tweetText = "Série MD5 pegando fogo! O time tá fechado e focado no próximo draft. Vamos lutar até o último Nexus!";
-          rewardFame = 50;
-          careerState.stats.comm = Math.min(99, careerState.stats.comm + 1);
-        }
 
-        careerState.fame += rewardFame;
-        career.addSocialPost(careerState.nick, "@" + careerState.nick.toLowerCase(), tweetText);
-        showToast("📱 Tweet publicado! (+ " + rewardFame + " Fãs)");
-
-        setTimeout(() => {
-          const casters = [
-            { name: "Baiano", handle: "@baianolol", text: "SIMPLESMENTE @" + careerState.nick.toLowerCase() + " jogando o fino do League of Legends no Ilha das Lendas!" },
-            { name: "Schaeppi", handle: "@schaeppilol", text: "O garoto tem estrela! A comissão técnica acertou em cheio no draft de hoje!" },
-            { name: "TitaN", handle: "@titancblol", text: "Joga muito, o moleque tá amassando na rota. Merecido!" }
-          ];
-          const c = casters[Math.floor(Math.random() * casters.length)];
-          career.addSocialPost(c.name, c.handle, c.text);
-          career.updateSocialUI();
-        }, 1200);
-
-        career.save();
-        career.updateSocialUI();
-      }
-    };
-
-    /* CONTROLE CENTRAL DE CARREIRA */
+    /* ENGINE DE CARREIRA, ROTINAS DE SUPORTE E SOLOQUEUE HIGH ELO */
     const career = {
       saveKey: "lol_career_save_v1",
 
@@ -3319,8 +3611,128 @@
         if (careerState.socialFeed.length > 20) careerState.socialFeed.pop();
       },
 
+      /* ROTINA DIÁRIA E TREINOS DO ATLETA (ESPECÍFICOS PARA SUPORTE E DEMAIS ROTAS) */
+      trainStat(stat) {
+        if (careerState.energy < 20) {
+          showToast("⚡ Energia insuficiente para treino intenso! Descanse primeiro.");
+          return;
+        }
+
+        gameAudio.playClick();
+        careerState.energy = Math.max(0, careerState.energy - 20);
+        careerState.stats[stat] = Math.min(99, (careerState.stats[stat] || 50) + 2);
+
+        const statLabels = {
+          mechanics: "Mecânica",
+          macro: "Macro/Visão",
+          comm: "Comunicação",
+          consistency: "Consistência"
+        };
+
+        this.save();
+        this.updateDashboardUI();
+        showToast("⚡ Treino concluído! +2 em " + (statLabels[stat] || stat) + ".");
+      },
+
+      restDay() {
+        gameAudio.playVictory();
+        careerState.energy = Math.min(100, careerState.energy + 50);
+        careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 75) + 10);
+        this.save();
+        this.updateDashboardUI();
+        showToast("🛌 Dia de descanso! Energia e confiança recuperadas.");
+      },
+
+      /* MATCHMAKING DA SOLOQUEUE HIGH ELO */
+      startSoloQueueMatchmaking() {
+        if (careerState.energy < 20) {
+          showToast("⚡ Energia insuficiente para disputar a SoloQ. Descanse na rotina!");
+          return;
+        }
+
+        gameAudio.playClick();
+        const modal = document.getElementById("soloqMatchmakingModal");
+        const regionEl = document.getElementById("soloqModalRegionName");
+        const previewEl = document.getElementById("soloqLobbyRosterPreview");
+
+        const reg = careerState.region || "BR";
+        if (regionEl) regionEl.innerText = reg;
+
+        if (previewEl) {
+          const players = REGIONAL_SOLOQ_PLAYERS[reg] || REGIONAL_SOLOQ_PLAYERS.BR;
+          const shuffle = [...players].sort(() => 0.5 - Math.random());
+          const bluePicks = shuffle.slice(0, 4);
+          const redPicks = shuffle.slice(4, 9);
+
+          previewEl.innerHTML = "<div style='display:grid; grid-template-columns:1fr 1fr; gap:12px;'>" +
+            "<div>" +
+              "<div style='font-weight:700; color:var(--hextech-blue); margin-bottom:6px;'>🔷 SEU TIME:</div>" +
+              "<div style='color:var(--hextech-gold); font-weight:bold;'>⭐ " + careerState.nick + " (Você - " + careerState.role + ")</div>" +
+              bluePicks.map(p => "<div style='font-size:0.8rem; color:#cbd5e1;'>• " + p.name + " (" + p.tier + ")</div>").join("") +
+            "</div>" +
+            "<div>" +
+              "<div style='font-weight:700; color:var(--danger-red); margin-bottom:6px;'>🔴 TIME INIMIGO:</div>" +
+              redPicks.map(p => "<div style='font-size:0.8rem; color:#cbd5e1;'>• " + p.name + " (" + p.tier + " - " + p.champ + ")</div>").join("") +
+            "</div>" +
+          "</div>";
+        }
+
+        if (modal) modal.classList.add("active");
+      },
+
+      cancelSoloQueue() {
+        gameAudio.playClick();
+        const modal = document.getElementById("soloqMatchmakingModal");
+        if (modal) modal.classList.remove("active");
+      },
+
+      confirmSoloQueuePlay() {
+        const modal = document.getElementById("soloqMatchmakingModal");
+        if (modal) modal.classList.remove("active");
+        matchEngine.isSoloQMatch = true;
+        draftEngine.startChampionSelect();
+      },
+
+      /* TABELA OFICIAL DE SOLOQUEUE REGIONAL (LEADERBOARD DE DESAFIANTES) */
+      renderSoloQueueTable() {
+        const reg = careerState ? (careerState.region || "BR") : "BR";
+        const badge = document.getElementById("tabSoloQRegionBadge");
+        const tbody = document.getElementById("tabSoloQueueTableBody");
+
+        if (badge) badge.innerText = "SERVIDOR: " + reg;
+        if (!tbody) return;
+        tbody.innerHTML = "";
+
+        const list = REGIONAL_SOLOQ_PLAYERS[reg] || REGIONAL_SOLOQ_PLAYERS.BR;
+        const pElo = careerState ? careerState.elo : { tier: "Mestre", lp: 140, soloRank: 2450 };
+
+        list.forEach(p => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = "<td><strong>#" + p.rank + "</strong></td>" +
+            "<td><strong style='color:#fff;'>" + p.name + "</strong></td>" +
+            "<td><span class='badge badge-gold'>" + p.tier + "</span></td>" +
+            "<td><strong style='color:var(--hextech-blue);'>" + p.lp + " PDL</strong></td>" +
+            "<td>" + p.winrate + "</td>" +
+            "<td>" + p.champ + "</td>";
+          tbody.appendChild(tr);
+        });
+
+        // Linha do próprio jogador destacada no ranking!
+        const playerTr = document.createElement("tr");
+        playerTr.style.background = "rgba(200, 170, 110, 0.25)";
+        playerTr.style.border = "1px solid var(--hextech-gold)";
+        playerTr.innerHTML = "<td><strong style='color:var(--hextech-gold);'>#" + pElo.soloRank + "</strong></td>" +
+          "<td><strong style='color:var(--hextech-gold);'>⭐ " + (careerState ? careerState.nick : "Você") + " (Você)</strong></td>" +
+          "<td><span class='badge " + (pElo.tier === "Desafiante" ? "badge-gold" : pElo.tier === "Grão-Mestre" ? "badge-danger" : "badge-purple") + "'>" + pElo.tier + "</span></td>" +
+          "<td><strong style='color:var(--hextech-gold);'>" + pElo.lp + " PDL</strong></td>" +
+          "<td>62%</td>" +
+          "<td>" + (careerState && careerState.championPool[0] ? careerState.championPool[0].name : "Favorito") + "</td>";
+        tbody.appendChild(playerTr);
+      },
+
       updateDashboardUI() {
         if (!careerState) return;
+
         document.getElementById("hubPlayerNick").innerText = careerState.nick;
         document.getElementById("hubPlayerRole").innerText = "⚡ " + careerState.role;
         document.getElementById("hubPlayerTeam").innerText = careerState.team.name;
@@ -3329,7 +3741,15 @@
         document.getElementById("hubGoldVal").innerText = "R$ " + careerState.gold;
         document.getElementById("hubFameVal").innerText = careerState.fame;
 
-        // Renderizar Logos Oficiais do Seu Time e do Rival
+        // Atualizar SoloQ Card
+        const soloBadge = document.getElementById("hubSoloQBadgeTag");
+        const soloPos = document.getElementById("hubSoloQPosition");
+        const soloDetailed = document.getElementById("hubSoloQRankDetailed");
+        if (soloBadge) soloBadge.innerText = careerState.elo.tier.toUpperCase();
+        if (soloPos) soloPos.innerText = "#" + careerState.elo.soloRank;
+        if (soloDetailed) soloDetailed.innerText = careerState.elo.tier + " (" + careerState.elo.lp + " PDL)";
+
+        // Logos Oficiais dos Times
         const myLogoEl = document.getElementById("hubMyTeamLogoBox");
         const oppLogoEl = document.getElementById("hubEnemyTeamLogoBox");
         if (myLogoEl) myLogoEl.innerHTML = getTeamLogoSvg(careerState.team.name, 48);
@@ -3347,7 +3767,9 @@
         if (seriesHud) {
           if (careerState.playoffs && careerState.playoffs.inPlayoffs) {
             seriesHud.style.display = "flex";
-            document.getElementById("hubPlayoffsStageTag").innerText = careerState.playoffs.stage;
+            const stageTag = document.getElementById("hubPlayoffsStageTag");
+            if (stageTag) stageTag.innerText = careerState.playoffs.stage;
+
             const w = careerState.playoffs.wins || 0;
             const l = careerState.playoffs.losses || 0;
             for (let i = 1; i <= 3; i++) {
@@ -3361,11 +3783,17 @@
           }
         }
 
+        // Card do Próximo Jogo
         document.getElementById("hubMyTeamNameMatch").innerText = careerState.team.name;
         document.getElementById("hubEnemyTeamNameMatch").innerText = oppTeam.name;
         document.getElementById("hubEnemyTeamTagMatch").innerText = oppTeam.tag || "Rival";
         document.getElementById("hubSeasonRecord").innerText = careerState.team.wins + "V - " + careerState.team.losses + "D";
         document.getElementById("hubMatchLeagueHeader").innerText = (LEAGUES_DATA[careerState.currentTierId]?.name || "Liga") + " • Semana " + careerState.team.week;
+        const weekNum = document.getElementById("hubWeekNumber");
+        if (weekNum) weekNum.innerText = careerState.team.week;
+
+        // RENDERIZAR ROTINA DE TREINOS DINÂMICA (SUPORTE VS DEMAIS ROTAS)
+        this.renderActionsGrid();
 
         this.updateStatsUI();
         this.updatePoolPreview();
@@ -3373,6 +3801,55 @@
         if (window.leagueNavigator) {
           window.leagueNavigator.renderTable(careerState.currentTierId);
         }
+      },
+
+      renderActionsGrid() {
+        const grid = document.getElementById("hubActionsGridContainer");
+        if (!grid) return;
+
+        const isSupport = careerState.role === "Suporte";
+        const actions = isSupport ? [
+          { stat: "macro", icon: "👁️", title: "Controle de Visão & Lente", desc: "Warding profundo no Covil do Dragão e limpeza de sentinelas.", cost: "+2 Macro/Visão | -20 Energia" },
+          { stat: "consistency", icon: "🛡️", title: "Peel & Reflexo de Escudo", desc: "Salvar o atirador de engages surpresa e assassinos inimigos.", cost: "+2 Consistência | -20 Energia" },
+          { stat: "mechanics", icon: "🗺️", title: "Timing de Roaming no Rio", desc: "Sincronizar rotação com o Caçador para emboscada no Mid.", cost: "+2 Mecânica | -20 Energia" },
+          { stat: "comm", icon: "🎙️", title: "Shotcalling & Feitiços", desc: "Cronometrar Flashes adversários e comandar a iniciação.", cost: "+2 Comunicação | -20 Energia" }
+        ] : [
+          { stat: "mechanics", icon: "🎯", title: "Treino 1v1 Mecânico", desc: "Micro-movimentação, cancelamento de animações e reflexos.", cost: "+2 Mecânica | -20 Energia" },
+          { stat: "macro", icon: "🗺️", title: "VOD Review & Macro", desc: "Rastreamento de selva e controle de objetivos neutros.", cost: "+2 Macro/Visão | -20 Energia" },
+          { stat: "comm", icon: "🎙️", title: "Shotcalling de Time", desc: "Liderança de calls e coordenação de lutas de equipe.", cost: "+2 Comunicação | -20 Energia" },
+          { stat: "consistency", icon: "🛡️", title: "Rotina de Farm & Trocas", desc: "CS perfeito sob pressão e paciência de rotas.", cost: "+2 Consistência | -20 Energia" }
+        ];
+
+        grid.innerHTML = "";
+        actions.forEach(a => {
+          const tile = document.createElement("div");
+          tile.className = "action-tile";
+          tile.onclick = () => career.trainStat(a.stat);
+          tile.innerHTML = "<h4>" + a.icon + " " + a.title + "</h4>" +
+            "<p>" + a.desc + "</p>" +
+            "<div class='action-tile-cost'>" + a.cost + "</div>";
+          grid.appendChild(tile);
+        });
+
+        // SoloQ tile
+        const soloTile = document.createElement("div");
+        soloTile.className = "action-tile";
+        soloTile.style.borderColor = "#c39bd3";
+        soloTile.onclick = () => career.startSoloQueueMatchmaking();
+        soloTile.innerHTML = "<h4>🔥 Jogar SoloQueue High Elo</h4>" +
+          "<p>Disputar ranqueadas contra os melhores do seu servidor.</p>" +
+          "<div class='action-tile-cost'>±PDL | -20 Energia | Sobe Ranking</div>";
+        grid.appendChild(soloTile);
+
+        // Rest tile
+        const restTile = document.createElement("div");
+        restTile.className = "action-tile";
+        restTile.style.borderColor = "var(--success-green)";
+        restTile.onclick = () => career.restDay();
+        restTile.innerHTML = "<h4>🛌 Descanso & Academia</h4>" +
+          "<p>Recuperação física e mental para evitar o desgaste e tilt.</p>" +
+          "<div class='action-tile-cost'>+50 Energia | +10 Confiança</div>";
+        grid.appendChild(restTile);
       },
 
       updateStatsUI() {
@@ -3427,55 +3904,91 @@
           "<p style='font-size:0.88rem; color:#dce5ef; margin:0; line-height:1.4;'>" + post.text + "</p>";
           container.appendChild(div);
         });
-      },
-
-      restDay() {
-        gameAudio.playVictory();
-        careerState.energy = Math.min(100, careerState.energy + 50);
-        careerState.stats.confidence = Math.min(99, careerState.stats.confidence + 10);
-        this.save();
-        this.updateDashboardUI();
-        showToast("🛌 Dia de descanso! Energia e confiança recuperadas.");
-      },
-
-      practiceMechanics() {
-        if (careerState.energy < 20) {
-          showToast("⚡ Energia insuficiente para treino intenso!");
-          return;
-        }
-        gameAudio.playClick();
-        careerState.energy -= 20;
-        careerState.stats.mechanics = Math.min(99, careerState.stats.mechanics + 1);
-        this.save();
-        this.updateDashboardUI();
-        showToast("⚔️ Treino Mecânico concluído! +1 em Mecânica.");
       }
     };
 
-    /* GERENCIADOR DE SAVES */
+    /* ENGINE DE REDES SOCIAIS INTERATIVAS (X/TWITTER DOS ESPORTS) */
+    const socialEngine = {
+      playerTweet(type) {
+        if (!careerState) return;
+        gameAudio.playClick();
+
+        let tweetText = "";
+        let replyAuthor = "Baiano";
+        let replyHandle = "@baianolol";
+        let replyText = "";
+
+        if (type === "provoke") {
+          tweetText = "O palco dos playoffs é meu. Pode vir quem quiser que hoje não tem chance pra ninguém! #CBLOL #Diff";
+          replyAuthor = "Baiano";
+          replyHandle = "@baianolol";
+          replyText = "ESSE MOLEQUE É MALUCO! É o verdadeiro terror da rota de " + careerState.role + "! Ilha das Lendas aprovou!";
+          careerState.fame += 60;
+          careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 75) + 5);
+        } else if (type === "humble") {
+          tweetText = "Grande jogo hoje! Pés no chão, muito respeito ao adversário e foco absoluto nos treinos de amanhã. Seguimos firmes! 🙏";
+          replyAuthor = "Schaeppi";
+          replyHandle = "@schaeppilol";
+          replyText = "A maturidade do @" + careerState.nick + " jogando em alto nível é impressionante. É postura de campeão nacional!";
+          careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 2);
+          careerState.fame += 30;
+        } else if (type === "bo5") {
+          tweetText = "Série MD5 pegando fogo! Nada está decidido até o Nexus cair. Confiem no processo que vamos buscar até o final! ⚔️";
+          replyAuthor = "TitaN";
+          replyHandle = "@titanlol";
+          replyText = "É esse sangue nos olhos que a gente quer ver! MD5 separa os meninos das lendas!";
+          careerState.stats.comm = Math.min(99, (careerState.stats.comm || 50) + 2);
+          careerState.fame += 45;
+        }
+
+        career.addSocialPost(careerState.nick, "@" + careerState.nick.toLowerCase(), tweetText);
+        setTimeout(() => {
+          career.addSocialPost(replyAuthor, replyHandle, replyText);
+          career.save();
+          career.updateSocialUI();
+        }, 300);
+
+        career.save();
+        career.updateSocialUI();
+        showToast("📱 Tweet publicado! (+ " + (type === "provoke" ? 60 : 30) + " Fãs)");
+      }
+    };
+
+    /* GERENCIADOR DE SAVES COM SUPORTE TOTAL A AMBOS OS IDS DE MODAL */
     const saveManager = {
+      getModal() {
+        return document.getElementById("saveManagerModal") || document.getElementById("saveModalBackdrop");
+      },
       openModal() {
         gameAudio.playClick();
-        document.getElementById("saveCodeTextarea").value = "";
-        document.getElementById("saveModalBackdrop").classList.add("active");
+        const textarea = document.getElementById("saveCodeTextarea");
+        if (textarea) textarea.value = "";
+        const modal = this.getModal();
+        if (modal) modal.classList.add("active");
       },
       closeModal() {
-        document.getElementById("saveModalBackdrop").classList.remove("active");
+        const modal = this.getModal();
+        if (modal) modal.classList.remove("active");
       },
       exportToTextarea() {
         gameAudio.playVictory();
         const raw = JSON.stringify(careerState || DEFAULT_CAREER, null, 2);
-        document.getElementById("saveCodeTextarea").value = raw;
+        const textarea = document.getElementById("saveCodeTextarea");
+        if (textarea) textarea.value = raw;
         showToast("📋 Código de save gerado!");
       },
       copyToClipboard() {
         const textarea = document.getElementById("saveCodeTextarea");
-        if (!textarea.value) {
+        if (!textarea || !textarea.value) {
           this.exportToTextarea();
         }
-        navigator.clipboard.writeText(textarea.value).then(() => {
-          showToast("📋 Código copiado para a Área de Transferência!");
-        });
+        if (textarea && textarea.value) {
+          navigator.clipboard.writeText(textarea.value).then(() => {
+            showToast("📋 Código copiado para a Área de Transferência!");
+          }).catch(() => {
+            showToast("Código pronto para seleção!");
+          });
+        }
       },
       downloadJsonFile() {
         const data = JSON.stringify(careerState || DEFAULT_CAREER, null, 2);
@@ -3485,45 +3998,44 @@
         a.href = url;
         a.download = "lol_carreira_" + (careerState ? careerState.nick.toLowerCase() : "save") + ".json";
         a.click();
-        URL.revokeObjectURL(url);
-        showToast("💾 Arquivo .JSON baixado!");
+        showToast("💾 Arquivo de save baixado com sucesso!");
       },
       importFromTextarea() {
-        const text = document.getElementById("saveCodeTextarea").value.trim();
-        if (!text) {
-          showToast("⚠️ Cole o código do save primeiro!");
+        const raw = document.getElementById("saveCodeTextarea").value.trim();
+        if (!raw) {
+          showToast("Cole o código do save primeiro!");
           return;
         }
         try {
-          const parsed = JSON.parse(text);
+          const parsed = JSON.parse(raw);
           if (parsed && parsed.nick && parsed.stats) {
             careerState = parsed;
             career.save();
             gameAudio.playVictory();
             this.closeModal();
+            showToast("✅ Save carregado com sucesso!");
             career.updateDashboardUI();
             gameRouter.showScreen("screenDashboard");
-            showToast("🎉 Save importado com sucesso! Bem-vindo de volta.");
           } else {
-            showToast("❌ Código de save inválido!");
+            showToast("Código de save inválido ou corrompido!");
           }
         } catch(e) {
-          showToast("❌ Erro ao processar save. Verifique a formatação JSON.");
+          showToast("Erro ao interpretar o código de save.");
         }
       },
       resetSave() {
-        if (confirm("Tem certeza que deseja apagar sua carreira? Todo o progresso será perdido.")) {
+        if (confirm("Tem certeza que deseja apagar todo o seu progresso? Essa ação não pode ser desfeita.")) {
           localStorage.removeItem("lol_career_save_v1");
           careerState = null;
           this.closeModal();
+          showToast("🗑️ Progresso apagado.");
           gameRouter.updateTitleScreen();
           gameRouter.showScreen("screenTitle");
-          showToast("🗑️ Save apagado com sucesso.");
         }
       }
     };
 
-    /* ROTEADOR DO SPA */
+    /* ROTEADOR DO JOGO */
     const gameRouter = {
       showScreen(screenId) {
         document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
@@ -3533,46 +4045,56 @@
           window.scrollTo(0, 0);
         }
       },
+
       goTitle() {
         gameAudio.playClick();
         this.updateTitleScreen();
         this.showScreen("screenTitle");
       },
+
+      updateTitleScreen() {
+        const hasSave = career.load();
+        const continueBtn = document.getElementById("btnContinueCareerCard");
+        const continueDesc = document.getElementById("titleContinueDesc");
+
+        if (hasSave && continueBtn && continueDesc) {
+          continueBtn.style.display = "flex";
+          continueDesc.innerText = careerState.nick + " • " + careerState.team.name + " (" + careerState.role + ") • " + careerState.elo.tier;
+        } else if (continueBtn) {
+          continueBtn.style.display = "none";
+        }
+      },
+
       newCareer() {
         gameAudio.playClick();
         creationUI.init();
         this.showScreen("screenCreation");
       },
+
       continueCareer() {
-        gameAudio.playClick();
-        career.updateDashboardUI();
-        this.showScreen("screenDashboard");
-      },
-      updateTitleScreen() {
-        const hasSave = career.load();
-        const continueCard = document.getElementById("btnContinueCareerCard");
-        if (hasSave && careerState) {
-          if (continueCard) {
-            continueCard.style.display = "flex";
-            const descEl = document.getElementById("titleContinueDesc");
-            if (descEl) descEl.innerText = careerState.nick + " • " + careerState.team.name + " (" + careerState.elo.tier + " " + careerState.elo.lp + " PDL)";
-          }
-        } else if (continueCard) {
-          continueCard.style.display = "none";
+        gameAudio.playVictory();
+        if (career.load()) {
+          career.updateDashboardUI();
+          this.showScreen("screenDashboard");
+          showToast("🎮 Bem-vindo de volta, " + careerState.nick + "!");
+        } else {
+          showToast("Nenhum save encontrado. Inicie um Novo Jogo!");
         }
       },
+
       openGuideModal() {
         gameAudio.playClick();
         const g = document.getElementById("guideModal");
         if (g) g.classList.add("active");
       },
+
       closeGuideModal() {
         const g = document.getElementById("guideModal");
         if (g) g.classList.remove("active");
       }
     };
 
-    /* CONTROLE DE ABAS DO DASHBOARD */
+    /* CONTROLE DE ABAS DO DASHBOARD COM RENDERIZAÇÃO DA SOLOQUEUE */
     const hubTabs = {
       switchTab(tabId, btnEl) {
         gameAudio.playClick();
@@ -3582,6 +4104,11 @@
         document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
         const target = document.getElementById(tabId);
         if (target) target.classList.add("active");
+
+        // Se abriu a aba da SoloQueue, renderizar o Leaderboard atualizado!
+        if (tabId === "tabSoloQueueRank") {
+          career.renderSoloQueueTable();
+        }
       }
     };
 
@@ -3604,12 +4131,7 @@
     /* CONTROLLER DE PARTIDA (DISPUTA SOLOQ DIRETA) */
     const matchController = {
       startSoloQMatch() {
-        if (careerState.energy < 20) {
-          showToast("⚡ Energia insuficiente para disputar a SoloQ. Descanse!");
-          return;
-        }
-        matchEngine.isSoloQMatch = true;
-        draftEngine.startChampionSelect();
+        career.startSoloQueueMatchmaking();
       }
     };
 
@@ -3620,6 +4142,7 @@
     window.go4LoLOffersUI = go4LoLOffersUI;
     window.leagueNavigator = leagueNavigator;
     window.SUMMONER_SPELLS_DB = SUMMONER_SPELLS_DB;
+    window.SYNERGIES_DB = SYNERGIES_DB;
     window.draftEngine = draftEngine;
     window.matchEngine = matchEngine;
     window.matchController = matchController;
@@ -3633,6 +4156,8 @@
       gameRouter.updateTitleScreen();
       gameRouter.showScreen("screenTitle");
     });
+
+
 
   </script>
 </body>
