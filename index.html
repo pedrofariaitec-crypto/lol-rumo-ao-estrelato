@@ -1786,11 +1786,55 @@
         <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabSoloQueueRank', this)">🔥 SoloQueue High Elo</button>
         <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabTransfers', this)">💼 Mercado de Contratos (<span id="tabTransferCountBadge">0</span>)</button>
         <button class="nav-tab-btn" onclick="hubTabs.switchTab('tabSocialFeed', this)">📱 Redes Sociais & Notícias</button>
+        <button class="nav-tab-btn" id="tabBtnCareerProfile" onclick="hubTabs.switchTab('tabCareerProfile', this)">⭐ Perfil do Pro & Carreira</button>
         <button class="nav-tab-btn" onclick="saveManager.openModal()">💾 Gerenciar Saves</button>
       </nav>
 
       <!-- TAB 1: VISÃO GERAL -->
       <div id="tabOverview" class="tab-content active">
+        <!-- BARRA DE COMANDO RÁPIDO DO HUB (BATER O OLHO E SABER ONDE IR) -->
+        <div class="hub-quick-command-bar" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin-bottom:18px;">
+          <!-- Card 1: Próximo Jogo Oficial -->
+          <div class="quick-command-card primary-match-card" onclick="draftEngine.startChampionSelect()" style="background:linear-gradient(135deg, rgba(200,170,110,0.22) 0%, rgba(12,20,36,0.98) 100%); border:1px solid var(--hextech-gold); border-radius:8px; padding:12px 16px; cursor:pointer; display:flex; align-items:center; gap:12px; box-shadow:0 0 16px rgba(200,170,110,0.22); transition:all 0.2s ease;">
+            <div style="font-size:2rem; filter:drop-shadow(0 0 8px rgba(200,170,110,0.7));">⚔️</div>
+            <div style="flex:1;">
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:0.95rem; color:#fff; letter-spacing:0.5px;">JOGAR PARTIDA OFICIAL</div>
+              <div style="font-size:0.75rem; color:var(--hextech-gold);" id="quickCommandOppLabel">Rodada Oficial do Split</div>
+            </div>
+            <span class="badge badge-gold" style="font-size:0.7rem; font-weight:800;">JOGAR</span>
+          </div>
+
+          <!-- Card 2: Treinos & Ações Diárias -->
+          <div class="quick-command-card" onclick="document.getElementById('hubActionsSection')?.scrollIntoView({behavior:'smooth'})" style="background:#090f1d; border:1px solid #1e2c44; border-radius:8px; padding:12px 16px; cursor:pointer; display:flex; align-items:center; gap:12px; transition:all 0.2s ease;">
+            <div style="font-size:1.8rem;">🏋️</div>
+            <div style="flex:1;">
+              <div style="font-family:var(--font-tech); font-weight:700; font-size:0.9rem; color:#fff;">AÇÕES & TREINOS</div>
+              <div style="font-size:0.75rem; color:#94a3b8;" id="quickCommandActionsLabel">3 Ações Restantes</div>
+            </div>
+            <span class="badge badge-blue" style="font-size:0.7rem;">TREINAR</span>
+          </div>
+
+          <!-- Card 3: Tabela & Pontos -->
+          <div class="quick-command-card" onclick="hubTabs.switchTab('tabLeagueStandings', document.querySelectorAll('.nav-tab-btn')[1])" style="background:#090f1d; border:1px solid #1e2c44; border-radius:8px; padding:12px 16px; cursor:pointer; display:flex; align-items:center; gap:12px; transition:all 0.2s ease;">
+            <div style="font-size:1.8rem;">🏆</div>
+            <div style="flex:1;">
+              <div style="font-family:var(--font-tech); font-weight:700; font-size:0.9rem; color:#fff;">TABELA & G4</div>
+              <div style="font-size:0.75rem; color:#94a3b8;">Pontos & Calendário</div>
+            </div>
+            <span class="badge" style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#10b981; font-size:0.7rem;">G4</span>
+          </div>
+
+          <!-- Card 4: Perfil do Atleta & Carreira -->
+          <div class="quick-command-card" onclick="hubTabs.switchTab('tabCareerProfile', document.getElementById('tabBtnCareerProfile'))" style="background:#090f1d; border:1px solid #1e2c44; border-radius:8px; padding:12px 16px; cursor:pointer; display:flex; align-items:center; gap:12px; transition:all 0.2s ease;">
+            <div style="font-size:1.8rem;">⭐</div>
+            <div style="flex:1;">
+              <div style="font-family:var(--font-tech); font-weight:700; font-size:0.9rem; color:#fff;">PERFIL DO PRO</div>
+              <div style="font-size:0.75rem; color:#94a3b8;">Camisa, Troféus & MVPs</div>
+            </div>
+            <span class="badge badge-purple" style="font-size:0.7rem;">VER</span>
+          </div>
+        </div>
+
         <div class="dashboard-grid">
           <!-- Coluna Esquerda: Status do Atleta & Mains -->
           <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -1838,6 +1882,13 @@
                 <span class="badge badge-purple" id="hubCoachLevelBadgeOverview">👔 Coach Maestro (Nív. 1)</span>
                 <span class="badge badge-blue" id="hubSeasonRecord">0V - 0D</span>
               </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.06); border-radius:6px; padding:6px 12px; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:0.95rem;">📅</span>
+                  <span id="hubMatchScheduleDate" style="color:var(--hextech-blue); font-size:0.84rem; font-weight:700;">Sábado, 14 de Março de 2026 • 13:00h</span>
+                </div>
+                <button class="btn btn-sm" style="padding:2px 10px; font-size:0.75rem; border:1px solid rgba(200,170,110,0.5); color:var(--hextech-gold);" onclick="calendarEngine.openScheduleModal()">📅 Calendário</button>
+              </div>
 
               <!-- HUD Oficial de Playoffs Séries MD5 -->
               <div id="hubPlayoffsSeriesHud" style="display: none; align-items: center; justify-content: center; gap: 10px; margin: 8px 0; padding: 8px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-hex); border-radius: 6px;">
@@ -1882,7 +1933,7 @@
             <!-- Rotina e Ações Diárias -->
             <div class="card">
               <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                <span>Ações Diárias & Rotina de Atleta</span>
+                <span id="hubActionsSection">Ações Diárias & Rotina de Atleta</span>
                 <div style="display: flex; align-items: center; gap: 10px;">
                   <span class="badge badge-gold" id="hubWeeklyActionsBadge">⚡ 3 / 3 Ações Restantes</span>
                   <span style="font-size: 0.8rem; color: var(--text-muted);">Semana <span id="hubWeekNumber">1</span></span>
@@ -2004,19 +2055,23 @@
               <h4 id="navTierHeading" style="font-family: var(--font-tech); color: var(--hextech-gold); font-size: 1.1rem; text-transform: uppercase;">Tier 4 - Liga Amadora Go4LoL</h4>
               <p id="navTierDesc" style="font-size: 0.82rem; color: #94a3b8; margin: 0;">Porta de entrada do cenário semiprofissional. Os 2 melhores avançam para a disputa do Circuito Desafiante.</p>
             </div>
-            <span class="badge badge-blue" id="navYourTeamStatusBadge">Sua Divisão Atual</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button class="btn btn-sm" style="border:1px solid var(--hextech-gold); color:var(--hextech-gold); font-size:0.78rem; padding:4px 12px;" onclick="calendarEngine.openScheduleModal()">📅 Ver Calendário da Etapa</button>
+              <span class="badge badge-blue" id="navYourTeamStatusBadge">Sua Divisão Atual</span>
+            </div>
           </div>
 
           <table class="scoreboard-table">
             <thead>
               <tr>
-                <th>Posição</th>
+                <th style="width:70px; text-align:center;">Posição</th>
                 <th>Equipe</th>
-                <th>Partidas</th>
-                <th>Vitórias</th>
-                <th>Derrotas</th>
-                <th>Aproveitamento</th>
-                <th>Poder / Status</th>
+                <th style="color:var(--hextech-gold); text-align:center; font-weight:800;">Pontos (PTS)</th>
+                <th style="text-align:center;">Jogos (J)</th>
+                <th style="color:var(--success-green); text-align:center;">Vitórias (V)</th>
+                <th style="color:var(--danger-red); text-align:center;">Derrotas (D)</th>
+                <th style="text-align:center;">Aprov. (%)</th>
+                <th style="text-align:center;">Classificação</th>
                 <th style="text-align:center;">Scouting</th>
               </tr>
             </thead>
@@ -2105,6 +2160,125 @@
           <div id="tabSocialFeedContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
       </div>
+
+      <!-- TAB 6: PERFIL DO PRO-PLAYER, CAMISA DO TIME & CARREIRA -->
+      <div id="tabCareerProfile" class="tab-content">
+        <div class="card" style="border-color:var(--hextech-gold); margin-bottom:16px; background:linear-gradient(135deg, rgba(200,170,110,0.12) 0%, #0a1120 100%);">
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <span>⭐ PERFIL OFICIAL DO ATLETA • UNIFORME OFICIAL DA ORGANIZAÇÃO</span>
+            </span>
+            <span class="badge badge-gold" id="careerProfileTeamBadge">Santos Dex</span>
+          </div>
+
+          <!-- Grid Principal do Perfil do Atleta -->
+          <div style="display:grid; grid-template-columns:260px 1fr; gap:24px; align-items:center; flex-wrap:wrap;">
+            <!-- Coluna Esquerda: Avatar do Atleta com a Camisa do Time -->
+            <div style="background:#060b14; border:1px solid #1a273e; border-radius:10px; padding:18px; text-align:center; box-shadow:0 0 25px rgba(0,0,0,0.6); position:relative;">
+              <div id="careerPlayerJerseyContainer" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
+              <div style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; color:#fff;" id="careerProfilePlayerNick">Revenge</div>
+              <div style="font-size:0.8rem; color:var(--hextech-blue); font-weight:700; margin-top:2px;" id="careerProfilePlayerRole">MID LANER TITULAR</div>
+              <div style="font-size:0.75rem; color:#94a3b8; margin-top:4px;" id="careerProfilePlayerBio">19 anos • 🇧🇷 Brasil</div>
+              <div style="margin-top:10px; display:inline-block;" class="badge badge-gold" id="careerProfileStatusTag">👑 Titular Incontestável</div>
+            </div>
+
+            <!-- Coluna Direita: Ficha Técnica, OVR & Contrato -->
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px;">
+                <div style="background:#080e1a; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+                  <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">NÍVEL GERAL</div>
+                  <div style="font-family:var(--font-tech); font-weight:800; font-size:1.4rem; color:var(--hextech-gold);" id="careerProfileOvrVal">85 OVR</div>
+                </div>
+                <div style="background:#080e1a; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+                  <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">SALÁRIO SEMANAL</div>
+                  <div style="font-family:var(--font-tech); font-weight:800; font-size:1.2rem; color:var(--success-green);" id="careerProfileSalaryVal">R$ 4.500</div>
+                </div>
+                <div style="background:#080e1a; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+                  <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">REPUTAÇÃO / FAMA</div>
+                  <div style="font-family:var(--font-tech); font-weight:800; font-size:1.2rem; color:var(--hextech-blue);" id="careerProfileFameVal">850 Fãs</div>
+                </div>
+                <div style="background:#080e1a; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+                  <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">ELO SOLOQUEUE</div>
+                  <div style="font-family:var(--font-tech); font-weight:800; font-size:1.1rem; color:#fff;" id="careerProfileEloVal">Desafiante</div>
+                </div>
+              </div>
+
+              <!-- Atributos Chave do Atleta -->
+              <div style="background:#080e1a; border:1px solid #1e2c44; border-radius:8px; padding:14px;">
+                <div style="font-size:0.78rem; font-weight:700; color:var(--hextech-gold); margin-bottom:8px; text-transform:uppercase;">DNA COMPETITIVO & ATRIBUTOS NO RIFT:</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px;">
+                  <div style="font-size:0.84rem; display:flex; justify-content:space-between;"><span style="color:#94a3b8;">Mecânica & Duelos:</span> <strong style="color:#00d2ff;" id="careerValMech">88</strong></div>
+                  <div style="font-size:0.84rem; display:flex; justify-content:space-between;"><span style="color:#94a3b8;">Macro & Visão:</span> <strong style="color:#a855f7;" id="careerValMacro">84</strong></div>
+                  <div style="font-size:0.84rem; display:flex; justify-content:space-between;"><span style="color:#94a3b8;">Comunicação & Liderança:</span> <strong style="color:#f59e0b;" id="careerValComm">78</strong></div>
+                  <div style="font-size:0.84rem; display:flex; justify-content:space-between;"><span style="color:#94a3b8;">Consistência & Frieza:</span> <strong style="color:#10b981;" id="careerValCons">82</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SALA DE TROFÉUS E PALMARÉS (TROPHY ROOM) -->
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>🏆 SALA DE TROFÉUS & CONQUISTAS COLETIVAS</span>
+            <span class="badge badge-gold" id="careerTitlesCountBadge">0 Títulos Oficiais</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px;" id="careerTrophiesContainer">
+            <!-- Gerado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- PRÊMIOS INDIVIDUAIS & HISTÓRICO GLOBAL -->
+        <div class="card">
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>⭐ PRÊMIOS INDIVIDUAIS & ESTATÍSTICAS HISTÓRICAS DE CARREIRA</span>
+            <span class="badge badge-purple">Hall da Fama</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:18px;">
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:8px; padding:14px; text-align:center;">
+              <div style="font-size:1.8rem;">👑</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.5rem; color:var(--hextech-gold); margin-top:4px;" id="careerMvpCount">0</div>
+              <div style="font-size:0.75rem; color:#94a3b8; font-weight:700;">MVP DA PARTIDA</div>
+            </div>
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:8px; padding:14px; text-align:center;">
+              <div style="font-size:1.8rem;">⚔️</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.5rem; color:var(--hextech-blue); margin-top:4px;" id="careerFinalsCount">0</div>
+              <div style="font-size:0.75rem; color:#94a3b8; font-weight:700;">FINAIS DISPUTADAS</div>
+            </div>
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:8px; padding:14px; text-align:center;">
+              <div style="font-size:1.8rem;">💥</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.5rem; color:#e11d48; margin-top:4px;" id="careerPentakillsCount">0</div>
+              <div style="font-size:0.75rem; color:#94a3b8; font-weight:700;">PENTAKILLS HISTÓRICOS</div>
+            </div>
+          </div>
+
+          <!-- Estatísticas Totais de Partidas -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; text-align:center;">
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+              <div style="font-size:0.72rem; color:#94a3b8;">JOGOS TOTAIS</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.25rem; color:#fff;" id="careerTotalGames">0</div>
+            </div>
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+              <div style="font-size:0.72rem; color:#94a3b8;">VITÓRIAS</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.25rem; color:var(--success-green);" id="careerTotalWins">0</div>
+            </div>
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+              <div style="font-size:0.72rem; color:#94a3b8;">DERROTAS</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.25rem; color:var(--danger-red);" id="careerTotalLosses">0</div>
+            </div>
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+              <div style="font-size:0.72rem; color:#94a3b8;">APROVEITAMENTO</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.25rem; color:var(--hextech-gold);" id="careerWinrate">0%</div>
+            </div>
+            <div style="background:#090f1d; border:1px solid #1e2c44; border-radius:6px; padding:10px;">
+              <div style="font-size:0.72rem; color:#94a3b8;">ABATES TOTAIS</div>
+              <div style="font-family:var(--font-tech); font-weight:800; font-size:1.25rem; color:#38bdf8;" id="careerTotalKills">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -2564,6 +2738,36 @@
   <!-- ==========================================================
        MODAIS (SOLOQUEUE, SAVES, GUIA)
        ========================================================== -->
+  
+  <!-- Modal de Calendário Oficial de Jogos da Etapa -->
+  <div id="scheduleCalendarModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index:99999;">
+    <div class="modal-box" style="max-width:840px; width:95%; max-height:90vh; overflow-y:auto; padding:24px; text-align:left; border:1px solid var(--hextech-gold); box-shadow:0 0 35px rgba(200,170,110,0.35);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; border-bottom:1px solid #1e2c44; padding-bottom:14px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:2rem;">📅</span>
+          <div>
+            <h2 style="margin:0; font-family:var(--font-display); font-size:1.5rem; color:#fff;">CALENDÁRIO OFICIAL DA TEMPORADA 2026</h2>
+            <p id="scheduleModalSubtitle" style="margin:2px 0 0 0; font-size:0.85rem; color:#94a3b8;">Datas, confrontos e horários oficiais das rodadas (Sábados e Domingos às 13:00h)</p>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-danger" onclick="calendarEngine.closeScheduleModal()">✕ Fechar</button>
+      </div>
+
+      <div style="background:rgba(0,162,255,0.08); border:1px solid rgba(0,162,255,0.25); border-radius:8px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="font-size:0.85rem; color:#cbd5e1;">
+          📌 <strong>Sistema de Pontuação Oficial:</strong> Vitória = <span style="color:var(--hextech-gold); font-weight:800;">+3 Pontos</span> | Derrota = <span style="color:#94a3b8;">0 Pontos</span>. O <span style="color:#10b981; font-weight:700;">G4 (Top 4)</span> avança para os Playoffs MD5 com Fearless Draft!
+        </div>
+        <span class="badge badge-gold" id="scheduleModalLeagueBadge">CBLOL 2026</span>
+      </div>
+
+      <div id="scheduleRoundsContainer" style="display:flex; flex-direction:column; gap:12px;"></div>
+
+      <div style="text-align:right; margin-top:16px;">
+        <button class="btn btn-gold" style="padding:8px 26px;" onclick="calendarEngine.closeScheduleModal()">Entendido</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal de Scouting e Escalação de Times -->
   <div id="teamScoutingModal" class="modal-overlay" style="display:none; align-items:center; justify-content:center; z-index:99999;">
     <div class="modal-box" style="max-width:760px; width:94%; max-height:90vh; overflow-y:auto; padding:24px; text-align:left; border:1px solid var(--hextech-gold); box-shadow:0 0 35px rgba(200,170,110,0.35);">
@@ -3312,6 +3516,242 @@
           { role: "ADC", nick: "Celo", ovr: 81, champs: "Zeri, Kai'Sa, Jinx", form: "✨ Revelação Promissora", kda: "4.0" },
           { role: "Suporte", nick: "Kabbie", ovr: 81, champs: "Rakan, Thresh, Nautilus", form: "🛡️ Suporte Tático", kda: "3.7" }
         ]
+      },
+
+      // === TIER 4: LIGA AMADORA GO4LOL ===
+      "Santos Dex": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Mantis", playstyle: "Agressividade no Início de Jogo e Duelos Mecânicos", streak: "⚡ 2 Vitórias", ovr: 52,
+        players: [
+          { role: "Top", nick: "Mantis", ovr: 53, champs: "Renekton, Aatrox, Jax", form: "⚡ Focado", kda: "3.2" },
+          { role: "Jungle", nick: "Klaus", ovr: 51, champs: "Lee Sin, Jarvan IV, Vi", form: "⚡ Regular", kda: "3.0" },
+          { role: "Mid", nick: "Nox", ovr: 54, champs: "Ahri, Zed, Syndra", form: "🔥 Destaque", kda: "3.8" },
+          { role: "ADC", nick: "Breeze", ovr: 52, champs: "Lucian, Ezreal, Jinx", form: "⚡ Confiável", kda: "3.5" },
+          { role: "Suporte", nick: "Lox", ovr: 50, champs: "Thresh, Nautilus, Leona", form: "🛡️ Iniciador", kda: "3.1" }
+        ]
+      },
+      "KaBuM! Black": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Noc", playstyle: "Lutas de Equipe e Controle de Objetivos Básicos", streak: "⚡ 1 Vitória", ovr: 53,
+        players: [
+          { role: "Top", nick: "Vanguard", ovr: 52, champs: "Sion, Malphite, Shen", form: "🛡️ Muralha", kda: "2.9" },
+          { role: "Jungle", nick: "ShadowBR", ovr: 54, champs: "Sejuani, Viego, Nocturne", form: "⚡ Ousado", kda: "3.4" },
+          { role: "Mid", nick: "Eclipse", ovr: 53, champs: "Orianna, Viktor, Azir", form: "🧠 Estratégico", kda: "3.6" },
+          { role: "ADC", nick: "Shooter", ovr: 54, champs: "Caitlyn, Varus, Jinx", form: "🔥 Pontaria Boa", kda: "3.9" },
+          { role: "Suporte", nick: "Sentinel", ovr: 51, champs: "Braum, Alistar, Rell", form: "🛡️ Protetor", kda: "3.2" }
+        ]
+      },
+      "Team Genesis": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Fang", playstyle: "Iniciações Rápidas e Skirmishes no Rio", streak: "❄️ 1 Derrota", ovr: 50,
+        players: [
+          { role: "Top", nick: "Reaper", ovr: 51, champs: "Darius, Garen, Sett", form: "⚡ Bruto", kda: "2.8" },
+          { role: "Jungle", nick: "Fang", ovr: 50, champs: "Xin Zhao, Warwick, Vi", form: "⚡ Caçador", kda: "3.0" },
+          { role: "Mid", nick: "Mirage", ovr: 52, champs: "LeBlanc, Talon, Akali", form: "🔥 Emboscador", kda: "3.4" },
+          { role: "ADC", nick: "Starlight", ovr: 49, champs: "Ashe, Miss Fortune, Jhin", form: "⚡ Utilitário", kda: "3.1" },
+          { role: "Suporte", nick: "Wardian", ovr: 48, champs: "Morgana, Lux, Karma", form: "🛡️ Mago Sup", kda: "2.7" }
+        ]
+      },
+      "Ilha da Macacada Gaming": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Macaco", playstyle: "Pressão de Torcida, Jogadas Caóticas e Invasões de Nível 1", streak: "🔥 3 Vitórias Seguidas", ovr: 53,
+        players: [
+          { role: "Top", nick: "MonkeyKing", ovr: 54, champs: "Wukong, Renekton, Jax", form: "🔥 Ousado", kda: "3.7" },
+          { role: "Jungle", nick: "BananaMan", ovr: 52, champs: "Zac, Amumu, Rammus", form: "⚡ Imprevisível", kda: "3.3" },
+          { role: "Mid", nick: "Gorilla", ovr: 55, champs: "Yasuo, Yone, Sylas", form: "🔥 SoloQ King", kda: "4.0" },
+          { role: "ADC", nick: "Chimp", ovr: 51, champs: "Draven, Tristana, Samira", form: "🔥 Agressivo", kda: "3.4" },
+          { role: "Suporte", nick: "Harambe", ovr: 52, champs: "Blitzcrank, Pyke, Nautilus", form: "🎯 Puxões Lendários", kda: "3.6" }
+        ]
+      },
+      "Sobregaming": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Zorba", playstyle: "Macro Tradicional e Escalonamento Lento", streak: "❄️ 2 Derrotas", ovr: 49,
+        players: [
+          { role: "Top", nick: "Zorba", ovr: 50, champs: "Cho'Gath, Ornn, Maokai", form: "🛡️ Tanque", kda: "2.7" },
+          { role: "Jungle", nick: "Dagger", ovr: 49, champs: "Kha'Zix, Kayn, Elise", form: "⚡ Emboscador", kda: "3.1" },
+          { role: "Mid", nick: "Krypton", ovr: 51, champs: "Veigar, Malzahar, Annie", form: "⚡ Seguro", kda: "3.2" },
+          { role: "ADC", nick: "Vandal", ovr: 48, champs: "Sivir, Twitch, Kog'Maw", form: "⚡ Late Game", kda: "2.9" },
+          { role: "Suporte", nick: "Hex", ovr: 48, champs: "Janna, Lulu, Soraka", form: "🛡️ Protetor", kda: "2.8" }
+        ]
+      },
+      "Keyd Warriors": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Strike", playstyle: "Disciplina Tática e Coordenação de Rotas", streak: "⚡ 2 Vitórias", ovr: 54,
+        players: [
+          { role: "Top", nick: "Slayer", ovr: 53, champs: "Fiora, Irelia, Camille", form: "🔥 Duelista", kda: "3.5" },
+          { role: "Jungle", nick: "Striker", ovr: 55, champs: "Lee Sin, Jarvan IV, Viego", form: "⚡ Capitão", kda: "3.8" },
+          { role: "Mid", nick: "Pulse", ovr: 54, champs: "Syndra, Taliyah, Ahri", form: "⚡ Criador de Jogadas", kda: "3.6" },
+          { role: "ADC", nick: "Crosshair", ovr: 53, champs: "Kai'Sa, Lucian, Varus", form: "⚡ Preciso", kda: "3.7" },
+          { role: "Suporte", nick: "Bastion", ovr: 52, champs: "Rakan, Leona, Nautilus", form: "🛡️ Iniciador", kda: "3.3" }
+        ]
+      },
+      "Remo Brave": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Spartan", playstyle: "Espírito Guerreiro do Norte e Lutas Frequentes", streak: "❄️ 1 Derrota", ovr: 48,
+        players: [
+          { role: "Top", nick: "Spartan", ovr: 49, champs: "Pantheon, Olaf, Renekton", form: "⚡ Combatente", kda: "2.8" },
+          { role: "Jungle", nick: "Viking", ovr: 48, champs: "Volibear, Trundle, Udyr", form: "⚡ Selvagem", kda: "2.9" },
+          { role: "Mid", nick: "Tempest", ovr: 50, champs: "Kassadin, Katarina, Diana", form: "🔥 Ousado", kda: "3.3" },
+          { role: "ADC", nick: "Volley", ovr: 47, champs: "Ashe, Kalista, Varus", form: "⚡ Regular", kda: "2.7" },
+          { role: "Suporte", nick: "AegisGuard", ovr: 47, champs: "Taric, Braum, Shen", form: "🛡️ Escudeiro", kda: "2.6" }
+        ]
+      },
+      "Big Gods": {
+        region: "BR", league: "Liga Amadora Go4LoL", coach: "Coach Titan", playstyle: "Agressividade nas Rotas Laterais e Split-Push", streak: "⚡ 1 Vitória", ovr: 51,
+        players: [
+          { role: "Top", nick: "TitanGod", ovr: 52, champs: "Kled, Sion, Jax", form: "⚡ Pressão Top", kda: "3.1" },
+          { role: "Jungle", nick: "Colossus", ovr: 50, champs: "Hecarim, Gragas, Sejuani", form: "⚡ Tanque", kda: "3.0" },
+          { role: "Mid", nick: "ZeusBR", ovr: 53, champs: "Jayce, Ryze, Cassiopeia", form: "🔥 Dano Alto", kda: "3.5" },
+          { role: "ADC", nick: "Apollo", ovr: 51, champs: "Jinx, Aphelios, Kai'Sa", form: "⚡ Hipercarregador", kda: "3.4" },
+          { role: "Suporte", nick: "Chronos", ovr: 49, champs: "Zilean, Bard, Thresh", form: "🧠 Estratégico", kda: "3.0" }
+        ]
+      },
+
+      // === TIER 3: CIRCUITO DESAFIANTE ===
+      "Flamengo Esports": {
+        region: "BR", league: "Circuito Desafiante", coach: "Coach Djoko", playstyle: "Pressão de Torcida, Rotação Agressiva e Tradição Rubro-Negra", streak: "🔥 4 Vitórias Seguidas", ovr: 68,
+        players: [
+          { role: "Top", nick: "Parang", ovr: 69, champs: "Gnar, Jayce, K'Sante", form: "🔥 Titã Coreano", kda: "3.9" },
+          { role: "Jungle", nick: "Shrimp", ovr: 68, champs: "Lee Sin, Rek'Sai, Elise", form: "⚡ Predador", kda: "4.1" },
+          { role: "Mid", nick: "Goku", ovr: 69, champs: "Ahri, Azir, Syndra", form: "👑 Veterano Decisivo", kda: "4.3" },
+          { role: "ADC", nick: "brTT", ovr: 71, champs: "Draven, Lucian, Kalista", form: "👑 Rexpeita o Pai", kda: "4.7" },
+          { role: "Suporte", nick: "Luci", ovr: 68, champs: "Thresh, Alistar, Nautilus", form: "🛡️ Suporte Coreano", kda: "4.0" }
+        ]
+      },
+      "Santos e-Sports": {
+        region: "BR", league: "Circuito Desafiante", coach: "Coach Jack", playstyle: "Meninos da Vila: Jovens Talentos com Duelos Rápidos", streak: "⚡ 2 Vitórias", ovr: 66,
+        players: [
+          { role: "Top", nick: "JackPoT", ovr: 67, champs: "Aatrox, Renekton, Rumble", form: "⚡ Combativo", kda: "3.5" },
+          { role: "Jungle", nick: "Mew1", ovr: 65, champs: "Jarvan IV, Sejuani, Vi", form: "⚡ Sólido", kda: "3.6" },
+          { role: "Mid", nick: "Rainbow", ovr: 68, champs: "Azir, Corki, Taliyah", form: "🔥 Maestro Criativo", kda: "4.1" },
+          { role: "ADC", nick: "Luskka", ovr: 66, champs: "Varus, Jinx, Ashe", form: "⚡ Atirador Firme", kda: "3.8" },
+          { role: "Suporte", nick: "Hawk", ovr: 64, champs: "Rakan, Braum, Leona", form: "🛡️ Protetor", kda: "3.4" }
+        ]
+      },
+      "Team oNe eSports": {
+        region: "BR", league: "Circuito Desafiante", coach: "Coach Neki", playstyle: "Espírito Campeão dos Golden Boys e Macro Refinado", streak: "⚡ 3 Vitórias Seguidas", ovr: 67,
+        players: [
+          { role: "Top", nick: "VVvert", ovr: 68, champs: "Shen, Cho'Gath, Camille", form: "🔥 Ouro Puro", kda: "3.8" },
+          { role: "Jungle", nick: "4LaN", ovr: 67, champs: "Lee Sin, Gragas, Elise", form: "⚡ Psicopata do Rio", kda: "3.9" },
+          { role: "Mid", nick: "Brucer", ovr: 67, champs: "Orianna, Syndra, Ryze", form: "🧠 Estrategista", kda: "4.0" },
+          { role: "ADC", nick: "Absolut", ovr: 68, champs: "Jinx, Kalista, Varus", form: "🔥 Carregador Nato", kda: "4.2" },
+          { role: "Suporte", nick: "Jockster", ovr: 66, champs: "Alistar, Morgana, Thresh", form: "🛡️ Lenda do Suporte", kda: "3.9" }
+        ]
+      },
+      "Operation Kino": {
+        region: "BR", league: "Circuito Desafiante", coach: "Coach Beellz", playstyle: "Lutas Caóticas e Iniciações Diretas", streak: "❄️ 1 Derrota", ovr: 63,
+        players: [
+          { role: "Top", nick: "Fitz", ovr: 63, champs: "Renekton, Kled, Jax", form: "⚡ Aguerrido", kda: "3.1" },
+          { role: "Jungle", nick: "Turtle", ovr: 64, champs: "Gragas, Rek'Sai, Sejuani", form: "🧠 Capitão Tartaruga", kda: "3.4" },
+          { role: "Mid", nick: "DynquedoJr", ovr: 65, champs: "Azir, Ahri, Cassiopeia", form: "✨ Promessa", kda: "3.7" },
+          { role: "ADC", nick: "TheFoxz", ovr: 63, champs: "Lucian, Ezreal, Corki", form: "⚡ Agressivo", kda: "3.3" },
+          { role: "Suporte", nick: "Professor", ovr: 63, champs: "Bard, Braum, Nautilus", form: "🛡️ Consistente", kda: "3.5" }
+        ]
+      },
+      "ProGaming Esports": {
+        region: "BR", league: "Circuito Desafiante", coach: "Coach Gafone", playstyle: "Agressividade no Início de Jogo e Selva Dominante", streak: "⚡ 1 Vitória", ovr: 65,
+        players: [
+          { role: "Top", nick: "SkyBart", ovr: 64, champs: "Gnar, Aatrox, Jayce", form: "⚡ Duelista Firme", kda: "3.3" },
+          { role: "Jungle", nick: "Minerva", ovr: 66, champs: "Hecarim, Lee Sin, Nocturne", form: "🔥 Ousadia Pura", kda: "3.8" },
+          { role: "Mid", nick: "Lynx", ovr: 64, champs: "Taliyah, LeBlanc, Zoe", form: "⚡ Rápido", kda: "3.5" },
+          { role: "ADC", nick: "Duduzera", ovr: 65, champs: "Varus, Jinx, Kai'Sa", form: "⚡ Seguro", kda: "3.7" },
+          { role: "Suporte", nick: "Baiano", ovr: 66, champs: "Blitzcrank, Thresh, Tahm Kench", form: "🔥 A Voz do Brasil", kda: "3.9" }
+        ]
+      },
+      "Iron Hawks Esports": {
+        region: "BR", league: "Circuito Desafiante", coach: "Coach Wood", playstyle: "Defesa Sólida e Controle de Dragões", streak: "❄️ 2 Derrotas", ovr: 62,
+        players: [
+          { role: "Top", nick: "DudsTheBoy", ovr: 63, champs: "Sion, Ornn, Poppy", form: "🛡️ Muralha de Ferro", kda: "3.0" },
+          { role: "Jungle", nick: "Erasus", ovr: 62, champs: "Jarvan IV, Trundle, Vi", form: "⚡ Focado", kda: "3.2" },
+          { role: "Mid", nick: "Krabim", ovr: 63, champs: "Syndra, Orianna, Viktor", form: "⚡ Tradicional", kda: "3.4" },
+          { role: "ADC", nick: "Steal", ovr: 62, champs: "Caitlyn, Jhin, Sivir", form: "⚡ Posicionamento", kda: "3.3" },
+          { role: "Suporte", nick: "Woodboy", ovr: 61, champs: "Taric, Nautilus, Leona", form: "🛡️ Iniciador", kda: "3.1" }
+        ]
+      },
+
+      // === TIER 2: CBLOL ACADEMY ===
+      "LOUD Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Bell", playstyle: "Formação de Elite, Lutas Coordenadas e Ritmo Acelerado", streak: "🔥 3 Vitórias Seguidas", ovr: 78,
+        players: [
+          { role: "Top", nick: "Curse", ovr: 78, champs: "Aatrox, Renekton, Jayce", form: "🔥 Titã da Base", kda: "3.9" },
+          { role: "Jungle", nick: "Hidan", ovr: 77, champs: "Lee Sin, Viego, Sejuani", form: "⚡ Muito Ativo", kda: "3.8" },
+          { role: "Mid", nick: "Glow", ovr: 79, champs: "Azir, Ahri, Sylas", form: "✨ Prodígio da LOUD", kda: "4.3" },
+          { role: "ADC", nick: "Marf", ovr: 78, champs: "Varus, Kai'Sa, Lucian", form: "🔥 Atirador Letal", kda: "4.2" },
+          { role: "Suporte", nick: "BocaJR", ovr: 76, champs: "Rakan, Nautilus, Leona", form: "🛡️ Engajador", kda: "3.7" }
+        ]
+      },
+      "paiN Gaming Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Sarkis", playstyle: "DNA Tradicional da paiN, Pressão Contínua e Raça em Todas as Rotas", streak: "🔥 4 Vitórias Seguidas", ovr: 78,
+        players: [
+          { role: "Top", nick: "Hanor", ovr: 78, champs: "Camille, Fiora, K'Sante", form: "🔥 O Novo Wizer", kda: "4.0" },
+          { role: "Jungle", nick: "Gragolandia", ovr: 77, champs: "Gragas, Jarvan IV, Vi", form: "⚡ Ousadia Pura", kda: "3.9" },
+          { role: "Mid", nick: "Qats", ovr: 78, champs: "Taliyah, Azir, Orianna", form: "👑 Controle Mágico", kda: "4.2" },
+          { role: "ADC", nick: "Tatu", ovr: 79, champs: "Lucian, Kai'Sa, Draven", form: "🔥 Jovem Fenômeno", kda: "4.5" },
+          { role: "Suporte", nick: "DamageJr", ovr: 76, champs: "Thresh, Nautilus, Alistar", form: "🎯 Puxão Perfeito", kda: "3.8" }
+        ]
+      },
+      "RED Canids Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Hypno", playstyle: "Agressividade Jovens Lobos, Engajes Diretos e Ritmo Frenético", streak: "⚡ 2 Vitórias", ovr: 77,
+        players: [
+          { role: "Top", nick: "Betão", ovr: 77, champs: "Renekton, Gnar, Rumble", form: "🔥 Agressivo", kda: "3.7" },
+          { role: "Jungle", nick: "Scavenger", ovr: 76, champs: "Lee Sin, Viego, Xin Zhao", form: "⚡ Caçador Nato", kda: "3.8" },
+          { role: "Mid", nick: "Avenger", ovr: 78, champs: "Sylas, Akali, Yone", form: "🔥 Assassino Veloz", kda: "4.1" },
+          { role: "ADC", nick: "Morttheus", ovr: 77, champs: "Kalista, Varus, Jinx", form: "⚡ Atirador Feroz", kda: "4.0" },
+          { role: "Suporte", nick: "Telas", ovr: 75, champs: "Leona, Rell, Nautilus", form: "🛡️ Iniciador da Matilha", kda: "3.6" }
+        ]
+      },
+      "Vivo Keyd Stars Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Krow", playstyle: "Macro Preciso, Controle de Visão e Transições Rápidas", streak: "⚡ 3 Vitórias Seguidas", ovr: 76,
+        players: [
+          { role: "Top", nick: "Tyrin", ovr: 76, champs: "Jayce, K'Sante, Gnar", form: "⚡ Técnico", kda: "3.6" },
+          { role: "Jungle", nick: "Goot", ovr: 77, champs: "Sejuani, Jarvan IV, Viego", form: "🧠 Estrategista", kda: "3.9" },
+          { role: "Mid", nick: "Leleko", ovr: 77, champs: "Azir, Syndra, Ahri", form: "🔥 Mago Promissor", kda: "4.0" },
+          { role: "ADC", nick: "Mortes", ovr: 76, champs: "Varus, Aphelios, Jinx", form: "⚡ Seguro", kda: "3.8" },
+          { role: "Suporte", nick: "Trymbik", ovr: 75, champs: "Rakan, Braum, Renata", form: "🛡️ Tático", kda: "3.6" }
+        ]
+      },
+      "FURIA Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Max", playstyle: "Agressividade nas Rotas Laterais e Busca por Pickoffs", streak: "❄️ 1 Derrota", ovr: 75,
+        players: [
+          { role: "Top", nick: "Norvas", ovr: 75, champs: "Aatrox, Jax, Renekton", form: "⚡ Regular", kda: "3.4" },
+          { role: "Jungle", nick: "Ganks", ovr: 76, champs: "Nocturne, Lee Sin, Vi", form: "🔥 Caçador Rápido", kda: "3.7" },
+          { role: "Mid", nick: "Stankov", ovr: 76, champs: "Orianna, Viktor, Azir", form: "⚡ Sólido", kda: "3.8" },
+          { role: "ADC", nick: "Stepz", ovr: 76, champs: "Jinx, Zeri, Kai'Sa", form: "⚡ Hipercarregador", kda: "3.9" },
+          { role: "Suporte", nick: "Juzinho", ovr: 74, champs: "Nautilus, Leona, Tahm Kench", form: "🛡️ Protetor", kda: "3.5" }
+        ]
+      },
+      "KaBuM! Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Sam", playstyle: "Controle de Linha de Frente e Lutas por Objetivos Neutros", streak: "⚡ 1 Vitória", ovr: 75,
+        players: [
+          { role: "Top", nick: "Raven", ovr: 75, champs: "Sion, Ornn, K'Sante", form: "🛡️ Tanque Confiável", kda: "3.3" },
+          { role: "Jungle", nick: "Scary", ovr: 76, champs: "Jarvan IV, Lee Sin, Sejuani", form: "⚡ Iniciador", kda: "3.6" },
+          { role: "Mid", nick: "Dioge", ovr: 76, champs: "Ahri, Syndra, Yone", form: "🔥 Habilidoso", kda: "3.8" },
+          { role: "ADC", nick: "Ravena", ovr: 76, champs: "Varus, Aphelios, Kai'Sa", form: "⚡ Pontaria Fina", kda: "3.9" },
+          { role: "Suporte", nick: "Guigs", ovr: 75, champs: "Thresh, Nautilus, Alistar", form: "🎯 Mão Firme", kda: "3.6" }
+        ]
+      },
+      "Fluxo Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Kake", playstyle: "Iniciações Imprevisíveis e Alta Criatividade em Combate", streak: "❄️ 2 Derrotas", ovr: 74,
+        players: [
+          { role: "Top", nick: "Stylo", ovr: 74, champs: "Gnar, Rumble, K'Sante", form: "⚡ Em Formação", kda: "3.2" },
+          { role: "Jungle", nick: "Yampi", ovr: 76, champs: "Lee Sin, Viego, Jarvan IV", form: "🔥 Veterano Guiando", kda: "3.7" },
+          { role: "Mid", nick: "Piloto", ovr: 75, champs: "Taliyah, Azir, Syndra", form: "⚡ Promissor", kda: "3.6" },
+          { role: "ADC", nick: "Sabbag", ovr: 74, champs: "Jinx, Lucian, Varus", form: "⚡ Regular", kda: "3.5" },
+          { role: "Suporte", nick: "Moot", ovr: 73, champs: "Rakan, Leona, Nautilus", form: "🛡️ Dedicado", kda: "3.3" }
+        ]
+      },
+      "INTZ Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Onil", playstyle: "Formação de Novos Intrépidos com Foco em Disciplina", streak: "❄️ 1 Derrota", ovr: 74,
+        players: [
+          { role: "Top", nick: "Skau", ovr: 74, champs: "Renekton, Aatrox, Jayce", form: "⚡ Firme", kda: "3.3" },
+          { role: "Jungle", nick: "Mayumi", ovr: 75, champs: "Sejuani, Vi, Jarvan IV", form: "⚡ Caçadora Focada", kda: "3.6" },
+          { role: "Mid", nick: "Hades", ovr: 75, champs: "Azir, Orianna, Corki", form: "⚡ Técnico", kda: "3.7" },
+          { role: "ADC", nick: "Taura", ovr: 74, champs: "Aphelios, Jinx, Varus", form: "⚡ Promessa", kda: "3.6" },
+          { role: "Suporte", nick: "Niship", ovr: 74, champs: "Braum, Nautilus, Alistar", form: "🛡️ Protetor Firme", kda: "3.4" }
+        ]
+      },
+      "Los Grandes Academy": {
+        region: "BR", league: "CBLOL Academy", coach: "Coach Vash", playstyle: "Aceleração Rápida no Meio de Jogo e Skirmishes no Rio", streak: "❄️ 2 Derrotas", ovr: 73,
+        players: [
+          { role: "Top", nick: "BoalJr", ovr: 73, champs: "Aatrox, K'Sante, Gragas", form: "⚡ Em Formação", kda: "3.1" },
+          { role: "Jungle", nick: "Drakehero", ovr: 74, champs: "Lee Sin, Viego, Xin Zhao", form: "⚡ Ousado", kda: "3.5" },
+          { role: "Mid", nick: "Kowalsky", ovr: 74, champs: "Azir, Syndra, Ahri", form: "⚡ Estratégico", kda: "3.5" },
+          { role: "ADC", nick: "Kenan", ovr: 74, champs: "Zeri, Kai'Sa, Jinx", form: "✨ Revelação", kda: "3.6" },
+          { role: "Suporte", nick: "Medusa", ovr: 73, champs: "Rakan, Thresh, Nautilus", form: "🛡️ Iniciador", kda: "3.3" }
+        ]
       }
     };
     window.GLOBAL_ROSTERS_DB = GLOBAL_ROSTERS_DB;
@@ -3534,7 +3974,18 @@ function generateRival(playerRole) {
       spells: { d: "Flash", f: "Ignite" },
       coach: { name: "Maestro", level: 1, exp: 0, nextExp: 100, title: "Treinador Novato" },
       playoffs: { inPlayoffs: false, stage: "Fase Regular", wins: 0, losses: 0, seriesTarget: 3, opponentName: "", fearlessPlayedChamps: [] },
-      socialFeed: []
+      socialFeed: [],
+      achievements: {
+        titles: [],
+        finals: 0,
+        mvpMatches: 0,
+        mvpTournaments: 0,
+        totalMatches: 0,
+        totalWins: 0,
+        totalLosses: 0,
+        totalKills: 0,
+        totalPentakills: 0
+      }
     };
 
     let careerState = null;
@@ -4152,36 +4603,44 @@ function generateRival(playerRole) {
 
         const teamsList = [...league.teams];
         if (careerState && careerState.team.tierId === tierId) {
-          const myIdx = teamsList.findIndex(t => t.name === careerState.team.name);
+          const myIdx = teamsList.findIndex(t => t.name.trim().toLowerCase() === careerState.team.name.trim().toLowerCase());
           if (myIdx !== -1) {
             teamsList[myIdx].wins = careerState.team.wins;
             teamsList[myIdx].losses = careerState.team.losses;
+            teamsList[myIdx].points = (careerState.team.wins || 0) * 3;
           }
         }
 
-        teamsList.sort((a, b) => b.wins - a.wins || a.losses - b.losses);
+        teamsList.forEach(tm => {
+          tm.points = (tm.wins || 0) * 3;
+        });
+
+        teamsList.sort((a, b) => (b.points - a.points) || (b.wins - a.wins) || (a.losses - b.losses));
 
         teamsList.forEach((tm, idx) => {
-          const isMyTeam = careerState && careerState.team.name === tm.name;
+          const isMyTeam = careerState && careerState.team.name.trim().toLowerCase() === tm.name.trim().toLowerCase();
           const tr = document.createElement("tr");
           tr.className = "team-scout-row" + (isMyTeam ? " my-team-row" : "");
           tr.onclick = () => this.openScoutingModal(tm.name);
 
-          const totalGames = tm.wins + tm.losses;
-          const wr = totalGames > 0 ? Math.round((tm.wins / totalGames) * 100) : 50;
+          const totalGames = (tm.wins || 0) + (tm.losses || 0);
+          const wr = totalGames > 0 ? Math.round((tm.wins / totalGames) * 100) : 0;
+          const points = tm.points !== undefined ? tm.points : ((tm.wins || 0) * 3);
+          const inG4 = idx < 4;
 
-          tr.innerHTML = "<td><strong>#" + (idx + 1) + "</strong></td>" +
+          tr.innerHTML = "<td style='text-align:center;'><strong>#" + (idx + 1) + "</strong></td>" +
             "<td>" +
               "<div style='display:flex; align-items:center; gap:10px;'>" +
                 getTeamLogoSvg(tm.name, 30) +
                 "<strong style='color:" + (isMyTeam ? "var(--hextech-gold)" : "#fff") + ";'>" + tm.name + (isMyTeam ? " (Você)" : "") + "</strong>" +
               "</div>" +
             "</td>" +
-            "<td>" + totalGames + "</td>" +
-            "<td><strong style='color:var(--success-green);'>" + tm.wins + "</strong></td>" +
-            "<td><strong style='color:var(--danger-red);'>" + tm.losses + "</strong></td>" +
-            "<td>" + wr + "%</td>" +
-            "<td><span class='badge " + (idx < 4 ? "badge-gold" : "badge-blue") + "'>" + (idx < 4 ? "Zona de Playoffs" : "Permanência") + "</span></td>" +
+            "<td style='text-align:center;'><strong style='color:var(--hextech-gold); font-size:1.06rem; font-family:var(--font-tech);'>" + points + " PTS</strong></td>" +
+            "<td style='text-align:center; color:#cbd5e1;'>" + totalGames + "</td>" +
+            "<td style='text-align:center;'><strong style='color:var(--success-green);'>" + (tm.wins || 0) + "</strong></td>" +
+            "<td style='text-align:center;'><strong style='color:var(--danger-red);'>" + (tm.losses || 0) + "</strong></td>" +
+            "<td style='text-align:center; color:#94a3b8;'>" + wr + "%</td>" +
+            "<td style='text-align:center;'><span class='badge " + (inG4 ? "badge-gold" : "") + "' style='" + (inG4 ? "background:rgba(16,185,129,0.18); border:1px solid #10b981; color:#10b981;" : "background:rgba(100,116,139,0.2); border:1px solid #475569; color:#94a3b8;") + "'>" + (inG4 ? "🟢 G4 • Playoff" : "⚪ Fora do G4") + "</span></td>" +
             "<td style='text-align:center;'><button class='btn btn-sm' style='padding:3px 8px; font-size:0.75rem;' data-team='" + tm.name + "' onclick='event.stopPropagation(); leagueNavigator.openScoutingModal(this.dataset.team)'>🔍 Ver Time</button></td>";
           tbody.appendChild(tr);
         });
@@ -4205,28 +4664,34 @@ function generateRival(playerRole) {
         tbody.innerHTML = "";
 
         const teamsList = [...regData.teams];
-        teamsList.sort((a, b) => b.wins - a.wins || a.losses - b.losses);
+        teamsList.forEach(tm => {
+          tm.points = (tm.wins || 0) * 3;
+        });
+        teamsList.sort((a, b) => (b.points - a.points) || (b.wins - a.wins) || (a.losses - b.losses));
 
         teamsList.forEach((tm, idx) => {
           const tr = document.createElement("tr");
           tr.className = "team-scout-row";
           tr.onclick = () => this.openScoutingModal(tm.name);
 
-          const totalGames = tm.wins + tm.losses;
-          const wr = totalGames > 0 ? Math.round((tm.wins / totalGames) * 100) : 50;
+          const totalGames = (tm.wins || 0) + (tm.losses || 0);
+          const wr = totalGames > 0 ? Math.round((tm.wins / totalGames) * 100) : 0;
+          const points = (tm.wins || 0) * 3;
+          const inTop = idx < 4;
 
-          tr.innerHTML = "<td><strong>#" + (idx + 1) + "</strong></td>" +
+          tr.innerHTML = "<td style='text-align:center;'><strong>#" + (idx + 1) + "</strong></td>" +
             "<td>" +
               "<div style='display:flex; align-items:center; gap:10px;'>" +
                 getTeamLogoSvg(tm.name, 30) +
                 "<strong style='color:#fff;'>" + tm.name + "</strong>" +
               "</div>" +
             "</td>" +
-            "<td>" + totalGames + "</td>" +
-            "<td><strong style='color:var(--success-green);'>" + tm.wins + "</strong></td>" +
-            "<td><strong style='color:var(--danger-red);'>" + tm.losses + "</strong></td>" +
-            "<td>" + wr + "%</td>" +
-            "<td><span class='badge " + (idx < 3 ? "badge-gold" : "badge-blue") + "'>" + (idx < 3 ? "Top Seed" : "Na Disputa") + "</span></td>" +
+            "<td style='text-align:center;'><strong style='color:var(--hextech-gold); font-size:1.06rem; font-family:var(--font-tech);'>" + points + " PTS</strong></td>" +
+            "<td style='text-align:center; color:#cbd5e1;'>" + totalGames + "</td>" +
+            "<td style='text-align:center;'><strong style='color:var(--success-green);'>" + (tm.wins || 0) + "</strong></td>" +
+            "<td style='text-align:center;'><strong style='color:var(--danger-red);'>" + (tm.losses || 0) + "</strong></td>" +
+            "<td style='text-align:center; color:#94a3b8;'>" + wr + "%</td>" +
+            "<td style='text-align:center;'><span class='badge " + (inTop ? "badge-gold" : "") + "' style='" + (inTop ? "background:rgba(16,185,129,0.18); border:1px solid #10b981; color:#10b981;" : "background:rgba(100,116,139,0.2); border:1px solid #475569; color:#94a3b8;") + "'>" + (inTop ? "🟢 Top Seed" : "⚪ Na Disputa") + "</span></td>" +
             "<td style='text-align:center;'><button class='btn btn-sm' style='padding:3px 8px; font-size:0.75rem;' data-team='" + tm.name + "' onclick='event.stopPropagation(); leagueNavigator.openScoutingModal(this.dataset.team)'>🔍 Ver Time</button></td>";
           tbody.appendChild(tr);
         });
@@ -4448,21 +4913,73 @@ function generateRival(playerRole) {
 
       setupInitialSlots() {
         const roles = ["Top", "Jungle", "Mid", "ADC", "Suporte"];
-        const isElite = (careerState.currentTierId || 4) <= 2;
+        const playerRole = careerState?.role || "Mid";
 
-        const allyNames = isElite 
-          ? { Top: "Robo", Jungle: "Cariok", Mid: "Tinowns", ADC: "TitaN", Suporte: "Ceos" }
-          : { Top: "Dexter", Jungle: "Strikerr", Mid: "Shadow", ADC: "Sniper", Suporte: "Aegis" };
+        // MODO RANQUEADA SOLOQUEUE: 9 nicks variados e autênticos da SoloQ brasileira sem repetições
+        if (matchEngine.isSoloQMatch) {
+          const soloQPool = [
+            "Jovirone", "Daniels", "Kennzy", "PatoPapao", "Rakin", "Takeshi", "Kami", "Mylon", "Revolta", "Tockers",
+            "Lep", "Brucer", "Esa", "YoDa", "Shevee", "MonoDravenBR", "MainYasuo2M", "RivenGodBR", "FakerDoBrasil",
+            "Apenas1Mono", "XerathSniper", "SmurfDoMestre", "OlafInsano", "KatarinaPentakill", "VayneMechanics",
+            "ThreshGodBR", "ZedDasSombras", "LeeSinChines", "AatroxRaidBoss", "AkaliSmurf", "GragasBebado", "PykeSuporte",
+            "CaitlynHeadshot", "BlitzPuxaoCerto", "IreliaBlade", "RumbleFlorest", "NocturneEscuro", "KassadinLvl16"
+          ];
+          const shuffled = [...soloQPool].sort(() => 0.5 - Math.random());
+          const allyNicks = shuffled.slice(0, 4);
+          const enemyNicks = shuffled.slice(4, 9);
 
-        const enemyNames = isElite 
-          ? { Top: "Wizer", Jungle: "Aegis", Mid: "dyNquedo", ADC: "Brance", Suporte: "Keria" }
-          : { Top: "Goliath", Jungle: "Hunter", Mid: "Blaze", ADC: "Arrow", Suporte: "Shield" };
+          let aIdx = 0;
+          this.allyPicks = roles.map(r => {
+            const isPlayer = r === playerRole;
+            return {
+              role: r,
+              nick: isPlayer ? careerState.nick + " (Você)" : allyNicks[aIdx++],
+              isPlayer: isPlayer,
+              champ: null,
+              locked: false,
+              isPicking: false
+            };
+          });
+
+          let eIdx = 0;
+          this.enemyPicks = roles.map(r => {
+            const isRivalRole = r === playerRole;
+            const nick = (isRivalRole && careerState.rival && careerState.rival.nick) 
+              ? careerState.rival.nick 
+              : enemyNicks[eIdx++];
+            return {
+              role: r,
+              nick: nick,
+              isPlayer: false,
+              champ: null,
+              locked: false,
+              isPicking: false
+            };
+          });
+
+          const allyHeader = document.getElementById("draftAllyTeamSideLabel");
+          const enemyHeader = document.getElementById("draftEnemyTeamSideLabel");
+          if (allyHeader) allyHeader.innerText = "Time Azul (SoloQ)";
+          if (enemyHeader) enemyHeader.innerText = "Time Vermelho (SoloQ)";
+          return;
+        }
+
+        // MODO CAMPEONATO / TORNEIO OFICIAL:
+        // 1. Time Aliado: Elenco real do time do jogador, com o jogador assumindo sua rota
+        const myTeamName = careerState?.team?.name || "Sua Equipe";
+        const opp = career.getCurrentOpponent();
+        const oppTeamName = opp ? opp.name : "Adversário";
+
+        const allyRosterData = leagueNavigator.getRosterData(myTeamName);
+        const enemyRosterData = leagueNavigator.getRosterData(oppTeamName);
 
         this.allyPicks = roles.map(r => {
-          const isPlayer = r === careerState.role;
+          const isPlayer = r === playerRole;
+          const starter = allyRosterData?.players?.find(p => p.role === r);
+          const nick = isPlayer ? careerState.nick + " (Você)" : (starter ? starter.nick : (r + " Aliado"));
           return {
             role: r,
-            nick: isPlayer ? careerState.nick + " (Você)" : allyNames[r] || "Aliado",
+            nick: nick,
             isPlayer: isPlayer,
             champ: null,
             locked: false,
@@ -4470,10 +4987,17 @@ function generateRival(playerRole) {
           };
         });
 
+        // 2. Time Inimigo: Elenco real do time adversário (NUNCA O MESMO TIME DO JOGADOR)
         this.enemyPicks = roles.map(r => {
+          const starter = enemyRosterData?.players?.find(p => p.role === r);
+          let nick = starter ? starter.nick : (r + " Adversário");
+          // Se for a rota do jogador e o rival tiver nick específico no confronto
+          if (r === playerRole && careerState.rival && careerState.rival.nick) {
+            nick = careerState.rival.nick;
+          }
           return {
             role: r,
-            nick: enemyNames[r] || "Adversário",
+            nick: nick,
             isPlayer: false,
             champ: null,
             locked: false,
@@ -4483,9 +5007,8 @@ function generateRival(playerRole) {
 
         const allyHeader = document.getElementById("draftAllyTeamSideLabel");
         const enemyHeader = document.getElementById("draftEnemyTeamSideLabel");
-        if (allyHeader) allyHeader.innerText = careerState.team.name + " (Você)";
-        const opp = career.getCurrentOpponent();
-        if (enemyHeader) enemyHeader.innerText = opp.name || "Adversário";
+        if (allyHeader) allyHeader.innerText = myTeamName + " (Você)";
+        if (enemyHeader) enemyHeader.innerText = oppTeamName;
       },
 
       renderBanSlots() {
@@ -5159,87 +5682,169 @@ function generateRival(playerRole) {
     const pressConferenceEngine = {
       activeQuestions: [],
       answeredIndices: [],
+      rivalStatement: "",
 
       initPostGameConference(isVictory) {
-        const rival = careerState.rival ? careerState.rival.nick : "Seu Rival";
+        const rival = careerState?.rival?.nick || "Seu Rival";
         this.answeredIndices = [];
 
-        this.activeQuestions = [
+        // 1. REAÇÃO DIRETA DO RIVAL PÓS-PARTIDA (TRASH TALK OU IRRITAÇÃO)
+        const rivalWinReactions = [
+          "O rival " + rival + " disse na zona mista: 'Ele deu sorte nas lutas e foi carregado pelo time. No segundo turno eu mostro quem manda nessa rota!' (Humor: 😡 Tiltado)",
+          "O rival " + rival + " postou no X/Twitter: 'Perdemos pra nós mesmos hoje. Aquele @' + (careerState?.nick || 'Player') + ' não joga metade do que a imprensa fala.' (Humor: 🔥 Furioso)",
+          "O rival " + rival + " declarou: 'A chamada de Barão deles foi pura sorte de 50/50. Semana que vem a história vai ser bem diferente.' (Humor: 😤 Inconformado)"
+        ];
+
+        const rivalLossReactions = [
+          "O rival " + rival + " provocou na coletiva: 'Eu avisei que ele sumia quando a pressão do palco subia. Vitória tranquila, nem suei a camisa!' (Humor: 👑 Soberbo)",
+          "O rival " + rival + " postou: 'Muito papo de MVP e pouca mecânica no Rift. Segue o líder!' (Humor: 🔥 Provocador)",
+          "O rival " + rival + " disse na entrevista: 'O estilo dele é manjado demais. Neutralizamos a rota dele nos primeiros 5 minutos.' (Humor: ⚡ Confiante)"
+        ];
+
+        this.rivalStatement = isVictory 
+          ? rivalWinReactions[Math.floor(Math.random() * rivalWinReactions.length)]
+          : rivalLossReactions[Math.floor(Math.random() * rivalLossReactions.length)];
+
+        // 2. POOL VARIADO DE PERGUNTAS JORNALÍSTICAS DINÂMICAS
+        const questionPoolVictory = [
           {
             outlet: "Mais Esports",
-            badge: "TÁTICA & DESEMPENHO",
+            badge: "ESTATÍSTICAS & MACRO",
             journalist: "Rodrigo Guerra",
-            question: isVictory 
-              ? ("Você foi o grande destaque na rota de " + careerState.role + ". Essa estratégia já vinha sendo treinada na semana?")
-              : "A equipe parecia desconectada nas lutas de equipe hoje. Onde o plano de jogo desandou?",
+            question: "Você teve uma das maiores marcas de dano e participação em abates da rodada na rota de " + (careerState?.role || "Mid") + ". Sente que está jogando no melhor nível da carreira?",
             answers: [
               {
-                text: isVictory ? "Treinamos muito essa resposta no draft. Mérito total da comissão técnica!" : "Assumo a culpa, errei a tomada de decisão no meio de jogo.",
-                effectDesc: "+Comunicação & +Consistência",
+                text: "Estou na melhor forma mecânica da minha vida. Vim para ser o melhor jogador do campeonato!",
+                effectDesc: "👑 Confiança Máxima (+10 Confiança, +70 Fãs)",
                 apply() {
-                  careerState.stats.comm = Math.min(99, (careerState.stats.comm || 50) + 3);
-                  careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 2);
-                  career.addSocialPost("Coach Maestro", "@coachmaestro", "Essa é a postura de atleta profissional que constrói campeões!");
+                  careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 75) + 10);
+                  careerState.fame += 70;
+                  career.addSocialPost(careerState.nick, "@" + careerState.nick.toLowerCase(), "No palco o trabalho fala mais alto. Foco no troféu! 🏆");
                 }
               },
               {
-                text: isVictory ? "Apenas fiz o básico de sempre: outplay mecânico puro e superioridade na rota." : "O draft nos colocou numa situação horrível, não tinha muito o que fazer.",
-                effectDesc: "+Fama & +Confiança",
+                text: "O mérito é de todo o time. A gente treina 12 horas por dia para executar exatamente esse plano.",
+                effectDesc: "🤝 Espírito Coletivo (+4 Comunicação, +3 Consistência)",
                 apply() {
-                  careerState.fame += 50;
-                  careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 75) + 5);
-                  career.addSocialPost("Baiano", "@baianolol", "ELE METEU ESSA NA COLETIVA! A Ilha das Lendas vai à loucura! 🔥");
+                  careerState.stats.comm = Math.min(99, (careerState.stats.comm || 50) + 4);
+                  careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 3);
+                  career.addSocialPost("Coach Maestro", "@coachmaestro", "Humildade e disciplina de quem constrói dinastia!");
                 }
               }
             ]
           },
           {
             outlet: "Ilha das Lendas",
-            badge: "RIVALIDADE & FOGO",
-            journalist: "Esa / Brucer",
-            question: "O " + rival + " comentou na live dele que o seu estilo de jogo é previsível e fácil de punir. O que você tem a dizer para ele?",
+            badge: "RESPOSTA AO RIVAL",
+            journalist: "Baiano & Esa",
+            question: "O " + rival + " acabou de declarar que você 'deu sorte e foi carregado'. O que você tem a responder diretamente para ele?",
             answers: [
               {
-                text: "Fala pra ele assistir meus VODs e anotar. O " + rival + " fala muito na live e desaparece no palco.",
-                effectDesc: "🔥 Provocação Brutal (+80 Fãs, Rival fica Tiltado)",
+                text: "Ele devia parar de reclamar no Twitter e treinar mais na SoloQ. O choro é livre, o placar é nosso!",
+                effectDesc: "🔥 Resposta Devastadora (+120 Fãs, Rival fica Furioso)",
                 apply() {
-                  careerState.fame += 80;
-                  if (careerState.rival) {
-                    careerState.rival.currentMood = "Tiltado";
-                    career.addSocialPost(careerState.rival.nick, "@" + careerState.rival.nick.toLowerCase(), "Guarda esse ego pro nosso próximo jogo. Você não perde por esperar.");
-                  }
+                  careerState.fame += 120;
+                  if (careerState.rival) careerState.rival.currentMood = "Furioso";
+                  career.addSocialPost("Baiano", "@baianolol", "RECEBA! O @" + careerState.nick + " colocou o " + rival + " no bolso na coletiva! 🔥🔥🔥");
                 }
               },
               {
-                text: "Eu não me preocupo com o que ele fala em live. Foco no meu jogo e no meu time, os resultados falam por si.",
-                effectDesc: "🧘 Maturidade (+5 Consistência)",
+                text: "Deixa ele falar. Quem ganha comemora no palco, quem perde dá desculpa na internet.",
+                effectDesc: "🧘 Frieza & Postura de Campeão (+5 Consistência)",
                 apply() {
-                  careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 4);
-                  career.addSocialPost("Schaeppi", "@schaeppilol", "A frieza do @" + careerState.nick + " é impressionante. Cabeça no lugar de quem vai disputar troféu.");
+                  careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 5);
+                  career.addSocialPost("Schaeppi", "@schaeppilol", "Aula de postura de um verdadeiro atleta de elite.");
                 }
               }
             ]
           },
           {
             outlet: "Globo Esporte / Broadcast",
-            badge: "TORCIDA & OBJETIVOS",
+            badge: "CORRIDA AOS PLAYOFFS",
             journalist: "Tácio Schaeppi",
-            question: isVictory
-              ? "A torcida já está sonhando com a liderança isolada e vaga nos playoffs. Qual o recado para os fãs?"
-              : "Como manter a cabeça erguida para a sequência do campeonato após esse tropeço?",
+            question: "Com os 3 pontos conquistados hoje, a equipe se consolida no G4. Qual o recado para a torcida que já sonha com a grande final?",
             answers: [
               {
-                text: isVictory ? "Acreditem! Vamos buscar esse título, o troféu vai ser nosso!" : "Prometo para a torcida que vamos voltar duas vezes mais fortes na próxima rodada.",
-                effectDesc: "+100 Fãs Apaixonados",
+                text: "Podem lotar o estádio porque a gente vai levantar essa taça! Esse troféu tem endereço certo!",
+                effectDesc: "🎉 Euforia da Torcida (+150 Fãs Apaixonados)",
                 apply() {
-                  careerState.fame += 100;
-                  career.addSocialPost("Torcida Organizada", "@torcida_oficial", "É DISSO QUE O TIME PRECISA! ESTAMOS FECHADOS ATÉ O FIM! ⚔️🔥");
+                  careerState.fame += 150;
+                  career.addSocialPost("Torcida Organizada", "@torcida_oficial", "EU ACREDITO! ESTAMOS FECHADOS ATÉ A FINAL! ⚔️🔥");
                 }
               }
             ]
           }
         ];
 
+        const questionPoolDefeat = [
+          {
+            outlet: "Mais Esports",
+            badge: "ANÁLISE DE CRISE",
+            journalist: "Rodrigo Guerra",
+            question: "A equipe parecia desconectada nas lutas de equipe e tomou decisões arriscadas no Barão. Onde a estratégia falhou?",
+            answers: [
+              {
+                text: "Assumo total responsabilidade. A chamada foi minha e eu tomei a decisão errada naquele momento.",
+                effectDesc: "🧠 Liderança Madura (+4 Consistência, +3 Comunicação)",
+                apply() {
+                  careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 4);
+                  careerState.stats.comm = Math.min(99, (careerState.stats.comm || 50) + 3);
+                  career.addSocialPost("Coach Maestro", "@coachmaestro", "Atleta que assume a liderança no erro é o que se torna campeão.");
+                }
+              },
+              {
+                text: "O draft adversário nos complicou muito. Precisamos rever nossas prioridades para o próximo jogo.",
+                effectDesc: "🛡️ Alívio de Pressão (-10 Fãs, Foco Tático)",
+                apply() {
+                  careerState.stats.macro = Math.min(99, (careerState.stats.macro || 50) + 2);
+                  career.addSocialPost("Comissão Técnica", "@comissao_cblol", "Ajustes necessários no draft para a próxima rodada.");
+                }
+              }
+            ]
+          },
+          {
+            outlet: "Ilha das Lendas",
+            badge: "PROVOCAÇÃO DO RIVAL",
+            journalist: "Brucer / Minerva",
+            question: "O " + rival + " disse que foi uma 'vitória tranquila' e que você 'sumiu no palco'. Como você lida com essas provocações?",
+            answers: [
+              {
+                text: "Ele pode rir agora, mas o campeonato é longo. Na volta ele vai pagar cada palavra que falou.",
+                effectDesc: "⚔️ Sede de Vingança (+8 Confiança, Foco no Reencontro)",
+                apply() {
+                  careerState.stats.confidence = Math.min(99, (careerState.stats.confidence || 75) + 8);
+                  career.addSocialPost(careerState.nick, "@" + careerState.nick.toLowerCase(), "Anotando cada provocação. A volta vai ser pesada.");
+                }
+              },
+              {
+                text: "Eu não jogo pra responder rival de rede social, jogo para ser campeão. Amanhã cedo estamos treinando.",
+                effectDesc: "🧘 Resiliência & Trabalho (+5 Consistência)",
+                apply() {
+                  careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 5);
+                  career.addSocialPost("Baiano", "@baianolol", "Gostei da resposta! Cabeça erguida de quem sabe o que quer.");
+                }
+              }
+            ]
+          },
+          {
+            outlet: "Globo Esporte / Broadcast",
+            badge: "PRESSÃO DA TORCIDA",
+            journalist: "Rafaela Tomasi",
+            question: "A torcida ficou revoltada nas redes após esse resultado. Como manter a cabeça no lugar para a próxima rodada do fim de semana?",
+            answers: [
+              {
+                text: "Entendo a frustração da torcida. Prometo que no próximo sábado vamos entrar mordendo e dar a resposta no Rift!",
+                effectDesc: "💪 Conexão com os Fãs (+80 Fãs Conquistados)",
+                apply() {
+                  careerState.fame += 80;
+                  career.addSocialPost("Torcida Organizada", "@torcida_oficial", "Cobramos porque amamos esse time. Respondam no Rift no sábado!");
+                }
+              }
+            ]
+          }
+        ];
+
+        this.activeQuestions = isVictory ? questionPoolVictory : questionPoolDefeat;
         this.renderConferenceUI();
       },
 
@@ -5247,6 +5852,16 @@ function generateRival(playerRole) {
         const container = document.getElementById("pressConferenceContainer");
         if (!container) return;
         container.innerHTML = "";
+
+        // Banner com declaração do Rival
+        if (this.rivalStatement) {
+          const rivalBox = document.createElement("div");
+          rivalBox.style.cssText = "background:linear-gradient(90deg, rgba(239,68,68,0.18) 0%, rgba(15,23,42,0.95) 100%); border:1px solid #ef4444; border-radius:8px; padding:12px 16px; margin-bottom:14px;";
+          rivalBox.innerHTML = 
+            "<div style='font-size:0.75rem; color:#ef4444; font-weight:800; text-transform:uppercase; letter-spacing:1px;'>🎙️ ZONA MISTA • DECLARAÇÃO DO SEU RIVAL:</div>" +
+            "<div style='font-size:0.92rem; color:#fff; font-style:italic; margin-top:4px;'>\"" + this.rivalStatement + "\"</div>";
+          container.appendChild(rivalBox);
+        }
 
         this.activeQuestions.forEach((q, qIndex) => {
           const isAnswered = this.answeredIndices.includes(qIndex);
@@ -5256,7 +5871,7 @@ function generateRival(playerRole) {
 
           let content = 
             "<div style='display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;'>" +
-              "<span style='color:var(--hextech-blue); font-weight:800; font-size:0.82rem; letter-spacing:1px;'>🎙️ " + q.outlet + " (" + q.badge + ")</span>" +
+              "<span style='color:var(--hextech-blue); font-weight:800; font-size:0.82rem; letter-spacing:1px;'>🎙️ " + q.outlet + " (" + q.badge + ") • " + q.journalist + "</span>" +
               "<span style='font-size:0.75rem; color:#94a3b8;'>" + (isAnswered ? "✅ Respondida" : "Aguardando Resposta") + "</span>" +
             "</div>" +
             "<p style='font-size:0.92rem; color:#f1f5f9; font-style:italic; margin-bottom:12px;'>\"" + q.question + "\"</p>";
@@ -5279,6 +5894,7 @@ function generateRival(playerRole) {
           container.appendChild(card);
         });
       },
+
 
       chooseAnswer(qIndex, aIndex) {
         const q = this.activeQuestions[qIndex];
@@ -5325,6 +5941,7 @@ function generateRival(playerRole) {
         this.enemyHp = 100;
         this.scores = [];
         this.statGains = {};
+        this.activeScenarios = this.generateMatchScenarios();
 
         // HUD Inicial
         const interPhase = document.getElementById("matchInteractivePhase");
@@ -5344,7 +5961,7 @@ function generateRival(playerRole) {
           miniEnemyImg.src = "https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/" + this.enemyChamp.id + ".png";
           miniEnemyImg.onerror = () => { miniEnemyImg.src = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + this.enemyChamp.id + "_0.jpg"; };
         }
-        this.updateMinimapPins(1);
+        this.updateMinimapPins(1, false, this.activeScenarios[0]?.zone);
         this.updateScoreHud();
         this.loadTurn(1);
         gameRouter.showScreen("screenMatch");
@@ -5479,539 +6096,629 @@ function generateRival(playerRole) {
         }
       },
 
-      /* CENÁRIOS INTELIGENTES ADAPTADOS POR ROTA - 4 ESCOLHAS DINÂMICAS POR MOMENTO! */
-      getScenarios() {
-        const role = careerState.role || "Mid";
-        const spD = careerState.spells?.d || "Flash";
-        const spF = careerState.spells?.f || (role === "Jungle" ? "Smite" : "Ignite");
+            /* MOTOR DE CENÁRIOS DINÂMICOS & DECISÃO DO BARÃO NA'SHOR */
+      generateMatchScenarios() {
+        const role = careerState?.role || "Mid";
+        const spD = careerState?.spells?.d || "Flash";
+        const spF = careerState?.spells?.f || (role === "Jungle" ? "Smite" : "Ignite");
         const myName = this.myChamp ? this.myChamp.name : "Seu Campeão";
         const oppName = this.enemyChamp ? this.enemyChamp.name : "Adversário";
 
-        // ==========================================================
-        // 1. SUPORTE: 4 Escolhas Ricas por Momento
-        // ==========================================================
-        if (role === "Suporte") {
-          return [
-            {
-              badge: "Fase de Rotas 2v2 • Bot Lane",
-              botStance: "Pressão de Rota & Arbustos",
-              zoneTag: "FASE DE ROTAS • 2V2 BOT LANE",
-              time: "07:15",
-              title: "Disputa pelo Nível 2 e Arbustos da Bot Lane contra " + oppName,
-              desc: "O Atirador rival se adiantou para coletar uma tropa de canhão. A linha de visão dos arbustos está contestada!",
-              choices: [
-                {
-                  title: "⚡ All-In Mecânico com CC no ADC Adversário",
-                  desc: "Combar cadeia de controle e forçar feitiços de defesa rivais",
-                  stat: "mechanics",
-                  feedbackWin: "INICIAÇÃO PERFEITA! Você acertou todo o controle de grupo no ADC adversário, forçando Flash e garantindo o First Blood para o seu Atirador!",
-                  feedbackLoss: "Contra-iniciação rival! O suporte oponente virou a troca com dano pesado no seu parceiro e vocês recuaram sob pressão."
-                },
-                {
-                  title: "👁️ Controle de Sentinelas Profundas & Peel Seguro",
-                  desc: "Warding no rio e garantir que seu ADC farme sem riscos",
-                  stat: "macro",
-                  feedbackWin: "VISÃO IMPECÁVEL! Sua sentinela no rio revelou a aproximação do caçador inimigo antes do gank. Você salvou a rota e congelou a onda!",
-                  feedbackLoss: "Escuridão perigosa! O caçador rival chegou pelas costas e forçou uma troca desfavorável para sua bot lane."
-                },
-                {
-                  title: "🔥 Jogada Decisiva com Feitiço [" + spD + " / " + spF + "]",
-                  desc: "Queimar feitiço para anular a cura rival ou garantir desengaje cirúrgico",
-                  stat: "consistency",
-                  feedbackWin: "FEITIÇO CIRÚRGICO! O uso impecável de " + spF + " neutralizou completamente a investida adversária e virou o combate!",
-                  feedbackLoss: "Tempo imperfeito do feitiço! O rival conseguiu escapar com vida e manteve a rota sob controle."
-                },
-                {
-                  title: "🎙️ Shotcall Coordenado & Roaming Rápido ao Mid",
-                  desc: "Avisar o ADC para jogar safe e criar superioridade numérica no rio",
-                  stat: "comm",
-                  feedbackWin: "ROAMING MAGISTRAL! Sua aparição surpresa pelo rio pegou o mid adversário desatento, garantindo abate e o Aronguejo!",
-                  feedbackLoss: "Comunicação falhou! Seu parceiro no bot tomou dive agressivo antes do seu retorno à rota."
-                }
-              ]
-            },
-            {
-              badge: "Disputa de Objetivo • 17 min",
-              botStance: "Controle de Rio & Dragão",
-              zoneTag: "RIO & DRAGÃO ELEMENTAL • TEAMFIGHT",
-              time: "17:40",
-              title: "Controle de Visão e Teamfight pelo 3º Dragão",
-              desc: "O Dragão Elemental está nascendo. As duas equipes manobram na escuridão do rio em busca da melhor abertura!",
-              choices: [
-                {
-                  title: "🔭 Limpeza com Lente do Oráculo & Emboscada",
-                  desc: "Destruir sentinelas inimigas e criar armadilha na curva do rio",
-                  stat: "macro",
-                  feedbackWin: "EMBOSCADA LETAL! Sem visão, o caçador inimigo entrou de peito aberto e foi deletado instantaneamente. Dragão livre!",
-                  feedbackLoss: "Emboscada interceptada! A equipe adversária avançou agrupada e colapsou sobre você."
-                },
-                {
-                  title: "🛡️ Peel Defensivo Heroico no seu Hipercarregador",
-                  desc: "Neutralizar os assassinos rivais e manter os causadores de dano vivos",
-                  stat: "consistency",
-                  feedbackWin: "PROTEÇÃO MONSTRUOSA! O assassino inimigo pulou com tudo, mas você aplicou desengaje total e salvou a luta!",
-                  feedbackLoss: "Dano rival esmagador! O assassino adversário furou sua proteção e abateu o carregador do time."
-                },
-                {
-                  title: "⚡ Combinação de Feitiços [" + spD + "] para Flash-Engage",
-                  desc: "Flash ofensivo sincronizado com o ultimate na linha de trás",
-                  stat: "mechanics",
-                  feedbackWin: "PLAY DA RODADA! O Flash-Engage acertou 3 jogadores inimigos em cheio e abriu caminho para um Ace limpo!",
-                  feedbackLoss: "O inimigo previu o Flash e esquivou da habilidade principal, deixando você isolado."
-                },
-                {
-                  title: "🎙️ Comandar Chamada Tática de Zoneamento e Foco",
-                  desc: "Liderar a comunicação da equipe e orientar o alvo prioritário",
-                  stat: "comm",
-                  feedbackWin: "SHOTCALL EXEMPLAR! Todo o time focou o mesmo alvo na ordem exata e venceu o confronto sem baixas!",
-                  feedbackLoss: "Hesitação na equipe! O time dividiu o foco e a luta foi perdida nos detalhes."
-                }
-              ]
-            },
-            {
-              badge: "Fim de Jogo • 29 min",
-              botStance: "Barão Na'Shor / Base",
-              zoneTag: "BASE & NEXUS ADVERSÁRIO • CLÍMAX",
-              time: "29:10",
-              title: "O Cerco Final à Base Inimiga e Destruição do Nexus",
-              desc: "Com o bônus de Barão Na'Shor ativo, sua equipe empurra os inibidores para fechar a partida!",
-              choices: [
-                {
-                  title: "⚡ Iniciação Perfeita sob a Torre de Inibidor",
-                  desc: "Prender os defensores sob a torre e forçar a luta definitiva",
-                  stat: "mechanics",
-                  feedbackWin: "INICIAÇÃO DE CAMPEÃO! Você isolou o pilar defensivo rival e limpou a base inimiga para a vitória!",
-                  feedbackLoss: "O engage sob as torres custou caro e os inimigos repeliram a investida."
-                },
-                {
-                  title: "👁️ Negação Absoluta de Visão e Flanco Inverso",
-                  desc: "Garantir que nenhum rival consiga teleportar ou flanquear pelas costas",
-                  stat: "macro",
-                  feedbackWin: "LEITURA ABSOLUTA! Você frustrou o teleporte secreto inimigo e manteve as super tropas protegidas até o Nexus!",
-                  feedbackLoss: "Um flanco inimigo passou despercebido pela lateral e causou estragos na sua linha de trás."
-                },
-                {
-                  title: "🛡️ Proteção Máxima com [" + spD + " / " + spF + "] no Carregador",
-                  desc: "Gastar todos os recursos e feitiços para garantir a sobrevivência do dano principal",
-                  stat: "consistency",
-                  feedbackWin: "PAREDE INTRANSPONÍVEL! Com todos os feitiços e escudos gastos no momento certo, seu time levou as duas torres do Nexus!",
-                  feedbackLoss: "Recursos esgotados cedo demais deixaram sua equipe vulnerável ao contra-ataque final."
-                },
-                {
-                  title: "🎙️ Chamada Decisiva de Foco no Nexus",
-                  desc: "Ignorar abates desnecessários e mandar todo o dano diretamente nas estruturas",
-                  stat: "comm",
-                  feedbackWin: "VITÓRIA HISTÓRICA! O shotcall de focar o Nexus encerrou a partida de forma brilhante sob aplausos da torcida!",
-                  feedbackLoss: "A equipe se dividiu entre perseguir abates e bater no Nexus, dando chance de retorno ao rival."
-                }
-              ]
-            }
-          ];
-        }
-
-        // ==========================================================
-        // 2. CAÇADOR / JUNGLE: 4 Escolhas Ricas
-        // ==========================================================
-        if (role === "Jungle") {
-          return [
-            {
-              badge: "Início de Jogo • Rota da Selva",
-              botStance: "Disputa de Aronguejo",
-              zoneTag: "RIO • DISPUTA PELO ARONGUEJO",
-              time: "03:30",
-              title: "Duelo 1v1 no Rio contra o Caçador " + oppName,
-              desc: "Você e o caçador inimigo chegam ao mesmo tempo no Aronguejo do rio. A prioridade de rota está em jogo!",
-              choices: [
-                {
-                  title: "⚔️ Duelo Mecânico Agressivo 1v1",
-                  desc: "Partir para o combate direto e forçar o rival a recuar",
-                  stat: "mechanics",
-                  feedbackWin: "SOLOKILL NA SELVA! Você superou o caçador rival em dano e garantiu o First Blood na selva!",
-                  feedbackLoss: "O rival estava em pico de poder mais forte e venceu a troca individual."
-                },
-                {
-                  title: "⚡ Smite Fight Decisivo [" + spD + " / " + spF + "]",
-                  desc: "Calcular o dano exato do Smite para roubar o monstro e curar vida",
-                  stat: "consistency",
-                  feedbackWin: "SMITE PERFEITO! Você garantiu o monstro no milissegundo exato e acelerou seu nível!",
-                  feedbackLoss: "O caçador rival foi mais rápido no tempo de Smite e levou o objetivo."
-                },
-                {
-                  title: "🧠 Invasão Tática na Selva Oposta",
-                  desc: "Abandonar a disputa arriscada e punir limpando os campos dele",
-                  stat: "macro",
-                  feedbackWin: "PATHING GENIAL! Você roubou dois campos inteiros do adversário e abriu grande vantagem de farm!",
-                  feedbackLoss: "A rotação foi lenta e as sentinelas inimigas detectaram sua movimentação."
-                },
-                {
-                  title: "🎙️ Chamada de Apoio Rápida com o Laner Mais Próximo",
-                  desc: "Pingar assistência e criar emboscada 2v1 no rio",
-                  stat: "comm",
-                  feedbackWin: "COBERTURA EXEMPLAR! Seu laner chegou primeiro e juntos vocês executaram o rival!",
-                  feedbackLoss: "O laner adversário reagiu mais rápido que o seu aliado e virou a luta."
-                }
-              ]
-            },
-            {
-              badge: "Meio de Jogo • Objetivo Neutro",
-              botStance: "Controle de Dragão",
-              zoneTag: "COVIL DO DRAGÃO • ROUBO & DISPUTA",
-              time: "16:20",
-              title: "A Disputa Decisiva pelo Dragão contra " + oppName,
-              desc: "O rival iniciou o Dragão com pouca vida. Você tem a chance de um roubo épico ou teamfight!",
-              choices: [
-                {
-                  title: "⚡ Salto no Covil e Roubo Milagroso com Smite",
-                  desc: "Pular por cima da parede e acertar o Smite sob foco inimigo",
-                  stat: "mechanics",
-                  feedbackWin: "ROUBO ÉPICO! Você roubou o Dragão na cara do time adversário e ainda escapou vivo!",
-                  feedbackLoss: "Você foi silenciado e eliminado antes de conseguir desferir o Smite."
-                },
-                {
-                  title: "🧠 Flanco na Backline Inimiga enquanto eles batem no Dragão",
-                  desc: "Ignorar o monstro e aniquilar os causadores de dano focados no objetivo",
-                  stat: "macro",
-                  feedbackWin: "FLANCO DEVASTADOR! A backline inimiga foi dizimada e o Dragão caiu de bônus para sua equipe!",
-                  feedbackLoss: "A equipe adversária virou o foco rapidamente e conteve seu avanço."
-                },
-                {
-                  title: "🛡️ Uso Tático de Feitiço [" + spD + "] para Outplay",
-                  desc: "Desviar do controle de grupo principal com Flash e reengajar",
-                  stat: "consistency",
-                  feedbackWin: "ESQUIVA ESPETACULAR! Você desviou do engage adversário e reverteu o combate!",
-                  feedbackLoss: "O tempo de reação falhou e o feitiço foi queimado sem retorno."
-                },
-                {
-                  title: "🎙️ Shotcall de Emboscada no Gargalo da Selva",
-                  desc: "Prender os rivais no corredor estreito do rio",
-                  stat: "comm",
-                  feedbackWin: "CHAMADA BRILHANTE! A equipe rival tomou todo o dano em área no corredor estreito e foi eliminada!",
-                  feedbackLoss: "A equipe demorou a se posicionar no gargalo e a oportunidade passou."
-                }
-              ]
-            },
-            {
-              badge: "Fim de Jogo • Barão Na'Shor",
-              botStance: "Barão Na'Shor",
-              zoneTag: "COVIL DO BARÃO NA'SHOR • DECISÃO",
-              time: "28:40",
-              title: "O Duelo Definitivo pelo Barão Na'Shor",
-              desc: "O Barão está com 3.000 de vida! Quem conquistar o buff terá passagem direta para o Nexus rival!",
-              choices: [
-                {
-                  title: "⚡ Smite Cirúrgico de Alta Pressão",
-                  desc: "Manter nervos de aço e finalizar o monstro com 1.200 de dano verdadeiro",
-                  stat: "consistency",
-                  feedbackWin: "BARÃO CONQUISTADO! Smite cirúrgico garantiu o objetivo mais importante do jogo!",
-                  feedbackLoss: "O Smite rival entrou um décimo de segundo antes e roubou o Barão."
-                },
-                {
-                  title: "⚔️ Eliminar o Caçador Adversário antes do Smite",
-                  desc: "Mergulhar e assassinar o rival para garantir o objetivo com tranquilidade",
-                  stat: "mechanics",
-                  feedbackWin: "EXECUÇÃO CIRÚRGICA! Você apagou o caçador inimigo e o Barão foi entregue de bandeja!",
-                  feedbackLoss: "O caçador rival resistiu ao dano e seu time ficou desprotegido."
-                },
-                {
-                  title: "🧠 Rush Tático Rápido e Fuga Limpa",
-                  desc: "Acelerar o dano com habilidades máximas e sair antes do combate rival",
-                  stat: "macro",
-                  feedbackWin: "RUSH PERFEITO! O Barão caiu em 6 segundos e seu time marchou até a vitória!",
-                  feedbackLoss: "O time tomou dano excessivo do monstro e foi pego sem vida pelos rivais."
-                },
-                {
-                  title: "🎙️ Comandar a Marcha Triunfal pela Rota do Meio",
-                  desc: "Liderar a investida com super tropas em direção ao Nexus",
-                  stat: "comm",
-                  feedbackWin: "VITÓRIA GLORIOSA! Sob seu comando, as defesas rivais desmoronaram e o Nexus explodiu!",
-                  feedbackLoss: "A equipe hesitou no avanço final e permitiu o respawn adversário."
-                }
-              ]
-            }
-          ];
-        }
-
-        // ==========================================================
-        // 3. ATIRADOR / ADC: 4 Escolhas Ricas
-        // ==========================================================
-        if (role === "ADC") {
-          return [
-            {
-              badge: "Fase de Rotas • 2v2 Bot Lane",
-              botStance: "Trocas de Rota",
-              zoneTag: "FASE DE ROTAS • 2V2 BOT LANE",
-              time: "06:50",
-              title: "Troca Mecânica de Alto Risco contra " + oppName,
-              desc: "O atirador rival tentou punir seu farm. Você tem a chance de devolver dano crítico e vencer a rota!",
-              choices: [
-                {
-                  title: "⚔️ Kiting e Troca Agressiva de Dano por Segundo",
-                  desc: "Alternar movimentação e ataques básicos com precisão mecânica milimétrica",
-                  stat: "mechanics",
-                  feedbackWin: "KITING ESPETACULAR! Você esquivou dos projéteis rivais enquanto causava DPS contínuo!",
-                  feedbackLoss: "Você tomou um ataque a mais e a troca de vida ficou desfavorável."
-                },
-                {
-                  title: "🧠 Congelar a Onda de Tropas perto da Torre",
-                  desc: "Negar farm ao rival e deixar a rota aberta para gank aliado",
-                  stat: "macro",
-                  feedbackWin: "FREEZE IMPECÁVEL! O atirador rival perdeu 15 tropas e ficou vulnerável a emboscadas!",
-                  feedbackLoss: "A onda de tropas quebrou na torre inimiga e você perdeu pressão."
-                },
-                {
-                  title: "⚡ Desengaje / All-In com Feitiço [" + spD + " / " + spF + "]",
-                  desc: "Usar feitiço para esquivar de habilidade fatal e garantir o abate",
-                  stat: "consistency",
-                  feedbackWin: "OUTPLAY DE FEITIÇO! Seu feitiço evitou o dano letal e garantiu o First Blood na rota!",
-                  feedbackLoss: "O feitiço foi acionado com atraso e o adversário conseguiu finalizar a troca."
-                },
-                {
-                  title: "🎙️ Sincronizar Foco com o seu Suporte",
-                  desc: "Combinar o tempo exato das habilidades para explodir o mesmo alvo",
-                  stat: "comm",
-                  feedbackWin: "SINCRONIA LETAL! Ataque conjunto perfeito não deu chance de resposta à dupla inimiga!",
-                  feedbackLoss: "Falta de sincronia fez os danos se dispersarem em alvos diferentes."
-                }
-              ]
-            },
-            {
-              badge: "Meio de Jogo • Luta em Equipe",
-              botStance: "Teamfight no Rio",
-              zoneTag: "RIO & DRAGÃO ELEMENTAL • TEAMFIGHT",
-              time: "18:15",
-              title: "Posicionamento Crítico na Luta do Dragão contra " + oppName,
-              desc: "A teamfight estourou no rio! A linha de frente inimiga avança com sede de abater você!",
-              choices: [
-                {
-                  title: "🛡️ Posicionamento Front-to-Back Seguro",
-                  desc: "Bater no alvo mais próximo sem se colocar em risco de assassinato",
-                  stat: "consistency",
-                  feedbackWin: "DPS MONSTRO! Você derreteu os tanques inimigos mantendo distância segura!",
-                  feedbackLoss: "A linha de frente rival avançou rápido demais e alcançou sua posição."
-                },
-                {
-                  title: "⚡ Flash Agressivo para Finalizar a Backline",
-                  desc: "Avançar de Flash e eliminar o causador de dano rival isolado",
-                  stat: "mechanics",
-                  feedbackWin: "JOGADA DE DESTAQUE! O Flash ofensivo garantiu Triple Kill e abriu a vitória na luta!",
-                  feedbackLoss: "O Flash ofensivo colocou você em alcance de atordoamento e você foi abatido."
-                },
-                {
-                  title: "🧠 Reposicionamento Tático no Terreno da Selva",
-                  desc: "Aproveitar as paredes e arbustos para se esconder de flancos",
-                  stat: "macro",
-                  feedbackWin: "LEITURA ESPACIAL! Nenhum assassino conseguiu encontrá-lo e seu dano limpou a luta!",
-                  feedbackLoss: "Você ficou isolado da sua equipe e foi cercado pelos rivais."
-                },
-                {
-                  title: "🎙️ Pedir Peel Imediato da Linha de Frente",
-                  desc: "Solicitar proteção prioritária aos aliados para continuar batendo",
-                  stat: "comm",
-                  feedbackWin: "PROTEÇÃO TOTAL! Seus aliados blindaram seus passos e seu dano decidiu a teamfight!",
-                  feedbackLoss: "O time não conseguiu proteger a tempo contra os mergulhos inimigos."
-                }
-              ]
-            },
-            {
-              badge: "Fim de Jogo • Cerco Final",
-              botStance: "Inibidores & Nexus",
-              zoneTag: "BASE INIMIGA • DESTRUIÇÃO DO NEXUS",
-              time: "30:00",
-              title: "A Batalha Final pelas Torres do Nexus",
-              desc: "As super tropas estão nas torres gêmeas do Nexus adversário. Cada tiro conta!",
-              choices: [
-                {
-                  title: "💥 Dano Crítico Contínuo nas Torres do Nexus",
-                  desc: "Concentrar todo o poder de fogo para derreter as estruturas",
-                  stat: "consistency",
-                  feedbackWin: "DESTRUIÇÃO AVASSALADORA! As torres caíram em segundos diante do seu poder de fogo!",
-                  feedbackLoss: "O dano nas estruturas foi interrompido pelas habilidades em área inimigas."
-                },
-                {
-                  title: "⚔️ Ace Completo e Pentakill Mecânico",
-                  desc: "Eliminar todos os defensores antes de tocar no Nexus",
-                  stat: "mechanics",
-                  feedbackWin: "PENTAKILL HISTÓRICO! Uma exibição magistral de mecânica que aniquilou a equipe rival!",
-                  feedbackLoss: "A busca por abates atrasou o fim do jogo e custou preciosos segundos."
-                },
-                {
-                  title: "🧠 Bater no Nexus de Alcance Máximo",
-                  desc: "Manter a distância mais segura possível enquanto finaliza a partida",
-                  stat: "macro",
-                  feedbackWin: "JOGO LIMPO E INTELIGENTE! Vitória conquistada com disciplina tática exemplar!",
-                  feedbackLoss: "A distância permitiu que os inimigos se reorganizassem para uma última defesa."
-                },
-                {
-                  title: "🎙️ Liderar o Shotcall de Foco Absoluto no Nexus",
-                  desc: "Ordenar que todos ignorem os defensores e golpeiem a estrutura central",
-                  stat: "comm",
-                  feedbackWin: "CHAMADA DE OURO! O Nexus explodiu no último segundo garantindo o troféu!",
-                  feedbackLoss: "A chamada gerou confusão momentânea e os rivais conseguiram defender."
-                }
-              ]
-            }
-          ];
-        }
-
-        // ==========================================================
-        // 4. MEIO / MID & 5. TOPO / TOP (DEMAIS ROTAS)
-        // ==========================================================
-        return [
+        // POOL 1: EARLY GAME (4 EVENTOS POSSÍVEIS)
+        const earlyPool = [
           {
-            badge: "Fase de Rotas • Early Game",
-            botStance: "Duelo 1v1 na Rota",
-            zoneTag: "ROTA PRINCIPAL • DUELO 1V1",
-            time: "06:40",
-            title: "Duelo 1v1 e Controle de Pressão contra " + oppName,
-            desc: "O adversário tentou uma troca agressiva para assumir a prioridade. Como você reage?",
+            badge: "Invasão de Nível 1 • 01:20",
+            botStance: "Invasão no Buff da Selva",
+            zoneTag: "SELVA INIMIGA • INVASÃO DE NÍVEL 1",
+            zone: "invade",
+            time: "01:25",
+            title: "Invasão Coordenada no Red Buff de " + oppName,
+            desc: "A equipe se reuniu no arbusto do rio para contestar o primeiro campo da selva adversária aos 01:25!",
             choices: [
               {
-                title: "⚔️ Troca Mecânica Agressiva e Combos Rápidos",
-                desc: "Esquivar das habilidades rivais e aplicar todo o combo de dano",
+                title: "⚡ Flash-CC Agressivo para First Blood",
+                desc: "Queimar feitiço para prender o primeiro adversário avistado",
                 stat: "mechanics",
-                feedbackWin: "SOLOKILL ESPETACULAR! Você esquivou das principais habilidades e garantiu um abate limpo!",
-                feedbackLoss: "O adversário previu seu movimento e venceu a troca individual."
+                feedbackWin: "FIRST BLOOD HISTÓRICO! Seu Flash sincronizado com o controle de grupo abateu o rival instantaneamente!",
+                feedbackLoss: "O rival previu o movimento, utilizou Flash de reação e sua equipe recuou desorganizada."
               },
               {
-                title: "🧠 Controle de Rota & Congelamento de Wave",
-                desc: "Manter os minions próximos à sua torre e negar ouro ao rival",
+                title: "🎯 Roubo Furtivo do Buff com Dano Rápido",
+                desc: "Focar exclusivamente o monstro e sair com a vantagem de ouro e experiência",
                 stat: "macro",
-                feedbackWin: "AULA DE MACRO! Você negou duas ondas inteiras e colocou o adversário em desvantagem!",
-                feedbackLoss: "A onda quebrou na torre adversária proporcionando reset tranquilo ao oponente."
+                feedbackWin: "ROUBO PERFEITO! O buff foi garantido limpo e o caçador inimigo ficou completamente atrasado no jogo!",
+                feedbackLoss: "O Smite do adversário foi mais veloz e ele manteve a posse do monstro da selva."
               },
               {
-                title: "⚡ Outplay Decisivo com Feitiço [" + spD + " / " + spF + "]",
-                desc: "Queimar feitiço de invocador para surpreender com dano ou esquiva fatal",
+                title: "👁️ Sentinela Profunda e Recuo Seguro",
+                desc: "Deixar visão dentro da selva rival e retornar às rotas sem correr riscos",
                 stat: "consistency",
-                feedbackWin: "USO DE FEITIÇO BRILHANTE! A combinação com " + spD + " pegou o oponente de surpresa!",
-                feedbackLoss: "O feitiço foi acionado cedo demais e o rival conseguiu recuar em segurança."
+                feedbackWin: "LEITURA IMPECÁVEL! A sentinela revelou todo o caminho do caçador rival pelos próximos 3 minutos!",
+                feedbackLoss: "A sentinela foi destruída pela Lente do Oráculo adversária e o tempo foi desperdiçado."
               },
               {
-                title: "🎙️ Sincronizar Emboscada com o Caçador Aliado",
-                desc: "Coordenar o tempo de chegada para gank fulminante na rota",
+                title: "🎙️ Chamada de Rotação Cruzada para o Blue",
+                desc: "Comandar a equipe para invadir o lado oposto da selva em resposta",
                 stat: "comm",
-                feedbackWin: "GANK SINCRONIZADO! O controle de grupo em conjunto rendeu abate e placas da torre!",
-                feedbackLoss: "Falta de sincronia permitiu ao adversário escapar ileso sob a torre."
+                feedbackWin: "COMANDO BRILHANTE! A rotação cruzada garantiu 2 campos extras para sua equipe sem sofrer baixas!",
+                feedbackLoss: "A comunicação truncada atrasou a chegada dos aliados na selva oposta."
               }
             ]
           },
           {
-            badge: "Meio de Jogo • Luta por Objetivo",
-            botStance: "Luta pelo Dragão",
-            zoneTag: "RIO & DRAGÃO ELEMENTAL • TEAMFIGHT",
-            time: "18:25",
-            title: "Teamfight Decisiva no Rio pelo Dragão contra " + oppName,
-            desc: "As equipes se encaram no rio. Uma jogada certeira garante a vantagem para a reta final!",
+            badge: "Objetivo Neutro • 05:40",
+            botStance: "Covil das Vastilarvas",
+            zoneTag: "RIO SUPERIOR • COVIL DAS VASTILARVAS",
+            zone: "voidgrubs",
+            time: "05:45",
+            title: "Disputa pelas Primeiras Vastilarvas (Voidgrubs)",
+            desc: "As Vastilarvas nasceram no Rio Superior! Quem conquistar as 3 criaturas terá dano verdadeiro brutal contra estruturas!",
             choices: [
               {
-                title: "🎯 Flanco nos Carregadores Inimigos",
-                desc: "Atravessar a selva pelas sombras e assassinar a backline rival",
+                title: "🐛 Rushear as 3 Larvas com Dano Concentrado",
+                desc: "Dano contínuo rápido para eliminar os monstros antes da chegada dos rivais",
                 stat: "macro",
-                feedbackWin: "FLANCO DEVASTADOR! Você eliminou o principal causador de dano adversário e venceu a luta!",
-                feedbackLoss: "Você foi detectado por uma sentinela de controle antes de completar o flanco."
+                feedbackWin: "TRIPLA VASTILARVA! As 3 larvas foram abatidas em tempo recorde! As torres inimigas agora vão derreter!",
+                feedbackLoss: "A equipe adversária colapsou pelo rio no meio do abate e roubou a última larva crucial."
               },
               {
-                title: "⚡ Outplay Mecânico no Centro do Combate",
-                desc: "Usar mobilidade máxima para desviar de tudo e desferir dano letal",
+                title: "⚔️ Duelo Mecânico contra " + oppName + " no Rio",
+                desc: "Combate direto contra o oponente na entrada do covil para ganhar a prioridade",
                 stat: "mechanics",
-                feedbackWin: "OUTPLAY SENSACIONAL! Você destruiu a teamfight com jogada plástica inesquecível!",
-                feedbackLoss: "Você foi pego no meio de um controle de grupo e focado por toda a equipe inimiga."
+                feedbackWin: "OUTPLAY NO RIO! Você derrotou seu oponente direto e abriu o caminho livre para as vastilarvas!",
+                feedbackLoss: "O rival acertou uma combinação precisa e forçou seu recuo com pouca vida."
               },
               {
-                title: "🛡️ Luta Front-to-Back e Dano Consistente com [" + spD + "]",
-                desc: "Manter posicionamento sólido e usar feitiço para sobreviver",
+                title: "🛡️ Zoneamento e Proteção com [" + spD + " / " + spF + "]",
+                desc: "Usar o terreno estreito do rio para impedir o avanço dos carregadores adversários",
                 stat: "consistency",
-                feedbackWin: "POSICIONAMENTO IMPECÁVEL! Dano consistente garantiu vitória esmagadora no confronto!",
-                feedbackLoss: "A investida da linha de frente adversária rompeu a sua formação."
+                feedbackWin: "BARREIRA INTRANSPONÍVEL! Ninguém passou pela sua contenção e seu time coletou todas as larvas!",
+                feedbackLoss: "O dano em área adversário superou a contenção e obrigou seu time a abandonar o objetivo."
               },
               {
-                title: "🎙️ Comandar a Rotação Coletiva e Foco Único",
-                desc: "Liderar os pings de alvo e guiar os companheiros na luta",
+                title: "🛑 Troca Tática: Abandonar Larvas e Punir a Bot Lane",
+                desc: "Deixar o objetivo neutro e mandar pressão agressiva com mergulho (dive) no bot",
                 stat: "comm",
-                feedbackWin: "CHAMADA DE MESTRE! O time lutou como uma única máquina e varreu o time adversário!",
-                feedbackLoss: "Vozes conflitantes geraram hesitação nos momentos críticos da luta."
+                feedbackWin: "TROCA ESPETACULAR! Enquanto eles batiam nas larvas, seu time levou a primeira torre do jogo no bot!",
+                feedbackLoss: "A tentativa de dive no bot falhou e o adversário ficou com as larvas e a vantagem."
               }
             ]
           },
           {
-            badge: "Fim de Jogo • Decisão Final",
-            botStance: "Base / Nexus Inimigo",
-            zoneTag: "BASE INIMIGA • DESTRUIÇÃO DO NEXUS",
-            time: "29:30",
-            title: "A Batalha Definitiva pelo Nexus Adversário",
-            desc: "Com o buff de Barão ativo, seu time avança para finalizar a partida e levantar o troféu!",
+            badge: "Skirmish no Rio • 03:30",
+            botStance: "Disputa do Aronguejo",
+            zoneTag: "RIO CENTRAL • DISPUTA PELO ARONGUEJO",
+            zone: "river_skirmish",
+            time: "03:30",
+            title: "Skirmish 2v2 no Rio contra " + oppName,
+            desc: "O Aronguejo do rio foi contestado simultaneamente pelos dois caçadores com apoio imediato das rotas laterais!",
             choices: [
               {
-                title: "⚔️ Iniciação Decisiva na Torre de Inibidor",
-                desc: "Mergulhar sob a defesa rival e romper a última linha inimiga",
+                title: "💥 All-in Explosivo no Caçador Adversário",
+                desc: "Pular com todo o arsenal de habilidades para explodir o caçador antes do Smite",
                 stat: "mechanics",
-                feedbackWin: "QUADRAKILL E VITÓRIA! Seus combos foram letais e o Nexus rival ruiu!",
-                feedbackLoss: "A defesa sob as torres foi sólida e os rivais conseguiram repelir o ataque."
+                feedbackWin: "BURST INSTANTÂNEO! O caçador rival foi deletado antes de conseguir usar o Smite! Aronguejo garantido!",
+                feedbackLoss: "O rival sobreviveu com pouca vida e o contra-ataque da equipe dele pegou você fora de posição."
               },
               {
-                title: "🧠 Cerco Tático 1-3-1 com Pressão de Tropas",
-                desc: "Dividir a pressão nas rotas laterais e forçar o colapso adversário",
-                stat: "macro",
-                feedbackWin: "MACROGENIAL! Super tropas inundaram a base inimiga e garantiram a vitória com tranquilidade!",
-                feedbackLoss: "O rival forçou 5v4 no meio antes que as rotas laterais pudessem pressionar."
-              },
-              {
-                title: "🛡️ Manter Disciplina com Feitiço [" + spD + " / " + spF + "]",
-                desc: "Evitar jogadas precipitadas e punir os erros de desespero do oponente",
+                title: "⚡ Smite / Golpe de Execução Cirúrgico",
+                desc: "Manter a calma, calcular o dano no limite e garantir o monstro no milissegundo exato",
                 stat: "consistency",
-                feedbackWin: "SANGUE FRIO! Você puniu o desespero do adversário e fechou a partida sem sustos!",
-                feedbackLoss: "Uma distração momentânea deu sobrevida aos defensores da base."
+                feedbackWin: "EXECUÇÃO MILIMÉTRICA! O monstro foi seu e o bônus de velocidade deu escape perfeito para o time!",
+                feedbackLoss: "O rival teve o timing mais preciso e levou o Aronguejo na sua frente."
               },
               {
-                title: "🎙️ Comandar a Chamada Final Rumo à Vitória",
-                desc: "Orquestrar o foco nas estruturas para consagrar a campanha",
+                title: "👁️ Controle de Sentinelas Profundas no Rio",
+                desc: "Garantir a visão da entrada da selva inimiga e evitar emboscadas",
+                stat: "macro",
+                feedbackWin: "VISÃO PERFEITA! Você revelou a rotação secreta deles e garantiu a segurança de todas as rotas!",
+                feedbackLoss: "A falta de visão no ponto cego permitiu um contra-gank fulminante."
+              },
+              {
+                title: "🎙️ Chamada de Apoio Rápida com Pings",
+                desc: "Avisar o time para colapsar em superioridade numérica de 3 contra 2",
                 stat: "comm",
-                feedbackWin: "CHAMADA DE CAMPEÃO! Foco absoluto nas estruturas e o troféu é seu!",
-                feedbackLoss: "Chamadas divididas permitiram que o rival ganhasse tempo para defender."
+                feedbackWin: "COBERTURA EXEMPLAR! Três jogadores aliados chegaram juntos e limparam a luta no rio!",
+                feedbackLoss: "A demora nos pings causou descompasso e a vantagem foi perdida."
+              }
+            ]
+          },
+          {
+            badge: "Fase de Rotas • 04:15",
+            botStance: "Duelo Direto de Rota",
+            zoneTag: "ROTAS DE SUMMONER'S RIFT • 1V1",
+            zone: "laning",
+            time: "04:15",
+            title: "Duelo Individual e Troca Agressiva de Nível contra " + oppName,
+            desc: "Você alcançou vantagem de nível na rota! As tropas estão pressionadas sob a torre do oponente!",
+            choices: [
+              {
+                title: "⚔️ Troca Agressiva com Foco em Solokill",
+                desc: "Acertar a combinação principal de habilidades e forçar o rival para fora da rota",
+                stat: "mechanics",
+                feedbackWin: "SOLOKILL ESPETACULAR! Você superou mecanicamente o adversário e conquistou o abate individual!",
+                feedbackLoss: "O adversário absorveu o dano sob a torre e revidou com contra-ataque perigoso."
+              },
+              {
+                title: "🧊 Congelar a Onda de Tropas com Segurança",
+                desc: "Manter a onda próxima da sua torre para negar experiência e ouro ao rival",
+                stat: "macro",
+                feedbackWin: "FREEZE MAGISTRAL! O rival perdeu três levas completas de tropas sem conseguir se aproximar!",
+                feedbackLoss: "A onda resetou cedo demais e o rival conseguiu empurrar de volta."
+              },
+              {
+                title: "🔥 Queimar Feitiço [" + spD + " / " + spF + "] para Vantagem Máxima",
+                desc: "Utilizar feitiço agressivo para arrancar o Flash inimigo e estabelecer dominância",
+                stat: "consistency",
+                feedbackWin: "PRESSÃO ABSOLUTA! O uso do feitiço forçou o rival a gastar todos os recursos de fuga!",
+                feedbackLoss: "O feitiço não atingiu o impacto esperado e deixou você vulnerável a ganks."
+              },
+              {
+                title: "🎙️ Roaming Coordenado para o Rio",
+                desc: "Empurrar a onda rápido e criar jogada surpresa com o caçador aliado no rio",
+                stat: "comm",
+                feedbackWin: "ROAMING LETAL! Sua descida ao rio pegou os adversários desprevenidos para mais um abate!",
+                feedbackLoss: "O adversário avisou a tempo e você perdeu tropas preciosas na sua rota."
               }
             ]
           }
         ];
+
+        // POOL 2: MID GAME (3 EVENTOS POSSÍVEIS)
+        const midPool = [
+          {
+            badge: "Disputa de Objetivo • 18:20",
+            botStance: "Covil do Dragão Elemental",
+            zoneTag: "RIO INFERIOR • 3º DRAGÃO ELEMENTAL",
+            zone: "dragon",
+            time: "18:25",
+            title: "Teamfight Decisiva pelo 3º Dragão Elemental",
+            desc: "O Dragão Elemental está na metade da vida. Ambas as equipes duelam na escuridão do rio em busca da Alma Elemental!",
+            choices: [
+              {
+                title: "⚡ Flash-Engage Explosivo na Linha de Trás",
+                desc: "Flash ofensivo sincronizado para prender os principais causadores de dano rivais",
+                stat: "mechanics",
+                feedbackWin: "ENGAGE PERFEITO! O Flash-Engage acertou três jogadores em cheio e garantiu um Ace limpo no rio!",
+                feedbackLoss: "O time adversário utilizou feitiços de defesa rápidos e contra-atacou com força total."
+              },
+              {
+                title: "🐉 Rushear o Dragão com Smite Seguro",
+                desc: "Ignorar as provocações e mandar todo o dano diretamente no monstro",
+                stat: "macro",
+                feedbackWin: "DRAGÃO CONQUISTADO! O monstro foi garantido com perfeição e sua equipe agora tem o ponto de alma!",
+                feedbackLoss: "A equipe se afunilou dentro da cova e sofreu dano em área devastador."
+              },
+              {
+                title: "🛡️ Peel Defensivo Heroico no Carregador",
+                desc: "Bloquear os assassinos inimigos e manter os aliados de alto dano vivos",
+                stat: "consistency",
+                feedbackWin: "PROTEÇÃO MONSTRUOSA! O assassino inimigo foi completamente neutralizado e seu ADC limpou a luta!",
+                feedbackLoss: "A linha de frente rival conseguiu furar sua proteção e alcançou seu carregador."
+              },
+              {
+                title: "🌾 Flanco Sorrateiro por Trás da Cova",
+                desc: "Contornar a rotação adversária e pegá-los pelas costas em pinça perfeita",
+                stat: "comm",
+                feedbackWin: "PINÇA MAGISTRAL! A equipe inimiga foi esmagada entre duas frentes sem rota de fuga!",
+                feedbackLoss: "O flanco foi detectado por uma sentinela de controle e você ficou isolado."
+              }
+            ]
+          },
+          {
+            badge: "Cerco de Estrutura • 16:10",
+            botStance: "Arauto na Torre T2",
+            zoneTag: "ROTA DO MEIO • CERCO DO ARAUTO T2",
+            zone: "herald_siege",
+            time: "16:15",
+            title: "Invocação do Arauto do Rift e Queda da Torre T2 do Mid",
+            desc: "O Arauto foi solto na Rota do Meio e avança a passos largos contra a Torre T2 adversária!",
+            choices: [
+              {
+                title: "🚀 Montar no Arauto para Colisão Devastadora",
+                desc: "Pilotar o monstro e acelerar direto nas barricadas e defensores inimigos",
+                stat: "mechanics",
+                feedbackWin: "IMPACTO DEMOLIDOR! O Arauto pulverizou a torre e arremessou dois defensores pelos ares!",
+                feedbackLoss: "Os defensores focaram dano pesado no Arauto antes da colisão e neutralizaram a investida."
+              },
+              {
+                title: "👁️ Poke à Distância e Demolição Segura",
+                desc: "Manter distância calculada e desgastar as defesas inimigas sem arriscar",
+                stat: "macro",
+                feedbackWin: "MACRO CIRÚRGICO! A torre caiu sem que nenhum aliado perdesse vida!",
+                feedbackLoss: "A investida perdeu pressão e os inimigos limparam as tropas com facilidade."
+              },
+              {
+                title: "🛡️ Desengaje Limpo após Conquistar a Estrutura",
+                desc: "Derrubar a torre e recuar imediatamente para gastar a vantagem de ouro",
+                stat: "consistency",
+                feedbackWin: "RECUO DE LIVRO! O ouro da torre foi embolsado e o time voltou inteiro à base!",
+                feedbackLoss: "A equipe demorou para recuar e foi apanhada pelo flanco da selva."
+              },
+              {
+                title: "🎙️ Split-Push Cruzado nas Rotas Laterais",
+                desc: "Usar a distração do Arauto no Mid para levar simultaneamente a torre do Bot!",
+                stat: "comm",
+                feedbackWin: "DIVISÃO GENIAL! Duas torres caíram ao mesmo tempo em cantos opostos do mapa!",
+                feedbackLoss: "A pressão lateral foi fraca e o adversário conseguiu defender os dois lados."
+              }
+            ]
+          },
+          {
+            badge: "Afunilamento na Selva • 20:45",
+            botStance: "Emboscada no Ponto Cego",
+            zoneTag: "SELVA CENTRAL • CHOKEPOINT CRÍTICO",
+            zone: "jungle_chokepoint",
+            time: "20:50",
+            title: "Emboscada e Teamfight no Afunilamento da Selva",
+            desc: "Sentinelas revelaram dois carregadores inimigos se deslocando pelos corredores estreitos da selva sem visão!",
+            choices: [
+              {
+                title: "💥 Combinação em Área (Wombo-Combo) no Estreito",
+                desc: "Despejar todo o dano supremo em área onde os inimigos não têm como desviar",
+                stat: "mechanics",
+                feedbackWin: "WOMBO-COMBO ÉPICO! As habilidades em área se conectaram com perfeição e dizimaram a equipe rival!",
+                feedbackLoss: "Os rivais usaram ampulhetas e escudos no milissegundo exato e sobreviveram ao impacto."
+              },
+              {
+                title: "🔒 Controle de Grupo em Cadeia para Lock-Down",
+                desc: "Prender os alvos prioritários sem dar chance de usarem feitiços ou habilidades",
+                stat: "consistency",
+                feedbackWin: "CADEIA PERFEITA! Nenhum adversário conseguiu sequer usar Flash e a luta terminou sem baixas!",
+                feedbackLoss: "Um dos atordoamentos falhou e o contra-ataque inimigo foi violento."
+              },
+              {
+                title: "👁️ Negação de Visão com Lente do Oráculo",
+                desc: "Apagar todas as sentinelas rivais para garantir que o abate seja 100% surpresa",
+                stat: "macro",
+                feedbackWin: "ESCURIDÃO TOTAL! Sem enxergar nada, a equipe adversária entrou de peito aberto na armadilha!",
+                feedbackLoss: "Uma sentinela profunda rival detectou a movimentação antes do esperado."
+              },
+              {
+                title: "🎙️ Foco Coordenado no Alvo Mais Forte",
+                desc: "Shotcall firme para que os cinco aliados ataquem o mesmo jogador simultaneamente",
+                stat: "comm",
+                feedbackWin: "FOCO EXEMPLAR! O atleta mais perigoso do time adversário desapareceu em 0.5 segundo!",
+                feedbackLoss: "O foco se dividiu entre dois alvos e permitiu que os adversários revidassem."
+              }
+            ]
+          }
+        ];
+
+        // POOL 3: LATE GAME - COM A DECISÃO CRÍTICA DO BARÃO NA'SHOR EM DESTAQUE!
+        const latePool = [
+          {
+            badge: "Clímax da Partida • 28:30",
+            botStance: "Covil do Barão Na'Shor",
+            zoneTag: "COVIL DO BARÃO NA'SHOR • DECISÃO CRÍTICA",
+            zone: "baron",
+            time: "28:30",
+            title: "A Decisão do Barão Na'Shor: Ir ou NÃO ir no Barão?",
+            desc: "O Atirador adversário apareceu sozinho limpando a Bot Lane! Sua equipe tem uma janela crítica de 25 segundos! O que você comanda?",
+            choices: [
+              {
+                title: "🐉 Rushear o Barão Na'Shor Imediatamente!",
+                desc: "Dano total de toda a equipe para garantir o bônus antes da volta do Atirador rival!",
+                stat: "macro",
+                feedbackWin: "BARÃO CONQUISTADO COM MAESTRIA! Sua equipe derreteu o monstro em segundos, garantiu o buff mais poderoso do jogo e abriu caminho para a vitória!",
+                feedbackLoss: "O Barão causou dano excessivo! O caçador adversário chegou de roubo relâmpago com Smite e a luta desandou."
+              },
+              {
+                title: "🛑 NÃO IR NO BARÃO! Puxar o Mid e Levar 2 Torres + Inibidor Seguro!",
+                desc: "Decisão lúcida de macro: não arriscar o 50/50 e punir na base inimiga com superioridade numérica garantida!",
+                stat: "consistency",
+                feedbackWin: "JOGADA DE MESTRE! A recusa de ir no Barão foi a decisão certa: seu time avançou pelo Mid, levou duas torres e o inibidor sem arriscar nada!",
+                feedbackLoss: "A equipe hesitou entre bater e recuar, permitindo que a equipe inimiga voltasse a tempo de defender as torres."
+              },
+              {
+                title: "🌾 Falso Barão (Baron Bait) nos Arbustos do Rio!",
+                desc: "Bater no Barão apenas para atrair o rival e explodi-los na emboscada surpresa!",
+                stat: "comm",
+                feedbackWin: "BAIT HISTÓRICO! A equipe rival mordeu a isca e caiu direto na armadilha: 4 abates limpos e o Barão feito com tranquilidade na sequência!",
+                feedbackLoss: "A emboscada demorou demais e o dano acumulado do Barão voltou-se contra a sua própria equipe."
+              },
+              {
+                title: "⚔️ Luta Forçada 5v5 em Campo Aberto!",
+                desc: "Ignorar o monstro no início e partir para o combate decisivo frontal antes de fazer o objetivo!",
+                stat: "mechanics",
+                feedbackWin: "OUTPLAY MECÂNICO PURO! Uma teamfight brilhante dizimou os defensores e abriu caminho livre para o Barão e o Nexus!",
+                feedbackLoss: "A equipe adversária se posicionou melhor no terreno alto e conteve a investida."
+              }
+            ]
+          },
+          {
+            badge: "Disputa Final • 33:15",
+            botStance: "Covil do Dragão Ancião",
+            zoneTag: "COVIL DO DRAGÃO ANCIÃO • EXECUÇÃO",
+            zone: "elder",
+            time: "33:20",
+            title: "Disputa de Vida ou Morte pelo Dragão Ancião",
+            desc: "O Dragão Ancião acordou aos 33 minutos! A equipe que conquistar o monstro terá o sopro de fogo com execução direta em 20% de vida!",
+            choices: [
+              {
+                title: "⚡ Smite Fight Decisivo de Vida ou Morte",
+                desc: "Calcular o Smite no ponto exato para garantir o buff mais letal de Summoner's Rift",
+                stat: "consistency",
+                feedbackWin: "SMITE DE OURO! O Dragão Ancião é seu! Os adversários foram executados um a um sob a fúria do dragão!",
+                feedbackLoss: "O Smite rival entrou por milésimos de segundo e a execução virou-se contra sua equipe."
+              },
+              {
+                title: "💥 Explodir a Linha de Trás Antes de Bater no Monstro",
+                desc: "Ignorar o dragão temporariamente e focar todo o dano nos carregadores inimigos",
+                stat: "mechanics",
+                feedbackWin: "ANIMAÇÃO PURA! Os carregadores rivais foram apagados da luta e o Dragão Ancião foi conquistado com facilidade!",
+                feedbackLoss: "A linha de trás inimiga conseguiu desengajar e puniu seu avanço."
+              },
+              {
+                title: "🛡️ Zoneamento Rígido na Entrada do Rio",
+                desc: "Impedir fisicamente que qualquer adversário consiga ver a vida do dragão",
+                stat: "macro",
+                feedbackWin: "MURALHA ABSOLUTA! O dragão caiu em segurança sem contestação!",
+                feedbackLoss: "O caçador rival saltou a parede com habilidade e roubou o monstro."
+              },
+              {
+                title: "🛑 Troca Radical: Abandonar o Ancião e Dar Base Race no Nexus",
+                desc: "Aproveitar que todos estão no covil para marchar direto nas torres do Nexus desprotegido!",
+                stat: "comm",
+                feedbackWin: "BASE RACE HISTÓRICO! Enquanto eles faziam o Ancião, seu time destruiu o Nexus inimigo para a vitória épica!",
+                feedbackLoss: "O recuo deles com teleporte interceptou o avanço a metros do Nexus."
+              }
+            ]
+          },
+          {
+            badge: "Cerco Final • 31:40",
+            botStance: "Base & Torres do Nexus",
+            zoneTag: "BASE INIMIGA • TORRES GÊMEAS & NEXUS",
+            zone: "base",
+            time: "31:45",
+            title: "O Cerco Final à Base Inimiga e Destruição do Nexus",
+            desc: "Com as Super Tropas marchando pelas três rotas, sua equipe invade a base para derrubar as duas torres gêmeas e consagrar o título!",
+            choices: [
+              {
+                title: "⚡ Mergulho (Dive) sob as Torres Gêmeas",
+                desc: "Avanço fulminante para eliminar os últimos defensores sob as estruturas",
+                stat: "mechanics",
+                feedbackWin: "INICIAÇÃO DE CAMPEÃO! Você isolou os defensores sob o Nexus e abriu caminho para a vitória definitiva!",
+                feedbackLoss: "As torres gêmeas causaram dano massivo e repeliram a investida final."
+              },
+              {
+                title: "🛡️ Proteção Máxima aos Canhões de Cerco",
+                desc: "Focar em manter os canhões vivos para que as torres caiam com segurança",
+                stat: "consistency",
+                feedbackWin: "PACIÊNCIA TÁTICA! As torres caíram pelo poder das tropas e a base adversária ruiu!",
+                feedbackLoss: "Os defensores limparam as tropas com dano em área rápido e ganharam sobrevida."
+              },
+              {
+                title: "👁️ Corte de Flancos e Controle de Respawn",
+                desc: "Bloquear a fonte adversária para garantir que ninguém consiga contestar",
+                stat: "macro",
+                feedbackWin: "DOMÍNIO COMPLETO! Os inimigos ficaram presos na fonte e o Nexus foi ao chão!",
+                feedbackLoss: "Um defensor conseguiu renascer com itens novos e virou a luta."
+              },
+              {
+                title: "🎙️ Chamada Decisiva: 'FOCA O NEXUS! FOCA O NEXUS!'",
+                desc: "Ignorar qualquer abate secundário e colocar 100% do dano na estrutura central",
+                stat: "comm",
+                feedbackWin: "VITÓRIA HISTÓRICA! O shotcall de foco no Nexus encerrou a partida de forma brilhante sob aplausos da torcida!",
+                feedbackLoss: "A equipe se dividiu entre bater no Nexus e caçar abates, permitindo o contra-ataque."
+              }
+            ]
+          }
+        ];
+
+        // POOL EXTRA: EVENTOS SURPRESA INESPERADOS (1v1 ou 2v1)
+        const surpriseDuel1v1 = {
+          badge: "⚔️ DUELO 1v1 NA SIDE LANE! • 14:40",
+          botStance: "Duelo Individual Isolado",
+          zoneTag: "ROTA LATERAL • DUELO 1V1 ISOLADO",
+          zone: "laning",
+          time: "14:45",
+          title: "O Duelo das Sombras: 1v1 Isolado contra " + oppName,
+          desc: "Ambas as equipes dividiram o mapa. Você e " + oppName + " se encontram sozinhos em campo aberto na rota lateral sem ajuda!",
+          choices: [
+            {
+              title: "⚔️ Duelo Mecânico Puro de Vida ou Morte",
+              desc: "Trocação no limite, acertando cada habilidade e esquivando dos golpes rivais",
+              stat: "mechanics",
+              feedbackWin: "SOLOKILL MONSTRUOSO! Você deu um baile mecânico no rival e conquistou um abate solo espetacular na side lane!",
+              feedbackLoss: "O rival acertou o ponto fraco e levou a melhor no duelo individual."
+            },
+            {
+              title: "🧊 Manter Espaçamento e Kitar com Frieza",
+              desc: "Bater recuando, punindo cada passo em falso do adversário sem se expor",
+              stat: "consistency",
+              feedbackWin: "ESPAÇAMENTO DE GÊNIO! O rival gastou tudo no vento e você o puniu implacavelmente!",
+              feedbackLoss: "O rival fechou a distância rapidamente e forçou o combate corpo a corpo."
+            },
+            {
+              title: "🔥 Queimar Feitiço [" + spD + " / " + spF + "] para Vantagem Absoluta",
+              desc: "Garantir o abate imediato surpreendendo o rival com dano extra de feitiço",
+              stat: "macro",
+              feedbackWin: "EXECUÇÃO CIRÚRGICA! O uso preciso do feitiço liquidou o rival sem qualquer chance de resposta!",
+              feedbackLoss: "O adversário respondeu com o próprio feitiço e neutralizou sua jogada."
+            },
+            {
+              title: "🌾 Bait para Emboscada Aliada",
+              desc: "Fingir fraqueza para atrair o rival direto para as garras do caçador aliado",
+              stat: "comm",
+              feedbackWin: "ISCA PERFEITA! O adversário mordeu a isca e tomou o colapso aliado sem saída!",
+              feedbackLoss: "O caçador aliado errou o tempo de chegada e você tomou dano desnecessário."
+            }
+          ]
+        };
+
+        const surpriseAmbush2v1 = {
+          badge: "⚠️ EMBOSCADA 2v1 INESPERADA! • 15:10",
+          botStance: "Colapso 1v2 Inimigo",
+          zoneTag: "ROTA LATERAL • EMBOSCADA 2V1",
+          zone: "laning",
+          time: "15:15",
+          title: "Alerta Vermelho! O Caçador e o Mid inimigos colapsaram sobre você!",
+          desc: "Você estava empurrando a rota lateral quando dois adversários saíram simultaneamente da névoa de guerra pelas suas costas!",
+          choices: [
+            {
+              title: "⚡ Flash-Outplay Heróico 1v2 pelo Double Kill!",
+              desc: "Desviar do controle com Flash no milissegundo e explodir o alvo com menor vida",
+              stat: "mechanics",
+              feedbackWin: "DOUBLE KILL LENDÁRIO! Você esquivou da habilidade fatal com o Flash, virou o dano e eliminou os dois emboscadores! A torcida foi à loucura!",
+              feedbackLoss: "O controle de grupo em cadeia dos dois inimigos foi implacável e você foi abatido sob pressão."
+            },
+            {
+              title: "🛡️ Defesa e Desengaje com Feitiços Defensivos",
+              desc: "Gastar feitiço de defesa e correr em zigue-zague para o alcance seguro da torre",
+              stat: "consistency",
+              feedbackWin: "SOBREVIVÊNCIA MILAGROSA! Você usou seus recursos com frieza, desviou das habilidades e escapou vivo!",
+              feedbackLoss: "A perseguição adversária foi rápida demais e eles alcançaram você antes da torre."
+            },
+            {
+              title: "🎯 Foco Suicida: Levar o Carregador Junto",
+              desc: "Ignorar a fuga e despejar 100% do seu combo para garantir a troca 1 por 1",
+              stat: "macro",
+              feedbackWin: "TROCA HEROICA! Mesmo em 2v1, você deletou o principal carregador rival antes de cair, equilibrando a luta!",
+              feedbackLoss: "Eles usaram escudos a tempo e você não conseguiu finalizar o abate."
+            },
+            {
+              title: "🎙️ Shotcall: Ganhar Tempo para o Time Fazer Barão/Torres",
+              desc: "Kitar os dois oponentes para longe do mapa enquanto seus aliados punem do outro lado",
+              stat: "comm",
+              feedbackWin: "SACRIFÍCIO ESTRATÉGICO! Sua manobra segurou dois jogadores por 30 segundos, permitindo que seu time levasse o objetivo limpo!",
+              feedbackLoss: "A equipe aliada demorou a reagir e a janela tática foi desperdiçada."
+            }
+          ]
+        };
+
+        // SELEÇÃO DINÂMICA: 1 evento aleatório de cada fase por partida!
+        const sc1 = earlyPool[Math.floor(Math.random() * earlyPool.length)];
+        
+        // 35% de chance de o Turno 2 ser um Duelo 1v1 ou Emboscada 2v1 Inesperada!
+        let sc2;
+        const rollSurprise = Math.random();
+        if (rollSurprise < 0.20) {
+          sc2 = surpriseDuel1v1;
+        } else if (rollSurprise < 0.40) {
+          sc2 = surpriseAmbush2v1;
+        } else {
+          sc2 = midPool[Math.floor(Math.random() * midPool.length)];
+        }
+
+        // Destaque: 70% de chance de o turno 3 ser exatamente a Decisão do Barão Na'Shor!
+        const sc3 = (Math.random() < 0.7) ? latePool[0] : latePool[Math.floor(Math.random() * latePool.length)];
+
+        return [sc1, sc2, sc3];
       },
 
-      
-      updateMinimapPins(turn, isFlash) {
+      getScenarios() {
+        if (!this.activeScenarios || this.activeScenarios.length < 3) {
+          this.activeScenarios = this.generateMatchScenarios();
+        }
+        return this.activeScenarios;
+      },
+
+      updateMinimapPins(turn, isFlash, zone) {
         turn = turn || 1;
         const container = document.getElementById("minimapChampionsLayer");
         if (!container) return;
 
         const roles = ["Top", "Jungle", "Mid", "ADC", "Suporte"];
-        const playerRole = careerState.role || "Mid";
+        const playerRole = careerState?.role || "Mid";
         const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
 
         const defaultAllyChamps = { Top: { id: "Aatrox", name: "Aatrox" }, Jungle: { id: "LeeSin", name: "Lee Sin" }, Mid: { id: "Ahri", name: "Ahri" }, ADC: { id: "Jinx", name: "Jinx" }, Suporte: { id: "Thresh", name: "Thresh" } };
         const defaultEnemyChamps = { Top: { id: "Renekton", name: "Renekton" }, Jungle: { id: "JarvanIV", name: "Jarvan IV" }, Mid: { id: "Syndra", name: "Syndra" }, ADC: { id: "Kaisa", name: "Kai'Sa" }, Suporte: { id: "Nautilus", name: "Nautilus" } };
 
-        const POSITIONS_BY_TURN = {
-          1: { // Laning Phase (Rotas Oficiais de Summoner's Rift)
+        const ZONE_COORDS = {
+          laning: {
             Top:     { ally: { x: 22, y: 34 }, enemy: { x: 28, y: 24 } },
             Jungle:  { ally: { x: 36, y: 60 }, enemy: { x: 46, y: 52 } },
             Mid:     { ally: { x: 46, y: 54 }, enemy: { x: 54, y: 46 } },
             ADC:     { ally: { x: 74, y: 84 }, enemy: { x: 84, y: 74 } },
             Suporte: { ally: { x: 70, y: 88 }, enemy: { x: 88, y: 70 } }
           },
-          2: { // Disputa do Dragão / Teamfight no Rio
-            Top:     { ally: { x: 52, y: 70 }, enemy: { x: 68, y: 54 } },
+          invade: {
+            Top:     { ally: { x: 30, y: 36 }, enemy: { x: 38, y: 28 } },
+            Jungle:  { ally: { x: 42, y: 46 }, enemy: { x: 48, y: 40 } },
+            Mid:     { ally: { x: 45, y: 50 }, enemy: { x: 52, y: 44 } },
+            ADC:     { ally: { x: 44, y: 54 }, enemy: { x: 54, y: 48 } },
+            Suporte: { ally: { x: 40, y: 52 }, enemy: { x: 50, y: 46 } }
+          },
+          voidgrubs: {
+            Top:     { ally: { x: 28, y: 28 }, enemy: { x: 36, y: 22 } },
+            Jungle:  { ally: { x: 32, y: 32 }, enemy: { x: 38, y: 26 } },
+            Mid:     { ally: { x: 35, y: 36 }, enemy: { x: 42, y: 30 } },
+            ADC:     { ally: { x: 30, y: 38 }, enemy: { x: 40, y: 34 } },
+            Suporte: { ally: { x: 26, y: 34 }, enemy: { x: 37, y: 28 } }
+          },
+          river_skirmish: {
+            Top:     { ally: { x: 38, y: 44 }, enemy: { x: 46, y: 38 } },
+            Jungle:  { ally: { x: 46, y: 52 }, enemy: { x: 54, y: 46 } },
+            Mid:     { ally: { x: 48, y: 54 }, enemy: { x: 56, y: 48 } },
+            ADC:     { ally: { x: 56, y: 64 }, enemy: { x: 64, y: 58 } },
+            Suporte: { ally: { x: 52, y: 62 }, enemy: { x: 62, y: 56 } }
+          },
+          dragon: {
+            Top:     { ally: { x: 54, y: 70 }, enemy: { x: 68, y: 54 } },
             Jungle:  { ally: { x: 58, y: 66 }, enemy: { x: 64, y: 60 } },
             Mid:     { ally: { x: 55, y: 62 }, enemy: { x: 62, y: 56 } },
             ADC:     { ally: { x: 60, y: 72 }, enemy: { x: 69, y: 62 } },
             Suporte: { ally: { x: 56, y: 68 }, enemy: { x: 65, y: 65 } }
           },
-          3: { // Avanço à Base Inimiga / Barão
-            Top:     { ally: { x: 72, y: 36 }, enemy: { x: 82, y: 24 } },
-            Jungle:  { ally: { x: 70, y: 40 }, enemy: { x: 80, y: 28 } },
-            Mid:     { ally: { x: 75, y: 32 }, enemy: { x: 84, y: 24 } },
-            ADC:     { ally: { x: 70, y: 38 }, enemy: { x: 85, y: 26 } },
-            Suporte: { ally: { x: 73, y: 34 }, enemy: { x: 83, y: 22 } }
+          herald_siege: {
+            Top:     { ally: { x: 50, y: 46 }, enemy: { x: 62, y: 38 } },
+            Jungle:  { ally: { x: 52, y: 44 }, enemy: { x: 60, y: 40 } },
+            Mid:     { ally: { x: 54, y: 42 }, enemy: { x: 64, y: 36 } },
+            ADC:     { ally: { x: 48, y: 48 }, enemy: { x: 66, y: 34 } },
+            Suporte: { ally: { x: 50, y: 50 }, enemy: { x: 62, y: 38 } }
+          },
+          jungle_chokepoint: {
+            Top:     { ally: { x: 44, y: 40 }, enemy: { x: 52, y: 34 } },
+            Jungle:  { ally: { x: 46, y: 44 }, enemy: { x: 54, y: 38 } },
+            Mid:     { ally: { x: 50, y: 46 }, enemy: { x: 56, y: 42 } },
+            ADC:     { ally: { x: 42, y: 48 }, enemy: { x: 58, y: 44 } },
+            Suporte: { ally: { x: 45, y: 50 }, enemy: { x: 55, y: 46 } }
+          },
+          baron: { // Covil do Barão Na'Shor no Rio Superior
+            Top:     { ally: { x: 28, y: 30 }, enemy: { x: 38, y: 22 } },
+            Jungle:  { ally: { x: 30, y: 34 }, enemy: { x: 36, y: 24 } },
+            Mid:     { ally: { x: 34, y: 36 }, enemy: { x: 40, y: 26 } },
+            ADC:     { ally: { x: 26, y: 38 }, enemy: { x: 42, y: 28 } },
+            Suporte: { ally: { x: 30, y: 40 }, enemy: { x: 39, y: 25 } }
+          },
+          elder: { // Covil do Dragão Ancião no Rio Inferior
+            Top:     { ally: { x: 58, y: 72 }, enemy: { x: 70, y: 58 } },
+            Jungle:  { ally: { x: 62, y: 68 }, enemy: { x: 66, y: 62 } },
+            Mid:     { ally: { x: 60, y: 64 }, enemy: { x: 64, y: 58 } },
+            ADC:     { ally: { x: 64, y: 74 }, enemy: { x: 72, y: 64 } },
+            Suporte: { ally: { x: 60, y: 70 }, enemy: { x: 68, y: 66 } }
+          },
+          base: { // Base Inimiga e Torres do Nexus
+            Top:     { ally: { x: 74, y: 34 }, enemy: { x: 84, y: 22 } },
+            Jungle:  { ally: { x: 72, y: 38 }, enemy: { x: 82, y: 26 } },
+            Mid:     { ally: { x: 76, y: 30 }, enemy: { x: 86, y: 22 } },
+            ADC:     { ally: { x: 72, y: 36 }, enemy: { x: 87, y: 24 } },
+            Suporte: { ally: { x: 75, y: 32 }, enemy: { x: 85, y: 20 } }
           }
         };
 
-        const turnCoords = POSITIONS_BY_TURN[turn] || POSITIONS_BY_TURN[1];
+        const activeZone = zone || (turn === 1 ? "laning" : (turn === 2 ? "dragon" : "baron"));
+        const turnCoords = ZONE_COORDS[activeZone] || ZONE_COORDS.laning;
+
+        // Atualizar Badge do Minimapa com o local da ação
+        const liveBadge = document.getElementById("minimapLiveBadge");
+        if (liveBadge) {
+          const zoneLabels = {
+            baron: "📍 BARÃO NA'SHOR",
+            dragon: "📍 DRAGÃO",
+            voidgrubs: "📍 VASTILARVAS",
+            invade: "📍 INVASÃO",
+            herald_siege: "📍 ARAUTO NO MID",
+            jungle_chokepoint: "📍 SELVA",
+            elder: "📍 DRAGÃO ANCIÃO",
+            base: "📍 BASE & NEXUS",
+            river_skirmish: "📍 RIO",
+            laning: "📍 ROTAS"
+          };
+          liveBadge.innerText = zoneLabels[activeZone] || "AO VIVO";
+        }
 
         // Se os 10 pins ainda não foram gerados, criá-los
         if (container.children.length === 0) {
@@ -6067,13 +6774,13 @@ function generateRival(playerRole) {
           if (allyPin) {
             allyPin.style.left = posAlly.x + "%";
             allyPin.style.top = posAlly.y + "%";
-            const allyNick = isPlayer ? careerState.nick + " (Você)" : (allyPick?.nick || r + " Aliado");
+            const allyNick = isPlayer ? (careerState?.nick + " (Você)") : (allyPick?.nick || (r + " Aliado"));
             allyPin.title = (isPlayer ? "⭐ [VOCÊ] " : "[ALIADO] ") + allyNick + " (" + (allyChamp?.name || r) + ")";
           }
           if (enemyPin) {
             enemyPin.style.left = posEnemy.x + "%";
             enemyPin.style.top = posEnemy.y + "%";
-            const enemyNick = isPlayer ? (careerState.rival?.nick || "Rival") : (enemyPick?.nick || r + " Inimigo");
+            const enemyNick = isPlayer ? (careerState?.rival?.nick || "Rival") : (enemyPick?.nick || (r + " Inimigo"));
             enemyPin.title = (isPlayer ? "⚔️ [RIVAL] " : "[INIMIGO] ") + enemyNick + " (" + (enemyChamp?.name || r) + ")";
           }
         });
@@ -6113,10 +6820,10 @@ function generateRival(playerRole) {
       },
 
       loadTurn(turn) {
-        this.updateMinimapPins(turn);
         this.currentTurn = turn;
         const scenarios = this.getScenarios();
-        const sc = scenarios[turn - 1];
+        const sc = scenarios[turn - 1] || scenarios[0];
+        this.updateMinimapPins(turn, false, sc.zone);
 
         // Atualizar Badges e Informações da Rodada
         const phaseBadge = document.getElementById("scenarioPhaseBadge");
@@ -6155,20 +6862,41 @@ function generateRival(playerRole) {
       },
 
       calculateOdds(stat) {
-        const base = careerState.stats[stat] || 50;
-        const isMain = careerState.championPool.some(m => m.id === (this.myChamp ? this.myChamp.id : null));
+        const base = careerState?.stats?.[stat] || 50;
+        const isMain = careerState?.championPool?.some(m => m.id === (this.myChamp ? this.myChamp.id : null));
         const mainBonus = isMain ? 12 : 0;
         const coachBonus = this.matchupBonus || 0;
-        const confBonus = ((careerState.stats.confidence || 75) - 50) * 0.15;
+        const confBonus = ((careerState?.stats?.confidence || 75) - 50) * 0.15;
 
-        // IA ESCALONADA: Dificuldade varia com o nível da equipe adversária
-        const oppPower = this.isSoloQMatch ? 62 : (career.getCurrentOpponent()?.power || 50);
-        const diffPenalty = (oppPower - 50) * 0.35;
+        // 1. DUELO DIRETO DE STATUS: PRO X (Você) vs PRO Y (Seu Adversário Direto de Rota)
+        const playerOvr = career.calculatePlayerOvr ? career.calculatePlayerOvr() : 60;
+        let enemyProOvr = 60;
+        const oppTeam = career.getCurrentOpponent();
+        if (oppTeam && window.leagueNavigator) {
+          const enemyRoster = window.leagueNavigator.getRosterData(oppTeam.name);
+          const directPro = enemyRoster?.players?.find(p => p.role === (careerState?.role || "Mid"));
+          if (directPro) enemyProOvr = directPro.ovr;
+          else if (careerState?.rival) enemyProOvr = careerState.rival.soloRank ? 65 : 60;
+        }
+        // Diferença de status individual: pro com maior status domina a rota!
+        const statAdvantage = Math.round((playerOvr - enemyProOvr) * 0.75);
+
+        // 2. VANTAGEM DE COMPOSIÇÃO DE EQUIPE (Draft Synergy & Counter)
+        let compAdvantage = 0;
+        if (this.activeSynergy) {
+          compAdvantage += (this.activeSynergy.bonus || 10);
+        }
+        // Bônus adicional se o campeão do jogador pertencer à sinergia
+        const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
+        const allyChamps = draftSource.allyPicks?.filter(p => p.champ).map(p => p.champ) || [];
+        if (allyChamps.length >= 3) {
+          compAdvantage += 5; // Composição coordenada
+        }
 
         // Bônus de Feitiços de Invocador Equipados
         let spellBonus = 0;
-        const spD = careerState.spells?.d;
-        const spF = careerState.spells?.f;
+        const spD = careerState?.spells?.d;
+        const spF = careerState?.spells?.f;
 
         if (spD === "Flash" || spF === "Flash") spellBonus += 6;
         if ((spD === "Ignite" || spF === "Ignite") && stat === "mechanics") spellBonus += 8;
@@ -6178,7 +6906,13 @@ function generateRival(playerRole) {
         if ((spD === "Cleanse" || spF === "Cleanse") && stat === "consistency") spellBonus += 8;
         if ((spD === "Ghost" || spF === "Ghost") && stat === "mechanics") spellBonus += 7;
 
-        return Math.max(25, Math.min(95, Math.round(base * 0.7 + mainBonus + coachBonus + confBonus + spellBonus - diffPenalty)));
+        // IA ESCALONADA: Nível geral do clube adversário
+        const oppPower = this.isSoloQMatch ? 62 : (career.getCurrentOpponent()?.power || 50);
+        const diffPenalty = (oppPower - 50) * 0.25;
+
+        // Cálculo determinístico: se o jogador construiu melhor pro e melhor comp, ele tem vitória merecida!
+        const finalOdds = Math.round(base * 0.55 + statAdvantage + compAdvantage + mainBonus + coachBonus + confBonus + spellBonus - diffPenalty);
+        return Math.max(20, Math.min(96, finalOdds));
       },
 
       resolveChoice(choice, odds) {
@@ -6624,8 +7358,58 @@ function generateRival(playerRole) {
           showToast("🔥 Ranqueada SoloQ: " + (lpDelta > 0 ? "+" + lpDelta : lpDelta) + " PDL • " + eloInfo.tier + " (" + eloInfo.lp + " PDL)");
         } else {
           // Partida de Campeonato / Liga Oficial
-          if (isVictory) careerState.team.wins += 1;
-          else careerState.team.losses += 1;
+          if (isVictory) {
+            careerState.team.wins = (careerState.team.wins || 0) + 1;
+          } else {
+            careerState.team.losses = (careerState.team.losses || 0) + 1;
+          }
+          careerState.team.points = (careerState.team.wins || 0) * 3;
+
+          // Sincronizar na lista de times da liga atual
+          const currentTier = careerState.currentTierId || 4;
+          const league = LEAGUES_DATA[currentTier] || LEAGUES_DATA[4];
+          const myTeamInLeague = league.teams.find(t => t.name.trim().toLowerCase() === careerState.team.name.trim().toLowerCase());
+          if (myTeamInLeague) {
+            myTeamInLeague.wins = careerState.team.wins;
+            myTeamInLeague.losses = careerState.team.losses;
+            myTeamInLeague.points = careerState.team.points;
+          }
+
+          // Atualizar o adversário enfrentado
+          const opp = career.getCurrentOpponent();
+          const oppInLeague = league.teams.find(t => t.name.trim().toLowerCase() === (opp ? opp.name.trim().toLowerCase() : ""));
+          if (oppInLeague) {
+            if (isVictory) {
+              oppInLeague.losses = (oppInLeague.losses || 0) + 1;
+            } else {
+              oppInLeague.wins = (oppInLeague.wins || 0) + 1;
+            }
+            oppInLeague.points = (oppInLeague.wins || 0) * 3;
+          }
+
+          // SIMULAR OS OUTROS JOGOS DA RODADA PARA OS DEMAIS TIMES DA LIGA!
+          const otherTeams = league.teams.filter(t => 
+            t.name.trim().toLowerCase() !== careerState.team.name.trim().toLowerCase() &&
+            (!opp || t.name.trim().toLowerCase() !== opp.name.trim().toLowerCase())
+          );
+          // Parear os times restantes 2 a 2
+          for (let i = 0; i < otherTeams.length - 1; i += 2) {
+            const teamA = otherTeams[i];
+            const teamB = otherTeams[i + 1];
+            const diff = (teamA.power || 50) - (teamB.power || 50);
+            const probA = Math.min(85, Math.max(15, 50 + diff * 2));
+            const roll = Math.random() * 100;
+            if (roll <= probA) {
+              teamA.wins = (teamA.wins || 0) + 1;
+              teamB.losses = (teamB.losses || 0) + 1;
+            } else {
+              teamB.wins = (teamB.wins || 0) + 1;
+              teamA.losses = (teamA.losses || 0) + 1;
+            }
+            teamA.points = (teamA.wins || 0) * 3;
+            teamB.points = (teamB.wins || 0) * 3;
+          }
+
           careerState.team.week += 1;
 
           // Restaurar ações semanais e pagar salário semanal
@@ -6633,7 +7417,10 @@ function generateRival(playerRole) {
           careerState.energy = Math.min(100, careerState.energy + 40);
           const salary = careerState.team.salary || 450;
           careerState.gold += salary;
-          showToast("📅 Rodada finalizada! Nova Semana " + careerState.team.week + " (+R$ " + salary + " de Salário e 3 Ações restauradas).");
+
+          const calInfo = window.calendarEngine ? window.calendarEngine.getRoundCalendarInfo(careerState.team.week) : null;
+          const nextDateStr = calInfo ? (calInfo.day + ", " + calInfo.date) : ("Semana " + careerState.team.week);
+          showToast("📅 Rodada finalizada! " + (isVictory ? "+3 Pontos conquistados!" : "0 Pontos.") + " Próximo jogo: " + nextDateStr + " (+R$ " + salary + ").");
 
           // Se estiver em Playoffs MD5 (Fearless Draft ativo):
           if (careerState.playoffs && careerState.playoffs.inPlayoffs) {
@@ -6685,6 +7472,21 @@ function generateRival(playerRole) {
 
         careerState.fame += fameGain;
         careerState.gold += goldGain;
+
+        // Registrar Conquistas e MVPs na Carreira
+        if (!careerState.achievements) {
+          careerState.achievements = { titles: [], finals: 0, mvpMatches: 0, mvpTournaments: 0, totalMatches: 0, totalWins: 0, totalLosses: 0, totalKills: 0, totalPentakills: 0 };
+        }
+        careerState.achievements.totalMatches = (careerState.achievements.totalMatches || 0) + 1;
+        if (isVictory) {
+          careerState.achievements.totalWins = (careerState.achievements.totalWins || 0) + 1;
+          // Se venceu e causou dano alto ou obteve nota S
+          careerState.achievements.mvpMatches = (careerState.achievements.mvpMatches || 0) + 1;
+          careerState.achievements.totalKills = (careerState.achievements.totalKills || 0) + (Math.floor(Math.random() * 5) + 6);
+        } else {
+          careerState.achievements.totalLosses = (careerState.achievements.totalLosses || 0) + 1;
+          careerState.achievements.totalKills = (careerState.achievements.totalKills || 0) + (Math.floor(Math.random() * 3) + 2);
+        }
         Object.keys(this.statGains).forEach(st => {
           careerState.stats[st] = Math.min(99, (careerState.stats[st] || 50) + this.statGains[st]);
         });
@@ -6743,10 +7545,177 @@ function generateRival(playerRole) {
         showToast("💾 Progresso da Carreira Salvo com Sucesso!");
       },
 
+      renderPlayerJerseySvg(teamName, playerNick, playerRole) {
+        const meta = (window.TEAM_METADATA && window.TEAM_METADATA[teamName]) || { color: "#38bdf8", bg: "#0c192c", tag: "PRO" };
+        const primaryColor = meta.color || "#00d2ff";
+        const secondaryColor = meta.bg || "#0a1120";
+        const nick = (playerNick || "PRO").toUpperCase().slice(0, 10);
+        const tag = meta.tag || "BR";
+        const role = (playerRole || "MID").slice(0, 3).toUpperCase();
+
+        return '<svg viewBox="0 0 240 280" class="player-jersey-svg" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:230px; filter:drop-shadow(0 0 16px rgba(0,0,0,0.85);">' +
+          '<circle cx="120" cy="46" r="30" fill="#e2e8f0" />' +
+          '<path d="M92 40 C92 18, 148 18, 148 40 C142 30, 126 28, 120 30 C114 28, 98 30, 92 40 Z" fill="#1e293b" />' +
+          '<path d="M84 46 C84 22, 156 22, 156 46" stroke="' + primaryColor + '" stroke-width="7" fill="none" stroke-linecap="round" />' +
+          '<rect x="78" y="38" width="12" height="24" rx="5" fill="#0f172a" stroke="' + primaryColor + '" stroke-width="2" />' +
+          '<rect x="150" y="38" width="12" height="24" rx="5" fill="#0f172a" stroke="' + primaryColor + '" stroke-width="2" />' +
+          '<path d="M84 56 Q94 72, 108 68" stroke="' + primaryColor + '" stroke-width="3" fill="none" />' +
+          '<circle cx="110" cy="68" r="3" fill="#ef4444" />' +
+          '<rect x="108" y="72" width="24" height="18" fill="#cbd5e1" />' +
+          '<path d="M60 110 L94 84 L146 84 L180 110 L166 142 L146 130 L146 250 L94 250 L94 130 L74 142 Z" fill="' + secondaryColor + '" stroke="' + primaryColor + '" stroke-width="3" />' +
+          '<path d="M94 84 L110 84 L104 250 L94 250 Z" fill="' + primaryColor + '" opacity="0.85" />' +
+          '<path d="M146 84 L130 84 L136 250 L146 250 Z" fill="' + primaryColor + '" opacity="0.85" />' +
+          '<polygon points="106,84 134,84 120,104" fill="#020617" stroke="' + primaryColor + '" stroke-width="2" />' +
+          '<rect x="98" y="118" width="44" height="22" rx="4" fill="rgba(0,0,0,0.6)" stroke="' + primaryColor + '" stroke-width="1.5" />' +
+          '<text x="120" y="132" font-family="sans-serif" font-weight="900" font-size="10" fill="' + primaryColor + '" text-anchor="middle" dominant-baseline="middle">' + tag + '</text>' +
+          '<text x="120" y="166" font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" letter-spacing="1">' + nick + '</text>' +
+          '<text x="120" y="196" font-family="sans-serif" font-weight="900" font-size="22" fill="' + primaryColor + '" text-anchor="middle" opacity="0.95">' + role + '</text>' +
+          '<circle cx="86" cy="116" r="8" fill="#eab308" stroke="#ffffff" stroke-width="1" />' +
+          '<text x="86" y="117" font-family="sans-serif" font-weight="bold" font-size="9" fill="#000" text-anchor="middle" dominant-baseline="middle">C</text>' +
+        '</svg>';
+      },
+
+      renderCareerProfile() {
+        if (!careerState) return;
+
+        // Garantir achievements
+        if (!careerState.achievements) {
+          careerState.achievements = {
+            titles: [],
+            finals: 0,
+            mvpMatches: 0,
+            mvpTournaments: 0,
+            totalMatches: (careerState.team?.wins || 0) + (careerState.team?.losses || 0),
+            totalWins: careerState.team?.wins || 0,
+            totalLosses: careerState.team?.losses || 0,
+            totalKills: (careerState.team?.wins || 0) * 8,
+            totalPentakills: 0
+          };
+        }
+
+        const teamName = careerState.team?.name || "Santos Dex";
+        const nick = careerState.nick || "Revenge";
+        const role = careerState.role || "Mid";
+
+        // 1. Renderizar Avatar e Camisa
+        const jerseyContainer = document.getElementById("careerPlayerJerseyContainer");
+        if (jerseyContainer) {
+          jerseyContainer.innerHTML = this.renderPlayerJerseySvg(teamName, nick, role);
+        }
+
+        const teamBadge = document.getElementById("careerProfileTeamBadge");
+        const nickEl = document.getElementById("careerProfilePlayerNick");
+        const roleEl = document.getElementById("careerProfilePlayerRole");
+        const bioEl = document.getElementById("careerProfilePlayerBio");
+        const statusTag = document.getElementById("careerProfileStatusTag");
+
+        if (teamBadge) teamBadge.innerText = teamName;
+        if (nickEl) nickEl.innerText = nick;
+        if (roleEl) roleEl.innerText = role.toUpperCase() + " TITULAR";
+        const age = careerState.age || 19;
+        const country = careerState.country || "Brasil";
+        if (bioEl) bioEl.innerText = age + " anos • 🇧🇷 " + country;
+        if (statusTag) statusTag.innerText = "👑 Titular • " + teamName;
+
+        // Ficha Técnica
+        const ovrVal = document.getElementById("careerProfileOvrVal");
+        const salaryVal = document.getElementById("careerProfileSalaryVal");
+        const fameVal = document.getElementById("careerProfileFameVal");
+        const eloVal = document.getElementById("careerProfileEloVal");
+
+        const ovr = Math.round(this.calculatePlayerOvr ? this.calculatePlayerOvr() : 60);
+        if (ovrVal) ovrVal.innerText = ovr + " OVR";
+        if (salaryVal) salaryVal.innerText = "R$ " + (careerState.team?.salary || 450).toLocaleString("pt-BR");
+        if (fameVal) fameVal.innerText = (careerState.fame || 50) + " Fãs";
+        if (eloVal) eloVal.innerText = eloLabel();
+
+        // Atributos
+        const s = careerState.stats || {};
+        const vMech = document.getElementById("careerValMech");
+        const vMacro = document.getElementById("careerValMacro");
+        const vComm = document.getElementById("careerValComm");
+        const vCons = document.getElementById("careerValCons");
+        if (vMech) vMech.innerText = s.mechanics || 50;
+        if (vMacro) vMacro.innerText = s.macro || 50;
+        if (vComm) vComm.innerText = s.comm || 50;
+        if (vCons) vCons.innerText = s.consistency || 50;
+
+        // Sala de Troféus
+        const tropBox = document.getElementById("careerTrophiesContainer");
+        const titlesBadge = document.getElementById("careerTitlesCountBadge");
+        const titles = careerState.achievements.titles || [];
+        if (titlesBadge) titlesBadge.innerText = titles.length + " Título" + (titles.length === 1 ? "" : "s");
+
+        if (tropBox) {
+          tropBox.innerHTML = "";
+          const trophySlots = [
+            { id: "go4lol", title: "Liga Amadora Go4LoL", icon: "⭐", reqTier: 4 },
+            { id: "desafiante", title: "Circuito Desafiante", icon: "🛡️", reqTier: 3 },
+            { id: "cblol", title: "CBLOL (Campeão Nacional)", icon: "⚔️", reqTier: 1 },
+            { id: "worlds", title: "Summoner's Cup (Mundial)", icon: "👑", reqTier: 5 }
+          ];
+
+          trophySlots.forEach(slot => {
+            const isWon = titles.some(t => t.toLowerCase().includes(slot.title.toLowerCase().slice(0, 8)));
+            const card = document.createElement("div");
+            card.style.cssText = "background:" + (isWon ? "rgba(200,170,110,0.15)" : "#070c16") + "; border:1px solid " + (isWon ? "var(--hextech-gold)" : "#1e2c44") + "; border-radius:8px; padding:12px; text-align:center; box-shadow:" + (isWon ? "0 0 15px rgba(200,170,110,0.3)" : "none") + ";";
+            card.innerHTML = 
+              "<div style='font-size:2rem; filter:" + (isWon ? "drop-shadow(0 0 8px rgba(200,170,110,0.7))" : "grayscale(1) opacity(0.3)") + ";'>" + slot.icon + "</div>" +
+              "<div style='font-family:var(--font-tech); font-weight:700; font-size:0.88rem; color:" + (isWon ? "var(--hextech-gold)" : "#64748b") + "; margin-top:6px;'>" + slot.title + "</div>" +
+              "<div style='font-size:0.72rem; color:" + (isWon ? "#10b981" : "#475569") + "; margin-top:3px; font-weight:700;'>" + (isWon ? "🏆 CONQUISTADO!" : "🔒 Bloqueado") + "</div>";
+            tropBox.appendChild(card);
+          });
+        }
+
+        // Prêmios Individuais
+        const mvpCountEl = document.getElementById("careerMvpCount");
+        const finalsCountEl = document.getElementById("careerFinalsCount");
+        const pentasCountEl = document.getElementById("careerPentakillsCount");
+        if (mvpCountEl) mvpCountEl.innerText = careerState.achievements.mvpMatches || 0;
+        if (finalsCountEl) finalsCountEl.innerText = careerState.achievements.finals || 0;
+        if (pentasCountEl) pentasCountEl.innerText = careerState.achievements.totalPentakills || 0;
+
+        // Estatísticas Globais
+        const totGamesEl = document.getElementById("careerTotalGames");
+        const totWinsEl = document.getElementById("careerTotalWins");
+        const totLossesEl = document.getElementById("careerTotalLosses");
+        const winrateEl = document.getElementById("careerWinrate");
+        const totKillsEl = document.getElementById("careerTotalKills");
+
+        const totG = (careerState.achievements.totalMatches !== undefined) ? careerState.achievements.totalMatches : ((careerState.team?.wins || 0) + (careerState.team?.losses || 0));
+        const totW = (careerState.achievements.totalWins !== undefined) ? careerState.achievements.totalWins : (careerState.team?.wins || 0);
+        const totL = (careerState.achievements.totalLosses !== undefined) ? careerState.achievements.totalLosses : (careerState.team?.losses || 0);
+        const wr = totG > 0 ? Math.round((totW / totG) * 100) : 0;
+        const kills = careerState.achievements.totalKills || (totW * 8 + totL * 3);
+
+        if (totGamesEl) totGamesEl.innerText = totG;
+        if (totWinsEl) totWinsEl.innerText = totW;
+        if (totLossesEl) totLossesEl.innerText = totL;
+        if (winrateEl) winrateEl.innerText = wr + "%";
+        if (totKillsEl) totKillsEl.innerText = kills;
+      },
+
+      calculatePlayerOvr() {
+        if (!careerState || !careerState.stats) return 50;
+        const s = careerState.stats;
+        return (s.mechanics * 0.35 + s.macro * 0.35 + s.comm * 0.15 + s.consistency * 0.15);
+      },
+
+
       getCurrentOpponent() {
-        const league = LEAGUES_DATA[careerState.currentTierId] || LEAGUES_DATA[4];
-        const rivals = league.teams.filter(t => t.name !== careerState.team.name);
-        return rivals[(careerState.team.week - 1) % rivals.length] || rivals[0];
+        const currentTier = careerState?.currentTierId || 4;
+        const league = LEAGUES_DATA[currentTier] || LEAGUES_DATA[4];
+        const myName = (careerState?.team?.name || "").trim().toLowerCase();
+        const rivals = league.teams.filter(t => t.name.trim().toLowerCase() !== myName);
+        if (!rivals || rivals.length === 0) {
+          return { name: "Adversário Desafiante", power: 55, tag: "ADV" };
+        }
+        const week = Math.max(1, careerState?.team?.week || 1);
+        let opp = rivals[(week - 1) % rivals.length] || rivals[0];
+        if (opp.name.trim().toLowerCase() === myName) {
+          opp = rivals.find(t => t.name.trim().toLowerCase() !== myName) || rivals[0];
+        }
+        return opp;
       },
 
       calculateTeamOvr() {
@@ -7322,9 +8291,17 @@ function generateRival(playerRole) {
         if (myNameMatch) myNameMatch.innerText = careerState.team.name;
         if (oppNameMatch) oppNameMatch.innerText = oppTeam.name;
         if (oppTagMatch) oppTagMatch.innerText = oppTeam.tag || "Rival";
-        if (recordEl) recordEl.innerText = careerState.team.wins + "V - " + careerState.team.losses + "D";
-        if (leagueHeader) leagueHeader.innerText = (LEAGUES_DATA[careerState.currentTierId]?.name || "Liga") + " • Semana " + careerState.team.week;
+        const points = careerState.team.points !== undefined ? careerState.team.points : (careerState.team.wins * 3);
+        if (recordEl) recordEl.innerText = points + " PTS (" + careerState.team.wins + "V - " + careerState.team.losses + "D)";
+        if (leagueHeader) leagueHeader.innerText = (LEAGUES_DATA[careerState.currentTierId]?.name || "Liga") + " • Rodada " + careerState.team.week;
         if (weekNum) weekNum.innerText = careerState.team.week;
+
+        // Atualizar Data Oficial no Card do Próximo Jogo
+        const dateEl = document.getElementById("hubMatchScheduleDate");
+        if (dateEl && window.calendarEngine) {
+          const cal = window.calendarEngine.getRoundCalendarInfo(careerState.team.week);
+          dateEl.innerText = cal.fullDate + " • " + cal.time + " (" + cal.phase + ")";
+        }
 
         this.renderActionsGrid();
         this.updateStatsUI();
@@ -7663,6 +8640,9 @@ function generateRival(playerRole) {
         if (tabId === "tabTransfers") {
           career.renderTransfersMarket();
         }
+        if (tabId === "tabCareerProfile") {
+          career.renderCareerProfile();
+        }
       }
     };
 
@@ -7696,6 +8676,104 @@ function generateRival(playerRole) {
         career.startSoloQueueMatchmaking();
       }
     };
+
+    
+    /* MOTOR DO CALENDÁRIO OFICIAL DA TEMPORADA (CBLOL & LIGAS 2026) */
+    const calendarEngine = {
+      schedule: [
+        { week: 1, day: "Sábado", date: "14/03/2026", fullDate: "Sábado, 14 de Março de 2026", time: "13:00h", phase: "Rodada 1 • Abertura Oficial" },
+        { week: 2, day: "Domingo", date: "15/03/2026", fullDate: "Domingo, 15 de Março de 2026", time: "13:00h", phase: "Rodada 2 • Fase de Grupos" },
+        { week: 3, day: "Sábado", date: "21/03/2026", fullDate: "Sábado, 21 de Março de 2026", time: "13:00h", phase: "Rodada 3 • Fase de Grupos" },
+        { week: 4, day: "Domingo", date: "22/03/2026", fullDate: "Domingo, 22 de Março de 2026", time: "13:00h", phase: "Rodada 4 • Clássico das Torcidas" },
+        { week: 5, day: "Sábado", date: "28/03/2026", fullDate: "Sábado, 28 de Março de 2026", time: "13:00h", phase: "Rodada 5 • Virada do Turno" },
+        { week: 6, day: "Domingo", date: "29/03/2026", fullDate: "Domingo, 29 de Março de 2026", time: "13:00h", phase: "Rodada 6 • Returno Decisivo" },
+        { week: 7, day: "Sábado", date: "04/04/2026", fullDate: "Sábado, 04 de Abril de 2026", time: "13:00h", phase: "Rodada 7 • Corrida ao G4 (Playoffs)" },
+        { week: 8, day: "Domingo", date: "05/04/2026", fullDate: "Domingo, 05 de Abril de 2026", time: "13:00h", phase: "Rodada 8 • Penúltima Rodada" },
+        { week: 9, day: "Sábado", date: "11/04/2026", fullDate: "Sábado, 11 de Abril de 2026", time: "13:00h", phase: "Rodada 9 • Super Semana / Fim dos Pontos" },
+        { week: 10, day: "Sábado", date: "18/04/2026", fullDate: "Sábado, 18 de Abril de 2026", time: "13:00h", phase: "Playoffs • Semifinal MD5 (Fearless Draft)" },
+        { week: 11, day: "Sábado", date: "25/04/2026", fullDate: "Sábado, 25 de Abril de 2026", time: "13:00h", phase: "Playoffs • Grande Final MD5 (Summoner's Cup)" }
+      ],
+
+      getRoundCalendarInfo(weekNum) {
+        weekNum = Math.max(1, weekNum || 1);
+        return this.schedule[weekNum - 1] || {
+          week: weekNum,
+          day: "Sábado",
+          date: "02/05/2026",
+          fullDate: "Sábado, 02 de Maio de 2026",
+          time: "13:00h",
+          phase: "Série Decisiva Especial"
+        };
+      },
+
+      openScheduleModal() {
+        gameAudio.playClick();
+        const modal = document.getElementById("scheduleCalendarModal");
+        if (!modal) return;
+        this.renderScheduleModal();
+        modal.style.display = "flex";
+      },
+
+      closeScheduleModal() {
+        gameAudio.playClick();
+        const modal = document.getElementById("scheduleCalendarModal");
+        if (modal) modal.style.display = "none";
+      },
+
+      renderScheduleModal() {
+        const container = document.getElementById("scheduleRoundsContainer");
+        const leagueBadge = document.getElementById("scheduleModalLeagueBadge");
+        if (!container) return;
+        container.innerHTML = "";
+
+        const currentTier = careerState?.currentTierId || 4;
+        const league = LEAGUES_DATA[currentTier] || LEAGUES_DATA[4];
+        if (leagueBadge) leagueBadge.innerText = league.name;
+
+        const myTeam = careerState?.team?.name || "Seu Time";
+        const currentWeek = careerState?.team?.week || 1;
+        const rivals = league.teams.filter(t => t.name.trim().toLowerCase() !== myTeam.trim().toLowerCase());
+
+        this.schedule.forEach(item => {
+          const isPast = item.week < currentWeek;
+          const isCurrent = item.week === currentWeek;
+          const oppTeamObj = rivals[(item.week - 1) % rivals.length] || rivals[0];
+          const oppName = oppTeamObj?.name || "Adversário";
+
+          const card = document.createElement("div");
+          card.style.cssText = "background: " + (isCurrent ? "linear-gradient(90deg, rgba(200,170,110,0.15) 0%, #0d1526 100%)" : "#080e18") + "; border: 1px solid " + (isCurrent ? "var(--hextech-gold)" : "#1e2c44") + "; border-radius: 8px; padding: 12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;";
+
+          let statusBadgeHtml = "";
+          if (isPast) {
+            statusBadgeHtml = "<span class='badge' style='background:rgba(100,116,139,0.25); color:#94a3b8; border:1px solid #475569;'>✅ Finalizado</span>";
+          } else if (isCurrent) {
+            statusBadgeHtml = "<span class='badge badge-gold' style='box-shadow:0 0 10px rgba(200,170,110,0.5);'>🔥 RODADA ATUAL (HOJE)</span>";
+          } else {
+            statusBadgeHtml = "<span class='badge badge-blue'>⏳ Em Breve</span>";
+          }
+
+          card.innerHTML = 
+            "<div style='display:flex; align-items:center; gap:14px;'>" +
+              "<div style='text-align:center; min-width:65px;'>" +
+                "<div style='font-size:0.75rem; color:#94a3b8; text-transform:uppercase;'>Semana " + item.week + "</div>" +
+                "<div style='font-family:var(--font-tech); font-weight:800; font-size:1.15rem; color:" + (isCurrent ? "var(--hextech-gold)" : "#fff") + ";'>" + item.day.slice(0, 3) + "</div>" +
+              "</div>" +
+              "<div style='border-left:1px solid #1e2c44; padding-left:14px;'>" +
+                "<div style='font-size:0.78rem; color:var(--hextech-blue); font-weight:700;'>" + item.phase + " • " + item.date + " às " + item.time + "</div>" +
+                "<div style='display:flex; align-items:center; gap:8px; margin-top:4px; font-family:var(--font-tech); font-weight:700; font-size:1.02rem; color:#fff;'>" +
+                  "<span>" + myTeam + "</span>" +
+                  "<span style='color:var(--danger-red); font-size:0.85rem; font-weight:900;'>VS</span>" +
+                  "<span>" + oppName + "</span>" +
+                "</div>" +
+              "</div>" +
+            "</div>" +
+            "<div>" + statusBadgeHtml + "</div>";
+
+          container.appendChild(card);
+        });
+      }
+    };
+    window.calendarEngine = calendarEngine;
 
     /* ASSOCIAÇÕES GLOBAIS NO WINDOW (SEMPRE NO FINAL APÓS DECLARAÇÕES) */
     window.gameRouter = gameRouter;
