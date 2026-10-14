@@ -1247,10 +1247,50 @@
       .toast-container { left: 10px !important; right: 10px !important; bottom: 10px !important; }
     }
 
+    /* OTIMIZAÇÃO DE PERFORMANCE MOBILE & ADAPTAÇÃO ULTRA PROFISSIONAL */
+    html {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    button, .quick-command-card, .champ-select-tile, .choice-card-btn, .nav-tab-btn {
+      touch-action: manipulation;
+      cursor: pointer;
+    }
+
+    /* Scrollbar Suave Horizontal para Abas no Celular */
+    .nav-tabs {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid { grid-template-columns: 1fr !important; }
+      .hub-quick-command-bar { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+      .profile-main-grid { grid-template-columns: 1fr !important; }
+      .draft-arena-grid { grid-template-columns: 1fr !important; }
+      .draft-team-side { order: 2; }
+      .draft-center-stage { order: 1; }
+    }
+
     @media (max-width: 480px) {
       .actions-grid { grid-template-columns: 1fr !important; }
-      .draft-168-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)) !important; }
-      .champ-tile-img { width: 32px !important; height: 32px !important; }
+      .hub-quick-command-bar { grid-template-columns: 1fr !important; }
+      .draft-168-grid { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)) !important; gap: 4px !important; }
+      .champ-tile-img { width: 30px !important; height: 30px !important; }
+      .champ-tile-name { font-size: 0.65rem !important; }
+      .card { padding: 12px !important; }
+      .card-title { font-size: 0.95rem !important; }
+      .quick-stat-box { padding: 8px !important; }
+      .modal-box { width: 96% !important; padding: 12px 10px !important; }
+      .player-jersey-svg { max-width: 220px !important; }
     }
   
     .champ-tag-badge {
@@ -3064,7 +3104,55 @@
 
     /* BANCO DE DADOS DE SINERGIAS OFICIAIS (DUO BOT & MID/JUNGLE COMBOS) */
     const SYNERGIES_DB = [
-      // DUO BOT COMBOS
+      // DUO BOT COMBOS (META COMPETITIVO ATUALIZADO 2025/2026)
+      {
+        champs: ["Aphelios", "Thresh"],
+        name: "Sentença Noturna Lunar",
+        type: "bot",
+        desc: "Lanterna de Thresh garante reposicionamento impecável para o Gravitum e Calibrum de Aphelios.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Aphelios", "Milio"],
+        name: "Chamas Lunares & Alcance Máximo",
+        type: "bot",
+        desc: "Fogueira de Milio expande o alcance de ataque de Aphelios para derreter os inimigos à distância segura.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Lucian", "Milio"],
+        name: "Faíscas da Luz & Disparos Duplos",
+        type: "bot",
+        desc: "A passiva Fogo Amigo de Milio queima os alvos e potencializa o Disparo Iluminado de Lucian.",
+        bonus: 15,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Caitlyn", "Karma"],
+        name: "Pressão Opressiva de Cerco",
+        type: "bot",
+        desc: "Mantra Q de Karma e as armadilhas de Caitlyn negam qualquer aproximação sob a torre inimiga.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Jinx", "Lulu"],
+        name: "Metralhadora Insana de Piltover",
+        type: "bot",
+        desc: "Capricho e Pix concedem velocidade de ataque astronômica para os Mísseis Supremoz da Jinx.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Yunara", "Lulu"],
+        name: "Proteção Mágica & Dano Cósmico",
+        type: "bot",
+        desc: "Escudos contínuos e bônus de mobilidade tornam o hypercarry intocável durante as teamfights.",
+        bonus: 15,
+        tag: "Duo Bot S"
+      },
       {
         champs: ["Draven", "Leona"],
         name: "All-in Brutal",
@@ -3146,6 +3234,39 @@
         tag: "Duo Bot S"
       },
 
+      // TOP + JUNGLE & MID COMBOS
+      {
+        champs: ["KSante", "Sejuani"],
+        name: "Muralha de Shurima & Gelo Freljordiano",
+        type: "top_jg",
+        desc: "Controle de grupo em cadeia massivo e linha de frente indestrutível para lutas no Rift.",
+        bonus: 16,
+        tag: "Top/Jg S+"
+      },
+      {
+        champs: ["Renekton", "Elise"],
+        name: "Mergulho Ponto & Abate Certeiro",
+        type: "top_jg",
+        desc: "Atordoamento instantâneo de Renekton com Casulo e Rapel de Elise para dives perfeitos.",
+        bonus: 16,
+        tag: "Top/Jg S+"
+      },
+      {
+        champs: ["Camille", "Galio"],
+        name: "Ultimato Hextech & Queda Heroica",
+        type: "top_mid",
+        desc: "O alvo aprisionado no Ultimato Hextech não consegue escapar da Entrada Heroica de Galio.",
+        bonus: 16,
+        tag: "Top/Mid S+"
+      },
+      {
+        champs: ["Yasuo", "Malphite"],
+        name: "Impacto Incontrolável no Ar",
+        type: "mid_top",
+        desc: "Força Incontrolável de Malphite arremessa a equipe inimiga garantindo Último Suspiro perfeito.",
+        bonus: 16,
+        tag: "Mid/Top S+"
+      },
       // MID + JUNGLE COMBOS
       {
         champs: ["Vi", "Orianna"],
@@ -4904,9 +5025,13 @@ function generateRival(playerRole) {
         this.initLobbyChat();
         this.updateActionButtons();
 
-        // Iniciar na FASE DE BANS com o Jogador sendo o Capitão da Equipe
-        this.setBanner("👑 VOCÊ É O CAPITÃO • DEFINA O BAN PRIORITÁRIO DA EQUIPE (1 DE 10)", "danger");
-        this.startTimer(15, () => this.confirmBan());
+        // IA do Treinador: Sugerir Ban Prioritário contra a rota ou meta
+        this.coachRecommendedBan = this.enemyOpponentChamp || db.find(c => c.id === "Zed") || db[0];
+        this.renderCoachBanAdvisory();
+
+        // Iniciar na FASE DE BANS com o Jogador podendo aceitar o ban do Coach ou banir manualmente
+        this.setBanner("👑 FASE DE BANS • BANIR SUGESTÃO DO COACH OU ESCOLHER COMO CAPITÃO", "danger");
+        this.startTimer(18, () => this.confirmBan());
 
         gameRouter.showScreen("screenDraft");
       },
@@ -5182,8 +5307,10 @@ function generateRival(playerRole) {
         this.render168ChampionsGrid();
       },
 
-      filterGrid(query) {
-        this.render168ChampionsGrid();
+      selectSynergyChampion(champId) {
+        const db = window.LOL_CHAMPIONS_DB || [];
+        const champ = db.find(c => c.id === champId) || { id: champId, name: champId };
+        this.selectChampion(champ, 16);
       },
 
       selectChampion(champ, bonus) {
@@ -5292,6 +5419,15 @@ function generateRival(playerRole) {
           btn.disabled = true;
           btn.className = "btn btn-gold btn-lockin-large";
           btn.innerHTML = "✅ PARTIDA INICIANDO...";
+        }
+      },
+
+      acceptCoachBan() {
+        if (this.coachRecommendedBan) {
+          this.selectedBanChamp = this.coachRecommendedBan;
+          gameAudio.playClick();
+          showToast("👔 Recomendação do Coach aceita! Banindo " + this.coachRecommendedBan.name + "!");
+          this.confirmBan();
         }
       },
 
@@ -5510,6 +5646,39 @@ function generateRival(playerRole) {
         }, 1200);
       },
 
+      renderCoachBanAdvisory() {
+        const panel = document.getElementById("coachMatchupPanel");
+        if (!panel) return;
+        const b = this.coachRecommendedBan;
+        if (!b) return;
+
+        panel.style.display = "block";
+        const h = document.getElementById("coachBriefingHeader");
+        const p = document.getElementById("coachBriefingDialogue");
+        const list = document.getElementById("coachCounterList");
+
+        if (h) h.innerText = "Coach Maestro (Técnico Nív. " + (careerState?.coach?.level || 1) + "):";
+        if (p) {
+          p.innerHTML = "Identifiquei que a rota adversária é perigosa de <strong>" + b.name + "</strong>! Recomendo bani-lo para garantir conforto tático:";
+        }
+
+        if (list) {
+          list.innerHTML = 
+            "<div style='display:flex; align-items:center; justify-content:space-between; width:100%; gap:12px; background:rgba(200,170,110,0.12); border:1px solid var(--hextech-gold); border-radius:8px; padding:10px 14px; flex-wrap:wrap;'>" +
+              "<div style='display:flex; align-items:center; gap:10px;'>" +
+                "<img src='" + getChampImgUrl(b) + "' alt='" + b.name + "' style='width:42px; height:42px; border-radius:6px; border:2px solid #ef4444; object-fit:cover;' onerror='handleImgError(this);'>" +
+                "<div>" +
+                  "<div style='font-family:var(--font-tech); font-weight:800; color:#fff; font-size:0.92rem;'>BAN SUGERIDO: " + b.name.toUpperCase() + "</div>" +
+                  "<div style='font-size:0.75rem; color:#cbd5e1;'>Meta Threat • Neutraliza o rival no início de jogo</div>" +
+                "</div>" +
+              "</div>" +
+              "<button class='btn btn-gold' style='padding:8px 18px; font-weight:800; font-size:0.82rem; cursor:pointer;' onclick='draftEngine.acceptCoachBan()'>" +
+                "⚡ ACEITAR BAN DO COACH (" + b.name.toUpperCase() + ")" +
+              "</button>" +
+            "</div>";
+        }
+      },
+
       setupCoachAdvisory(enemyChamp) {
         const coach = careerState.coach || { level: 1, title: "Treinador Novato" };
         const coachLvlBonus = Math.min(30, 10 + coach.level * 4);
@@ -5531,6 +5700,7 @@ function generateRival(playerRole) {
         const rolePool = db.filter(c => c.roles && c.roles.includes(careerState.role) && c.id !== enemyChamp.id && !this.bannedChampIds.includes(c.id) && !this.fearlessBlockedIds.includes(c.id));
         const recs = rolePool.slice(0, 3);
 
+        // 1. Counters Diretos do Rival
         recs.forEach((champ, idx) => {
           const bonus = coachLvlBonus - (idx * 3);
           const card = document.createElement("div");
@@ -5543,6 +5713,59 @@ function generateRival(playerRole) {
             "</div>";
           counterList.appendChild(card);
         });
+
+        // 2. SINERGIAS OFICIAIS SUGERIDAS PELO COACH (DUO BOT, MID/JG & COMBOS)
+        const synergyBanner = document.createElement("div");
+        synergyBanner.style.cssText = "width:100%; margin-top:10px; border-top:1px solid #1e2c44; padding-top:10px;";
+
+        const role = careerState.role || "Mid";
+        // Encontrar campeões aliados já escolhidos
+        const pickedAllyChamps = this.allyPicks.filter(p => !p.isPlayer && p.champ).map(p => p.champ.id);
+        const roleChamps = db.filter(c => c.roles && c.roles.includes(role));
+        const roleChampIds = new Set(roleChamps.map(c => c.id));
+
+        // Buscar sinergias onde pelo menos um campeão pertença à rota do jogador
+        let relevantSyns = SYNERGIES_DB.filter(s => s.champs.some(id => roleChampIds.has(id)));
+
+        // Priorizar sinergias cujo parceiro já foi escolhido por um aliado no time
+        relevantSyns.sort((a, b) => {
+          const aHasPickedPartner = a.champs.some(id => pickedAllyChamps.includes(id));
+          const bHasPickedPartner = b.champs.some(id => pickedAllyChamps.includes(id));
+          if (aHasPickedPartner && !bHasPickedPartner) return -1;
+          if (!aHasPickedPartner && bHasPickedPartner) return 1;
+          return b.bonus - a.bonus;
+        });
+
+        if (relevantSyns.length > 0) {
+          let synHtml = "<div style='font-size:0.78rem; font-weight:800; color:var(--hextech-blue); letter-spacing:1px; margin-bottom:8px; text-transform:uppercase;'>✨ SINERGIAS RECOMENDADAS PELO COACH (" + role.toUpperCase() + "):</div>" +
+            "<div style='display:flex; gap:8px; overflow-x:auto; padding-bottom:6px;'>";
+
+          relevantSyns.slice(0, 5).forEach(syn => {
+            let myTargetChampId = syn.champs.find(cid => roleChampIds.has(cid));
+            if (!myTargetChampId) myTargetChampId = syn.champs[0];
+            const partnerChampId = syn.champs.find(cid => cid !== myTargetChampId) || syn.champs[1];
+
+            const myChampObj = db.find(c => c.id === myTargetChampId) || { id: myTargetChampId, name: myTargetChampId };
+            const partnerChampObj = db.find(c => c.id === partnerChampId) || { id: partnerChampId, name: partnerChampId };
+
+            const isPartnerPicked = pickedAllyChamps.includes(partnerChampId);
+            const statusLabel = isPartnerPicked ? "🔥 COMBO ATIVO COM SEU TIME!" : "+" + syn.bonus + "% Bônus de Luta";
+
+            synHtml += 
+              "<div onclick='draftEngine.selectSynergyChampion(\"" + myChampObj.id + "\")' style='background:" + (isPartnerPicked ? "rgba(0, 210, 255, 0.22)" : "#090f1d") + "; border:1px solid " + (isPartnerPicked ? "var(--hextech-blue)" : "#1e2c44") + "; border-radius:6px; padding:6px 10px; cursor:pointer; min-width:180px; display:flex; align-items:center; gap:8px; transition:all 0.2s ease; box-shadow:" + (isPartnerPicked ? "0 0 12px rgba(0,210,255,0.3)" : "none") + ";'>" +
+                "<img src='" + getChampImgUrl(myChampObj) + "' alt='" + myChampObj.name + "' style='width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid " + (isPartnerPicked ? "var(--hextech-blue)" : "#334155") + ";' onerror='handleImgError(this);'>" +
+                "<div style='flex:1;'>" +
+                  "<div style='font-size:0.82rem; font-weight:700; color:#fff;'>" + myChampObj.name + " (" + role + ")</div>" +
+                  "<div style='font-size:0.72rem; color:var(--hextech-gold);'>com " + partnerChampObj.name + "</div>" +
+                  "<div style='font-size:0.68rem; color:" + (isPartnerPicked ? "#38bdf8" : "#94a3b8") + "; font-weight:700;'>" + statusLabel + "</div>" +
+                "</div>" +
+              "</div>";
+          });
+
+          synHtml += "</div>";
+          synergyBanner.innerHTML = synHtml;
+          counterList.appendChild(synergyBanner);
+        }
       },
 
       checkSynergy(champ) {
@@ -7550,28 +7773,127 @@ function generateRival(playerRole) {
         const primaryColor = meta.color || "#00d2ff";
         const secondaryColor = meta.bg || "#0a1120";
         const nick = (playerNick || "PRO").toUpperCase().slice(0, 10);
-        const tag = meta.tag || "BR";
+        const tag = (meta.tag || "BR").toUpperCase().slice(0, 4);
         const role = (playerRole || "MID").slice(0, 3).toUpperCase();
+        const svgId = "pro_avatar_" + Math.floor(Math.random() * 10000);
 
-        return '<svg viewBox="0 0 240 280" class="player-jersey-svg" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:230px; filter:drop-shadow(0 0 16px rgba(0,0,0,0.85);">' +
-          '<circle cx="120" cy="46" r="30" fill="#e2e8f0" />' +
-          '<path d="M92 40 C92 18, 148 18, 148 40 C142 30, 126 28, 120 30 C114 28, 98 30, 92 40 Z" fill="#1e293b" />' +
-          '<path d="M84 46 C84 22, 156 22, 156 46" stroke="' + primaryColor + '" stroke-width="7" fill="none" stroke-linecap="round" />' +
-          '<rect x="78" y="38" width="12" height="24" rx="5" fill="#0f172a" stroke="' + primaryColor + '" stroke-width="2" />' +
-          '<rect x="150" y="38" width="12" height="24" rx="5" fill="#0f172a" stroke="' + primaryColor + '" stroke-width="2" />' +
-          '<path d="M84 56 Q94 72, 108 68" stroke="' + primaryColor + '" stroke-width="3" fill="none" />' +
-          '<circle cx="110" cy="68" r="3" fill="#ef4444" />' +
-          '<rect x="108" y="72" width="24" height="18" fill="#cbd5e1" />' +
-          '<path d="M60 110 L94 84 L146 84 L180 110 L166 142 L146 130 L146 250 L94 250 L94 130 L74 142 Z" fill="' + secondaryColor + '" stroke="' + primaryColor + '" stroke-width="3" />' +
-          '<path d="M94 84 L110 84 L104 250 L94 250 Z" fill="' + primaryColor + '" opacity="0.85" />' +
-          '<path d="M146 84 L130 84 L136 250 L146 250 Z" fill="' + primaryColor + '" opacity="0.85" />' +
-          '<polygon points="106,84 134,84 120,104" fill="#020617" stroke="' + primaryColor + '" stroke-width="2" />' +
-          '<rect x="98" y="118" width="44" height="22" rx="4" fill="rgba(0,0,0,0.6)" stroke="' + primaryColor + '" stroke-width="1.5" />' +
-          '<text x="120" y="132" font-family="sans-serif" font-weight="900" font-size="10" fill="' + primaryColor + '" text-anchor="middle" dominant-baseline="middle">' + tag + '</text>' +
-          '<text x="120" y="166" font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" letter-spacing="1">' + nick + '</text>' +
-          '<text x="120" y="196" font-family="sans-serif" font-weight="900" font-size="22" fill="' + primaryColor + '" text-anchor="middle" opacity="0.95">' + role + '</text>' +
-          '<circle cx="86" cy="116" r="8" fill="#eab308" stroke="#ffffff" stroke-width="1" />' +
-          '<text x="86" y="117" font-family="sans-serif" font-weight="bold" font-size="9" fill="#000" text-anchor="middle" dominant-baseline="middle">C</text>' +
+        return '<svg viewBox="0 0 300 360" class="player-jersey-svg" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:280px; filter:drop-shadow(0 0 20px rgba(0,0,0,0.85);">' +
+          '<defs>' +
+            '<radialGradient id="' + svgId + '_aura" cx="50%" cy="38%" r="60%">' +
+              '<stop offset="0%" stop-color="' + primaryColor + '" stop-opacity="0.45" />' +
+              '<stop offset="60%" stop-color="' + secondaryColor + '" stop-opacity="0.15" />' +
+              '<stop offset="100%" stop-color="#020617" stop-opacity="0" />' +
+            '</radialGradient>' +
+            '<linearGradient id="' + svgId + '_gold" x1="0%" y1="0%" x2="100%" y2="100%">' +
+              '<stop offset="0%" stop-color="#f5d061" />' +
+              '<stop offset="50%" stop-color="#c8aa6e" />' +
+              '<stop offset="100%" stop-color="#7a5c29" />' +
+            '</linearGradient>' +
+            '<linearGradient id="' + svgId + '_jersey" x1="0%" y1="0%" x2="100%" y2="100%">' +
+              '<stop offset="0%" stop-color="' + secondaryColor + '" />' +
+              '<stop offset="50%" stop-color="#0a1220" />' +
+              '<stop offset="100%" stop-color="' + secondaryColor + '" />' +
+            '</linearGradient>' +
+            '<linearGradient id="' + svgId + '_skin" x1="0%" y1="0%" x2="0%" y2="100%">' +
+              '<stop offset="0%" stop-color="#fed7aa" />' +
+              '<stop offset="100%" stop-color="#fdba74" />' +
+            '</linearGradient>' +
+            '<linearGradient id="' + svgId + '_hair" x1="0%" y1="0%" x2="100%" y2="100%">' +
+              '<stop offset="0%" stop-color="#1e293b" />' +
+              '<stop offset="60%" stop-color="#0f172a" />' +
+              '<stop offset="100%" stop-color="' + primaryColor + '" />' +
+            '</linearGradient>' +
+            '<linearGradient id="' + svgId + '_glasses" x1="0%" y1="0%" x2="100%" y2="100%">' +
+              '<stop offset="0%" stop-color="rgba(0, 210, 255, 0.7)" />' +
+              '<stop offset="100%" stop-color="rgba(168, 85, 247, 0.4)" />' +
+            '</linearGradient>' +
+            '<filter id="' + svgId + '_glow" x="-20%" y="-20%" width="140%" height="140%">' +
+              '<feGaussianBlur stdDeviation="3" result="blur" />' +
+              '<feComposite in="SourceGraphic" in2="blur" operator="over" />' +
+            '</filter>' +
+          '</defs>' +
+
+          // 1. Escudo de Fundo Hextech Glow
+          '<polygon points="150,10 288,52 288,270 150,350 12,270 12,52" fill="#030712" stroke="url(#' + svgId + '_gold)" stroke-width="2" />' +
+          '<polygon points="150,16 280,56 280,264 150,342 20,264 20,56" fill="url(#' + svgId + '_aura)" />' +
+
+          // Linhas táticas de fundo
+          '<line x1="150" y1="20" x2="150" y2="340" stroke="' + primaryColor + '" stroke-width="1" stroke-dasharray="4 6" opacity="0.25" />' +
+          '<line x1="30" y1="180" x2="270" y2="180" stroke="' + primaryColor + '" stroke-width="1" stroke-dasharray="4 6" opacity="0.2" />' +
+
+          // 2. Ombros e Jaqueta de Esports (Jersey Oficial do Clube)
+          '<path d="M42,270 L80,175 L118,150 L182,150 L220,175 L258,270 L238,335 L62,335 Z" fill="url(#' + svgId + '_jersey)" stroke="' + primaryColor + '" stroke-width="2" />' +
+          // Painéis laterais da camisa com a cor primária do time
+          '<path d="M42,270 L80,175 L102,185 L74,335 L62,335 Z" fill="' + primaryColor + '" opacity="0.85" />' +
+          '<path d="M258,270 L220,175 L198,185 L226,335 L238,335 Z" fill="' + primaryColor + '" opacity="0.85" />' +
+
+          // Gola esportiva e zíper central
+          '<path d="M118,150 L150,188 L182,150 L170,140 L130,140 Z" fill="#020617" stroke="' + primaryColor + '" stroke-width="1.5" />' +
+          '<line x1="150" y1="188" x2="150" y2="335" stroke="' + primaryColor + '" stroke-width="2.5" opacity="0.8" />' +
+
+          // Patch / Brasão do Clube no peito esquerdo
+          '<rect x="94" y="202" width="38" height="24" rx="4" fill="#020617" stroke="url(#' + svgId + '_gold)" stroke-width="1.5" />' +
+          '<text x="113" y="218" font-family="sans-serif" font-weight="900" font-size="11" fill="url(#' + svgId + '_gold)" text-anchor="middle">' + tag + '</text>' +
+
+          // Patch da Bandeira do Brasil na manga direita
+          '<rect x="174" y="202" width="32" height="20" rx="3" fill="#009b3a" stroke="#ffffff" stroke-width="1" />' +
+          '<polygon points="190,204 203,212 190,220 177,212" fill="#fedf00" />' +
+          '<circle cx="190" cy="212" r="4" fill="#002776" />' +
+
+          // Nome do Atleta (IGN) em destaque no peito
+          '<rect x="80" y="244" width="140" height="30" rx="5" fill="rgba(2, 6, 23, 0.88)" stroke="' + primaryColor + '" stroke-width="1.5" />' +
+          '<text x="150" y="264" font-family="sans-serif" font-weight="900" font-size="15" fill="#ffffff" text-anchor="middle" letter-spacing="2" filter="url(#' + svgId + '_glow)">' + nick + '</text>' +
+
+          // Badge da Rota do Atleta (MID, TOP, ADC, etc.)
+          '<text x="150" y="304" font-family="sans-serif" font-weight="900" font-size="24" fill="' + primaryColor + '" text-anchor="middle" opacity="0.95">' + role + '</text>' +
+          '<text x="150" y="322" font-family="sans-serif" font-weight="700" font-size="9" fill="#94a3b8" text-anchor="middle" letter-spacing="1">STARTER • ATLETA OFICIAL</text>' +
+
+          // Braçadeira de Capitão "C" dourada no braço esquerdo
+          '<rect x="52" y="222" width="22" height="26" rx="4" fill="url(#' + svgId + '_gold)" stroke="#ffffff" stroke-width="1" />' +
+          '<text x="63" y="241" font-family="sans-serif" font-weight="900" font-size="16" fill="#020617" text-anchor="middle">C</text>' +
+
+          // 3. Pescoço e Sombra
+          '<polygon points="132,126 168,126 160,154 140,154" fill="#ea580c" opacity="0.3" />' +
+          '<rect x="135" y="112" width="30" height="34" rx="4" fill="url(#' + svgId + '_skin)" />' +
+
+          // 4. Cabeça / Rosto Estilizado de Anime/Esports
+          '<path d="M120,68 C116,92 124,124 150,126 C176,124 184,92 180,68 C180,48 120,48 120,68 Z" fill="url(#' + svgId + '_skin)" />' +
+          // Queixo definido e traços faciais
+          '<path d="M144,116 L150,119 L156,116" stroke="#ea580c" stroke-width="1.5" fill="none" />' +
+          '<line x1="143" y1="108" x2="157" y2="108" stroke="#c2410c" stroke-width="2" stroke-linecap="round" />' +
+
+          // Óculos Gamer Pro / Visor com reflexo cyberpunk
+          '<rect x="122" y="78" width="24" height="15" rx="3" fill="url(#' + svgId + '_glasses)" stroke="#0f172a" stroke-width="2" />' +
+          '<rect x="154" y="78" width="24" height="15" rx="3" fill="url(#' + svgId + '_glasses)" stroke="#0f172a" stroke-width="2" />' +
+          '<line x1="146" y1="84" x2="154" y2="84" stroke="#0f172a" stroke-width="2.5" />' +
+          // Brilho / Reflexo nos óculos
+          '<line x1="126" y1="81" x2="138" y2="90" stroke="#ffffff" stroke-width="1.5" opacity="0.8" />' +
+          '<line x1="158" y1="81" x2="170" y2="90" stroke="#ffffff" stroke-width="1.5" opacity="0.8" />' +
+          // Sobrancelhas focadas
+          '<path d="M122,74 L144,77" stroke="#0f172a" stroke-width="3" stroke-linecap="round" />' +
+          '<path d="M178,74 L156,77" stroke="#0f172a" stroke-width="3" stroke-linecap="round" />' +
+
+          // 5. Cabelo Gamer Dinâmico (Mechas estilizadas com iluminação)
+          '<path d="M112,66 C105,40 120,18 150,18 C180,18 195,40 188,66 C182,54 174,48 166,42 C158,38 142,38 134,42 C126,48 118,54 112,66 Z" fill="url(#' + svgId + '_hair)" />' +
+          '<path d="M120,44 L132,60 L136,46 L148,64 L154,46 L166,62 L172,44" fill="url(#' + svgId + '_hair)" stroke="#0f172a" stroke-width="1" />' +
+          '<path d="M136,28 Q150,22 164,28 Q154,36 136,28 Z" fill="' + primaryColor + '" opacity="0.65" />' +
+
+          // 6. Headset Gamer Profissional de Esports
+          // Arco do Headset
+          '<path d="M106,68 C106,30 194,30 194,68" fill="none" stroke="#0f172a" stroke-width="8" stroke-linecap="round" />' +
+          '<path d="M110,64 C110,34 190,34 190,64" fill="none" stroke="' + primaryColor + '" stroke-width="2" stroke-linecap="round" opacity="0.8" />' +
+          // Conchas auriculares iluminadas (Earcups com anel RGB do time)
+          '<rect x="98" y="58" width="16" height="34" rx="7" fill="#0f172a" stroke="' + primaryColor + '" stroke-width="2" />' +
+          '<circle cx="106" cy="75" r="5" fill="' + primaryColor + '" filter="url(#' + svgId + '_glow)" />' +
+          '<rect x="186" y="58" width="16" height="34" rx="7" fill="#0f172a" stroke="' + primaryColor + '" stroke-width="2" />' +
+          '<circle cx="194" cy="75" r="5" fill="' + primaryColor + '" filter="url(#' + svgId + '_glow)" />' +
+          // Microfone Boom com luz indicadora ativa
+          '<path d="M106,84 Q116,106 138,104" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round" />' +
+          '<circle cx="140" cy="104" r="3.5" fill="#ef4444" filter="url(#' + svgId + '_glow)" />' +
+
+          // Selo Oficial Pro Player
+          '<circle cx="150" cy="34" r="11" fill="url(#' + svgId + '_gold)" stroke="#ffffff" stroke-width="1.5" />' +
+          '<text x="150" y="38" font-family="sans-serif" font-weight="900" font-size="10" fill="#020617" text-anchor="middle">★</text>' +
         '</svg>';
       },
 
@@ -8678,31 +9000,88 @@ function generateRival(playerRole) {
     };
 
     
-    /* MOTOR DO CALENDÁRIO OFICIAL DA TEMPORADA (CBLOL & LIGAS 2026) */
+        /* MOTOR DO CALENDÁRIO OFICIAL DA TEMPORADA (CBLOL, MSI, WORLDS & ACADEMY) */
     const calendarEngine = {
-      schedule: [
-        { week: 1, day: "Sábado", date: "14/03/2026", fullDate: "Sábado, 14 de Março de 2026", time: "13:00h", phase: "Rodada 1 • Abertura Oficial" },
-        { week: 2, day: "Domingo", date: "15/03/2026", fullDate: "Domingo, 15 de Março de 2026", time: "13:00h", phase: "Rodada 2 • Fase de Grupos" },
-        { week: 3, day: "Sábado", date: "21/03/2026", fullDate: "Sábado, 21 de Março de 2026", time: "13:00h", phase: "Rodada 3 • Fase de Grupos" },
-        { week: 4, day: "Domingo", date: "22/03/2026", fullDate: "Domingo, 22 de Março de 2026", time: "13:00h", phase: "Rodada 4 • Clássico das Torcidas" },
-        { week: 5, day: "Sábado", date: "28/03/2026", fullDate: "Sábado, 28 de Março de 2026", time: "13:00h", phase: "Rodada 5 • Virada do Turno" },
-        { week: 6, day: "Domingo", date: "29/03/2026", fullDate: "Domingo, 29 de Março de 2026", time: "13:00h", phase: "Rodada 6 • Returno Decisivo" },
-        { week: 7, day: "Sábado", date: "04/04/2026", fullDate: "Sábado, 04 de Abril de 2026", time: "13:00h", phase: "Rodada 7 • Corrida ao G4 (Playoffs)" },
-        { week: 8, day: "Domingo", date: "05/04/2026", fullDate: "Domingo, 05 de Abril de 2026", time: "13:00h", phase: "Rodada 8 • Penúltima Rodada" },
-        { week: 9, day: "Sábado", date: "11/04/2026", fullDate: "Sábado, 11 de Abril de 2026", time: "13:00h", phase: "Rodada 9 • Super Semana / Fim dos Pontos" },
-        { week: 10, day: "Sábado", date: "18/04/2026", fullDate: "Sábado, 18 de Abril de 2026", time: "13:00h", phase: "Playoffs • Semifinal MD5 (Fearless Draft)" },
-        { week: 11, day: "Sábado", date: "25/04/2026", fullDate: "Sábado, 25 de Abril de 2026", time: "13:00h", phase: "Playoffs • Grande Final MD5 (Summoner's Cup)" }
-      ],
+      activeFilterTier: null,
+
+      schedulesByTier: {
+        1: [
+          // SPLIT 1 (FASE DE PONTOS)
+          { week: 1, day: "Sábado", date: "14/03/2026", fullDate: "Sábado, 14 de Março de 2026", time: "13:00h", phase: "Rodada 1 • Abertura Oficial do CBLOL Split 1", type: "regular" },
+          { week: 2, day: "Domingo", date: "15/03/2026", fullDate: "Domingo, 15 de Março de 2026", time: "13:00h", phase: "Rodada 2 • Fase Regular", type: "regular" },
+          { week: 3, day: "Sábado", date: "21/03/2026", fullDate: "Sábado, 21 de Março de 2026", time: "13:00h", phase: "Rodada 3 • Fase Regular", type: "regular" },
+          { week: 4, day: "Domingo", date: "22/03/2026", fullDate: "Domingo, 22 de Março de 2026", time: "13:00h", phase: "Rodada 4 • Clássico das Torcidas", type: "regular" },
+          { week: 5, day: "Sábado", date: "28/03/2026", fullDate: "Sábado, 28 de Março de 2026", time: "13:00h", phase: "Rodada 5 • Virada do Turno", type: "regular" },
+          { week: 6, day: "Domingo", date: "29/03/2026", fullDate: "Domingo, 29 de Março de 2026", time: "13:00h", phase: "Rodada 6 • Returno Decisivo", type: "regular" },
+          { week: 7, day: "Sábado", date: "04/04/2026", fullDate: "Sábado, 04 de Abril de 2026", time: "13:00h", phase: "Rodada 7 • Corrida ao G4 (Playoffs)", type: "regular" },
+          { week: 8, day: "Domingo", date: "05/04/2026", fullDate: "Domingo, 05 de Abril de 2026", time: "13:00h", phase: "Rodada 8 • Penúltima Rodada", type: "regular" },
+          { week: 9, day: "Sábado", date: "11/04/2026", fullDate: "Sábado, 11 de Abril de 2026", time: "13:00h", phase: "Rodada 9 • Super Semana / Fim dos Pontos", type: "regular" },
+          // PLAYOFFS SPLIT 1
+          { week: 10, day: "Sábado", date: "18/04/2026", fullDate: "Sábado, 18 de Abril de 2026", time: "13:00h", phase: "⚔️ Playoffs CBLOL • Semifinais MD5 (Fearless Draft)", type: "playoffs", badge: "⚔️ PLAYOFFS CBLOL" },
+          { week: 11, day: "Sábado", date: "25/04/2026", fullDate: "Sábado, 25 de Abril de 2026", time: "13:00h", phase: "🏆 GRANDE FINAL DO CBLOL SPLIT 1 (Vaga no MSI)", type: "final", badge: "🏆 GRANDE FINAL" },
+          // MSI (MID-SEASON INVITATIONAL)
+          { week: 12, day: "Quinta", date: "07/05/2026", fullDate: "Quinta-feira, 07 de Maio de 2026", time: "09:00h", phase: "🌍 MSI 2026 • Play-In Internacional (Mundial de Meio de Temporada)", type: "msi", badge: "🌍 MSI 2026 INTERNACIONAL" },
+          { week: 13, day: "Quinta", date: "14/05/2026", fullDate: "Quinta-feira, 14 de Maio de 2026", time: "09:00h", phase: "🌍 MSI 2026 • Fase Suíça Global (Duelo de Campeões Regionais)", type: "msi", badge: "🌍 MSI FASE SUÍÇA" },
+          { week: 14, day: "Domingo", date: "24/05/2026", fullDate: "Domingo, 24 de Maio de 2026", time: "10:00h", phase: "👑 MSI 2026 • GRANDE FINAL MUNDIAL DO MID-SEASON INVITATIONAL", type: "msi_final", badge: "👑 FINAL DO MSI" },
+          // SPLIT 2
+          { week: 15, day: "Sábado", date: "13/06/2026", fullDate: "Sábado, 13 de Junho de 2026", time: "13:00h", phase: "Rodada 1 • Abertura do Split 2", type: "regular" },
+          { week: 16, day: "Sábado", date: "27/06/2026", fullDate: "Sábado, 27 de Junho de 2026", time: "13:00h", phase: "Rodada 2 • Fase de Pontos Split 2", type: "regular" },
+          { week: 17, day: "Sábado", date: "11/07/2026", fullDate: "Sábado, 11 de Julho de 2026", time: "13:00h", phase: "Rodada 3 • Retorno Decisivo Split 2", type: "regular" },
+          { week: 18, day: "Sábado", date: "25/07/2026", fullDate: "Sábado, 25 de Julho de 2026", time: "13:00h", phase: "⚔️ Playoffs Split 2 • Semifinais MD5", type: "playoffs", badge: "⚔️ PLAYOFFS SPLIT 2" },
+          { week: 19, day: "Sábado", date: "08/08/2026", fullDate: "Sábado, 08 de Agosto de 2026", time: "13:00h", phase: "🏆 GRANDE FINAL SPLIT 2 (Vaga Direta no WORLDS)", type: "final", badge: "🏆 CAMPEÃO DO BRASIL" },
+          // WORLDS (CAMPEONATO MUNDIAL)
+          { week: 20, day: "Quinta", date: "01/10/2026", fullDate: "Quinta-feira, 01 de Outubro de 2026", time: "05:00h", phase: "👑 WORLDS 2026 • Fase Suíça Global (16 Melhores Equipes do Planeta)", type: "worlds", badge: "👑 WORLDS • FASE SUÍÇA" },
+          { week: 21, day: "Sábado", date: "17/10/2026", fullDate: "Sábado, 17 de Outubro de 2026", time: "05:00h", phase: "👑 WORLDS 2026 • Quartas de Final da Summoner's Cup", type: "worlds", badge: "👑 WORLDS QUARTAS" },
+          { week: 22, day: "Sábado", date: "24/10/2026", fullDate: "Sábado, 24 de Outubro de 2026", time: "05:00h", phase: "👑 WORLDS 2026 • Semifinais Mundiais", type: "worlds", badge: "👑 WORLDS SEMIS" },
+          { week: 23, day: "Sábado", date: "31/10/2026", fullDate: "Sábado, 31 de Outubro de 2026", time: "06:00h", phase: "👑 WORLDS 2026 • GRANDE FINAL DA SUMMONER'S CUP", type: "worlds_final", badge: "👑 DECISÃO DA SUMMONER'S CUP" }
+        ],
+        2: [
+          // TIER 2: ACADEMY & SUPERLIGA
+          { week: 1, day: "Segunda", date: "16/03/2026", fullDate: "Segunda, 16 de Março de 2026", time: "17:00h", phase: "Rodada 1 • Abertura CBLOL Academy", type: "regular" },
+          { week: 2, day: "Terça", date: "17/03/2026", fullDate: "Terça, 17 de Março de 2026", time: "17:00h", phase: "Rodada 2 • Fase de Grupos Academy", type: "regular" },
+          { week: 3, day: "Segunda", date: "23/03/2026", fullDate: "Segunda, 23 de Março de 2026", time: "17:00h", phase: "Rodada 3 • Fase de Grupos", type: "regular" },
+          { week: 4, day: "Terça", date: "24/03/2026", fullDate: "Terça, 24 de Março de 2026", time: "17:00h", phase: "Rodada 4 • Clássico de Base", type: "regular" },
+          { week: 5, day: "Segunda", date: "30/03/2026", fullDate: "Segunda, 30 de Março de 2026", time: "17:00h", phase: "Rodada 5 • Returno Academy", type: "regular" },
+          { week: 6, day: "Terça", date: "31/03/2026", fullDate: "Terça, 31 de Março de 2026", time: "17:00h", phase: "Rodada 6 • Decisão de Vagas", type: "regular" },
+          { week: 7, day: "Segunda", date: "06/04/2026", fullDate: "Segunda, 06 de Abril de 2026", time: "17:00h", phase: "Rodada 7 • Super Semana Academy", type: "regular" },
+          { week: 8, day: "Segunda", date: "13/04/2026", fullDate: "Segunda, 13 de Abril de 2026", time: "17:00h", phase: "⚔️ Playoffs Academy • Semifinais MD5", type: "playoffs", badge: "⚔️ PLAYOFFS ACADEMY" },
+          { week: 9, day: "Segunda", date: "20/04/2026", fullDate: "Segunda, 20 de Abril de 2026", time: "17:00h", phase: "🏆 GRANDE FINAL DO CBLOL ACADEMY", type: "final", badge: "🏆 FINAL ACADEMY" },
+          { week: 10, day: "Sábado", date: "02/05/2026", fullDate: "Sábado, 02 de Maio de 2026", time: "15:00h", phase: "🌟 SUPERLIGA DE BASE • SHOWCASE COM OLHEIROS DO CBLOL", type: "showcase", badge: "🌟 SUPERLIGA DE BASE" },
+          { week: 11, day: "Domingo", date: "10/05/2026", fullDate: "Domingo, 10 de Maio de 2026", time: "15:00h", phase: "🌟 TORNEIO PROMOCIONAL DE ACESSO AO TIME PRINCIPAL", type: "showcase", badge: "🌟 TORNEIO PROMOCIONAL" }
+        ],
+        3: [
+          // TIER 3: CIRCUITO DESAFIANTE
+          { week: 1, day: "Quarta", date: "18/03/2026", fullDate: "Quarta, 18 de Março de 2026", time: "19:00h", phase: "Rodada 1 • Circuito Desafiante Abertura", type: "regular" },
+          { week: 2, day: "Quinta", date: "19/03/2026", fullDate: "Quinta, 19 de Março de 2026", time: "19:00h", phase: "Rodada 2 • Fase Classificatória", type: "regular" },
+          { week: 3, day: "Quarta", date: "25/03/2026", fullDate: "Quarta, 25 de Março de 2026", time: "19:00h", phase: "Rodada 3 • Meio de Tabela", type: "regular" },
+          { week: 4, day: "Quinta", date: "26/03/2026", fullDate: "Quinta, 26 de Março de 2026", time: "19:00h", phase: "Rodada 4 • Returno", type: "regular" },
+          { week: 5, day: "Quarta", date: "01/04/2026", fullDate: "Quarta, 01 de Abril de 2026", time: "19:00h", phase: "Rodada 5 • Decisão dos 4 Melhores", type: "regular" },
+          { week: 6, day: "Quinta", date: "09/04/2026", fullDate: "Quinta, 09 de Abril de 2026", time: "19:00h", phase: "⚔️ Semifinais do Circuito Desafiante", type: "playoffs", badge: "⚔️ SEMIFINAIS" },
+          { week: 7, day: "Quinta", date: "16/04/2026", fullDate: "Quinta, 16 de Abril de 2026", time: "19:00h", phase: "🏆 GRANDE FINAL DO CIRCUITO DESAFIANTE & VAGA ACADEMY", type: "final", badge: "🏆 FINAL DESAFIANTE" }
+        ],
+        4: [
+          // TIER 4: LIGA GO4LOL
+          { week: 1, day: "Domingo", date: "15/03/2026", fullDate: "Domingo, 15 de Março de 2026", time: "14:00h", phase: "Etapa 1 • Torneio Aberto da Go4LoL", type: "regular" },
+          { week: 2, day: "Domingo", date: "22/03/2026", fullDate: "Domingo, 22 de Março de 2026", time: "14:00h", phase: "Etapa 2 • Pontuação Mensal", type: "regular" },
+          { week: 3, day: "Domingo", date: "29/03/2026", fullDate: "Domingo, 29 de Março de 2026", time: "14:00h", phase: "Etapa 3 • Virada Classificatória", type: "regular" },
+          { week: 4, day: "Domingo", date: "05/04/2026", fullDate: "Domingo, 05 de Abril de 2026", time: "14:00h", phase: "Etapa 4 • Super Domingo Amador", type: "regular" },
+          { week: 5, day: "Domingo", date: "12/04/2026", fullDate: "Domingo, 12 de Abril de 2026", time: "14:00h", phase: "⚔️ Playoffs da Copa Go4LoL", type: "playoffs", badge: "⚔️ PLAYOFFS" },
+          { week: 6, day: "Domingo", date: "19/04/2026", fullDate: "Domingo, 19 de Abril de 2026", time: "14:00h", phase: "🏆 GRANDE FINAL GO4LOL & CONTRATO NO DESAFIANTE", type: "final", badge: "🏆 CAMPEÃO GO4LOL" }
+        ]
+      },
 
       getRoundCalendarInfo(weekNum) {
+        const tier = careerState?.currentTierId || 4;
+        const list = this.schedulesByTier[tier] || this.schedulesByTier[4];
         weekNum = Math.max(1, weekNum || 1);
-        return this.schedule[weekNum - 1] || {
+        return list[weekNum - 1] || {
           week: weekNum,
           day: "Sábado",
           date: "02/05/2026",
           fullDate: "Sábado, 02 de Maio de 2026",
           time: "13:00h",
-          phase: "Série Decisiva Especial"
+          phase: "Rodada Oficial Especial",
+          type: "regular"
         };
       },
 
@@ -8710,6 +9089,7 @@ function generateRival(playerRole) {
         gameAudio.playClick();
         const modal = document.getElementById("scheduleCalendarModal");
         if (!modal) return;
+        this.activeFilterTier = careerState?.currentTierId || 1;
         this.renderScheduleModal();
         modal.style.display = "flex";
       },
@@ -8720,50 +9100,102 @@ function generateRival(playerRole) {
         if (modal) modal.style.display = "none";
       },
 
+      setScheduleTierFilter(tierId) {
+        gameAudio.playClick();
+        this.activeFilterTier = tierId;
+        this.renderScheduleModal();
+      },
+
       renderScheduleModal() {
         const container = document.getElementById("scheduleRoundsContainer");
         const leagueBadge = document.getElementById("scheduleModalLeagueBadge");
         if (!container) return;
         container.innerHTML = "";
 
-        const currentTier = careerState?.currentTierId || 4;
-        const league = LEAGUES_DATA[currentTier] || LEAGUES_DATA[4];
+        const viewTier = this.activeFilterTier || careerState?.currentTierId || 1;
+        const league = LEAGUES_DATA[viewTier] || LEAGUES_DATA[1];
         if (leagueBadge) leagueBadge.innerText = league.name;
 
-        const myTeam = careerState?.team?.name || "Seu Time";
-        const currentWeek = careerState?.team?.week || 1;
-        const rivals = league.teams.filter(t => t.name.trim().toLowerCase() !== myTeam.trim().toLowerCase());
+        // Barra de Seleção de Divisão / Torneio no topo do Modal
+        const filterBar = document.createElement("div");
+        filterBar.style.cssText = "display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; border-bottom:1px solid #1e2c44; padding-bottom:10px;";
+        const tierTabs = [
+          { id: 1, label: "🏆 Tier 1: CBLOL, MSI & WORLDS" },
+          { id: 2, label: "⚔️ Tier 2: Academy & Superliga" },
+          { id: 3, label: "🛡️ Tier 3: Circuito Desafiante" },
+          { id: 4, label: "⭐ Tier 4: Liga Amadora Go4LoL" }
+        ];
 
-        this.schedule.forEach(item => {
-          const isPast = item.week < currentWeek;
-          const isCurrent = item.week === currentWeek;
-          const oppTeamObj = rivals[(item.week - 1) % rivals.length] || rivals[0];
+        tierTabs.forEach(t => {
+          const btn = document.createElement("button");
+          const isActive = t.id === viewTier;
+          btn.className = "btn " + (isActive ? "btn-gold" : "btn-secondary");
+          btn.style.cssText = "padding:6px 14px; font-size:0.78rem; font-weight:" + (isActive ? "800" : "600") + "; border-radius:6px; cursor:pointer;";
+          btn.innerText = t.label;
+          btn.onclick = () => this.setScheduleTierFilter(t.id);
+          filterBar.appendChild(btn);
+        });
+        container.appendChild(filterBar);
+
+        const currentWeek = careerState?.team?.week || 1;
+        const isCurrentLeague = viewTier === (careerState?.currentTierId || 4);
+        const myTeam = isCurrentLeague ? (careerState?.team?.name || "Seu Time") : league.teams[0].name;
+        const rivals = league.teams.filter(t => t.name.trim().toLowerCase() !== myTeam.trim().toLowerCase());
+        const scheduleList = this.schedulesByTier[viewTier] || this.schedulesByTier[1];
+
+        scheduleList.forEach((item, idx) => {
+          const isPast = isCurrentLeague && item.week < currentWeek;
+          const isCurrent = isCurrentLeague && item.week === currentWeek;
+          const oppTeamObj = rivals[idx % rivals.length] || rivals[0];
           const oppName = oppTeamObj?.name || "Adversário";
 
+          const isMsi = item.type === "msi" || item.type === "msi_final";
+          const isWorlds = item.type === "worlds" || item.type === "worlds_final";
+          const isPlayoffs = item.type === "playoffs" || item.type === "final";
+          const isShowcase = item.type === "showcase";
+
+          let borderCol = isCurrent ? "var(--hextech-gold)" : "#1e2c44";
+          let bgGrad = isCurrent ? "linear-gradient(90deg, rgba(200,170,110,0.18) 0%, #0d1526 100%)" : "#080e18";
+          if (isWorlds) {
+            borderCol = "#eab308";
+            bgGrad = "linear-gradient(90deg, rgba(234,179,8,0.15) 0%, rgba(15,23,42,0.98) 100%)";
+          } else if (isMsi) {
+            borderCol = "#38bdf8";
+            bgGrad = "linear-gradient(90deg, rgba(56,189,248,0.15) 0%, rgba(15,23,42,0.98) 100%)";
+          } else if (isPlayoffs) {
+            borderCol = "#f43f5e";
+            bgGrad = "linear-gradient(90deg, rgba(244,63,94,0.12) 0%, #080e18 100%)";
+          }
+
           const card = document.createElement("div");
-          card.style.cssText = "background: " + (isCurrent ? "linear-gradient(90deg, rgba(200,170,110,0.15) 0%, #0d1526 100%)" : "#080e18") + "; border: 1px solid " + (isCurrent ? "var(--hextech-gold)" : "#1e2c44") + "; border-radius: 8px; padding: 12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;";
+          card.style.cssText = "background:" + bgGrad + "; border:1px solid " + borderCol + "; border-radius:8px; padding:12px 16px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; box-shadow:" + (isCurrent || isWorlds || isMsi ? "0 0 16px rgba(0,0,0,0.6)" : "none") + ";";
 
           let statusBadgeHtml = "";
-          if (isPast) {
+          if (item.badge) {
+            const badgeColor = isWorlds ? "#eab308" : isMsi ? "#38bdf8" : isPlayoffs ? "#f43f5e" : "#10b981";
+            statusBadgeHtml = "<span class='badge' style='background:rgba(0,0,0,0.5); color:" + badgeColor + "; border:1px solid " + badgeColor + "; font-weight:800; font-size:0.75rem;'>" + item.badge + "</span>";
+          } else if (isPast) {
             statusBadgeHtml = "<span class='badge' style='background:rgba(100,116,139,0.25); color:#94a3b8; border:1px solid #475569;'>✅ Finalizado</span>";
           } else if (isCurrent) {
-            statusBadgeHtml = "<span class='badge badge-gold' style='box-shadow:0 0 10px rgba(200,170,110,0.5);'>🔥 RODADA ATUAL (HOJE)</span>";
+            statusBadgeHtml = "<span class='badge badge-gold' style='box-shadow:0 0 10px rgba(200,170,110,0.5);'>🔥 RODADA ATUAL</span>";
           } else {
             statusBadgeHtml = "<span class='badge badge-blue'>⏳ Em Breve</span>";
           }
+
+          const vsOpponentText = (isMsi || isWorlds)
+            ? "<span style='color:" + (isWorlds ? "#eab308" : "#38bdf8") + "; font-size:0.92rem; font-weight:800;'>TORNEIO INTERNACIONAL • Melhores Equipes Globais (T1, BLG, Gen.G, G2)</span>"
+            : "<span>" + myTeam + "</span><span style='color:var(--danger-red); font-size:0.85rem; font-weight:900; margin:0 6px;'>VS</span><span>" + oppName + "</span>";
 
           card.innerHTML = 
             "<div style='display:flex; align-items:center; gap:14px;'>" +
               "<div style='text-align:center; min-width:65px;'>" +
                 "<div style='font-size:0.75rem; color:#94a3b8; text-transform:uppercase;'>Semana " + item.week + "</div>" +
-                "<div style='font-family:var(--font-tech); font-weight:800; font-size:1.15rem; color:" + (isCurrent ? "var(--hextech-gold)" : "#fff") + ";'>" + item.day.slice(0, 3) + "</div>" +
+                "<div style='font-family:var(--font-tech); font-weight:800; font-size:1.15rem; color:" + (isCurrent ? "var(--hextech-gold)" : (isWorlds ? "#eab308" : isMsi ? "#38bdf8" : "#fff")) + ";'>" + item.day.slice(0, 3) + "</div>" +
               "</div>" +
               "<div style='border-left:1px solid #1e2c44; padding-left:14px;'>" +
-                "<div style='font-size:0.78rem; color:var(--hextech-blue); font-weight:700;'>" + item.phase + " • " + item.date + " às " + item.time + "</div>" +
-                "<div style='display:flex; align-items:center; gap:8px; margin-top:4px; font-family:var(--font-tech); font-weight:700; font-size:1.02rem; color:#fff;'>" +
-                  "<span>" + myTeam + "</span>" +
-                  "<span style='color:var(--danger-red); font-size:0.85rem; font-weight:900;'>VS</span>" +
-                  "<span>" + oppName + "</span>" +
+                "<div style='font-size:0.78rem; color:" + (isWorlds ? "#facc15" : isMsi ? "#38bdf8" : "var(--hextech-blue)") + "; font-weight:700;'>" + item.phase + " • " + item.date + " às " + item.time + "</div>" +
+                "<div style='display:flex; align-items:center; margin-top:4px; font-family:var(--font-tech); font-weight:700; font-size:1.02rem; color:#fff;'>" +
+                  vsOpponentText +
                 "</div>" +
               "</div>" +
             "</div>" +
