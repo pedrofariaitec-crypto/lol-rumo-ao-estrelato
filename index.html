@@ -2433,13 +2433,19 @@
 
       
       <!-- Banner de Notificação da Regra Fearless Draft (Séries MD3 / MD5) -->
-      <div id="draftFearlessBanner" style="display:none; margin: 4px 18px 8px; padding: 8px 14px; background: linear-gradient(90deg, rgba(234, 179, 8, 0.15) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1px solid #eab308; border-radius: 6px; align-items: center; justify-content: space-between; font-size: 0.82rem; color: #fff;">
-        <span style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:1.1rem;">🛡️</span>
-          <strong>REGRA FEARLESS DRAFT ATIVA (MD5):</strong>
-          <span id="draftFearlessDescText">Campeões utilizados nas partidas anteriores desta série estão BLOQUEADOS!</span>
-        </span>
-        <span class="badge badge-gold" id="draftFearlessLockedCountBadge">0 Bloqueados</span>
+      <div id="draftFearlessBanner" style="display:none; flex-direction:column; margin: 6px 18px 10px; padding: 10px 16px; background: linear-gradient(90deg, rgba(234, 179, 8, 0.18) 0%, rgba(15, 23, 42, 0.96) 100%); border: 2px solid #eab308; border-radius: 8px; font-size: 0.82rem; color: #fff; box-shadow:0 0 20px rgba(234,179,8,0.25);">
+        <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+          <span style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:1.2rem;">🔒</span>
+            <strong style="color:var(--hextech-gold); font-size:0.88rem; letter-spacing:0.5px;">REGRA FEARLESS DRAFT ATIVA (SÉRIE MD5 / PLAYOFFS):</strong>
+            <span id="draftFearlessDescText" style="color:#cbd5e1;">Campeões já utilizados em partidas anteriores desta série estão terminantemente BLOQUEADOS!</span>
+          </span>
+          <span class="badge badge-danger" id="draftFearlessLockedCountBadge" style="font-weight:800; font-size:0.8rem; padding:4px 10px;">0 Campeões Bloqueados</span>
+        </div>
+        <!-- LISTA VISUAL NO TOPO DE TODOS OS CAMPEÕES JÁ ESCOLHIDOS NA SÉRIE -->
+        <div id="draftFearlessBlockedChampsList" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; border-top:1px solid rgba(234,179,8,0.3); padding-top:8px;">
+          <!-- Inserido dinamicamente com cards de campeões riscados/bloqueados -->
+        </div>
       </div>
 
       <!-- Barra de Bans Oficial (3 bans para cada equipe) -->
@@ -2472,7 +2478,7 @@
             <div class="coach-panel-top">
               <div class="coach-avatar-circle">👔</div>
               <div class="coach-briefing-text">
-                <h4 id="coachBriefingHeader">Coach Maestro (Técnico da Equipe)</h4>
+                <h4 id="coachBriefingHeader">Coach da Equipe (Briefing Tático)</h4>
                 <p id="coachBriefingDialogue">O rival travou o campeão dele. Qual campeão você quer para responder a esse matchup?</p>
               </div>
             </div>
@@ -3147,6 +3153,61 @@
     </div>
   </div>
 
+  
+  <!-- MODAL: CAMPEÃO DO TORNEIO & MVP DA RODADA / FINAL -->
+  <div class="custom-modal" id="tournamentChampionCelebrationModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(2,6,18,0.96); backdrop-filter:blur(10px); z-index:999999; justify-content:center; align-items:center;">
+    <div style="background:linear-gradient(135deg, rgba(234,179,8,0.22) 0%, #080f1e 100%); border:2px solid var(--hextech-gold); border-radius:16px; width:92%; max-width:680px; padding:28px; text-align:center; box-shadow:0 0 60px rgba(234,179,8,0.5); position:relative; overflow:hidden;">
+      <div style="font-size:3.5rem; margin-bottom:6px; filter:drop-shadow(0 0 16px rgba(234,179,8,0.9));">🏆</div>
+      <div class="badge badge-gold" style="font-size:0.8rem; letter-spacing:1.5px; margin-bottom:8px; text-transform:uppercase;" id="tourneyCelebrationBadge">TÍTULO HISTÓRICO CONQUISTADO</div>
+      <h2 style="font-family:var(--font-display); color:#fff; font-size:2rem; margin:0 0 6px 0;" id="tourneyCelebrationTitle">É CAMPEÃO! A TAÇA É NOSSA!</h2>
+      <p style="font-size:0.95rem; color:#cbd5e1; line-height:1.5; margin-bottom:18px;" id="tourneyCelebrationMessage">
+        Com uma série de gala e atuações dominantes, sua equipe superou todos os desafios e conquistou o troféu máximo da competição!
+      </p>
+
+      <!-- CARD DO MVP DA FINAL / DA RODADA -->
+      <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(234,179,8,0.4); border-radius:10px; padding:14px 18px; margin-bottom:18px; text-align:left; display:flex; align-items:center; gap:16px;">
+        <div style="position:relative; width:64px; height:64px; flex-shrink:0;">
+          <div style="width:64px; height:64px; border-radius:50%; border:2px solid var(--hextech-gold); background:#1e293b; display:flex; align-items:center; justify-content:center; font-size:1.8rem;" id="tourneyMvpAvatarSlot">👑</div>
+          <div style="position:absolute; bottom:-4px; right:-4px; background:var(--hextech-gold); color:#000; font-family:var(--font-tech); font-size:0.65rem; font-weight:900; padding:1px 5px; border-radius:4px;">MVP</div>
+        </div>
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+            <div style="font-family:var(--font-tech); font-weight:800; font-size:1.15rem; color:var(--hextech-gold);" id="tourneyMvpNick">Prodígio (MVP)</div>
+            <span class="badge badge-gold" id="tourneyMvpRatingBadge">NOTA 9.9 • DESTAQUE</span>
+          </div>
+          <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:6px;" id="tourneyMvpSubtitle">Rota do Top • Maior Dano por Minuto da Série Decisiva</div>
+          <div style="display:flex; gap:14px; font-size:0.82rem; color:#fff;">
+            <div><span>KDA Médio: </span><strong style="color:#38bdf8;" id="tourneyMvpKda">8.5</strong></div>
+            <div><span>Participação em Abates: </span><strong style="color:#10b981;" id="tourneyMvpKp">76%</strong></div>
+            <div><span>Dano / Minuto: </span><strong style="color:#f59e0b;" id="tourneyMvpDpm">792 DPM</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL DE PREMIAÇÕES E PROMOÇÃO -->
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; background:#080e1a; border:1px solid #1e2c44; border-radius:10px; padding:12px; margin-bottom:20px;">
+        <div style="text-align:center;">
+          <div style="font-size:0.72rem; color:#94a3b8; text-transform:uppercase;">Premiação em Dinheiro</div>
+          <div style="font-family:var(--font-tech); font-weight:800; font-size:1.2rem; color:#10b981;" id="tourneyRewardPrize">+R$ 25.000</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:0.72rem; color:#94a3b8; text-transform:uppercase;">Acesso Conquistado</div>
+          <div style="font-family:var(--font-tech); font-weight:800; font-size:1.1rem; color:var(--hextech-gold);" id="tourneyRewardPromotion">Tier 3 • Desafiante</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:0.72rem; color:#94a3b8; text-transform:uppercase;">Novos Fãs & Fama</div>
+          <div style="font-family:var(--font-tech); font-weight:800; font-size:1.2rem; color:var(--hextech-blue);" id="tourneyRewardFame">+800 Fãs</div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:center; gap:14px;">
+        <button class="btn btn-gold" style="padding:14px 34px; font-weight:800; font-size:1.05rem;" onclick="career.confirmTournamentCelebrationAndAdvance()">
+          🏆 LEVANTAR O TROFÉU & COMEMORAR ACESSO!
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: CONVOCAÇÃO / PROMOÇÃO AO TIME PRINCIPAL DO CBLOL -->
   <div class="custom-modal" id="rosterPromotionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(3,7,18,0.92); backdrop-filter:blur(8px); z-index:99999; justify-content:center; align-items:center;">
     <div style="background:linear-gradient(135deg, rgba(200,170,110,0.18) 0%, #090f1d 100%); border:2px solid var(--hextech-gold); border-radius:14px; width:90%; max-width:620px; padding:26px; text-align:center; box-shadow:0 0 50px rgba(200,170,110,0.4);">
@@ -3198,6 +3259,7 @@
 
     /* BANCO DE DADOS OFICIAL DOS 168 CAMPEÕES */
     window.LOL_CHAMPIONS_DB = [{"id":"Aatrox","name":"Aatrox","img":"Aatrox.png","roles":["Top"],"tags":["Fighter"]},{"id":"Ahri","name":"Ahri","img":"Ahri.png","roles":["Mid"],"tags":["Mage","Assassin"]},{"id":"Akali","name":"Akali","img":"Akali.png","roles":["Mid","Top"],"tags":["Assassin"]},{"id":"Akshan","name":"Akshan","img":"Akshan.png","roles":["Mid","Top"],"tags":["Marksman","Assassin"]},{"id":"Alistar","name":"Alistar","img":"Alistar.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Amumu","name":"Amumu","img":"Amumu.png","roles":["Jungle"],"tags":["Tank","Support"]},{"id":"Anivia","name":"Anivia","img":"Anivia.png","roles":["Mid"],"tags":["Mage"]},{"id":"Annie","name":"Annie","img":"Annie.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Aphelios","name":"Aphelios","img":"Aphelios.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Ashe","name":"Ashe","img":"Ashe.png","roles":["ADC","Suporte"],"tags":["Marksman","Support"]},{"id":"AurelionSol","name":"Aurelion Sol","img":"AurelionSol.png","roles":["Mid"],"tags":["Mage"]},{"id":"Aurora","name":"Aurora","img":"Aurora.png","roles":["Mid","Top"],"tags":["Mage","Assassin"]},{"id":"Azir","name":"Azir","img":"Azir.png","roles":["Mid"],"tags":["Mage","Marksman"]},{"id":"Bard","name":"Bard","img":"Bard.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Belveth","name":"Bel'Veth","img":"Belveth.png","roles":["Jungle"],"tags":["Fighter"]},{"id":"Blitzcrank","name":"Blitzcrank","img":"Blitzcrank.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Brand","name":"Brand","img":"Brand.png","roles":["Suporte","Mid","Jungle"],"tags":["Mage","Support"]},{"id":"Braum","name":"Braum","img":"Braum.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Briar","name":"Briar","img":"Briar.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Caitlyn","name":"Caitlyn","img":"Caitlyn.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Camille","name":"Camille","img":"Camille.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Cassiopeia","name":"Cassiopeia","img":"Cassiopeia.png","roles":["Mid","Top"],"tags":["Mage"]},{"id":"Chogath","name":"Cho'Gath","img":"Chogath.png","roles":["Top","Mid"],"tags":["Tank","Mage"]},{"id":"Corki","name":"Corki","img":"Corki.png","roles":["Mid","ADC"],"tags":["Marksman","Mage"]},{"id":"Darius","name":"Darius","img":"Darius.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Diana","name":"Diana","img":"Diana.png","roles":["Jungle","Mid"],"tags":["Fighter","Assassin"]},{"id":"Draven","name":"Draven","img":"Draven.png","roles":["ADC"],"tags":["Marksman"]},{"id":"DrMundo","name":"Dr. Mundo","img":"DrMundo.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Ekko","name":"Ekko","img":"Ekko.png","roles":["Jungle","Mid"],"tags":["Assassin","Mage"]},{"id":"Elise","name":"Elise","img":"Elise.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Evelynn","name":"Evelynn","img":"Evelynn.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Ezreal","name":"Ezreal","img":"Ezreal.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Fiddlesticks","name":"Fiddlesticks","img":"Fiddlesticks.png","roles":["Jungle"],"tags":["Mage","Support"]},{"id":"Fiora","name":"Fiora","img":"Fiora.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Fizz","name":"Fizz","img":"Fizz.png","roles":["Mid"],"tags":["Assassin","Fighter"]},{"id":"Galio","name":"Galio","img":"Galio.png","roles":["Mid","Suporte"],"tags":["Tank","Mage"]},{"id":"Gangplank","name":"Gangplank","img":"Gangplank.png","roles":["Top"],"tags":["Fighter"]},{"id":"Garen","name":"Garen","img":"Garen.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Gnar","name":"Gnar","img":"Gnar.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Gragas","name":"Gragas","img":"Gragas.png","roles":["Jungle","Top","Mid"],"tags":["Fighter","Mage"]},{"id":"Graves","name":"Graves","img":"Graves.png","roles":["Jungle"],"tags":["Marksman"]},{"id":"Gwen","name":"Gwen","img":"Gwen.png","roles":["Top"],"tags":["Fighter"]},{"id":"Hecarim","name":"Hecarim","img":"Hecarim.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Heimerdinger","name":"Heimerdinger","img":"Heimerdinger.png","roles":["Mid","Top","Suporte"],"tags":["Mage","Support"]},{"id":"Hwei","name":"Hwei","img":"Hwei.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Illaoi","name":"Illaoi","img":"Illaoi.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Irelia","name":"Irelia","img":"Irelia.png","roles":["Top","Mid"],"tags":["Fighter","Assassin"]},{"id":"Ivern","name":"Ivern","img":"Ivern.png","roles":["Jungle"],"tags":["Support","Mage"]},{"id":"Janna","name":"Janna","img":"Janna.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"JarvanIV","name":"Jarvan IV","img":"JarvanIV.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Jax","name":"Jax","img":"Jax.png","roles":["Top","Jungle"],"tags":["Fighter"]},{"id":"Jayce","name":"Jayce","img":"Jayce.png","roles":["Top","Mid"],"tags":["Marksman","Fighter"]},{"id":"Jhin","name":"Jhin","img":"Jhin.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Jinx","name":"Jinx","img":"Jinx.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Kaisa","name":"Kai'Sa","img":"Kaisa.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"Kalista","name":"Kalista","img":"Kalista.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Karma","name":"Karma","img":"Karma.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Karthus","name":"Karthus","img":"Karthus.png","roles":["Jungle","Mid"],"tags":["Mage"]},{"id":"Kassadin","name":"Kassadin","img":"Kassadin.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"Katarina","name":"Katarina","img":"Katarina.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"Kayle","name":"Kayle","img":"Kayle.png","roles":["Top","Mid"],"tags":["Mage","Marksman"]},{"id":"Kayn","name":"Kayn","img":"Kayn.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Kennen","name":"Kennen","img":"Kennen.png","roles":["Top"],"tags":["Mage"]},{"id":"Khazix","name":"Kha'Zix","img":"Khazix.png","roles":["Jungle"],"tags":["Assassin"]},{"id":"Kindred","name":"Kindred","img":"Kindred.png","roles":["Jungle"],"tags":["Marksman"]},{"id":"Kled","name":"Kled","img":"Kled.png","roles":["Top"],"tags":["Fighter"]},{"id":"KogMaw","name":"Kog'Maw","img":"KogMaw.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"KSante","name":"K'Sante","img":"KSante.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Leblanc","name":"LeBlanc","img":"Leblanc.png","roles":["Mid"],"tags":["Assassin","Mage"]},{"id":"LeeSin","name":"Lee Sin","img":"LeeSin.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Leona","name":"Leona","img":"Leona.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Lillia","name":"Lillia","img":"Lillia.png","roles":["Jungle"],"tags":["Fighter","Mage"]},{"id":"Lissandra","name":"Lissandra","img":"Lissandra.png","roles":["Mid"],"tags":["Mage"]},{"id":"Lucian","name":"Lucian","img":"Lucian.png","roles":["ADC","Mid"],"tags":["Marksman","Assassin"]},{"id":"Lulu","name":"Lulu","img":"Lulu.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Lux","name":"Lux","img":"Lux.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Malphite","name":"Malphite","img":"Malphite.png","roles":["Top"],"tags":["Tank","Mage"]},{"id":"Malzahar","name":"Malzahar","img":"Malzahar.png","roles":["Mid"],"tags":["Mage"]},{"id":"Maokai","name":"Maokai","img":"Maokai.png","roles":["Suporte","Jungle","Top"],"tags":["Tank","Support"]},{"id":"MasterYi","name":"Master Yi","img":"MasterYi.png","roles":["Jungle"],"tags":["Assassin","Fighter"]},{"id":"Milio","name":"Milio","img":"Milio.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"MissFortune","name":"Miss Fortune","img":"MissFortune.png","roles":["ADC"],"tags":["Marksman","Mage"]},{"id":"MonkeyKing","name":"Wukong","img":"MonkeyKing.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Mordekaiser","name":"Mordekaiser","img":"Mordekaiser.png","roles":["Top"],"tags":["Fighter","Mage"]},{"id":"Morgana","name":"Morgana","img":"Morgana.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Naafiri","name":"Naafiri","img":"Naafiri.png","roles":["Mid"],"tags":["Assassin","Fighter"]},{"id":"Nami","name":"Nami","img":"Nami.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Nasus","name":"Nasus","img":"Nasus.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Nautilus","name":"Nautilus","img":"Nautilus.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Neeko","name":"Neeko","img":"Neeko.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Nidalee","name":"Nidalee","img":"Nidalee.png","roles":["Jungle"],"tags":["Assassin","Mage"]},{"id":"Nilah","name":"Nilah","img":"Nilah.png","roles":["ADC"],"tags":["Fighter","Assassin"]},{"id":"Nocturne","name":"Nocturne","img":"Nocturne.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Nunu","name":"Nunu & Willump","img":"Nunu.png","roles":["Jungle"],"tags":["Tank","Mage"]},{"id":"Olaf","name":"Olaf","img":"Olaf.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Orianna","name":"Orianna","img":"Orianna.png","roles":["Mid"],"tags":["Mage","Support"]},{"id":"Ornn","name":"Ornn","img":"Ornn.png","roles":["Top"],"tags":["Tank"]},{"id":"Pantheon","name":"Pantheon","img":"Pantheon.png","roles":["Mid","Top","Suporte"],"tags":["Fighter","Assassin"]},{"id":"Poppy","name":"Poppy","img":"Poppy.png","roles":["Top","Jungle","Suporte"],"tags":["Tank","Fighter"]},{"id":"Pyke","name":"Pyke","img":"Pyke.png","roles":["Suporte"],"tags":["Support","Assassin"]},{"id":"Qiyana","name":"Qiyana","img":"Qiyana.png","roles":["Mid"],"tags":["Assassin"]},{"id":"Quinn","name":"Quinn","img":"Quinn.png","roles":["Top"],"tags":["Marksman","Assassin"]},{"id":"Rakan","name":"Rakan","img":"Rakan.png","roles":["Suporte"],"tags":["Support"]},{"id":"Rammus","name":"Rammus","img":"Rammus.png","roles":["Jungle"],"tags":["Tank"]},{"id":"RekSai","name":"Rek'Sai","img":"RekSai.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Rell","name":"Rell","img":"Rell.png","roles":["Suporte"],"tags":["Tank","Support"]},{"id":"Renata","name":"Renata Glasc","img":"Renata.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Renekton","name":"Renekton","img":"Renekton.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Rengar","name":"Rengar","img":"Rengar.png","roles":["Jungle","Top"],"tags":["Assassin","Fighter"]},{"id":"Riven","name":"Riven","img":"Riven.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"Rumble","name":"Rumble","img":"Rumble.png","roles":["Top","Mid"],"tags":["Fighter","Mage"]},{"id":"Ryze","name":"Ryze","img":"Ryze.png","roles":["Mid","Top"],"tags":["Mage"]},{"id":"Samira","name":"Samira","img":"Samira.png","roles":["ADC"],"tags":["Marksman","Assassin"]},{"id":"Sejuani","name":"Sejuani","img":"Sejuani.png","roles":["Jungle","Top"],"tags":["Tank"]},{"id":"Senna","name":"Senna","img":"Senna.png","roles":["Suporte","ADC"],"tags":["Support","Marksman"]},{"id":"Seraphine","name":"Seraphine","img":"Seraphine.png","roles":["Suporte","ADC","Mid"],"tags":["Support","Mage"]},{"id":"Sett","name":"Sett","img":"Sett.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Shaco","name":"Shaco","img":"Shaco.png","roles":["Jungle"],"tags":["Assassin"]},{"id":"Shen","name":"Shen","img":"Shen.png","roles":["Top","Suporte"],"tags":["Tank"]},{"id":"Shyvana","name":"Shyvana","img":"Shyvana.png","roles":["Jungle"],"tags":["Fighter","Mage"]},{"id":"Singed","name":"Singed","img":"Singed.png","roles":["Top"],"tags":["Tank","Mage"]},{"id":"Sion","name":"Sion","img":"Sion.png","roles":["Top"],"tags":["Tank","Fighter"]},{"id":"Sivir","name":"Sivir","img":"Sivir.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Skarner","name":"Skarner","img":"Skarner.png","roles":["Jungle","Top"],"tags":["Tank","Fighter"]},{"id":"Smolder","name":"Smolder","img":"Smolder.png","roles":["ADC","Mid"],"tags":["Marksman","Mage"]},{"id":"Sona","name":"Sona","img":"Sona.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Soraka","name":"Soraka","img":"Soraka.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Swain","name":"Swain","img":"Swain.png","roles":["Suporte","Mid"],"tags":["Mage","Support"]},{"id":"Sylas","name":"Sylas","img":"Sylas.png","roles":["Mid","Top"],"tags":["Mage","Assassin"]},{"id":"Syndra","name":"Syndra","img":"Syndra.png","roles":["Mid"],"tags":["Mage"]},{"id":"TahmKench","name":"Tahm Kench","img":"TahmKench.png","roles":["Top","Suporte"],"tags":["Tank","Support"]},{"id":"Taliyah","name":"Taliyah","img":"Taliyah.png","roles":["Jungle","Mid"],"tags":["Mage","Support"]},{"id":"Talon","name":"Talon","img":"Talon.png","roles":["Mid","Jungle"],"tags":["Assassin"]},{"id":"Taric","name":"Taric","img":"Taric.png","roles":["Suporte"],"tags":["Support","Tank"]},{"id":"Teemo","name":"Teemo","img":"Teemo.png","roles":["Top"],"tags":["Marksman","Mage"]},{"id":"Thresh","name":"Thresh","img":"Thresh.png","roles":["Suporte"],"tags":["Support","Tank"]},{"id":"Tristana","name":"Tristana","img":"Tristana.png","roles":["ADC","Mid"],"tags":["Marksman","Assassin"]},{"id":"Trundle","name":"Trundle","img":"Trundle.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Tryndamere","name":"Tryndamere","img":"Tryndamere.png","roles":["Top"],"tags":["Fighter","Assassin"]},{"id":"TwistedFate","name":"Twisted Fate","img":"TwistedFate.png","roles":["Mid"],"tags":["Mage","Marksman"]},{"id":"Twitch","name":"Twitch","img":"Twitch.png","roles":["ADC"],"tags":["Marksman","Assassin"]},{"id":"Udyr","name":"Udyr","img":"Udyr.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Urgot","name":"Urgot","img":"Urgot.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Varus","name":"Varus","img":"Varus.png","roles":["ADC","Mid"],"tags":["Marksman","Mage"]},{"id":"Vayne","name":"Vayne","img":"Vayne.png","roles":["ADC","Top"],"tags":["Marksman","Assassin"]},{"id":"Veigar","name":"Veigar","img":"Veigar.png","roles":["Mid"],"tags":["Mage"]},{"id":"Velkoz","name":"Vel'Koz","img":"Velkoz.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"Vex","name":"Vex","img":"Vex.png","roles":["Mid"],"tags":["Mage"]},{"id":"Vi","name":"Vi","img":"Vi.png","roles":["Jungle"],"tags":["Fighter","Assassin"]},{"id":"Viego","name":"Viego","img":"Viego.png","roles":["Jungle","Mid"],"tags":["Fighter","Assassin"]},{"id":"Viktor","name":"Viktor","img":"Viktor.png","roles":["Mid"],"tags":["Mage"]},{"id":"Vladimir","name":"Vladimir","img":"Vladimir.png","roles":["Mid","Top"],"tags":["Mage","Fighter"]},{"id":"Volibear","name":"Volibear","img":"Volibear.png","roles":["Top","Jungle"],"tags":["Fighter","Tank"]},{"id":"Warwick","name":"Warwick","img":"Warwick.png","roles":["Jungle","Top"],"tags":["Fighter","Tank"]},{"id":"Xayah","name":"Xayah","img":"Xayah.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Xerath","name":"Xerath","img":"Xerath.png","roles":["Mid","Suporte"],"tags":["Mage","Support"]},{"id":"XinZhao","name":"Xin Zhao","img":"XinZhao.png","roles":["Jungle"],"tags":["Fighter","Tank"]},{"id":"Yasuo","name":"Yasuo","img":"Yasuo.png","roles":["Mid","Top"],"tags":["Fighter","Assassin"]},{"id":"Yone","name":"Yone","img":"Yone.png","roles":["Mid","Top"],"tags":["Fighter","Assassin"]},{"id":"Yorick","name":"Yorick","img":"Yorick.png","roles":["Top"],"tags":["Fighter","Tank"]},{"id":"Yuumi","name":"Yuumi","img":"Yuumi.png","roles":["Suporte"],"tags":["Support","Mage"]},{"id":"Zac","name":"Zac","img":"Zac.png","roles":["Jungle","Top"],"tags":["Tank","Fighter"]},{"id":"Zed","name":"Zed","img":"Zed.png","roles":["Mid"],"tags":["Assassin"]},{"id":"Zeri","name":"Zeri","img":"Zeri.png","roles":["ADC"],"tags":["Marksman"]},{"id":"Ziggs","name":"Ziggs","img":"Ziggs.png","roles":["ADC","Mid"],"tags":["Mage"]},{"id":"Zilean","name":"Zilean","img":"Zilean.png","roles":["Suporte","Mid"],"tags":["Support","Mage"]},{"id":"Zoe","name":"Zoe","img":"Zoe.png","roles":["Mid"],"tags":["Mage"]},{"id":"Zyra","name":"Zyra","img":"Zyra.png","roles":["Suporte","Jungle"],"tags":["Mage","Support"]}];
+    window.CHAMPIONS_DB = window.LOL_CHAMPIONS_DB;
 
     function getChampImgUrl(champ) {
       if (!champ) return "";
@@ -3389,7 +3451,95 @@
 
     /* BANCO DE DADOS DE SINERGIAS OFICIAIS (DUO BOT & MID/JUNGLE COMBOS) */
     const SYNERGIES_DB = [
-      // DUO BOT COMBOS (META COMPETITIVO ATUALIZADO 2025/2026)
+      // DUO BOT COMBOS OFICIAIS DE LEAGUE OF LEGENDS
+      {
+        champs: ["Lucian", "Nami"],
+        name: "Eletrocutar & Fúria das Marés",
+        type: "bot",
+        desc: "Bênção da Convocadora de Nami projeta dano mágico explosivo e lentidão nas rajadas duplas de Lucian.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Lucian", "Milio"],
+        name: "Chamas Aconchegantes & Disparos Duplos",
+        type: "bot",
+        desc: "A passiva Fogo Amigo de Milio queima os alvos e amplia o alcance de ataque do Disparo Iluminado de Lucian.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Caitlyn", "Lux"],
+        name: "Prisão de Luz & Armadilha Yordle",
+        type: "bot",
+        desc: "Prisão de Luz de Lux garante acerto da armadilha de Caitlyn com dano crítico inescapável.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Caitlyn", "Karma"],
+        name: "Pressão Opressiva de Cerco",
+        type: "bot",
+        desc: "Mantra Q de Karma e as armadilhas de Caitlyn negam qualquer aproximação sob a torre inimiga.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Caitlyn", "Morgana"],
+        name: "Ligação das Trevas & Headshot Fatal",
+        type: "bot",
+        desc: "Stun prolongado de 3 segundos com armadilha colocada sob os pés da vítima para execução garantida.",
+        bonus: 15,
+        tag: "Duo Bot S"
+      },
+      {
+        champs: ["KogMaw", "Lulu"],
+        name: "Hypercarry Protetor & Pix",
+        type: "bot",
+        desc: "Metamorfose, escudos contínuos e Pix transformam Kog'Maw em uma metralhadora intocável de longo alcance.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Jinx", "Lulu"],
+        name: "Metralhadora Insana de Piltover",
+        type: "bot",
+        desc: "Capricho e Pix concedem velocidade de ataque astronômica para os Mísseis Supremoz da Jinx.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Jinx", "Thresh"],
+        name: "Sentença da Morte & Salvação da Lanterna",
+        type: "bot",
+        desc: "Lanterna salva a Jinx sem mobilidade e as Sentenças ativam a passiva Anime-se! nos abates.",
+        bonus: 15,
+        tag: "Duo Bot S"
+      },
+      {
+        champs: ["Samira", "Nautilus"],
+        name: "Cadeia de CC Pesado & Gatilho Infernal",
+        type: "bot",
+        desc: "Arremesso ao ar ativa a investida de Samira, garantindo acúmulo imediato de ranking S para a ultimate.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Samira", "Rell"],
+        name: "Atração Magnética & Tempestade de Lâminas",
+        type: "bot",
+        desc: "Queda Esmagadora de Rell junta todos os inimigos no centro para a ultimate em área de Samira.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Xayah", "Rakan"],
+        name: "Casal de Vastayas de Ionia",
+        type: "bot",
+        desc: "Sinergia nativa com pulo compartilhado, velocidade de ataque ampliada e engage acrobático letal.",
+        bonus: 16,
+        tag: "Duo Bot S+"
+      },
       {
         champs: ["Aphelios", "Thresh"],
         name: "Sentença Noturna Lunar",
@@ -3407,132 +3557,108 @@
         tag: "Duo Bot S+"
       },
       {
-        champs: ["Lucian", "Milio"],
-        name: "Faíscas da Luz & Disparos Duplos",
+        champs: ["Draven", "Pyke"],
+        name: "Execuções Dobradas & Ouro em Dobro",
         type: "bot",
-        desc: "A passiva Fogo Amigo de Milio queima os alvos e potencializa o Disparo Iluminado de Lucian.",
+        desc: "Agressividade brutal de rota onde o ouro de Adoração de Draven se soma ao 'Sua Parte' de Pyke.",
         bonus: 15,
         tag: "Duo Bot S+"
       },
       {
-        champs: ["Caitlyn", "Karma"],
-        name: "Pressão Opressiva de Cerco",
+        champs: ["Draven", "Leona"],
+        name: "All-in Solar Brutal",
         type: "bot",
-        desc: "Mantra Q de Karma e as armadilhas de Caitlyn negam qualquer aproximação sob a torre inimiga.",
-        bonus: 16,
+        desc: "Stuns em cadeia da Leona ativam dano de Adoração do Draven para abates rápidos no nível 2.",
+        bonus: 15,
         tag: "Duo Bot S+"
       },
       {
-        champs: ["Jinx", "Lulu"],
-        name: "Metralhadora Insana de Piltover",
+        champs: ["Ashe", "Braum"],
+        name: "Gelo Eterno de Freljord",
         type: "bot",
-        desc: "Capricho e Pix concedem velocidade de ataque astronômica para os Mísseis Supremoz da Jinx.",
-        bonus: 16,
-        tag: "Duo Bot S+"
-      },
-      {
-        champs: ["Yunara", "Lulu"],
-        name: "Proteção Mágica & Dano Cósmico",
-        type: "bot",
-        desc: "Escudos contínuos e bônus de mobilidade tornam o hypercarry intocável durante as teamfights.",
+        desc: "A Rajada de Ashe empilha os Golpes Concussivos de Braum com máxima facilidade a longa distância.",
         bonus: 15,
         tag: "Duo Bot S"
       },
       {
-        champs: ["Draven", "Leona"],
-        name: "All-in Brutal",
+        champs: ["Zeri", "Lulu"],
+        name: "Sobrecarga Elétrica & Velocidade Máxima",
         type: "bot",
-        desc: "Stuns em cadeia da Leona ativam dano de Adoração do Draven para abates rápidos.",
-        bonus: 15,
+        desc: "Escudos contínuos ativam a passiva de velocidade da Zeri enquanto Lulu impede qualquer aproximação.",
+        bonus: 16,
         tag: "Duo Bot S+"
+      },
+      {
+        champs: ["Zeri", "Yuumi"],
+        name: "Bateria Felina & Disparo Elétrico",
+        type: "bot",
+        desc: "Cura constante, velocidade de movimento adaptativa e ultimate combinada em teamfights velozes.",
+        bonus: 15,
+        tag: "Duo Bot S"
       },
       {
         champs: ["Ezreal", "Karma"],
         name: "Poke & Kiting Absoluto",
         type: "bot",
         desc: "Pressão de longo alcance, desengaje com escudos do Mantra e controle de rota seguro.",
-        bonus: 13,
-        tag: "Duo Bot S"
-      },
-      {
-        champs: ["Lucian", "Nami"],
-        name: "Eletrocutar Flamejante",
-        type: "bot",
-        desc: "Bênção da Convocadora projeta dano duplo instantâneo nas rajadas do Lucian.",
-        bonus: 15,
-        tag: "Duo Bot S+"
-      },
-      {
-        champs: ["Samira", "Nautilus"],
-        name: "Cadeia de CC & Massacre",
-        type: "bot",
-        desc: "Arremesso ao ar ativa aproximação de Samira e engatilha Gatilho Infernal.",
-        bonus: 15,
-        tag: "Duo Bot S+"
-      },
-      {
-        champs: ["Caitlyn", "Lux"],
-        name: "Cerco de Armadilha & Raio",
-        type: "bot",
-        desc: "Prisão de Luz garante acerto da armadilha de Caitlyn com dano crítico inescapável.",
-        bonus: 14,
-        tag: "Duo Bot S"
-      },
-      {
-        champs: ["KogMaw", "Lulu"],
-        name: "Hypercarry Protetor",
-        type: "bot",
-        desc: "Metamorfose, escudos e Pix transformam Kog'Maw em uma metralhadora intocável.",
-        bonus: 16,
-        tag: "Duo Bot S+"
-      },
-      {
-        champs: ["Kalista", "Thresh"],
-        name: "Pacto de Almas & Sentença",
-        type: "bot",
-        desc: "Destino do Chamado arremessa Thresh no meio dos inimigos, garantindo lanterna de fuga.",
-        bonus: 14,
-        tag: "Duo Bot S"
-      },
-      {
-        champs: ["Xayah", "Rakan"],
-        name: "Amantes de Ionia",
-        type: "bot",
-        desc: "Dança das Plumas compartilhada com engage acrobático e retorno seguro.",
-        bonus: 15,
-        tag: "Duo Bot S+"
-      },
-      {
-        champs: ["Jhin", "Morgana"],
-        name: "Florescer no Escuro",
-        type: "bot",
-        desc: "Ligação das Trevas de 3 segundos com Florescer Fatal e Aclamação Final.",
-        bonus: 13,
-        tag: "Duo Bot S"
-      },
-      {
-        champs: ["Ashe", "Braum"],
-        name: "Gelo Eterno de Freljord",
-        type: "bot",
-        desc: "Rajada de Ashe empilha os Golpes Concussivos de Braum com máxima facilidade.",
         bonus: 14,
         tag: "Duo Bot S"
       },
 
-      // TOP + JUNGLE & MID COMBOS
+      // TOP / MID / JUNGLE COMBOS CLÁSSICOS DE LOL
       {
-        champs: ["KSante", "Sejuani"],
-        name: "Muralha de Shurima & Gelo Freljordiano",
+        champs: ["Yasuo", "Malphite"],
+        name: "Impacto Incontrolável no Ar",
+        type: "mid_top",
+        desc: "Força Incontrolável de Malphite arremessa a equipe inimiga garantindo Último Suspiro perfeito de Yasuo.",
+        bonus: 16,
+        tag: "Mid/Top S+"
+      },
+      {
+        champs: ["Yasuo", "Diana"],
+        name: "Colapso Lunar & Tempestade de Aço",
+        type: "mid_jg",
+        desc: "Zênite e Colapso Lunar de Diana puxam múltiplos alvos para a ativação imediata do Último Suspiro.",
+        bonus: 16,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["Yasuo", "Gragas"],
+        name: "Barril Explosivo & Outplay Aéreo",
+        type: "mid_jg",
+        desc: "Barril Explosivo arremessa os inimigos no ar ativando o combo letal de Yasuo.",
+        bonus: 16,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["Orianna", "JarvanIV"],
+        name: "Cataclismo & Shockwave Devastador",
+        type: "mid_jg",
+        desc: "Jarvan mergulha com a Esfera de Orianna, fecha o Cataclismo e ativa a Onda de Choque esmagadora.",
+        bonus: 16,
+        tag: "Mid/Jg S+"
+      },
+      {
+        champs: ["Orianna", "Malphite"],
+        name: "Entrega de Onda de Choque Rochosa",
+        type: "mid_top",
+        desc: "Malphite carrega a Esfera no seu impacto incontrolável para um wombo-combo indefensável.",
+        bonus: 16,
+        tag: "Mid/Top S+"
+      },
+      {
+        champs: ["Renekton", "Nidalee"],
+        name: "Stun Ponto-e-Clique & Lança Mortal",
         type: "top_jg",
-        desc: "Controle de grupo em cadeia massivo e linha de frente indestrutível para lutas no Rift.",
+        desc: "Atordoamento imediato com W furioso do Renekton garante 100% de acerto na Lança à queima-roupa de Nidalee.",
         bonus: 16,
         tag: "Top/Jg S+"
       },
       {
         champs: ["Renekton", "Elise"],
-        name: "Mergulho Ponto & Abate Certeiro",
+        name: "Mergulho de Torre & Casulo Venenoso",
         type: "top_jg",
-        desc: "Atordoamento instantâneo de Renekton com Casulo e Rapel de Elise para dives perfeitos.",
+        desc: "Atordoamento de Renekton com Casulo e Rapel de Elise para dives perfeitos no early game.",
         bonus: 16,
         tag: "Top/Jg S+"
       },
@@ -3545,43 +3671,26 @@
         tag: "Top/Mid S+"
       },
       {
-        champs: ["Yasuo", "Malphite"],
-        name: "Impacto Incontrolável no Ar",
-        type: "mid_top",
-        desc: "Força Incontrolável de Malphite arremessa a equipe inimiga garantindo Último Suspiro perfeito.",
-        bonus: 16,
-        tag: "Mid/Top S+"
-      },
-      // MID + JUNGLE COMBOS
-      {
-        champs: ["Vi", "Orianna"],
-        name: "Entrega de Onda de Choque",
+        champs: ["Sejuani", "Yone"],
+        name: "Prisão Glacial & Destino Selado",
         type: "mid_jg",
-        desc: "Vi mergulha na backline inimiga carregando a Esfera de Orianna para Shockwave letal.",
+        desc: "Yone acumula os stacks de congelamento melee de Sejuani em segundos, encadeando CCs brutais.",
         bonus: 16,
         tag: "Mid/Jg S+"
       },
       {
-        champs: ["Yasuo", "Sejuani"],
-        name: "Prisão Glacial & Tempestade",
-        type: "mid_jg",
-        desc: "Ultimates com knockup garantem ativação instantânea do Último Suspiro de Yasuo.",
+        champs: ["Sejuani", "Aatrox"],
+        name: "Colosso Sombrio & Gelo de Freljord",
+        type: "top_jg",
+        desc: "Aatrox aplica congelamento veloz com sua espada, mantendo os alvos parados para o Q3 no centro.",
         bonus: 15,
-        tag: "Mid/Jg S+"
+        tag: "Top/Jg S"
       },
       {
-        champs: ["Yasuo", "Gragas"],
-        name: "Barris Explosivos & Espadas",
+        champs: ["Nocturne", "TwistedFate"],
+        name: "Apagão & Destino Global",
         type: "mid_jg",
-        desc: "Barril Explosivo arremessa os inimigos no ar ativando o combo letal de Yasuo.",
-        bonus: 15,
-        tag: "Mid/Jg S+"
-      },
-      {
-        champs: ["JarvanIV", "Galio"],
-        name: "Cataclismo & Entrada Heroica",
-        type: "mid_jg",
-        desc: "Inimigos presos na arena de Jarvan são destruídos pela queda maciça de Galio.",
+        desc: "Paranoia cega o mapa enquanto Destino revela os inimigos isolados para um gank sem resposta.",
         bonus: 16,
         tag: "Mid/Jg S+"
       },
@@ -3590,27 +3699,58 @@
         name: "Charme & Chute Insec",
         type: "mid_jg",
         desc: "Encanto de Ahri desorienta o alvo permitindo Insec perfeito de Lee Sin para o abate.",
-        bonus: 14,
-        tag: "Mid/Jg S"
-      },
-      {
-        champs: ["Nocturne", "TwistedFate"],
-        name: "Apagão & Destino Global",
-        type: "mid_jg",
-        desc: "Paranoia cega o mapa enquanto Destino revela os inimigos isolados para o gank.",
-        bonus: 16,
-        tag: "Mid/Jg S+"
-      },
-      {
-        champs: ["Viego", "Ahri"],
-        name: "Alma Perdida & Reset",
-        type: "mid_jg",
-        desc: "Dano explosivo garantindo o primeiro abate para Viego resetar sua possessão.",
-        bonus: 13,
+        bonus: 15,
         tag: "Mid/Jg S"
       }
     ];
     window.SYNERGIES_DB = SYNERGIES_DB;
+
+    /* TABELA DE TREINADORES OFICIAIS POR ORGANIZAÇÃO (NADA DE MAESTRO PARA TODOS OS TIMES) */
+    const ORGANIZATION_COACHES = {
+      // CBLOL Tier 1
+      "paiN Gaming": { name: "Xypherz", title: "Head Coach Tático", ovr: 88, bio: "Estrategista focado em drafts sólidos e controle de mapa." },
+      "LOUD": { name: "Stardust", title: "Head Coach Coreano", ovr: 90, bio: "Experiência internacional campeã com disciplina e lutas rápidas." },
+      "Vivo Keyd Stars": { name: "SeeEl", title: "Head Coach Europeu", ovr: 87, bio: "Visão analítica de macro game e transições cirúrgicas." },
+      "RED Canids Kalunga": { name: "Coelho", title: "Head Coach Campeão", ovr: 88, bio: "Agressividade controlada e foco no early game dos Jovens Lobos." },
+      "RED Canids": { name: "Coelho", title: "Head Coach Campeão", ovr: 88, bio: "Agressividade controlada e foco no early game dos Jovens Lobos." },
+      "FURIA": { name: "Maestro", title: "Head Coach Histórico", ovr: 89, bio: "Multicampeão brasileiro focado em liderança e disciplina coletiva." },
+      "KaBuM! Esports": { name: "Von", title: "Head Coach Estrategista", ovr: 86, bio: "Pioneiro do cenário focado em composições balanceadas." },
+      "KaBuM!": { name: "Von", title: "Head Coach Estrategista", ovr: 86, bio: "Pioneiro do cenário focado em composições balanceadas." },
+      "Fluxo": { name: "OnAir", title: "Head Coach Coreano", ovr: 85, bio: "Treinador analítico com experiência em drafts arrojados." },
+      "INTZ": { name: "Aoshi", title: "Head Coach Intrépido", ovr: 84, bio: "Ex-top laner lendário focado na leitura de rotas laterais." },
+      "Los Grandes": { name: "Meditive", title: "Head Coach Arrojado", ovr: 84, bio: "Estilo acelerado com foco em skirmishes no rio." },
+
+      // CBLOL Academy Tier 2
+      "paiN Gaming Academy": { name: "Sarkis", title: "Coach da Base", ovr: 80, bio: "Treinador formador de talentos com foco em garra e fundamentos." },
+      "LOUD Academy": { name: "Bell", title: "Coach de Desenvolvimento", ovr: 81, bio: "Formação acelerada para abastecer o elenco titular." },
+      "RED Canids Academy": { name: "Hypno", title: "Coach dos Jovens Lobos", ovr: 79, bio: "Engaje sem medo e sincronia em lutas de equipe." },
+      "Vivo Keyd Stars Academy": { name: "Krow", title: "Coach Tático da Base", ovr: 78, bio: "Prioridade em controle de visão e rotações seguras." },
+      "FURIA Academy": { name: "Max", title: "Coach das Panteras", ovr: 78, bio: "Desenvolvimento mecânico agressivo nas rotas solo." },
+      "KaBuM! Academy": { name: "Sam", title: "Coach dos Ninjas de Base", ovr: 77, bio: "Controle de linha de frente e lutas no covil do Dragão." },
+      "Fluxo Academy": { name: "Kake", title: "Coach de Criatividade", ovr: 77, bio: "Iniciações dinâmicas e leitura de espaço." },
+      "INTZ Academy": { name: "Onil", title: "Coach Intrépido de Base", ovr: 76, bio: "Disciplina rigorosa e postura competitiva." },
+      "Los Grandes Academy": { name: "Vash", title: "Coach de Base", ovr: 76, bio: "Aceleração tática e busca por vantagens no mid game." },
+
+      // Tier 3: Circuito Desafiante
+      "Flamengo Esports": { name: "Djoko", title: "Treinador Rubro-Negro", ovr: 74, bio: "Tradição, pressão sob a torcida e chamadas decisivas." },
+      "Santos e-Sports": { name: "Jack", title: "Coach dos Meninos da Vila", ovr: 72, bio: "Foco no potencial mecânico jovem de cada atleta." },
+      "Team oNe eSports": { name: "Neki", title: "Coach dos Golden Boys", ovr: 73, bio: "Macro tradicional com segurança nas tomadas de decisão." },
+      "Operation Kino": { name: "Beellz", title: "Coach Ousado", ovr: 70, bio: "Lutas de equipe caóticas e surpreendentes." },
+      "ProGaming Esports": { name: "Gafone", title: "Coach de Rota", ovr: 71, bio: "Pressão nas rotas e controle de selva." },
+      "Iron Hawks Esports": { name: "Wood", title: "Coach Defensivo", ovr: 69, bio: "Construção de linhas de frente resistentes." },
+
+      // Tier 4: Go4LoL
+      "Santos Dex": { name: "Bruno Tático", title: "Treinador Regional", ovr: 62, bio: "Comandante local focado em orientar jovens promessas." },
+      "KaBuM! Black": { name: "Jhow", title: "Instrutor de Base", ovr: 63, bio: "Especialista em identificar talentos de alta mecânica." },
+      "Team Genesis": { name: "Rafa", title: "Coach da Comunidade", ovr: 60, bio: "Incentivo moral e organização básica de rotas." },
+      "Ilha da Macacada Gaming": { name: "Yoda", title: "Coach de Hype", ovr: 64, bio: "Aura positiva, confiança máxima e jogadas de impacto." },
+      "Sobregaming": { name: "Diniz", title: "Analista Amador", ovr: 61, bio: "Cálculos de dano e escolha de alvos prioritários." },
+      "Keyd Warriors": { name: "Krow Jr", title: "Treinador Júnior", ovr: 62, bio: "Fundamentos de laning phase e warding." },
+      "Remo Brave": { name: "Zefa", title: "Coach Guerreiro", ovr: 59, bio: "Espírito aguerrido e lutas até o último segundo." },
+      "Big Gods": { name: "Raven", title: "Coach Observador", ovr: 60, bio: "Paciência e espera pelos erros do oponente." }
+    };
+    window.ORGANIZATION_COACHES = ORGANIZATION_COACHES;
+
 
     /* HELPER GLOBAL DE FEITIÇOS DE INVOCADOR (GARANTE IMAGENS BASE64 OFICIAIS) */
     function getSpellData(spellIdOrName) {
@@ -4959,6 +5099,7 @@ function generateRival(playerRole) {
         careerState.currentTierId = 4;
         careerState.gold += (bonusGold || 0);
         careerState.fame += (bonusFame || 0);
+        careerState.coach = career.getTeamCoach(teamName);
 
         career.addSocialPost(
           "CBLOL & Esports Insider",
@@ -5310,9 +5451,28 @@ function generateRival(playerRole) {
         if (inPlayoffsSeries && careerState.playoffs.fearlessPlayedChamps && careerState.playoffs.fearlessPlayedChamps.length > 0) {
           this.fearlessBlockedIds = [...careerState.playoffs.fearlessPlayedChamps];
           if (fearlessBanner) fearlessBanner.style.display = "flex";
-          if (fearlessBadge) fearlessBadge.innerText = this.fearlessBlockedIds.length + " Campeões Bloqueados";
+          if (fearlessBadge) fearlessBadge.innerText = this.fearlessBlockedIds.length + " Campeões Bloqueados na Série";
+
+          // Renderizar cards visuais no topo com os campeões bloqueados pelo Fearless Draft
+          const blockedContainer = document.getElementById("draftFearlessBlockedChampsList");
+          if (blockedContainer) {
+            blockedContainer.innerHTML = "";
+            const db = window.CHAMPIONS_DB || [];
+            this.fearlessBlockedIds.forEach(champId => {
+              const chObj = db.find(c => c.id.toLowerCase() === champId.toLowerCase()) || { id: champId, name: champId };
+              const chip = document.createElement("div");
+              chip.style.cssText = "display:inline-flex; align-items:center; gap:6px; background:rgba(239, 68, 68, 0.2); border:1px solid #ef4444; border-radius:6px; padding:3px 8px; color:#fca5a5; font-size:0.75rem; font-weight:700;";
+              const imgSrc = getChampImgUrl(chObj);
+              chip.innerHTML = "<img src='" + imgSrc + "' style='width:22px; height:22px; border-radius:50%; filter:grayscale(100%) brightness(0.7); border:1px solid #ef4444;' onerror='this.src=getFallbackAvatar(\"" + chObj.name + "\")'>" +
+                "<span style='text-decoration:line-through;'>" + chObj.name + "</span>" +
+                "<span style='font-size:0.65rem; background:#ef4444; color:#fff; border-radius:3px; padding:1px 4px;'>BLOQUEADO</span>";
+              blockedContainer.appendChild(chip);
+            });
+          }
         } else {
           if (fearlessBanner) fearlessBanner.style.display = "none";
+          const blockedContainer = document.getElementById("draftFearlessBlockedChampsList");
+          if (blockedContainer) blockedContainer.innerHTML = "";
         }
 
         this.setupInitialSlots();
@@ -5366,11 +5526,14 @@ function generateRival(playerRole) {
           });
 
           let eIdx = 0;
+          // SoloQ: Rival só tem 25% de chance de cair na mesma fila, tornando a SoloQ dinâmica
+          const rivalQueued = Math.random() < 0.25;
           this.enemyPicks = roles.map(r => {
             const isRivalRole = r === playerRole;
-            const nick = (isRivalRole && careerState.rival && careerState.rival.nick) 
-              ? careerState.rival.nick 
-              : enemyNicks[eIdx++];
+            let nick = enemyNicks[eIdx++];
+            if (isRivalRole && rivalQueued && careerState.rival && careerState.rival.nick) {
+              nick = careerState.rival.nick + " (Rival)";
+            }
             return {
               role: r,
               nick: nick,
@@ -5411,13 +5574,19 @@ function generateRival(playerRole) {
           };
         });
 
-        // 2. Time Inimigo: Elenco real do time adversário (NUNCA O MESMO TIME DO JOGADOR)
+        // 2. Time Inimigo: Elenco real do time adversário
+        // O jogador enfrenta o PRO REAL daquela equipe (Robo, Tinowns, dyNquedo, etc.).
+        // O rival SÓ aparece quando o jogador enfrenta DIRETAMENTE o time do rival!
+        const isFacingRivalTeam = careerState.rival && careerState.rival.team && (
+          oppTeamName.toLowerCase().includes(careerState.rival.team.toLowerCase()) ||
+          careerState.rival.team.toLowerCase().includes(oppTeamName.toLowerCase())
+        );
+
         this.enemyPicks = roles.map(r => {
           const starter = enemyRosterData?.players?.find(p => p.role === r);
-          let nick = starter ? starter.nick : (r + " Adversário");
-          // Se for a rota do jogador e o rival tiver nick específico no confronto
-          if (r === playerRole && careerState.rival && careerState.rival.nick) {
-            nick = careerState.rival.nick;
+          let nick = starter ? starter.nick : (r + " " + oppTeamName);
+          if (r === playerRole && isFacingRivalTeam && careerState.rival && careerState.rival.nick) {
+            nick = careerState.rival.nick + " (Rival Declarado)";
           }
           return {
             role: r,
@@ -5956,7 +6125,7 @@ function generateRival(playerRole) {
         const p = document.getElementById("coachBriefingDialogue");
         const list = document.getElementById("coachCounterList");
 
-        if (h) h.innerText = "Coach Maestro (Técnico Nív. " + (careerState?.coach?.level || 1) + "):";
+        if (h) h.innerText = "Coach " + (careerState?.coach?.name || "Técnico") + " (Nív. " + (careerState?.coach?.level || 1) + "):";
         if (p) {
           p.innerHTML = "Identifiquei que a rota adversária é perigosa de <strong>" + b.name + "</strong>! Recomendo bani-lo para garantir conforto tático:";
         }
@@ -5986,7 +6155,7 @@ function generateRival(playerRole) {
         const briefingP = document.getElementById("coachBriefingDialogue");
         const counterList = document.getElementById("coachCounterList");
 
-        if (briefingH) briefingH.innerText = "Coach Maestro (Técnico Nív. " + coach.level + "):";
+        if (briefingH) briefingH.innerText = "Coach " + (careerState?.coach?.name || "Técnico") + " (Nív. " + coach.level + "):";
         if (briefingP) {
           const fearlessNote = this.fearlessBlockedIds.length > 0 ? " Regra Fearless Draft ativa: " + this.fearlessBlockedIds.length + " campeões jogados na série foram bloqueados!" : "";
           briefingP.innerText = "O rival escalou " + enemyChamp.name + " no " + careerState.role + "!" + fearlessNote + " Nossos estudos táticos apontam escolhas e sinergias para neutralizá-lo:";
@@ -6071,13 +6240,23 @@ function generateRival(playerRole) {
         this.activeSynergy = null;
         const synPanel = document.getElementById("draftSynergyPanel");
         const synText = document.getElementById("draftSynergyText");
+        const activeCoachName = "Coach " + (careerState?.coach?.name || "Técnico");
+
+        const champId = (champ.id || champ.name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        const champName = (champ.name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 
         for (const ally of this.allyPicks) {
           if (ally.isPlayer || !ally.champ) continue;
 
-          const matchSyn = SYNERGIES_DB.find(s => 
-            s.champs.includes(champ.id) && s.champs.includes(ally.champ.id)
-          );
+          const allyId = (ally.champ.id || ally.champ.name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+          const allyName = (ally.champ.name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
+          const matchSyn = (window.SYNERGIES_DB || []).find(s => {
+            const list = s.champs.map(c => c.toLowerCase().replace(/[^a-z0-9]/g, ""));
+            const hasMain = list.some(c => c === champId || c === champName);
+            const hasAlly = list.some(c => c === allyId || c === allyName);
+            return hasMain && hasAlly;
+          });
 
           if (matchSyn) {
             this.activeSynergy = matchSyn;
@@ -6085,7 +6264,7 @@ function generateRival(playerRole) {
               synPanel.style.display = "flex";
               synText.innerHTML = "<strong>Sinergia Ativa (" + matchSyn.tag + "):</strong> " + matchSyn.name + " com " + ally.champ.name + " • <span style='color:var(--success-green);'>+" + matchSyn.bonus + "% Bônus de Luta</span>";
             }
-            this.addChatMessage("Coach Maestro", "Sensacional! Formamos a clássica sinergia de " + matchSyn.name + " (" + champ.name + " + " + ally.champ.name + ")!");
+            this.addChatMessage(activeCoachName, "Sensacional! Formamos a clássica sinergia de " + matchSyn.name + " (" + champ.name + " + " + ally.champ.name + ")!");
             break;
           }
         }
@@ -6158,7 +6337,7 @@ function generateRival(playerRole) {
         if (!chatBox) return;
         chatBox.innerHTML = "";
         this.addChatMessage("Sistema", "Seleção Competitiva iniciada. 10 Bans ativos!");
-        this.addChatMessage("Coach Maestro", "Capitão, lidere os banimentos com foco nos pontos fortes do adversário!");
+        this.addChatMessage("Coach " + (careerState?.coach?.name || "Técnico"), "Capitão, lidere os banimentos com foco nos pontos fortes do adversário!");
       },
 
       addChatMessage(author, text) {
@@ -6210,22 +6389,47 @@ function generateRival(playerRole) {
         const rival = careerState?.rival?.nick || "Seu Rival";
         this.answeredIndices = [];
 
-        // 1. REAÇÃO DIRETA DO RIVAL PÓS-PARTIDA (TRASH TALK OU IRRITAÇÃO)
+        const oppTeam = career.getCurrentOpponent();
+        const oppTeamName = oppTeam ? oppTeam.name : "Adversário";
+        const isFacingRivalTeam = careerState.rival && careerState.rival.team && (
+          oppTeamName.toLowerCase().includes(careerState.rival.team.toLowerCase()) ||
+          careerState.rival.team.toLowerCase().includes(oppTeamName.toLowerCase())
+        );
+
+        // 1. DECLARAÇÃO CONTEXTUAL: Se jogou contra o rival, ele fala diretamente; caso contrário, é a declaração do time adversário
         const rivalWinReactions = [
-          "O rival " + rival + " disse na zona mista: 'Ele deu sorte nas lutas e foi carregado pelo time. No segundo turno eu mostro quem manda nessa rota!' (Humor: 😡 Tiltado)",
-          "O rival " + rival + " postou no X/Twitter: 'Perdemos pra nós mesmos hoje. Aquele @' + (careerState?.nick || 'Player') + ' não joga metade do que a imprensa fala.' (Humor: 🔥 Furioso)",
-          "O rival " + rival + " declarou: 'A chamada de Barão deles foi pura sorte de 50/50. Semana que vem a história vai ser bem diferente.' (Humor: 😤 Inconformado)"
+          "O rival " + rival + " declarou na zona mista: 'Ele deu sorte nas teamfights. No segundo turno eu cobro essa derrota!' (Humor: 😡 Tiltado)",
+          "O rival " + rival + " postou no X: 'Perdemos pra nós mesmos. O @" + (careerState?.nick || 'Player') + " foi carregado pelo macro da equipe.' (Humor: 🔥 Furioso)",
+          "O rival " + rival + " admitiu relutante: 'Eles vieram preparados para o nosso pick. Mérito deles hoje, mas a série não acabou.' (Humor: 😤 Pressionado)"
         ];
 
         const rivalLossReactions = [
-          "O rival " + rival + " provocou na coletiva: 'Eu avisei que ele sumia quando a pressão do palco subia. Vitória tranquila, nem suei a camisa!' (Humor: 👑 Soberbo)",
-          "O rival " + rival + " postou: 'Muito papo de MVP e pouca mecânica no Rift. Segue o líder!' (Humor: 🔥 Provocador)",
-          "O rival " + rival + " disse na entrevista: 'O estilo dele é manjado demais. Neutralizamos a rota dele nos primeiros 5 minutos.' (Humor: ⚡ Confiante)"
+          "O rival " + rival + " provocou na bancada: 'Eu avisei! Quando o palco esquenta ele desaparece do mapa. Vitória tranquila!' (Humor: 👑 Soberbo)",
+          "O rival " + rival + " postou: 'Muito hype de MVP na internet e pouca pressão na laning phase. Segue o líder!' (Humor: 🔥 Provocador)",
+          "O rival " + rival + " disse: 'Lemos a rotação dele como um livro aberto. Foi o jogo mais fácil do split.' (Humor: ⚡ Confiante)"
         ];
 
-        this.rivalStatement = isVictory 
-          ? rivalWinReactions[Math.floor(Math.random() * rivalWinReactions.length)]
-          : rivalLossReactions[Math.floor(Math.random() * rivalLossReactions.length)];
+        const proOpponentReactionsWin = [
+          "O capitão do " + oppTeamName + " declarou: 'O @" + (careerState?.nick || 'Player') + " ditou o ritmo das lutas. Precisamos rever nossos erros na rota.'",
+          "O treinador do " + oppTeamName + " admitiu: 'A flexibilidade de picks deles surpreendeu nossa comissão técnica. Grande vitória deles.'",
+          "A coletiva do " + oppTeamName + " ressaltou: 'Eles puniram nossos deslizes no Barão com maestria. Parabéns pela partida.'"
+        ];
+
+        const proOpponentReactionsLoss = [
+          "O " + oppTeamName + " celebrou na coletiva: 'Neutralizamos as forças deles desde o nível 1. Vitória categórica do nosso elenco.'",
+          "O destaque do " + oppTeamName + " comentou: 'Eles tentaram jogadas arriscadas demais e nós capitalizamos em cima de cada erro.'",
+          "O técnico do " + oppTeamName + " pontuou: 'Nossa disciplina tática no mid game fez a diferença total contra o ímpeto deles.'"
+        ];
+
+        if (isFacingRivalTeam) {
+          this.rivalStatement = isVictory 
+            ? rivalWinReactions[Math.floor(Math.random() * rivalWinReactions.length)]
+            : rivalLossReactions[Math.floor(Math.random() * rivalLossReactions.length)];
+        } else {
+          this.rivalStatement = isVictory 
+            ? proOpponentReactionsWin[Math.floor(Math.random() * proOpponentReactionsWin.length)]
+            : proOpponentReactionsLoss[Math.floor(Math.random() * proOpponentReactionsLoss.length)];
+        }
 
         // 2. POOL VARIADO DE PERGUNTAS JORNALÍSTICAS DINÂMICAS
         const questionPoolVictory = [
@@ -6250,7 +6454,7 @@ function generateRival(playerRole) {
                 apply() {
                   careerState.stats.comm = Math.min(99, (careerState.stats.comm || 50) + 4);
                   careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 3);
-                  career.addSocialPost("Coach Maestro", "@coachmaestro", "Humildade e disciplina de quem constrói dinastia!");
+                  career.addSocialPost("Coach " + (careerState?.coach?.name || "Técnico"), "@coachmaestro", "Humildade e disciplina de quem constrói dinastia!");
                 }
               }
             ]
@@ -6311,7 +6515,7 @@ function generateRival(playerRole) {
                 apply() {
                   careerState.stats.consistency = Math.min(99, (careerState.stats.consistency || 50) + 4);
                   careerState.stats.comm = Math.min(99, (careerState.stats.comm || 50) + 3);
-                  career.addSocialPost("Coach Maestro", "@coachmaestro", "Atleta que assume a liderança no erro é o que se torna campeão.");
+                  career.addSocialPost("Coach " + (careerState?.coach?.name || "Técnico"), "@coachmaestro", "Atleta que assume a liderança no erro é o que se torna campeão.");
                 }
               },
               {
@@ -6455,15 +6659,40 @@ function generateRival(playerRole) {
         const container = document.getElementById("matchEventTimelineRows");
         if (container) container.innerHTML = "";
 
-        // Eventos autênticos idênticos à Imagem 3 enviada pelo usuário:
-        // [05:13] Jeskla eliminou Ceos!
-        // [05:01] A Vastilarva nasceu!
-        // [05:01] O Infernal nasceu!
-        // [03:02] Jeskla eliminou Ceos!
-        this.addTimelineEvent("05:13", "Jeskla eliminou Ceos!");
-        this.addTimelineEvent("05:01", "<span style='color:#c084fc; font-weight:bold;'>A Vastilarva nasceu!</span>");
-        this.addTimelineEvent("05:01", "<span style='color:#f87171; font-weight:bold;'>O Infernal nasceu!</span>");
-        this.addTimelineEvent("03:02", "Jeskla eliminou Ceos!");
+        // GERAÇÃO 100% DINÂMICA COM OS JOGADORES, TIMES E CAMPEÕES REAIS DESTA PARTIDA!
+        const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
+        const allyList = (draftSource.allyPicks || []).filter(p => p.champ);
+        const enemyList = (draftSource.enemyPicks || []).filter(p => p.champ);
+
+        const opp = career.getCurrentOpponent();
+        const oppTeam = opp ? opp.name : "Adversário";
+        const myTeam = careerState?.team?.name || "Sua Equipe";
+
+        const dragons = [
+          { name: "O Dragão Hextech", color: "#38bdf8" },
+          { name: "O Dragão Infernal", color: "#f87171" },
+          { name: "O Dragão da Montanha", color: "#ca8a04" },
+          { name: "O Dragão do Oceano", color: "#06b6d4" },
+          { name: "O Dragão Quimtec", color: "#10b981" }
+        ];
+        const selectedDrake = dragons[Math.floor(Math.random() * dragons.length)];
+
+        this.addTimelineEvent("01:30", "Tropas liberadas em Summoner's Rift (" + myTeam + " vs " + oppTeam + ")!");
+        this.addTimelineEvent("03:15", "<span style='color:#38bdf8;'>O Aronguejo do Rio Superior nasceu!</span>");
+
+        // Skirmish ou First Blood inicial no early game entre jogadores reais
+        if (allyList.length > 0 && enemyList.length > 0) {
+          const allySkirmish = allyList[Math.floor(Math.random() * allyList.length)];
+          const enemySkirmish = enemyList[Math.floor(Math.random() * enemyList.length)];
+          if (Math.random() < 0.5) {
+            this.addTimelineEvent("03:48", "⚡ Primeira troca agressiva na rota: <strong style='color:#38bdf8;'>" + allySkirmish.nick + "</strong> (" + allySkirmish.champ.name + ") forçou o Flash de <strong style='color:#f87171;'>" + enemySkirmish.nick + "</strong>!");
+          } else {
+            this.addTimelineEvent("04:10", "🛡️ Controle de visão: sentinela detectou rotação inimiga no Rio Inferior.");
+          }
+        }
+
+        this.addTimelineEvent("05:00", "<span style='color:#c084fc; font-weight:bold;'>As Vastilarvas nasceram no Covil do Barão!</span>");
+        this.addTimelineEvent("05:00", "<span style='color:" + selectedDrake.color + "; font-weight:bold;'>" + selectedDrake.name + " nasceu no Covil!</span>");
       },
       combatFlashBurned: false,
       combatSpellFBurned: false,
@@ -6644,13 +6873,23 @@ function generateRival(playerRole) {
 
         const enemyNick = document.getElementById("duelEnemyNick");
         const opp = career.getCurrentOpponent();
+        const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
+        const directEnemyPick = draftSource.enemyPicks?.find(p => p.role === role);
+        const oppTeamName = opp ? opp.name : "Adversário";
+        const isFacingRivalTeam = careerState.rival && careerState.rival.team && (
+          oppTeamName.toLowerCase().includes(careerState.rival.team.toLowerCase()) ||
+          careerState.rival.team.toLowerCase().includes(oppTeamName.toLowerCase())
+        );
+
         if (enemyNick) {
           if (this.isSoloQMatch) {
-            enemyNick.innerText = "High Elo Inimigo";
-          } else if (careerState.rival) {
-            enemyNick.innerText = careerState.rival.nick;
+            enemyNick.innerText = directEnemyPick?.nick || "Challenger Adversário";
+          } else if (isFacingRivalTeam && careerState.rival) {
+            enemyNick.innerText = careerState.rival.nick + " (Rival)";
+          } else if (directEnemyPick && directEnemyPick.nick) {
+            enemyNick.innerText = directEnemyPick.nick;
           } else {
-            enemyNick.innerText = opp ? opp.name : "Rival";
+            enemyNick.innerText = opp ? opp.name + " (" + role + ")" : "Adversário";
           }
         }
 
@@ -7474,7 +7713,7 @@ function generateRival(playerRole) {
         if (container) {
           container.innerHTML = "";
           sc.choices.forEach(ch => {
-            const odds = this.calculateOdds(ch.stat);
+            const odds = this.calculateOdds(ch.stat, ch.title);
             const btn = document.createElement("div");
             btn.className = "choice-card-btn";
             btn.onclick = () => this.resolveChoice(ch, odds);
@@ -7488,58 +7727,57 @@ function generateRival(playerRole) {
         }
       },
 
-      calculateOdds(stat) {
-        const base = careerState?.stats?.[stat] || 50;
-        const isMain = careerState?.championPool?.some(m => m.id === (this.myChamp ? this.myChamp.id : null));
-        const mainBonus = isMain ? 12 : 0;
-        const coachBonus = this.matchupBonus || 0;
-        const confBonus = ((careerState?.stats?.confidence || 75) - 50) * 0.15;
+      calculateOdds(stat, choiceType) {
+        // SISTEMA DE COMBATE JUSTO E DETERMINÍSTICO (PRO X vs PRO Y)
+        // Cada escolha possui um perfil tático:
+        // - Agressivo/Mecânico: Alta recompensa, chance moderada (~40-60%) dependendo da mecânica vs OVR do rival.
+        // - Macro/Objetivos: Risco equilibrado (~55-70%) escalando com macro + comunicação.
+        // - Seguro/Disciplinado: Menor ganho, alta chance (~70-82%) de evitar desastres.
 
-        // 1. DUELO DIRETO DE STATUS: PRO X (Você) vs PRO Y (Seu Adversário Direto de Rota)
+        const playerStat = careerState?.stats?.[stat] || 50;
         const playerOvr = career.calculatePlayerOvr ? career.calculatePlayerOvr() : 60;
-        let enemyProOvr = 60;
+
+        // OVR do pro adversário direto de rota (ex: Robo no Top, Tinowns no Mid, Ceos no Suporte)
+        let enemyProOvr = 65;
         const oppTeam = career.getCurrentOpponent();
-        if (oppTeam && window.leagueNavigator) {
+        if (this.isSoloQMatch) {
+          enemyProOvr = Math.min(95, 55 + Math.floor((careerState?.elo?.totalLp || 0) / 100));
+        } else if (oppTeam && window.leagueNavigator) {
           const enemyRoster = window.leagueNavigator.getRosterData(oppTeam.name);
           const directPro = enemyRoster?.players?.find(p => p.role === (careerState?.role || "Mid"));
           if (directPro) enemyProOvr = directPro.ovr;
-          else if (careerState?.rival) enemyProOvr = careerState.rival.soloRank ? 65 : 60;
-        }
-        // Diferença de status individual: pro com maior status domina a rota!
-        const statAdvantage = Math.round((playerOvr - enemyProOvr) * 0.75);
-
-        // 2. VANTAGEM DE COMPOSIÇÃO DE EQUIPE (Draft Synergy & Counter)
-        let compAdvantage = 0;
-        if (this.activeSynergy) {
-          compAdvantage += (this.activeSynergy.bonus || 10);
-        }
-        // Bônus adicional se o campeão do jogador pertencer à sinergia
-        const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
-        const allyChamps = draftSource.allyPicks?.filter(p => p.champ).map(p => p.champ) || [];
-        if (allyChamps.length >= 3) {
-          compAdvantage += 5; // Composição coordenada
+          else enemyProOvr = oppTeam.power || 65;
         }
 
-        // Bônus de Feitiços de Invocador Equipados
-        let spellBonus = 0;
-        const spD = careerState?.spells?.d;
-        const spF = careerState?.spells?.f;
+        // Diferença direta de nível de jogador (se o pro rival for melhor, você sofre penalidade real!)
+        const statDelta = playerStat - enemyProOvr;
 
-        if (spD === "Flash" || spF === "Flash") spellBonus += 6;
-        if ((spD === "Ignite" || spF === "Ignite") && stat === "mechanics") spellBonus += 8;
-        if ((spD === "Teleport" || spF === "Teleport") && stat === "macro") spellBonus += 8;
-        if ((spD === "Smite" || spF === "Smite") && (stat === "macro" || stat === "mechanics")) spellBonus += 10;
-        if ((spD === "Exhaust" || spF === "Exhaust") && (stat === "consistency" || stat === "macro")) spellBonus += 8;
-        if ((spD === "Cleanse" || spF === "Cleanse") && stat === "consistency") spellBonus += 8;
-        if ((spD === "Ghost" || spF === "Ghost") && stat === "mechanics") spellBonus += 7;
+        // Base de acordo com a disciplina da jogada
+        let baseOdds = 55;
+        if (stat === "consistency" || stat === "comm") {
+          baseOdds = 68; // Jogadas seguras e de grupo
+        } else if (stat === "mechanics") {
+          baseOdds = 48; // Jogadas mecânicas individuais são arriscadas!
+        } else if (stat === "macro") {
+          baseOdds = 58; // Jogadas táticas de objetivo
+        }
 
-        // IA ESCALONADA: Nível geral do clube adversário
-        const oppPower = this.isSoloQMatch ? 62 : (career.getCurrentOpponent()?.power || 50);
-        const diffPenalty = (oppPower - 50) * 0.25;
+        // Impacto dos atributos (máx +/- 20%)
+        const deltaImpact = Math.round(statDelta * 0.7);
 
-        // Cálculo determinístico: se o jogador construiu melhor pro e melhor comp, ele tem vitória merecida!
-        const finalOdds = Math.round(base * 0.55 + statAdvantage + compAdvantage + mainBonus + coachBonus + confBonus + spellBonus - diffPenalty);
-        return Math.max(20, Math.min(96, finalOdds));
+        // Bônus moderados e balanceados (evita inflação que tornava a vitória garantida em 95%)
+        const isMain = careerState?.championPool?.some(m => m.id === (this.myChamp ? this.myChamp.id : null));
+        const mainBonus = isMain ? 5 : 0;
+        const synergyBonus = this.activeSynergy ? Math.min(6, Math.round((this.activeSynergy.bonus || 10) * 0.35)) : 0;
+        const coachBonus = Math.min(5, this.matchupBonus || 0);
+
+        // Força do time adversário (jogar contra times tier 1 impõe respeito real)
+        const oppPower = this.isSoloQMatch ? 60 : (oppTeam?.power || 50);
+        const teamDiffPenalty = Math.round((oppPower - 60) * 0.35);
+
+        // Cálculo balanceado: pode variar de 25% a 85% dependendo das decisões e da disparidade de nível!
+        const finalOdds = Math.round(baseOdds + deltaImpact + mainBonus + synergyBonus + coachBonus - teamDiffPenalty);
+        return Math.max(22, Math.min(88, finalOdds));
       },
 
       resolveChoice(choice, odds) {
@@ -7570,11 +7808,28 @@ function generateRival(playerRole) {
           this.scores.push(Math.floor(Math.random() * 20) + 80);
           this.statGains[choice.stat] = (this.statGains[choice.stat] || 0) + 1;
 
-          // Inserir evento na timeline da partida (estilo Imagem 3)
-          const timeNow = (this.currentTurn === 1 ? "05:13" : (this.currentTurn === 2 ? "12:40" : "21:15"));
-          const oppChampName = this.enemyChamp ? this.enemyChamp.name : "Rival";
+          // Inserir evento na timeline da partida com timestamps e contexto reais
+          const timeNow = (this.currentTurn === 1 ? ("07:" + String(Math.floor(Math.random()*40)+10).padStart(2,'0')) : 
+                          (this.currentTurn === 2 ? ("15:" + String(Math.floor(Math.random()*40)+10).padStart(2,'0')) : 
+                          ("24:" + String(Math.floor(Math.random()*40)+10).padStart(2,'0'))));
+          const oppChampName = this.enemyChamp ? this.enemyChamp.name : "Adversário";
           const myChampName = this.myChamp ? this.myChamp.name : "Campeão";
-          this.addTimelineEvent(timeNow, "<strong style='color:#38bdf8;'>" + careerState.nick + "</strong> (" + myChampName + ") eliminou <strong style='color:#f87171;'>" + oppChampName + "</strong>!");
+          const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
+          const directEnemy = draftSource.enemyPicks?.find(p => p.role === (careerState?.role || "Mid"));
+          const oppNick = directEnemy ? directEnemy.nick : oppChampName;
+
+          if (choice.title.includes("Barão") || choice.title.includes("Ancião") || choice.title.includes("Dragão")) {
+            this.addTimelineEvent(timeNow, "<strong style='color:#38bdf8;'>" + careerState.team.name + "</strong> garantiu o objetivo épico após grande jogada de <strong style='color:#38bdf8;'>" + careerState.nick + "</strong>!");
+          } else {
+            this.addTimelineEvent(timeNow, "<strong style='color:#38bdf8;'>" + careerState.nick + "</strong> (" + myChampName + ") eliminou <strong style='color:#f87171;'>" + oppNick + "</strong> (" + oppChampName + ")!");
+          }
+
+          // Outros eventos paralelos no mapa
+          if (this.currentTurn === 1) {
+            this.addTimelineEvent("08:40", "<span style='color:#10b981; font-weight:700;'>Primeira Placa de Torre destruída pela sua equipe!</span>");
+          } else if (this.currentTurn === 2) {
+            this.addTimelineEvent("16:20", "<span style='color:#c084fc;'>O Arauto do Vale foi invocado no Meio! Torre derrubada!</span>");
+          }
 
           // Dano no Oponente Rival
           const dmg = Math.floor(Math.random() * 10) + 28;
@@ -7617,9 +7872,21 @@ function generateRival(playerRole) {
 
           gameAudio.playVictory();
         } else {
-          const timeNow = (this.currentTurn === 1 ? "05:13" : (this.currentTurn === 2 ? "12:40" : "21:15"));
-          const oppChampName = this.enemyChamp ? this.enemyChamp.name : "Rival";
-          this.addTimelineEvent(timeNow, "<strong style='color:#f87171;'>" + oppChampName + "</strong> neutralizou o avanço de <strong style='color:#38bdf8;'>" + careerState.nick + "</strong>!");
+          const timeNow = (this.currentTurn === 1 ? ("07:" + String(Math.floor(Math.random()*40)+10).padStart(2,'0')) : 
+                          (this.currentTurn === 2 ? ("15:" + String(Math.floor(Math.random()*40)+10).padStart(2,'0')) : 
+                          ("24:" + String(Math.floor(Math.random()*40)+10).padStart(2,'0'))));
+          const oppChampName = this.enemyChamp ? this.enemyChamp.name : "Adversário";
+          const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
+          const directEnemy = draftSource.enemyPicks?.find(p => p.role === (careerState?.role || "Mid"));
+          const oppNick = directEnemy ? directEnemy.nick : oppChampName;
+          const oppTeam = career.getCurrentOpponent() ? career.getCurrentOpponent().name : "Inimigo";
+
+          this.addTimelineEvent(timeNow, "<strong style='color:#f87171;'>" + oppNick + "</strong> (" + oppChampName + ") neutralizou <strong style='color:#38bdf8;'>" + careerState.nick + "</strong> e garantiu o abate!");
+          if (this.currentTurn === 2) {
+            this.addTimelineEvent("17:05", "<span style='color:#ef4444; font-weight:700;'>O time do " + oppTeam + " abateu o Dragão no contra-ataque!</span>");
+          } else if (this.currentTurn === 3) {
+            this.addTimelineEvent("25:30", "<span style='color:#ef4444; font-weight:bold;'>⚠️ O " + oppTeam + " abateu o Barão Na'Shor e avança pela rota!</span>");
+          }
           const kills = Math.floor(Math.random() * 2) + 2;
           this.enemyKills += kills;
           this.goldDiff -= 1200;
@@ -7758,9 +8025,13 @@ function generateRival(playerRole) {
         });
 
         // Cabeçalho Time Inimigo
+        const isFacingRivalTeam = careerState.rival && careerState.rival.team && (
+          oppTeamName.toLowerCase().includes(careerState.rival.team.toLowerCase()) ||
+          careerState.rival.team.toLowerCase().includes(oppTeamName.toLowerCase())
+        );
         const enemyHeader = document.createElement("tr");
         enemyHeader.style.background = "rgba(239, 68, 68, 0.15)";
-        enemyHeader.innerHTML = '<td colspan="6" style="color:var(--danger-red); font-weight:800; font-size:0.85rem; padding:6px 12px; margin-top:10px;">🔴 ' + oppTeamName + ' (RIVAL)</td>';
+        enemyHeader.innerHTML = '<td colspan="6" style="color:var(--danger-red); font-weight:800; font-size:0.85rem; padding:6px 12px; margin-top:10px;">🔴 ' + oppTeamName + (isFacingRivalTeam ? ' (RIVAL DECLARADO)' : '') + '</td>';
         tableBody.appendChild(enemyHeader);
 
         roles.forEach(role => {
@@ -7770,8 +8041,8 @@ function generateRival(playerRole) {
           const champName = champObj?.name || (isRivalRole ? "Inimigo" : "Sylas");
           const champId = champObj?.id || "Sylas";
           
-          let enemyNick = pick?.nick || (role + " Inimigo");
-          if (isRivalRole && careerState.rival) {
+          let enemyNick = pick?.nick || (role + " " + oppTeamName);
+          if (isRivalRole && isFacingRivalTeam && careerState.rival) {
             enemyNick = "⚔️ " + careerState.rival.nick + " (Seu Rival)";
           }
 
@@ -7914,7 +8185,10 @@ function generateRival(playerRole) {
       },
 
       showFinalScoreboard() {
-        const isVictory = this.allyKills >= this.enemyKills;
+        // VITÓRIA OU DERROTA JUSTA BASEADA NO DESEMPENHO REAL:
+        // Se cometeu erros táticos ou foi solado pelos adversários superiores, você PERDE a partida!
+        const netScore = (this.allyKills * 3) + (this.goldDiff > 0 ? 4 : -4) + (this.allyHp - this.enemyHp);
+        const isVictory = this.allyHp > 0 && ((this.allyKills > this.enemyKills) || (this.allyKills === this.enemyKills && this.goldDiff >= 0 && this.allyHp >= this.enemyHp));
         const isSupport = careerState.role === "Suporte";
 
         // Finalizar Barras de Vida
@@ -7997,7 +8271,7 @@ function generateRival(playerRole) {
           careerState.coach.nextExp += 80;
           const coachTitles = ["Novato", "Estrategista", "Analista Sênior", "Mestre Tático", "Lenda dos Bastidores"];
           careerState.coach.title = coachTitles[careerState.coach.level - 1] || "Mestre Tático";
-          showToast("👔 O Coach Maestro subiu para o Nível " + careerState.coach.level + " (" + careerState.coach.title + ")!");
+          showToast("👔 O Coach " + (careerState?.coach?.name || "Técnico") + " subiu para o Nível " + careerState.coach.level + " (" + careerState.coach.title + ")!");
         }
 
         // Se for SoloQ Match Dinâmica:
@@ -8116,6 +8390,15 @@ function generateRival(playerRole) {
             if (!careerState.playoffs.fearlessPlayedChamps) {
               careerState.playoffs.fearlessPlayedChamps = [];
             }
+            // REGRA FEARLESS DRAFT OFICIAL (CBLOL/LCK/LPL):
+            // TODOS os 10 campeões escolhidos em cada partida da série ficam bloqueados para os jogos seguintes!
+            const draftSource = (typeof draftEngine !== 'undefined' ? draftEngine : (window.draftOfficial || {}));
+            const allPicks = [...(draftSource.allyPicks || []), ...(draftSource.enemyPicks || [])];
+            allPicks.forEach(p => {
+              if (p.champ && p.champ.id && !careerState.playoffs.fearlessPlayedChamps.includes(p.champ.id)) {
+                careerState.playoffs.fearlessPlayedChamps.push(p.champ.id);
+              }
+            });
             if (this.myChamp && !careerState.playoffs.fearlessPlayedChamps.includes(this.myChamp.id)) {
               careerState.playoffs.fearlessPlayedChamps.push(this.myChamp.id);
             }
@@ -8129,9 +8412,12 @@ function generateRival(playerRole) {
             if (careerState.playoffs.wins >= 3) {
               if (careerState.playoffs.stage === "Grande Final") {
                 showToast("🏆 CAMPEÃO DO " + (LEAGUES_DATA[careerState.currentTierId]?.name || "TORNEIO") + "!");
-                career.promoteToNextTier();
                 careerState.playoffs.inPlayoffs = false;
                 careerState.playoffs.fearlessPlayedChamps = [];
+                // Abrir a espetacular tela de campeão e MVP com comemoração de troféu!
+                setTimeout(() => {
+                  career.openTournamentChampionCelebrationModal(careerState.currentTierId);
+                }, 800);
               } else {
                 careerState.playoffs.stage = "Grande Final";
                 careerState.playoffs.wins = 0;
@@ -8613,18 +8899,131 @@ function generateRival(playerRole) {
         return (s.mechanics * 0.35 + s.macro * 0.35 + s.comm * 0.15 + s.consistency * 0.15);
       },
 
+      getTeamCoach(teamName) {
+        teamName = (teamName || "").trim();
+        if (window.ORGANIZATION_COACHES && window.ORGANIZATION_COACHES[teamName]) {
+          return { ...window.ORGANIZATION_COACHES[teamName], level: 1, exp: 0, nextExp: 100 };
+        }
+        const rosterCoach = window.GLOBAL_ROSTERS_DB && window.GLOBAL_ROSTERS_DB[teamName]?.coach;
+        if (rosterCoach) {
+          const cleanName = rosterCoach.replace(/^Coach\s+/i, '');
+          return { name: cleanName, title: "Head Coach Oficial", ovr: 80, bio: "Estrategista focado no desenvolvimento da equipe.", level: 1, exp: 0, nextExp: 100 };
+        }
+        return { name: "Maestro", title: "Treinador Tático", ovr: 78, bio: "Treinador experiente.", level: 1, exp: 0, nextExp: 100 };
+      },
+
+      openTournamentChampionCelebrationModal(tierId) {
+        tierId = tierId || careerState.currentTierId || 4;
+        const modal = document.getElementById("tournamentChampionCelebrationModal");
+        if (!modal) return;
+
+        const currentLeague = LEAGUES_DATA[tierId] || LEAGUES_DATA[4];
+        const nextTier = currentLeague.promotionTarget;
+        const nextLeague = LEAGUES_DATA[nextTier];
+
+        const titleEl = document.getElementById("tourneyCelebrationTitle");
+        const badgeEl = document.getElementById("tourneyCelebrationBadge");
+        const msgEl = document.getElementById("tourneyCelebrationMessage");
+        const prizeEl = document.getElementById("tourneyRewardPrize");
+        const promoEl = document.getElementById("tourneyRewardPromotion");
+        const fameEl = document.getElementById("tourneyRewardFame");
+
+        const mvpNickEl = document.getElementById("tourneyMvpNick");
+        const mvpRoleEl = document.getElementById("tourneyMvpSubtitle");
+        const mvpKdaEl = document.getElementById("tourneyMvpKda");
+        const mvpKpEl = document.getElementById("tourneyMvpKp");
+        const mvpDpmEl = document.getElementById("tourneyMvpDpm");
+
+        const prizes = { 4: "R$ 15.000", 3: "R$ 45.000", 2: "R$ 120.000", 1: "R$ 350.000" };
+        const fameGains = { 4: "+800 Fãs", 3: "+1.600 Fãs", 2: "+3.500 Fãs", 1: "+10.000 Fãs" };
+
+        if (badgeEl) badgeEl.innerText = "🏆 TÍTULO CONQUISTADO: " + currentLeague.name.toUpperCase();
+        if (titleEl) titleEl.innerText = "É CAMPEÃO! A TAÇA É DO " + careerState.team.name.toUpperCase() + "!";
+        if (msgEl) {
+          msgEl.innerText = "Com atuações lendárias e sangue frio sob pressão, o " + careerState.team.name + " venceu a grande final da competição! " +
+            (nextLeague ? "O time conquistou a vaga oficial de acesso e agora disputará a divisão de elite: " + nextLeague.name + "!" : "O time é coroado o soberano supremo do League of Legends!");
+        }
+
+        if (prizeEl) prizeEl.innerText = "+" + (prizes[tierId] || "R$ 20.000");
+        if (promoEl) promoEl.innerText = nextLeague ? nextLeague.tierTag : "👑 CAMPEÃO SUPREMO";
+        if (fameEl) fameEl.innerText = fameGains[tierId] || "+1.000 Fãs";
+
+        if (mvpNickEl) mvpNickEl.innerText = careerState.nick + " (MVP DA SÉRIE)";
+        if (mvpRoleEl) mvpRoleEl.innerText = "Rota do " + careerState.role + " • " + careerState.team.name + " • Destaque das Finais";
+        if (mvpKdaEl) mvpKdaEl.innerText = "8.4 (21/3/17)";
+        if (mvpKpEl) mvpKpEl.innerText = "81% KP";
+        if (mvpDpmEl) mvpDpmEl.innerText = "782 DPM";
+
+        modal.style.display = "flex";
+      },
+
+      confirmTournamentCelebrationAndAdvance() {
+        const modal = document.getElementById("tournamentChampionCelebrationModal");
+        if (modal) modal.style.display = "none";
+        gameRouter.showScreen("screenDashboard");
+        this.promoteToNextTier();
+      },
+
       promoteToNextTier() {
-        const next = LEAGUES_DATA[careerState.currentTierId]?.promotionTarget;
+        const currentTier = careerState.currentTierId || 4;
+        const currentLeague = LEAGUES_DATA[currentTier] || LEAGUES_DATA[4];
+        const next = currentLeague?.promotionTarget;
+
         if (next && LEAGUES_DATA[next]) {
+          const nextLeague = LEAGUES_DATA[next];
+          const myTeamName = careerState.team.name;
+
+          // 1. SUBIDA DO TIME (Promoção real entre tabelas de ligas)
+          // Se o time do jogador não estava na liga superior, promove ele e rebaixa o último colocado
+          const alreadyInNext = nextLeague.teams.some(t => t.name.trim().toLowerCase() === myTeamName.trim().toLowerCase());
+          if (!alreadyInNext) {
+            // Rebaixa o último da liga superior para a liga atual
+            const relegatedTeam = nextLeague.teams.pop();
+            if (relegatedTeam) {
+              currentLeague.teams.push(relegatedTeam);
+            }
+            // Adiciona o time do jogador na liga superior com pontuação zerada
+            nextLeague.teams.push({
+              name: myTeamName,
+              wins: 0,
+              losses: 0,
+              points: 0,
+              power: Math.min(92, (careerState.team.power || 65) + 12),
+              tag: careerState.team.tag || "BR"
+            });
+            // Remove o time da liga antiga
+            currentLeague.teams = currentLeague.teams.filter(t => t.name.trim().toLowerCase() !== myTeamName.trim().toLowerCase());
+          }
+
+          // 2. Atualizar estado do jogador
           careerState.currentTierId = next;
           careerState.team.tierId = next;
           careerState.team.week = 1;
           careerState.team.wins = 0;
           careerState.team.losses = 0;
+          careerState.team.points = 0;
           careerState.actionsLeft = careerState.maxActions || 3;
           careerState.energy = 100;
+
+          // Aumento de salário ao subir de divisão
+          const newSalaries = { 3: 1800, 2: 4500, 1: 18000 };
+          if (newSalaries[next]) {
+            careerState.team.salary = newSalaries[next];
+          }
+
+          // Bônus de premiação em dinheiro e fama
+          const prizeGains = { 3: 15000, 2: 45000, 1: 120000 };
+          careerState.gold += (prizeGains[next] || 10000);
+          careerState.fame += (next === 1 ? 5000 : (next === 2 ? 2500 : 1200));
+
+          // Atualizar o coach da equipe de acordo com a nova organização
+          careerState.coach = this.getTeamCoach(myTeamName);
+
           this.save();
-          showToast("🏆 PARABÉNS! VOCÊ FOI PROMOVIDO PARA: " + LEAGUES_DATA[next].name);
+          this.updateDashboardUI();
+          showToast("🏆 PARABÉNS! SEU TIME SUBIU PARA O " + nextLeague.name.toUpperCase() + "! NOVO SALÁRIO: R$ " + careerState.team.salary.toLocaleString("pt-BR") + "/mês!");
+        } else {
+          showToast("👑 VOCÊ CONQUISTOU O TOPO MUNDIAL DO LEAGUE OF LEGENDS!");
         }
       },
 
@@ -8910,6 +9309,7 @@ function generateRival(playerRole) {
         careerState.fame += bonusFame;
         careerState.actionsLeft = careerState.maxActions || 3;
         careerState.energy = 100;
+        careerState.coach = this.getTeamCoach(teamName);
 
         this.addSocialPost(
           "CBLOL & Esports Insider",
@@ -9230,7 +9630,8 @@ function generateRival(playerRole) {
         const roleStatusEl = document.getElementById("coachMeetingRoleStatus");
         const diagText = document.getElementById("coachDialogueText");
 
-        if (nameEl) nameEl.innerText = (pair.isAcademy ? "COACH SARKIS / MAESTRO" : "COACH PRINCIPAL") + " • " + pair.mainTeam.toUpperCase();
+        const activeCoach = careerState?.coach?.name || (pair.isAcademy ? "Sarkis" : "Xypherz");
+        if (nameEl) nameEl.innerText = "COACH " + activeCoach.toUpperCase() + " • " + myTeam.toUpperCase();
         if (roleStatusEl) roleStatusEl.innerText = pair.isAcademy ? "Comissão Técnica da Base • Avaliação para o CBLOL" : "Comissão Técnica Principal • Gestão de Titularidade";
         if (diagText) {
           diagText.innerText = "Puxe uma cadeira, " + careerState.nick + ". Estive revisando seus números com o time técnico. Atualmente seu Nível Geral é " + myOvr + " OVR e sua Confiança está em " + (careerState.stats?.confidence || 75) + "%. O que você gostaria de tratar hoje?";
@@ -9344,6 +9745,7 @@ function generateRival(playerRole) {
         careerState.team.salary = 12000;
         careerState.fame = (careerState.fame || 0) + 250;
         careerState.coachTrust = 92;
+        careerState.coach = this.getTeamCoach(pair.mainTeam);
 
         const modal = document.getElementById("rosterPromotionModal");
         if (modal) modal.style.display = "none";
@@ -10102,7 +10504,8 @@ function generateRival(playerRole) {
         scheduleList.forEach((item, idx) => {
           const isPast = isCurrentLeague && item.week < currentWeek;
           const isCurrent = isCurrentLeague && item.week === currentWeek;
-          const oppTeamObj = rivals[idx % rivals.length] || rivals[0];
+          // Garante que a rodada atual do calendário corresponda EXATAMENTE ao adversário de career.getCurrentOpponent()
+          const oppTeamObj = isCurrent ? career.getCurrentOpponent() : (rivals[idx % rivals.length] || rivals[0]);
           const oppName = oppTeamObj?.name || "Adversário";
 
           const isMsi = item.type === "msi" || item.type === "msi_final";
